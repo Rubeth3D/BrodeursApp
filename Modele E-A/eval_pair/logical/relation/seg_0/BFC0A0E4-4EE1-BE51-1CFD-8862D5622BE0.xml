@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="eval_reponse" directorySegmentName="seg_0" id="BFC0A0E4-4EE1-BE51-1CFD-8862D5622BE0">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 14:30:15 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<sourcePk>73172080-3308-B9EB-9C31-09E617232CC4</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>compoter</nameOnSource>
+<nameOnTarget>être lié</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>6E395822-1AB4-E614-655A-001063D1CC69</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>5EE5E782-6856-DD01-D70C-9A9CEB875970</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

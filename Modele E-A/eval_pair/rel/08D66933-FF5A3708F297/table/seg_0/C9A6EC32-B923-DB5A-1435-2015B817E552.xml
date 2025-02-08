@@ -1,0 +1,102 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C9A6EC32-B923-DB5A-1435-2015B817E552" name="Niveau_performance">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>16757635-2105-3F90-6230-C960F2626FF1</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Reponse_id_reponse" id="04C321DA-9B4C-7D15-49E1-7656F7CD9263">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>E045B0D6-B248-8591-AAF2-CCC487602C08</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="19943026-3088-AAB1-5413-F6156F53EC51" referredColumn="74D05C41-0AD9-58EF-2565-0EA75B12803D"/>
+</associations>
+</Column>
+<Column name="Critere_id_critere" id="3EC0379E-A36D-0122-1DA7-39C3E3AEC917">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>BD16E6A0-66C6-518B-C104-D0BEF47CF695</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B2110803-08AA-D939-8CBA-1410AA7DD047" referredColumn="4CA11A49-F492-180E-7A51-53980D40A32F"/>
+</associations>
+</Column>
+<Column name="id_niveau" id="401D67FE-0A38-B123-DE8D-0939324C5204">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>D69B3DBB-F92D-7006-2EF5-72E1D66AE31D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="code_niveau" id="E86F2598-D70C-DFC7-6A46-97E3D208E53E">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>00ED35B3-4A10-7AA3-1DFC-B7F1C09512FE</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7C5C85D6-DB10-C858-D063-C516FF89A96F" name="Niveau_performance_PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>FF3E515D-4C70-5363-652C-BB8344A5A889</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="401D67FE-0A38-B123-DE8D-0939324C5204"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="06943445-FBA4-A49E-AE92-B60BE60F3534" name="Niveau_performance_Critere_FK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>43010828-A922-0334-4049-239414EB4F75</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3EC0379E-A36D-0122-1DA7-39C3E3AEC917"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A47E4BF1-2EE5-3F0D-3F60-C709AFF809B5" name="Niveau_performance_Reponse_FK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>032E5A5F-F5D3-B1CE-4151-6820CDFC5C33</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="04C321DA-9B4C-7D15-49E1-7656F7CD9263"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

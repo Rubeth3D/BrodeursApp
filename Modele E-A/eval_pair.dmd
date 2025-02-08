@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="eval_pair" id="C9B04FAC-D7EF-9AA4-9840-B42B6B31BDD8" version="3.5">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 14:02:51 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>C9B04FAC-D7EF-9AA4-9840-B42B6B31BDD8</designId>
+</OSDM_Design>

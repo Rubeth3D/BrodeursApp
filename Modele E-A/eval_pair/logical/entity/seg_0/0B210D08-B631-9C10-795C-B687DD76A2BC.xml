@@ -1,0 +1,114 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="0B210D08-B631-9C10-795C-B687DD76A2BC" name="Travail">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 14:34:10 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_travail" id="E017B45A-75AF-D8C9-043D-09899E9F4E7C">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:15:26 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="code_travail" id="2E2A895F-7C36-6E0C-0658-9B78F6D73AD1">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:23:53 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nom_travail" id="1A1C4A96-11A1-D0D7-6EE3-743437666A9C">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:24:37 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_instrument" id="C9565A72-1316-AB54-9E7D-584879B2CE45">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:25:50 UTC</createdTime>
+<generatorID>0D4939F5-A524-C433-492A-DB268EC6A68D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<referedAttribute>AD5A51E4-B617-A3C4-B87A-49BF274D98B9</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="date_travail" id="DFFDEA87-9E9F-9B36-3522-804638976D0B">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-22 13:54:01 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_classe" id="A5EA07D4-5A66-C71A-D408-F79211A0A328">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-22 14:45:02 UTC</createdTime>
+<generatorID>03618D49-6297-0007-BE75-6111260DAC5B</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<referedAttribute>8B50359D-B8C7-258B-41CC-57C7F7ED5456</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4CD66357-F83D-913F-C40D-FB2E5B29255C" name="Travail PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:15:43 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E017B45A-75AF-D8C9-043D-09899E9F4E7C</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

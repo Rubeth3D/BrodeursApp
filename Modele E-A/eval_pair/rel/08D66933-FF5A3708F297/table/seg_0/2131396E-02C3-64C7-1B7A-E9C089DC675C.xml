@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2131396E-02C3-64C7-1B7A-E9C089DC675C" name="Etudiant">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>1FE39B79-84FB-F593-71C4-57E81A0E1659</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Equipe_id_equipe" id="2687564A-E67A-DADE-6661-0649B6A3B71C">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>61008F96-AA5C-A379-A934-65118007D724</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FB3F675B-235C-4069-9212-0C0A14EC0859" referredColumn="83610DD8-11F9-8234-1773-2F130E32A813"/>
+</associations>
+</Column>
+<Column name="id_etudiant" id="8F38F039-B2D1-10B2-4742-37F16C867995">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>5174C3A7-C102-3718-9E96-9E0BF9F7D2DB</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="AA86D380-D1E6-D1C3-6525-E74D33DBF0C3" name="Etudiant_PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>8A10FE13-F004-2FF7-58C8-F66283932C59</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8F38F039-B2D1-10B2-4742-37F16C867995"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1EB503C5-4903-C93F-3F45-FD6EC4D968CC" name="Etudiant_Equipe_FK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>2DF09621-3022-0968-5610-8557B3D772E0</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2687564A-E67A-DADE-6661-0649B6A3B71C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

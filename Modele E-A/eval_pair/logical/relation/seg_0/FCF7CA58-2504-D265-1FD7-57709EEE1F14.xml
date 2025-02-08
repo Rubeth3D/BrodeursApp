@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="equi_affe" directorySegmentName="seg_0" id="FCF7CA58-2504-D265-1FD7-57709EEE1F14">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:10:55 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<sourcePk>5A4D48AA-AE8C-C1B0-25A2-AC73D06BE4A2</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>posséder</nameOnSource>
+<nameOnTarget>concerner</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>773EC420-B2F1-DE12-D28E-3CAF556F6507</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>BF1177CD-0E7A-A353-AA3F-2C90837BBC98</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
