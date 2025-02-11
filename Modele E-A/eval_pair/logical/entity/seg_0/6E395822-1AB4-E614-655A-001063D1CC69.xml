@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_travail" id="ECA607DB-0463-06F5-E0D9-24863EC97559">
+<Attribute name="Travail id travail" id="ECA607DB-0463-06F5-E0D9-24863EC97559">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:15:44 UTC</createdTime>
 <generatorID>3B14AFF7-59B0-FF8C-34A5-00C933F1BA01</generatorID>
@@ -29,7 +29,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_evaluation" id="00B38884-E74F-9557-F3FD-97D118642A67">
+<Attribute name="id evaluation" id="00B38884-E74F-9557-F3FD-97D118642A67">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:19:40 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>
@@ -41,7 +41,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_etudiant" id="44C84CED-EAF4-C8CD-A883-78C4C15323CC">
+<Attribute name="Etudiant id etudiant" id="44C84CED-EAF4-C8CD-A883-78C4C15323CC">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:21:44 UTC</createdTime>
 <generatorID>E0F9720B-094C-195D-9517-080877C1309D</generatorID>
@@ -55,7 +55,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_etudiant1" id="4C045969-F130-38E9-A0DE-C4F7C5002F93">
+<Attribute name="Etudiant id etudiant1" id="4C045969-F130-38E9-A0DE-C4F7C5002F93">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:21:44 UTC</createdTime>
 <generatorID>7275BC6A-081F-9531-2C4F-BA122512432D</generatorID>
@@ -69,7 +69,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="date_evaluation" id="862EB42D-0615-81FD-C6E1-24928C7F06BD">
+<Attribute name="date evaluation" id="862EB42D-0615-81FD-C6E1-24928C7F06BD">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:31:19 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>
@@ -82,21 +82,7 @@
 <logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_instrument" id="EA83FCCF-FAA2-1F03-CFA1-DAD11ABE190A">
-<createdBy>jifbrodeur</createdBy>
-<createdTime>2024-10-11 15:34:42 UTC</createdTime>
-<generatorID>48261EFD-6858-98F4-CCCA-19FD6ED92EE3</generatorID>
-<ownerDesignName>eval_pair</ownerDesignName>
-<engineerTo>
-<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
-</engineerTo>
-<referedAttribute>AD5A51E4-B617-A3C4-B87A-49BF274D98B9</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="id_equipe" id="DFCEB87D-3193-11C1-48F2-C69735906884">
+<Attribute name="Equipe id equipe" id="DFCEB87D-3193-11C1-48F2-C69735906884">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:35:25 UTC</createdTime>
 <generatorID>7E3E7469-A8D5-15A4-AD5F-D25596DA50B4</generatorID>
@@ -109,20 +95,6 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="code_evaluation" id="1BCC6D9F-74E4-5CD8-03CC-C58DEACAA83D">
-<createdBy>jifbrodeur</createdBy>
-<createdTime>2024-10-22 14:18:10 UTC</createdTime>
-<ownerDesignName>eval_pair</ownerDesignName>
-<engineerTo>
-<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>200</dataTypeSize>
-<ownDataTypeParameters>200,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="description" id="4CF608C6-B60C-E13B-6F4F-B2E7CA5D6951">
 <createdBy>jifbrodeur</createdBy>
@@ -138,7 +110,7 @@
 <dataTypeSize>2000</dataTypeSize>
 <ownDataTypeParameters>2000,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_classe" id="D3FCADFA-2C4F-91DF-D900-7A75BE7FF8EE">
+<Attribute name="Cours id classe" id="D3FCADFA-2C4F-91DF-D900-7A75BE7FF8EE">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-22 14:40:02 UTC</createdTime>
 <generatorID>84A9C0CE-D95F-F1AB-A6CA-130BD6E237FA</generatorID>
@@ -152,14 +124,82 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="note evaluation" id="1268DB7B-ABE2-ADE7-560A-9FCE6ADA4AA1">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 00:38:40 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="justification evaluation" id="1EAF82B5-94E8-D4BF-EEDE-C6914AA171E9">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 00:43:05 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5000</dataTypeSize>
+<ownDataTypeParameters>5000,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Professeur id professeur" id="3BDC1F77-02B0-8E59-D42F-C161ECF0386D">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:02:59 UTC</createdTime>
+<generatorID>C4E41BB0-0E11-35D9-BB05-0672E465F48D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>C4768204-A5E5-192A-1542-04C9B8D2F064</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="questions" id="140D66B8-DA20-4CAB-FAB1-2A81F883E3CF">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:06:25 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5000</dataTypeSize>
+<ownDataTypeParameters>5000,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Instrument id instrument" id="907C3ACD-2CA7-D284-0C67-F349BDFC71BA">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:20:01 UTC</createdTime>
+<generatorID>7A3F6A55-8022-54C3-B281-7BC02C0751F2</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<referedAttribute>04A19E26-49F5-F6A8-2B6E-4E2336C72CB0</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="73172080-3308-B9EB-9C31-09E617232CC4" name="Evaluation PK">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:19:52 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

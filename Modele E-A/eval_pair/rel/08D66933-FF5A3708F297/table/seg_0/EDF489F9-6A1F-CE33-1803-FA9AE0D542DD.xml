@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EDF489F9-6A1F-CE33-1803-FA9AE0D542DD" name="etudiant_classe">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Etudiant_id_etudiant" id="B28CE91B-0A17-8206-0EB4-36920650875D">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D61A1237-C3CB-2760-186D-5C04B5FD4E0B" referredColumn="8F38F039-B2D1-10B2-4742-37F16C867995"/>
+</associations>
+</Column>
+<Column name="Cours_id_classe" id="95939DCF-0B30-E5C0-0837-00BC9796C7FB">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A870F538-A617-5CCB-C648-2B2FAAD4F8E2" referredColumn="4C1538D8-7F29-E2AB-51E6-0999E95EC1ED"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="940A3A69-42E1-870D-882A-8FFA6DA73240" name="etudiant_classe_PK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B28CE91B-0A17-8206-0EB4-36920650875D"/>
+<colUsage columnID="95939DCF-0B30-E5C0-0837-00BC9796C7FB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="14CC7E45-5280-583F-956C-09A3510BB55D" name="etudiant_classe_Etudiant_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>2D6DE8FF-ECD7-3A4E-A490-4266145ECBCC</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B28CE91B-0A17-8206-0EB4-36920650875D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5B0FA211-735A-6B9D-DCD8-44267358AFA6" name="etudiant_classe_Cours_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>2D6DE8FF-ECD7-3A4E-A490-4266145ECBCC</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="95939DCF-0B30-E5C0-0837-00BC9796C7FB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

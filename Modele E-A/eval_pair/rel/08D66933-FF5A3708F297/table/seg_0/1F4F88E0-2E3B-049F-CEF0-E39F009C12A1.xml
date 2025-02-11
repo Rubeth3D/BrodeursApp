@@ -20,6 +20,40 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="Nom_complet" id="689BA832-554C-BE2B-899D-587E65F20D50">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>6F9AFEAA-651F-DEC7-4DAE-78824DE026CF</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DA" id="5B8499F1-BCDB-CE29-8062-E378002323AD">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>469FA96E-0CA6-F249-CEBE-B91E3FCC9684</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="mot_de_passe" id="635FC03D-4954-608A-C9EA-44DBC8D83FAB">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>850AFE85-24F1-363C-C133-448793EC9644</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="FCA5E2F7-3915-4F9E-1B87-9C38AC9535BA" name="Professeur_PK">

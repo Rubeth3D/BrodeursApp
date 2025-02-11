@@ -56,9 +56,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="BC62FE45-71F6-5F65-A8B5-B1583E4AA9EC" referredColumn="C607A2D5-0A78-8E4D-FF20-6C08925FBB29"/>
-</associations>
 </Column>
 <Column name="date_cloture" id="FA2D8856-EE57-FBD8-A790-758BDE072993">
 <createdBy>jifbrodeur</createdBy>
@@ -74,6 +71,33 @@
 <isRelationshipColumn>true</isRelationshipColumn>
 <dependOnForeignKeyID>BC62FE45-71F6-5F65-A8B5-B1583E4AA9EC</dependOnForeignKeyID>
 </Column>
+<Column name="date_travail" id="7A350676-65CF-F6FC-DCD5-A3A09712B75F">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>DFFDEA87-9E9F-9B36-3522-804638976D0B</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Cours_id_classe" id="83150BEF-6AF8-4503-F2EA-3AC12EEE9CC4">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>A5EA07D4-5A66-C71A-D408-F79211A0A328</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7FC72923-4A34-6AE2-12C7-3F70382A578E" referredColumn="4C1538D8-7F29-E2AB-51E6-0999E95EC1ED"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="ED68C3A9-4400-36BC-E13E-E9D77970DDBA" name="Travail_PK">
@@ -88,15 +112,15 @@
 <colUsage columnID="CE26D5CC-E222-336C-EDFB-34F1BC4BCB2B"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="8E1DC8C2-A505-7F44-164C-A2C605CDB1D0" name="Travail_Instrument_FK">
-<createdBy>jifbrodeur</createdBy>
-<createdTime>2024-10-11 15:46:50 UTC</createdTime>
-<generatorID>0D4939F5-A524-C433-492A-DB268EC6A68D</generatorID>
+<ind_PK_UK id="C15E1C5F-4350-ACB0-7C48-5CA6AB64C54D" name="Travail_Cours_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>03618D49-6297-0007-BE75-6111260DAC5B</generatorID>
 <ownerDesignName>eval_pair</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="174F9D1B-2B28-2B23-34FA-852A2DE7DC31"/>
+<colUsage columnID="83150BEF-6AF8-4503-F2EA-3AC12EEE9CC4"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

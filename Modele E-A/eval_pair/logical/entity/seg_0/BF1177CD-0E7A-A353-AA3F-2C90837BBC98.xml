@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_travail" id="195B40F3-0A82-E7B8-E7B9-EDB654F19D00">
+<Attribute name="Travail id travail" id="195B40F3-0A82-E7B8-E7B9-EDB654F19D00">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:15:44 UTC</createdTime>
 <generatorID>03BC3563-B735-0C8B-60A2-5716BE9D3E47</generatorID>
@@ -29,7 +29,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_assignation" id="6F3DE5E1-1EF2-52C1-20AA-6941CDD59C43">
+<Attribute name="id assignation" id="6F3DE5E1-1EF2-52C1-20AA-6941CDD59C43">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:18:00 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>
@@ -41,7 +41,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_equipe" id="FC1C2B09-AF83-2AA0-526C-75CA9E4C7902">
+<Attribute name="id equipe" id="FC1C2B09-AF83-2AA0-526C-75CA9E4C7902">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:19:04 UTC</createdTime>
 <generatorID>FCF7CA58-2504-D265-1FD7-57709EEE1F14</generatorID>
@@ -61,8 +61,9 @@
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:19:09 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

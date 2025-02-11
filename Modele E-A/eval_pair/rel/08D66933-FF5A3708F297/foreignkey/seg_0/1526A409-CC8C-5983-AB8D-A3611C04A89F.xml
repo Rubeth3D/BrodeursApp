@@ -1,15 +1,15 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="0ADDA6A0-3122-A4D7-A642-AB2AE4D7F374" containerWithKeyObject="4BD4452D-23A3-91BA-71B3-780205D35C9B" localFKIndex="57BB3D10-D7B2-E19B-5AE2-D91C1256B9B0" name="Reponse_Evaluation_FK">
-<createdBy>jifbrodeur</createdBy>
-<createdTime>2024-10-11 15:46:50 UTC</createdTime>
-<generatorID>BFC0A0E4-4EE1-BE51-1CFD-8862D5622BE0</generatorID>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="1526A409-CC8C-5983-AB8D-A3611C04A89F" containerWithKeyObject="031FFF8C-CF56-E524-0CEE-A988FE77C6EA" localFKIndex="A60C768B-C893-37BD-CAE8-47374EF702B4" name="Resultat_Evaluation_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>DE55AC78-952D-CE27-1866-C8A248260014</generatorID>
 <ownerDesignName>eval_pair</ownerDesignName>
 <referredTableLongName>Evaluation</referredTableLongName>
 <deleteRule>NO ACTION</deleteRule>
 <referredTableID>CDF9E111-ACB3-1AFD-3A27-CCC3D67A5044</referredTableID>
 <keyObject>823ABACB-739E-66E3-250C-3C671F3DEF6A</keyObject>
 <referredKeyID>823ABACB-739E-66E3-250C-3C671F3DEF6A</referredKeyID>
-<mandatory>true</mandatory>
+<mandatory>false</mandatory>
 <refColNames>id_evaluation</refColNames>
 <transferable>true</transferable>
 <rely>false</rely>

@@ -32,7 +32,7 @@
 <ownDataTypeParameters>200,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="Nom" id="6F147D94-44FA-D8D5-72D9-17C904AFC252">
+<Column name="nom_equipe" id="6F147D94-44FA-D8D5-72D9-17C904AFC252">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:46:50 UTC</createdTime>
 <generatorID>EBE4CA9D-43BC-9AB0-35C1-8CB37758936A</generatorID>
@@ -44,6 +44,21 @@
 <dataTypeSize>200</dataTypeSize>
 <ownDataTypeParameters>200,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Cours_id_classe" id="441B436F-25C0-C473-80F8-0F7E5B1FB9FE">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>C4A280ED-B311-D536-A9A1-8B3AD2726AB2</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="ABCD70A8-F329-7BFE-5D2A-27E86C76FA26" referredColumn="4C1538D8-7F29-E2AB-51E6-0999E95EC1ED"/>
+</associations>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
@@ -57,6 +72,28 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="83610DD8-11F9-8234-1773-2F130E32A813"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5CB42629-1AAA-8DB9-F00F-FC7DCDB2BCC9" name="Equipe__IDX">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:20:34 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>A2957ABC-7514-3B2F-87FE-5D9BF4800FBA</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="441B436F-25C0-C473-80F8-0F7E5B1FB9FE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8F1E1FFD-EA34-A0B9-C9BB-6ECCFBF07696" name="Equipe_Cours_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>A2957ABC-7514-3B2F-87FE-5D9BF4800FBA</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="441B436F-25C0-C473-80F8-0F7E5B1FB9FE"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="equi_affe" directorySegmentName="seg_0" id="FCF7CA58-2504-D265-1FD7-57709EEE1F14">
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Assignation Equipe FK" directorySegmentName="seg_0" id="FCF7CA58-2504-D265-1FD7-57709EEE1F14">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:10:55 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>

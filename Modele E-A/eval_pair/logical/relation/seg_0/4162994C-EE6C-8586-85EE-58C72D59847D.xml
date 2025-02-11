@@ -1,21 +1,21 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Cours Professeur FK" directorySegmentName="seg_0" id="B580DE8A-1E20-EDA9-5EA2-82337098AADB">
-<createdBy>jifbrodeur</createdBy>
-<createdTime>2024-10-22 14:43:39 UTC</createdTime>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Resultat Professeur FK" directorySegmentName="seg_0" id="4162994C-EE6C-8586-85EE-58C72D59847D">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:08:21 UTC</createdTime>
 <ownerDesignName>eval_pair</ownerDesignName>
 <engineerTo>
 <item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
 </engineerTo>
 <sourcePk>F1C89D3D-A7AA-5C7A-3B44-BAB74C76EE17</sourcePk>
 <identifying>false</identifying>
-<nameOnSource>donner</nameOnSource>
-<nameOnTarget>être enseignée</nameOnTarget>
-<optionalSource>true</optionalSource>
-<optionalTarget>false</optionalTarget>
+<nameOnSource>peut lire</nameOnSource>
+<nameOnTarget>appartient a </nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
 <sourceCardinality>1</sourceCardinality>
 <sourceEntity>4DB59C3D-3C4F-EA06-50CC-4084A3D0DC47</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>
-<targetEntity>C679008A-2D41-F7DC-0CF5-72AD0D9256F1</targetEntity>
+<targetEntity>9B7DE7F6-2033-621F-C6E1-822CCEC2510D</targetEntity>
 <transferable>true</transferable>
 <deleteRule>NO ACTION</deleteRule>
 </Relation>

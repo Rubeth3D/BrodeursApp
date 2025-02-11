@@ -1,0 +1,114 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="031FFF8C-CF56-E524-0CEE-A988FE77C6EA" name="Resultat">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>9B7DE7F6-2033-621F-C6E1-822CCEC2510D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_resultat" id="85D2132C-C619-8289-4701-772BF5EEC6EC">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>94D85857-B380-FAEC-FD3A-65DA3B3C969C</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="note_evaluation" id="C01BF8C6-FD55-CC59-B32A-665BFCE3A6D7">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>B7CCB04C-91AD-B966-E922-B02443DBD129</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="justification_evaluation" id="144D4AEE-4460-BEF1-DD69-3E6710CA17DA">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>265911FE-E82D-B767-9867-8ADB44B11C3D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5000</dataTypeSize>
+<ownDataTypeParameters>5000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Evaluation_id_evaluation" id="35341AAF-FC8F-E6E3-6923-B2A8D2CBD18B">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>F0DD231A-CF15-E2D8-9485-E2C6965A03E1</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1526A409-CC8C-5983-AB8D-A3611C04A89F" referredColumn="1BDC215A-1341-C6EC-6F68-26B59B9D2296"/>
+</associations>
+</Column>
+<Column name="Professeur_id_professeur" id="343112B0-873E-2955-692A-20EF0076EA0F">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>41741745-E90A-5E54-733D-E6E6326B1C92</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="607C270E-1BAC-C45D-4658-DA28036E7929" referredColumn="6C33DCED-9DF4-F12C-A504-3A2B51BE2E6F"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="73B53B94-47FE-F9AD-2F3A-E27C54C7FCEE" name="Resultat_PK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>20248E59-DA2C-48AF-BC71-D197BEF323A9</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="85D2132C-C619-8289-4701-772BF5EEC6EC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C8575149-5B36-D9E1-90B8-C3CED3C14E9E" name="Resultat_Professeur_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>4162994C-EE6C-8586-85EE-58C72D59847D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="343112B0-873E-2955-692A-20EF0076EA0F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A60C768B-C893-37BD-CAE8-47374EF702B4" name="Resultat_Evaluation_FK">
+<createdBy>Arnaud</createdBy>
+<createdTime>2025-02-11 01:18:52 UTC</createdTime>
+<generatorID>DE55AC78-952D-CE27-1866-C8A248260014</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="35341AAF-FC8F-E6E3-6923-B2A8D2CBD18B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
