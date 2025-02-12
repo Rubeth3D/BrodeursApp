@@ -1,20 +1,26 @@
 import express from "express";
-import logger from "./logger.mjs";
+import cors from "cors";
+//import logger from "./logger.mjs";
+
+
+
+
+function main(){
 const app = express();
-
-const con = mysql.createConnection({
-  host: "localhost",
-  user: "scott",
-  password: "oracle",
-  database: "mybd",
-});
-
-// app.get("/",(req,res) =>{
-    
+app.use(cors());
+// const con = mysql.createConnection({
+//   host: "localhost",
+//   user: "scott",
+//   password: "oracle",
+//   database: "mybd",
 // });
 
-app.listen(8080, () => {
-    logger.log("info","Le serveur roule sur le port 8080");
-} 
 
-);
+
+app.listen(8080, () => {
+  console.log("Le serveur roule sur le port 8080");
+});
+
+}
+
+
