@@ -1,7 +1,24 @@
 import express from "express";
 import cors from "cors";
-//import logger from "./logger.mjs";
+import winston from "winston";
 
+
+
+
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.printf(({ timestamp, level, message }) => {
+          return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+      })
+  ),
+  transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: 'server.log' })
+  ]
+});
 
 
 
@@ -18,9 +35,9 @@ app.use(cors());
 
 
 app.listen(8080, () => {
-  console.log("Le serveur roule sur le port 8080");
+  logger.log("info","Le serveur roule sur le port 8080");
 });
 
 }
-
+main();
 
