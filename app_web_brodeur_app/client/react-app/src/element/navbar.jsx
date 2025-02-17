@@ -1,29 +1,28 @@
 function navbar() {
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-light">
-      <a href="#" className="navbar-brand mb-0">
-        Évaluation par les pairs
-      </a>
-
-      <div className="navbar navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <a href="#" className="nav-link">
-              Accueil
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="#" className="nav-link">
-              Cours
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a href="#" className="nav-link">
-              Connexion
-            </a>
-          </li>
-        </ul>
-      </div>
+    <nav className="navbar navbar-expand-md navbar-light bg-light">
+      <div className="container">
+        <a href="#" className="navbar-brand">
+          Évaluation par les pairs
+        </a>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a href="" className="nav-link active" aria-current="page">
+                Accueil
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="" className="nav-link active">
+                Cours
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="" className="nav-link active">
+                Connexion
+              </a>
+            </li>
+          </ul>
+        </div>
     </nav>
   );
 }
