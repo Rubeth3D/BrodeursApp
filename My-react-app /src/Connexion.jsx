@@ -2,9 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom"; {/* Source : https://api.reactrouter.com/v7/functions/react_router.Link.html */}
 
 function Connexion() {
+    const annee = new Date().getFullYear();
     return (
-        <div style={{ backgroundColor: "#F5F6F7", width: "100vw", height: "100vh" }}>
-            <nav style={{ backgroundColor: "#343A40", color: "white", padding: "10px", display: "flex", justifyContent: "space-between" }}>
+        <div style={{ backgroundColor: "#F5F6F7", width: "100vw", height: "100vh"}}>
+            <nav style={{ backgroundColor: "#343A40", color: "white", padding: "10px", display: "flex",justifyContent: "space-between" }}>
                 <span className="fw-bold mt-2">Évaluation par les pairs</span>
                 <div className="mt-2">
                     <Link to="/" className="text-white mx-1">Accueil</Link>
@@ -21,11 +22,11 @@ function Connexion() {
             <div className="border mx-auto mt-5 rounded" style={{ width: "30%", padding: "30px", backgroundColor: "white"}}> 
                 <form>
                     <div className="mb-3">      {/* Source : https://getbootstrap.com/docs/5.0/forms/form-control */}
-                        <label for="exampleInputNoIdentification" className="form-label">Numéro identification</label>
+                        <label htmlFor="exampleInputNoIdentification" className="form-label">Numéro identification</label>
                         <input type="number" className="form-control" id="NoIdentification"/>
                     </div>
                     <div className="mb-3 ">
-                        <label for="exampleInputPassword1" className="form-label">Mot de passe</label>
+                        <label htmlFor="exampleInputPassword1" className="form-label">Mot de passe</label>
                         <input type="password" className="form-control" id="exampleInputPassword1"/> 
                     </div>
                     <button type="submit" className="btn btn-primary">Se connecter</button> <br/>
@@ -34,6 +35,9 @@ function Connexion() {
                     </div>
                 </form>
             </div>
+            <footer className="text-white text-center mt-5" style={{backgroundColor: "#343A40", padding: "10px", position: "absolute", bottom: "0", width: "100%"}}> 
+                &copy; Évaluation par les pairs - {annee} 
+            </footer>
         </div>
     );
 }
