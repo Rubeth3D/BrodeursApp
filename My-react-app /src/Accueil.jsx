@@ -43,8 +43,8 @@ function Accueil() {
                 </div>
             </div>
 
-            <div className="border mx-auto mt-3 rounded" style={{ width: "50%", padding: "20px", backgroundColor: "white"}}>
-                <h5 className="text-center">FAQ - Question</h5><br></br>
+            <div className="border mx-auto mt-3 rounded" style={{ width: "60%", padding: "20px", backgroundColor: "white"}}>
+                <h5 className="text-center">FAQ</h5><br></br>
                 <div className="accordion" id="faqAccordion"> {/* Source : https://getbootstrap.com/docs/5.0/components/accordion/ */}
                     <div className="accordion-item">
                         <h2 className="accordion-header" id="headingOne">
@@ -54,9 +54,9 @@ function Accueil() {
                             </button>
                         </h2>
                         <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne">
-                            <div className="accordion-body, text-justify, mt-3, mx-3"> 
-                                Chaque étudiant évalue les membres de son équipe selon les critères donnés par l’enseignant,
-                                ce qui permet aux étudiants d’analyser la performance du travail d’équipe. 
+                            <div className="accordion-body, text-justify, mt-3, mx-3">
+                                <p style={{margin:"20px"}}>Chaque étudiant évalue les membres de son équipe selon les critères donnés par l’enseignant,
+                                ce qui permet aux étudiants d’analyser la performance du travail d’équipe.</p>  
                             </div>
                         </div>
                     </div>
