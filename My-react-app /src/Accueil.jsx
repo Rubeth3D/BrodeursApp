@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"; // Source : https://getbootstrap.com/docs/5.0/getting-started/introduction/ et ChatGpt
+import { Link } from "react-router-dom"; 
 
 function Accueil() {
     const annee = new Date().getFullYear(); // Source : https://www.w3schools.com/js/js_date_methods.asp
@@ -8,9 +9,9 @@ function Accueil() {
             <nav style={{ backgroundColor: "#343A40", color: "white", padding: "10px", display: "flex", justifyContent: "space-between"}}>
                 <span className="fw-bold mt-2"> Évaluation par les pairs</span> {/* Source : https://getbootstrap.com/docs/5.0/utilities/text/*/}
                 <div className="mt-2">
-                    <a href="#" className="text-white mx-1">Accueil</a>
-                    <a href="#" className="text-white mx-1">Cours</a>
-                    <a href="#" className="text-white mx-1">Connexion</a>
+                    <Link to="/" className="text-white mx-1">Accueil</Link>
+                    <Link to="/Cours" className="text-white mx-1">Cours</Link>
+                    <Link to="/Connexion" className="text-white mx-1">Connexion</Link>
                 </div>
             </nav>
 

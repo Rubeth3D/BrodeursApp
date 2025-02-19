@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom"; {/* Source : https://api.reactrouter.com/v7/functions/react_router.Link.html */}
 
 function Connexion() {
     return (
@@ -6,9 +7,9 @@ function Connexion() {
             <nav style={{ backgroundColor: "#343A40", color: "white", padding: "10px", display: "flex", justifyContent: "space-between" }}>
                 <span className="fw-bold mt-2">Évaluation par les pairs</span>
                 <div className="mt-2">
-                    <a href="#" className="text-white mx-1">Accueil</a>
-                    <a href="#" className="text-white mx-1">Cours</a>
-                    <a href="#" className="text-white mx-1">Connexion</a>
+                    <Link to="/" className="text-white mx-1">Accueil</Link>
+                    <Link to="/Cours" className="text-white mx-1">Cours</Link>
+                    <Link to="/Connexion" className="text-white mx-1">Connexion</Link>
                 </div>
             </nav>
 
