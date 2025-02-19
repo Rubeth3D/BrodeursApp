@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js";
+import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"; // Source : https://getbootstrap.com/docs/5.0/getting-started/introduction/ et ChatGpt
 
 function Accueil() {
     const annee = new Date().getFullYear(); // Source : https://www.w3schools.com/js/js_date_methods.asp
