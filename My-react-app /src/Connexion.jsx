@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom"; {/* Source : https://api.reactrouter.com/v7/functions/react_router.Link.html */}
-import Connexionjs from "./Connexion";
 
 function Connexion() {
     const annee = new Date().getFullYear();
@@ -28,9 +27,9 @@ function Connexion() {
                     </div>
                     <div className="mb-3 ">
                         <label htmlFor="exampleInputPassword1" className="form-label">Mot de passe</label>
-                        <input type="password" className="form-control" id="exampleInputPassword"/> 
+                        <input type="password" className="form-control" id="exampleInputPassword1"/> 
                     </div>
-                    <button type="submit" className="btn btn-primary" onClick={Connexionjs}>Se connecter</button> <br/>
+                    <button type="submit" className="btn btn-primary">Se connecter</button> <br/>
                     <div style={{margin: "10px", textAlign: "center"}}>
                         <p>Vous n'avez pas de compte ? <a href="#" className="text-center"> Inscription</a></p>
                     </div>
