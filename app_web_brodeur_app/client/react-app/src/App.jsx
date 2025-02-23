@@ -1,12 +1,10 @@
 import "bootstrap/dist/css/bootstrap.css";
-import Navbar from "./element/navbar";
-import Footer from "./element/footer";
+import Home from "./pages/Home/Home.jsx";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Footer />
+      <Home></Home>
     </>
   );
 }
