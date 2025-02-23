@@ -28,4 +28,18 @@ const logger = winston.createLogger({
   ],
 });
 
-app.get("/", async (req, res) => {});
+app.get("/cours", async (req, res) => {
+  try {
+    
+  } catch (error) {
+    logger.error(error.message);
+  }
+});
+
+app.get("/cours/:id", async (req,res) => {
+  try {
+    
+  } catch (error) {
+    logger.error(error);
+  }
+})
