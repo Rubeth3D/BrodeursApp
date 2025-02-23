@@ -35,7 +35,7 @@ function Connexion() {
           </div>
         </div>
         <div className="text-center mt-5">
-          <button className="btn btn-primary fs-3">Connecter</button>
+          <button className="btn btn-primary fs-3 mb-1">Connecter</button>
           <p>
             <a
               href="#"
