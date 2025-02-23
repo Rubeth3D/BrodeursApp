@@ -1,6 +1,6 @@
 function navbar() {
   return (
-    <nav className="navbar navbar-expand-md navbar-light bg-primary">
+    <nav className="navbar navbar-expand-md navbar-light bg-primary fixed-top">
       <div className="container">
         <a href="#" className="navbar-brand text-white">
           Évaluation par les pairs
