@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="mt5 mb-5">#</div>
+      <div className="mt5 mb-5"></div>
       <div className="container">
         <h2 className="text-center display-2 fw-normal text-wrap text-dark">
           Évaluation par les pairs
@@ -77,6 +77,7 @@ function Home() {
                 <p className="card-tittle mb-4 fw-normal fw-lighter fs-3">
                   Comment les évaluations par les pairs fonctionne ?
                 </p>
+
                 <p className="card-text text-wrap mb-4 fw-lighter ">
                   Cette plateforme permet à chaque étudiant d'évaluer ses
                   membres d'équipe lorsqu'ils effectuent un travail d'équipe.
