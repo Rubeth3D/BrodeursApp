@@ -7,7 +7,7 @@ function Home() {
       <Navbar></Navbar>
       <div className="mt5 mb-5">#</div>
       <div className="container">
-        <h2 className="text-center display-2 fw-normal text-wrap">
+        <h2 className="text-center display-2 fw-normal text-wrap text-dark">
           Évaluation par les pairs
         </h2>
         <h2 className="text-center mb-5 fs-4 fw-light text-wrap">
