@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import winston from "winston";
-
+import cours from "./r"
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -18,12 +18,7 @@ const logger = winston.createLogger({
 
 function main() {
   const app = express();
-  // const con = mysql.createConnection({
-  //   host: "localhost",
-  //   user: "scott",
-  //   password: "oracle",
-  //   database: "mybd",
-  // });
+
   app.listen(8080, () => {
     logger.info("Le serveur roule sur le port 8080");
   });
