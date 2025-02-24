@@ -98,12 +98,12 @@ function CreateAccount() {
           </div>
         </div>
         <div class="d-flex justify-content-center align-items-center mt-2">
-          <button className="btn btn-primary mt-5">
+          <button className="btn btn-primary mt-5 mb-5">
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
         </div>
+        <h2 className="mb-5"></h2>
       </div>
-
       <Footer></Footer>
     </>
   );
