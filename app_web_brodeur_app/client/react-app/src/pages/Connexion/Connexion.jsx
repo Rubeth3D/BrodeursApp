@@ -27,7 +27,7 @@ function Connexion() {
                 Mot de passe
               </label>
               <input
-                type="text"
+                type="password"
                 className="form-control form-control-lg "
                 placeholder="Entrer Mot de passe"
                 id="inputMotDePasse"
