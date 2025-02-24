@@ -24,7 +24,7 @@ Routeur.use(cors());
 Routeur.use(express());
 
 //get en tableau
-Routeur.get("/cours", async (req, res) => {
+Routeur.get("/", async (req, res) => {
   try {
     const cours = await client.query("SELECT * FROM cours");
     logger.info("Get des cours effectue avec succes");
@@ -38,7 +38,7 @@ Routeur.get("/cours", async (req, res) => {
   }
 });
 //get avec le id
-Routeur.get("/cours/:idCours", async (req, res) => {
+Routeur.get("/:idCours", async (req, res) => {
   try {
     const { idCours } = req.params.id;
     const cours = await client.query(
@@ -54,7 +54,7 @@ Routeur.get("/cours/:idCours", async (req, res) => {
   }
 });
 //post un cours
-Routeur.post("/cours", async (req, res) => {
+Routeur.post("/", async (req, res) => {
   try {
     const {
       id_cours,
@@ -81,7 +81,7 @@ Routeur.post("/cours", async (req, res) => {
 });
 
 //update un cours
-Routeur.put("/cours/:idCours", async (req, res) => {
+Routeur.put("/:idCours", async (req, res) => {
   try {
     const { idCours } = req.params.id;
     const { code_cours, description_cours, etat_cours, session_id_session } =
@@ -102,7 +102,7 @@ Routeur.put("/cours/:idCours", async (req, res) => {
 });
 
 //delete un cours
-Routeur.delete("/cours/:idCours", async (req, res) => {
+Routeur.delete("/:idCours", async (req, res) => {
   try {
     const idCours = req.params.id;
     const coursDelete = client.query("DELETE cours WHERE id = $1", [idCours]);
