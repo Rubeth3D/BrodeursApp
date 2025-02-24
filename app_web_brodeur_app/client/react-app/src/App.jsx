@@ -1,12 +1,22 @@
 import "bootstrap/dist/css/bootstrap.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home.jsx";
 import Connexion from "./pages/Connexion/Connexion.jsx";
+import NotfoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import CreateAccount from "./pages/CreateAccount/CreateAccount.jsx";
+
+const router = createBrowserRouter([
+  {path:"/", element: <App></App>},
+  {path:"/Home", element:<Home></Home>},
+  {path:"/Connexion", element: <Connexion/>},
+  {path:"/Connexion/CreateAccount", element: <CreateAccount/> },
+  {path:"*", element: <NotfoundPage />}
+]);
 
 function App() {
   return (
     <>
-    <Home></Home>
+    <RouterProvider router={router}/>
     </>
   );
 }
