@@ -1,5 +1,6 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
+import {Link} from "react-router-dom";
 
 function CreateAccount() {
   return (
@@ -7,6 +8,7 @@ function CreateAccount() {
       <Navbar></Navbar>
       <h2 className=" mb-5"></h2>
       <div className="container">
+        <Link to={"/Connexion"}>
         <button className="btn btn-primary m-5">
           <h2 className="text-center fs-6 m-0">
             <svg
@@ -25,6 +27,7 @@ function CreateAccount() {
             Retour
           </h2>
         </button>
+        </Link>
         <h2 className="text-center display-3 fw-normal mb-5">Inscription</h2>
         <div className="row justify-content-center">
           <div className="col-4 mb-5">

@@ -1,13 +1,14 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
+import {Link} from "react-router-dom";
 
 function Connexion() {
   return (
     <>
       <Navbar></Navbar>
-      <h2 className=" mb-5"></h2>
+      <div className=" mb-5"></div>
       <div className="container">
-        <h2 className="text-center mt-5 display-3 fw-normal">Connexion</h2>
+        <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
           <div className="col-4">
             <div className="form-group mb-5">
@@ -37,12 +38,11 @@ function Connexion() {
         <div className="text-center mt-5">
           <button className="btn btn-primary fs-3 mb-1">Connecter</button>
           <p>
-            <a
-              href="#"
+            <Link to={"/Connexion/CreateAccount"}
               className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
             >
               Inscription
-            </a>
+            </Link>
           </p>
         </div>
       </div>

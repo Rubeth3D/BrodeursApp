@@ -1,29 +1,30 @@
+import {Link} from "react-router-dom";
+
 function navbar() {
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-primary sticky-top">
       <div className="container">
-        <a href="#" className="navbar-brand text-white">
+        <Link to={"/Home"} className="navbar-brand text-white">
           Évaluation par les pairs
-        </a>
+        </Link>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a
-              href=""
+            <Link to={"/Home"}
               className="nav-link active text-white"
               aria-current="page"
             >
               Accueil
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="" className="nav-link active text-white">
+            <Link to={"/Cours"} className="nav-link active text-white disabled" >
               Cours
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="" className="nav-link active text-white">
+            <Link to={"/Connexion"}className="nav-link active text-white">
               Connexion
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

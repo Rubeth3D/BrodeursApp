@@ -6,7 +6,7 @@ import CreateAccount from "./pages/CreateAccount/CreateAccount.jsx";
 function App() {
   return (
     <>
-     <Connexion></Connexion>
+    <Home></Home>
     </>
   );
 }
