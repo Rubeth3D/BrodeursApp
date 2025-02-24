@@ -42,10 +42,12 @@ select * from etudiant_classe;
 INSERT INTO etudiant_classe (etudiant_id_etudiant, classe_id_classe) VALUES
 (2, 4);
 
-INSERT INTO evaluation (travail_id_travail, id_evaluation, etudiant_id_etudiant2, date_evaluation, instrument_id_instrument, equipe_id_equipe, code_evaluation, description, classe_id_classe, evaluation_terminee, etat_evaluation)
-values 
+INSERT INTO evaluation (travail_id_travail, etudiant_id_etudiant, etudiant_id_etudiant2, date_evaluation, instrument_id_instrument, equipe_id_equipe, code_evaluation, description, classe_id_classe, evaluation_terminee, etat_evaluation)
+VALUES (1,1, '2025-02-24', 1, 1, 'EV001', 'Evaluation1', 1, 'T', 'T');
 
 
+
+select * from evaluation;
 
 INSERT INTO travail (code_travail, nom_travail, date_travail, classe_id_classe, etat_travail)
 VALUES ('T001', 'lab1', '2025-02-24', 5, 'T');
@@ -57,6 +59,19 @@ VALUES (2, 'INS001', 'Eval-01', 10,'T');
 
 select * from instrument;
 
+select * from equipe;
 
+INSERT INTO equipe(id_equipe, code_equipe, nom, classe_id_classe, etat_equipe) 
+VALUES (1, 'equipe001', 'equipe1', 5, 'T');
+
+INSERT INTO evaluation (travail_id_travail, etudiant_id_etudiant, etudiant_id_etudiant2, date_evaluation, instrument_id_instrument, equipe_id_equipe, code_evaluation, description, classe_id_classe, evaluation_terminee, etat_evaluation) 
+VALUES (1, 1, 2, '2025-02-24', 1, 1, 'Eval001', 'Evaluation1', 5, 'T', 'T');
 
 select * from evaluation;
+
+select * from niveau_performance;
+
+select * from critere;
+
+insert into critere(instrument_id_instrument,code_critere,description,valeur,etat_critere)
+values (1,'code1','Les critères eval',10,'T');
