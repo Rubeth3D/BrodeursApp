@@ -18,13 +18,13 @@ const logger = winston.createLogger({
   ],
 });
 
-const { Routeur } = express();
+const Router = express.Router();
 
-Routeur.use(cors());
-Routeur.use(express());
+Router.use(cors());
+Router.use(express());
 
 //get en tableau
-Routeur.get("/", async (req, res) => {
+Router.get("/", async (req, res) => {
   try {
     const cours = await client.query("SELECT * FROM cours");
     logger.info("Get des cours effectue avec succes");
@@ -38,7 +38,7 @@ Routeur.get("/", async (req, res) => {
   }
 });
 //get avec le id
-Routeur.get("/:idCours", async (req, res) => {
+Router.get("/:idCours", async (req, res) => {
   try {
     const { idCours } = req.params.id;
     const cours = await client.query(
@@ -54,7 +54,7 @@ Routeur.get("/:idCours", async (req, res) => {
   }
 });
 //post un cours
-Routeur.post("/", async (req, res) => {
+Router.post("/", async (req, res) => {
   try {
     const {
       id_cours,
@@ -71,7 +71,7 @@ Routeur.post("/", async (req, res) => {
 
     logger.info("Insert effectue avec succes");
     logger.info(`Nouveau Cours : ${requete.rows}`);
-    res.status(res.StatusCode).json({ message: "Cours inserre avec succes!" });
+    res.status(res.StatusCode).json({ message: "Cours insere avec succes!" });
   } catch (error) {
     logger.error(error);
     res
@@ -81,7 +81,7 @@ Routeur.post("/", async (req, res) => {
 });
 
 //update un cours
-Routeur.put("/:idCours", async (req, res) => {
+Router.put("/:idCours", async (req, res) => {
   try {
     const { idCours } = req.params.id;
     const { code_cours, description_cours, etat_cours, session_id_session } =
@@ -102,7 +102,7 @@ Routeur.put("/:idCours", async (req, res) => {
 });
 
 //delete un cours
-Routeur.delete("/:idCours", async (req, res) => {
+Router.delete("/:idCours", async (req, res) => {
   try {
     const idCours = req.params.id;
     const coursDelete = client.query("DELETE cours WHERE id = $1", [idCours]);
@@ -115,8 +115,6 @@ Routeur.delete("/:idCours", async (req, res) => {
   }
 });
 
-Routeur.listen(3000, () => {
-  logger.info("Le serveur roule sur le port 3000");
-});
 
-export default Routeur;
+
+export default Router;
