@@ -1,10 +1,7 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "bootstrap": "^5.3.3",
-    "express": "^4.21.2"
-=======
-    "bootstrap": "^5.3.3"
->>>>>>> FrontEndDeveloppement
+    "express": "^4.21.2",
+    "react": "^19.0.0"
   }
 }
