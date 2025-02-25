@@ -87,7 +87,7 @@ Router.put("/:idCours", async (req, res) => {
     const { code_cours, description_cours, etat_cours, session_id_session } =
       req.body;
     const coursUpdate = client.query(
-      "UPDATE cours SET code_cours = 1$, description_cours = 2$, etat_cours = 3$, session_id_session = 4$ WHERE id_cours = $5",
+      "UPDATE cours SET code_cours = $1, description_cours = $2, etat_cours = $3, session_id_session = $4 WHERE id_cours = $5",
       [code_cours, description_cours, etat_cours, session_id_session, idCours]
     );
     res
