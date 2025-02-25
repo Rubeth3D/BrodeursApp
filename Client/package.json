@@ -10,7 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD:Client/package.json
     "bootstrap": "^5.3.3",
+=======
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "popper": "^1.0.1",
+>>>>>>> FrontEndDeveloppement:app_web_brodeur_app/client/react-app/package.json
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0"
