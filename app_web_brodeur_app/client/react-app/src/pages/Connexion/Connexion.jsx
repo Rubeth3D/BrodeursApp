@@ -1,6 +1,6 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Connexion() {
   return (
@@ -38,7 +38,8 @@ function Connexion() {
         <div className="text-center mt-5">
           <button className="btn btn-primary fs-3 mb-1">Connecter</button>
           <p>
-            <Link to={"/Connexion/CreateAccount"}
+            <Link
+              to={"/Connexion/CreateAccount"}
               className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
             >
               Inscription

@@ -12,7 +12,6 @@ const router = createBrowserRouter([
   { path: "/Connexion/CreateAccount", element: <CreateAccount /> },
   { path: "*", element: <NotfoundPage /> },
 ]);
-
 function App() {
   return (
     <>
