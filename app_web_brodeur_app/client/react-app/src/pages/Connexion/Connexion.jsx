@@ -15,12 +15,14 @@ function Connexion() {
               <label for="numero" className="fw-bold fs-4">
                 Numéro d'identification
               </label>
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Entrer Numéro d'identification"
-                id="inputNumeroIdentification"
-              />
+              <div class="input-group">
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Entrer Numéro d'identification"
+                  id="inputNumeroIdentification"
+                />
+              </div>
             </div>
             <div className="form-group">
               <label for="numero" className="fw-bold fs-4">
