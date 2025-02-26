@@ -8,7 +8,7 @@ function Cours() {
     <>
       <Navbar />
       <div>
-
+        <h2>je suis rasciste</h2>
       </div>
       <Footer />
     </>
