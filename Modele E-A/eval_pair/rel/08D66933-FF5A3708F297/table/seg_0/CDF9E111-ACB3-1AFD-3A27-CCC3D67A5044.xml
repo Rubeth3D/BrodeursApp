@@ -49,7 +49,7 @@
 <colAssociation fkAssociation="EE3D740C-9E98-3364-747A-9345C391B109" referredColumn="8F38F039-B2D1-10B2-4742-37F16C867995"/>
 </associations>
 </Column>
-<Column name="Etudiant_id_etudiant2" id="2F914665-71C7-057F-F101-D0F172970895">
+<Column name="Etudiant_id_etudiant1" id="2F914665-71C7-057F-F101-D0F172970895">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:46:50 UTC</createdTime>
 <generatorID>4C045969-F130-38E9-A0DE-C4F7C5002F93</generatorID>
@@ -170,6 +170,21 @@
 <ownDataTypeParameters>5000,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="Instrument_id_instrument" id="88E66DA7-6EDF-75C3-4CF7-1F1A93A6BFAA">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>907C3ACD-2CA7-D284-0C67-F349BDFC71BA</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="459DF5CE-2BE6-6C51-8DB5-3DEE9716E538" referredColumn="ABEB2225-419F-1698-505E-2D5A2EF22DCE"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="823ABACB-739E-66E3-250C-3C671F3DEF6A" name="Evaluation_PK">
@@ -217,7 +232,7 @@
 <colUsage columnID="D364451F-08A5-7C6D-35D9-D8B050904B15"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="9BFF1994-48C5-36E5-CE1D-D645281853EB" name="Evaluation_Etudiant_FKv2">
+<ind_PK_UK id="9BFF1994-48C5-36E5-CE1D-D645281853EB" name="Evaluation_Etudiant_FKv1">
 <createdBy>jifbrodeur</createdBy>
 <createdTime>2024-10-11 15:46:50 UTC</createdTime>
 <generatorID>7275BC6A-081F-9531-2C4F-BA122512432D</generatorID>
@@ -259,6 +274,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="8EC7C7E2-8B6D-FC62-9C2A-E6B217BF5EC9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="17278E6B-22C2-63DB-2B54-C61881CE9146" name="Evaluation_Instrument_FK">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>7A3F6A55-8022-54C3-B281-7BC02C0751F2</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="88E66DA7-6EDF-75C3-4CF7-1F1A93A6BFAA"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

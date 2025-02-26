@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5882093E-079D-8E44-C5EE-305911AC14EC" name="Utilisateur">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>BEA0F93F-C3C6-E652-F12F-33E8C5475730</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_utilisateur" id="D38152F9-0D72-FB1D-59E7-9387CCAFFD42">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>BE7CF122-B0D6-D273-4284-977C11AA6979</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Nom_utilisateur" id="A5527C29-5F7A-5E75-55FF-FE45424C6309">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>F1A1033B-B2D3-70B5-0A24-9E4D188F763E</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Courriel" id="1E1367B9-3E2B-F595-F825-386CAB96992A">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>E44729B2-E449-CEE6-40A7-341CB824AD4D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Mot_de_passe" id="BFB8FEEC-1DF8-08C9-5A50-44E71DD27547">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>D9D8527C-119B-C79B-CA9F-0201CE4E96B9</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Type_utilisateur" id="10E979ED-7946-2A9A-3409-BC9AB7BBE0E4">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>D0147DEC-7F72-C78A-E495-6D684560A3C4</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B1D7200C-C9C5-F286-1334-B1D1CC3A5561" name="Utilisateur_PK">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>1D179DCA-5388-8F48-7F73-B9DD74FD6B2B</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D38152F9-0D72-FB1D-59E7-9387CCAFFD42"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

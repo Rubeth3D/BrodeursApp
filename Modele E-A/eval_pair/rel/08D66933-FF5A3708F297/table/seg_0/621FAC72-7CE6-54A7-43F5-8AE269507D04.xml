@@ -56,6 +56,9 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A7B07AE5-E415-1B33-4C03-3E008BE5E657" referredColumn="ABEB2225-419F-1698-505E-2D5A2EF22DCE"/>
+</associations>
 </Column>
 <Column name="date_cloture" id="FA2D8856-EE57-FBD8-A790-758BDE072993">
 <createdBy>jifbrodeur</createdBy>
@@ -69,7 +72,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 <isRelationshipColumn>true</isRelationshipColumn>
-<dependOnForeignKeyID>BC62FE45-71F6-5F65-A8B5-B1583E4AA9EC</dependOnForeignKeyID>
+<dependOnForeignKeyID>A7B07AE5-E415-1B33-4C03-3E008BE5E657</dependOnForeignKeyID>
 </Column>
 <Column name="date_travail" id="7A350676-65CF-F6FC-DCD5-A3A09712B75F">
 <createdBy>Arnaud</createdBy>
@@ -121,6 +124,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="83150BEF-6AF8-4503-F2EA-3AC12EEE9CC4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E7DCE264-E22A-AFD9-0B36-73F363DE7EF2" name="Travail_Instrument_FK">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>195F7118-2834-9843-8BEF-4C21BDC2404D</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="174F9D1B-2B28-2B23-34FA-852A2DE7DC31"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

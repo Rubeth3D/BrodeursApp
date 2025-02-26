@@ -65,6 +65,20 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="id_utilisateur" id="FAAB0D8A-EDA3-5458-5871-D0AB9CFFF82F">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:22:43 UTC</createdTime>
+<generatorID>4ABFD765-BF86-9E88-4181-8F559EEE565B</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<referedAttribute>BE7CF122-B0D6-D273-4284-977C11AA6979</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="F1C89D3D-A7AA-5C7A-3B44-BAB74C76EE17" name="Professeur PK">
