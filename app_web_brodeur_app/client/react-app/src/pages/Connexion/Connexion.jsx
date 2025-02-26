@@ -6,6 +6,7 @@ function Connexion() {
   return (
     <>
       <Navbar></Navbar>
+      <form>
       <div className=" mb-5"></div>
       <div className="container">
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
@@ -49,6 +50,7 @@ function Connexion() {
           </p>
         </div>
       </div>
+      </form>
       <Footer></Footer>
     </>
   );
