@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
 import winston from "winston";
 import client from "../bd/connexion.js";
@@ -23,31 +23,18 @@ const Router = express.Router();
 Router.use(cors());
 Router.use(express());
 
-//get en tableau
-Router.get("/", async (req, res) => {
-  try {
-    const cours = await client.query("SELECT * FROM cours");
-    logger.info("Get des cours effectue avec succes");
-    res.json(descriptionTables.rows);
-    res.status(res.StatusCode);
-  } catch (err) {
-    logger.error(`ERROR GET COURS SANS ID : ${err}`);
-    res
-      .status(res.StatusCode)
-      .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
-  }
-});
+
 //get avec le id
 Router.get("/:idCours", async (req, res) => {
   try {
-    const { idCours } = req.params.id;
+    const { idCours } = req.params;
     const cours = await client.query(
       "SELECT * FROM cours WHERE id_cours = $1",
-      [id_cours]
+      [idCours]
     );
     logger.info("Get du cours effectue avec succes");
     res.json(cours.rows);
-    res.status(res.StatusCode);
+    res.status(cours.StatusCode);
   } catch (err) {
     logger.error(`ERROR GET COURS : ${err}`);
     res.status(res.StatusCode);

@@ -5,7 +5,7 @@ const client = new Client({
   user: "postgres",
   password: "oracle",
   host: "localhost",
-  port: 5432,
+  port: 5000,
 });
 
 const logger = winston.createLogger({
