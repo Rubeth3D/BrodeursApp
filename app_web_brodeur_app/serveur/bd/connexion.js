@@ -24,7 +24,7 @@ const logger = winston.createLogger({
 
 client
   .connect()
-  .then(() => logger.log("Connecté à la base de données"))
+  .then(() => logger.info("Connecté à la base de données"))
   .catch((err) => logger.error(err));
 
 export default client;
