@@ -20,7 +20,7 @@ function main() {
   const app = express();
   app.use("/cours", cours);
   app.listen(8080, () => {
-    logger.info("Le serveur roule sur ");
+    logger.info("Le serveur roule sur l'adresse http//localhost:8080");
   });
 }
 main();
