@@ -3,7 +3,7 @@ import cors from "cors";
 import winston from "winston";
 import client from "../bd/connexion.js";
 
-//logger winston setup
+// Logger setup with winston
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -18,105 +18,101 @@ const logger = winston.createLogger({
   ],
 });
 
-const { Routeur } = express();
+const router = express.Router();
 
-Routeur.use(cors());
-Routeur.use(express());
+// Middleware to parse JSON requests
+router.use(express.json());
 
-//get en tableau
-Routeur.get("/", async (req, res) => {
+// GET all courses
+router.get("/", async (req, res) => {
   try {
-    const cours = await client.query("SELECT * FROM cours");
+    const result = await client.query("SELECT * FROM cours");
     logger.info("Get des cours effectue avec succes");
-    res.json(descriptionTables.rows);
-    res.status(res.StatusCode);
+    res.status(200).json(result.rows); // Ensure you're using the correct variable for the query result
   } catch (error) {
     logger.error(error.message);
-    res
-      .status(res.StatusCode)
-      .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
+    res.status(500).json({ message: "Il y a eu une erreur de type 500" });
   }
 });
-//get avec le id
-Routeur.get("/:idCours", async (req, res) => {
+
+// GET course by ID
+router.get("/:idCours", async (req, res) => {
   try {
-    const { idCours } = req.params.id;
-    const cours = await client.query(
+    const { idCours } = req.params; // Correctly access the param
+    const result = await client.query(
       "SELECT * FROM cours WHERE id_cours = $1",
-      [id_cours]
+      [idCours]
     );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Cours non trouvé" });
+    }
     logger.info("Get du cours effectue avec succes");
-    res.json(cours.rows);
-    res.status(res.StatusCode);
+    res.status(200).json(result.rows);
   } catch (error) {
     logger.error(error);
-    res.status(res.StatusCode);
-  }
-});
-//post un cours
-Routeur.post("/", async (req, res) => {
-  try {
-    const {
-      id_cours,
-      code_cours,
-      description_cours,
-      etat_cours,
-      session_id_session,
-    } = req.body;
-    logger.info(req.body.rows);
-    const nouveauCours = await client.query(
-      "INSERT INTO cours (id_cours, code_cours, description_cours, etat_cours, session_id_session) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-      [id_cours, code_cours, description_cours, etat_cours, session_id_session]
-    );
-
-    logger.info("Insert effectue avec succes");
-    logger.info(`Nouveau Cours : ${requete.rows}`);
-    res.status(res.StatusCode).json({ message: "Cours inserre avec succes!" });
-  } catch (error) {
-    logger.error(error);
-    res
-      .status(res.StatusCode)
-      .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
+    res.status(500).json({ message: "Erreur de serveur" });
   }
 });
 
-//update un cours
-Routeur.put("/:idCours", async (req, res) => {
+// POST new course
+router.post("/", async (req, res) => {
   try {
-    const { idCours } = req.params.id;
     const { code_cours, description_cours, etat_cours, session_id_session } =
       req.body;
-    const coursUpdate = client.query(
-      "UPDATE cours SET code_cours = 1$, description_cours = 2$, etat_cours = 3$, session_id_session = 4$ WHERE id_cours = $5",
+    const result = await client.query(
+      "INSERT INTO cours (code_cours, description_cours, etat_cours, session_id_session) VALUES ($1, $2, $3, $4) RETURNING *",
+      [code_cours, description_cours, etat_cours, session_id_session]
+    );
+    logger.info("Cours inséré avec succès");
+    res
+      .status(201)
+      .json({ message: "Cours inséré avec succès!", cours: result.rows[0] });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ message: "Erreur lors de l'insertion du cours" });
+  }
+});
+
+// PUT update a course
+router.put("/:idCours", async (req, res) => {
+  try {
+    const { idCours } = req.params;
+    const { code_cours, description_cours, etat_cours, session_id_session } =
+      req.body;
+    const result = await client.query(
+      "UPDATE cours SET code_cours = $1, description_cours = $2, etat_cours = $3, session_id_session = $4 WHERE id_cours = $5 RETURNING *",
       [code_cours, description_cours, etat_cours, session_id_session, idCours]
     );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Cours non trouvé" });
+    }
+    logger.info("Cours mis à jour avec succès");
     res
-      .status(res.StatusCode)
-      .json({ message: "Cours mis a jour avec succes !" });
-  } catch (err) {
-    logger.error(err);
-    res
-      .status(res.StatusCode)
-      .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
+      .status(200)
+      .json({ message: "Cours mis à jour avec succès", cours: result.rows[0] });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ message: "Erreur de mise à jour du cours" });
   }
 });
 
-//delete un cours
-Routeur.delete("/:idCours", async (req, res) => {
+// DELETE a course
+router.delete("/:idCours", async (req, res) => {
   try {
-    const idCours = req.params.id;
-    const coursDelete = client.query("DELETE cours WHERE id = $1", [idCours]);
-    res.status().json({ message: "Cours mis a jour avec succes !" });
-  } catch (err) {
-    logger.info(err);
-    res
-      .status(res.StatusCode)
-      .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
+    const { idCours } = req.params;
+    const result = await client.query(
+      "DELETE FROM cours WHERE id_cours = $1 RETURNING *",
+      [idCours]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Cours non trouvé" });
+    }
+    logger.info("Cours supprimé avec succès");
+    res.status(200).json({ message: "Cours supprimé avec succès" });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ message: "Erreur de suppression du cours" });
   }
 });
 
-Routeur.listen(3000, () => {
-  logger.info("Le serveur roule sur le port 3000");
-});
-
-export default Routeur;
+export default router;
