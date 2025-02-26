@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import winston from "winston";
-import cours from "../routes/cours.js"
+import cours from "../routes/cours.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -18,9 +18,9 @@ const logger = winston.createLogger({
 
 function main() {
   const app = express();
-  app.use("/cours",cours);
+  app.use("/cours", cours);
   app.listen(8080, () => {
-    logger.info("Le serveur roule sur le port 8080");
+    logger.info("Le serveur roule sur ");
   });
 }
 main();

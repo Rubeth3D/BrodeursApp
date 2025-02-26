@@ -30,8 +30,8 @@ Router.get("/", async (req, res) => {
     logger.info("Get des cours effectue avec succes");
     res.json(descriptionTables.rows);
     res.status(res.StatusCode);
-  } catch (error) {
-    logger.error(error.message);
+  } catch (err) {
+    logger.error(`ERROR GET COURS SANS ID : ${err}`);
     res
       .status(res.StatusCode)
       .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
@@ -48,8 +48,8 @@ Router.get("/:idCours", async (req, res) => {
     logger.info("Get du cours effectue avec succes");
     res.json(cours.rows);
     res.status(res.StatusCode);
-  } catch (error) {
-    logger.error(error);
+  } catch (err) {
+    logger.error(`ERROR GET COURS : ${err}`);
     res.status(res.StatusCode);
   }
 });
@@ -72,8 +72,8 @@ Router.post("/", async (req, res) => {
     logger.info("Insert effectue avec succes");
     logger.info(`Nouveau Cours : ${requete.rows}`);
     res.status(res.StatusCode).json({ message: "Cours insere avec succes!" });
-  } catch (error) {
-    logger.error(error);
+  } catch (err) {
+    logger.error(`ERROR POST COURS : ${err}`);
     res
       .status(res.StatusCode)
       .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
@@ -94,7 +94,7 @@ Router.put("/:idCours", async (req, res) => {
       .status(res.StatusCode)
       .json({ message: "Cours mis a jour avec succes !" });
   } catch (err) {
-    logger.error(err);
+    logger.error(`ERREUR PUT COURS : ${err}`);
     res
       .status(res.StatusCode)
       .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
@@ -108,13 +108,11 @@ Router.delete("/:idCours", async (req, res) => {
     const coursDelete = client.query("DELETE cours WHERE id = $1", [idCours]);
     res.status().json({ message: "Cours mis a jour avec succes !" });
   } catch (err) {
-    logger.info(err);
+    logger.error(` ERREUR DELETE COURS  : ${err}`);
     res
       .status(res.StatusCode)
       .json({ message: `Il y a eu une erreur de type ${res.StatusCode}` });
   }
 });
-
-
 
 export default Router;
