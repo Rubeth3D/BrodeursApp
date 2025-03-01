@@ -1,0 +1,141 @@
+-- Création des tables pour PostgreSQL
+
+CREATE TABLE session (
+    id_session SERIAL PRIMARY KEY,
+    code_session VARCHAR(200),
+    date_session DATE,
+    etat_session INTEGER
+);
+
+CREATE TABLE utilisateur (
+    id_user SERIAL PRIMARY KEY,
+    nom_user VARCHAR(200) NOT NULL,
+    mot_de_passe VARCHAR(200) NOT NULL,
+    email VARCHAR(200) NOT NULL,
+    type_utilisateur CHAR(1),
+    etat_utilisateur INTEGER
+);
+
+CREATE TABLE professeur (
+    id_professeur SERIAL PRIMARY KEY,
+    nom_complet VARCHAR(200) NOT NULL,
+    etat_professeur INTEGER,
+    utilisateur_id_user INTEGER NOT NULL UNIQUE REFERENCES utilisateur(id_user)
+);
+
+CREATE TABLE cours (
+    id_cours SERIAL PRIMARY KEY,
+    code_cours VARCHAR(200),
+    description_cours VARCHAR(2000),
+    etat_cours INTEGER,
+    session_id_session INTEGER NOT NULL REFERENCES session(id_session)
+);
+
+CREATE TABLE classe (
+    id_classe SERIAL PRIMARY KEY,
+    code_cours VARCHAR(200),
+    description VARCHAR(2000),
+    session VARCHAR(20),
+    groupe INTEGER,
+    professeur_id_professeur INTEGER NOT NULL REFERENCES professeur(id_professeur),
+    cours_id_cours INTEGER NOT NULL REFERENCES cours(id_cours),
+    etat_classe INTEGER
+);
+
+CREATE TABLE equipe (
+    id_equipe SERIAL PRIMARY KEY,
+    code_equipe VARCHAR(200),
+    nom VARCHAR(200),
+    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
+    etat_equipe INTEGER
+);
+
+CREATE TABLE etudiant (
+    id_etudiant SERIAL PRIMARY KEY,
+    nom_complet VARCHAR(200),
+    etat_etudiant INTEGER,
+    utilisateur_id_user INTEGER NOT NULL UNIQUE REFERENCES utilisateur(id_user),
+    equipe_id_equipe INTEGER REFERENCES equipe(id_equipe)
+);
+
+CREATE TABLE etudiant_classe (
+    etudiant_id_etudiant INTEGER NOT NULL REFERENCES etudiant(id_etudiant),
+    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
+    PRIMARY KEY (etudiant_id_etudiant, classe_id_classe)
+);
+
+CREATE TABLE instrument (
+    id_instrument SERIAL PRIMARY KEY,
+    code_instrument VARCHAR(200),
+    nom VARCHAR(2000) NOT NULL,
+    sur_denominateur INTEGER,
+    etat_instrument INTEGER,
+    professeur_id_professeur INTEGER NOT NULL REFERENCES professeur(id_professeur)
+);
+
+CREATE TABLE critere (
+    id_critere SERIAL PRIMARY KEY,
+    instrument_id_instrument INTEGER NOT NULL REFERENCES instrument(id_instrument),
+    code_critere VARCHAR(200),
+    description VARCHAR(2000),
+    valeur INTEGER,
+    etat_critere INTEGER
+);
+
+CREATE TABLE niveau_performance (
+    id_niveau SERIAL PRIMARY KEY,
+    critere_id_critere INTEGER NOT NULL REFERENCES critere(id_critere),
+    code_niveau VARCHAR(200),
+    description VARCHAR(2000),
+    niveau INTEGER,
+    afficher_note CHAR(1) NOT NULL,
+    etat_niveauperformance INTEGER
+);
+
+CREATE TABLE travail (
+    id_travail SERIAL PRIMARY KEY,
+    code_travail VARCHAR(200),
+    nom_travail VARCHAR(200),
+    instrument_id_instrument INTEGER REFERENCES instrument(id_instrument),
+    date_cloture DATE,
+    date_travail DATE,
+    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
+    etat_travail INTEGER
+);
+
+CREATE TABLE assignation (
+    id_assignation SERIAL PRIMARY KEY,
+    travail_id_travail INTEGER NOT NULL REFERENCES travail(id_travail),
+    equipe_id_equipe INTEGER NOT NULL REFERENCES equipe(id_equipe)
+);
+
+CREATE TABLE evaluation (
+    id_evaluation SERIAL PRIMARY KEY,
+    travail_id_travail INTEGER NOT NULL REFERENCES travail(id_travail),
+    etudiant_id_etudiant INTEGER NOT NULL REFERENCES etudiant(id_etudiant),
+    etudiant_id_etudiant2 INTEGER NOT NULL REFERENCES etudiant(id_etudiant),
+    date_evaluation DATE,
+    instrument_id_instrument INTEGER NOT NULL REFERENCES instrument(id_instrument),
+    equipe_id_equipe INTEGER NOT NULL REFERENCES equipe(id_equipe),
+    code_evaluation VARCHAR(200),
+    description VARCHAR(2000),
+    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
+    evaluation_terminee INTEGER,
+    etat_evaluation INTEGER
+);
+
+CREATE TABLE reponse (
+    id_reponse SERIAL PRIMARY KEY,
+    evaluation_id_evaluation INTEGER NOT NULL REFERENCES evaluation(id_evaluation),
+    note INTEGER,
+    commentaire VARCHAR(2000),
+    niveau_performance_id_niveau INTEGER NOT NULL REFERENCES niveau_performance(id_niveau),
+    etat_reponse INTEGER
+);
+
+-- Ajout des index
+
+CREATE INDEX idx_equipe_classe ON equipe (classe_id_classe);
+CREATE INDEX idx_etudiant_utilisateur ON etudiant (utilisateur_id_user);
+CREATE INDEX idx_niveau_performance_critere ON niveau_performance (critere_id_critere);
+CREATE INDEX idx_reponse_niveau_performance ON reponse (niveau_performance_id_niveau);
