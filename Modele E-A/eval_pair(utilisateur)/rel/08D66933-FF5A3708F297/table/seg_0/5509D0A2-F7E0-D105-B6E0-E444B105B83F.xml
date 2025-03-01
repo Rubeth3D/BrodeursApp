@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5509D0A2-F7E0-D105-B6E0-E444B105B83F" name="Cours">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>4E1C5C9F-AE8C-0E87-AC35-7E5005FA34B5</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_cours" id="26CF48FF-A2DA-63E9-079D-74D44F353F2B">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>7E672000-C735-C729-C8F3-123EBA8A8B44</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="code_cours" id="95601F3B-DCAB-C4D6-53CE-A0AE5935540B">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>EE1A4786-CA47-B846-B238-1C3B56753128</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description_cours" id="8E522B56-AC58-C449-E9DD-D03A4C48811B">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>4A548AD8-F14C-BDC3-07D1-0FDB8D67C979</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2000</dataTypeSize>
+<ownDataTypeParameters>2000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="etat_cours" id="57B2AA5C-F4E3-D415-1951-228B77F4FCEE">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>3079CAB9-3FD3-7D25-0EAD-7053A270B82B</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Session_id_session" id="F73ACA7E-52DC-2DF0-DC2B-0C95E0091686">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>763A5BCF-D61F-A897-CE06-47E0DB6B94E0</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1725D43A-32D8-1700-3B71-117557C6A0D1" referredColumn="8E82E317-3608-C7DF-1FFF-D12A2C387A87"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="18A69EC6-B748-7AB7-558B-98AB4E418739" name="Cours_PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>2E9CC9A7-9495-AA7A-6FC6-8C69C3E77548</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="26CF48FF-A2DA-63E9-079D-74D44F353F2B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8E5DE4DD-88F7-0FF6-E9C5-4A09080CAD4B" name="Cours_Session_FK">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>E30A3B01-6BA3-5C60-98F3-CB72B3736AEC</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F73ACA7E-52DC-2DF0-DC2B-0C95E0091686"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

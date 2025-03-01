@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="1725D43A-32D8-1700-3B71-117557C6A0D1" containerWithKeyObject="5509D0A2-F7E0-D105-B6E0-E444B105B83F" localFKIndex="8E5DE4DD-88F7-0FF6-E9C5-4A09080CAD4B" name="Cours_Session_FK">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>E30A3B01-6BA3-5C60-98F3-CB72B3736AEC</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<referredTableLongName>Session</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>2F1BDCAD-139E-4027-CFAB-F5D2D9882ED3</referredTableID>
+<keyObject>64DC598D-9321-FFD1-6D39-1043AF876287</keyObject>
+<referredKeyID>64DC598D-9321-FFD1-6D39-1043AF876287</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_session</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

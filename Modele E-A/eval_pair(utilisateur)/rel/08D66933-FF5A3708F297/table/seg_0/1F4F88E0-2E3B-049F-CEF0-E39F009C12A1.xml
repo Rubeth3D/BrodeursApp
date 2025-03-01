@@ -1,0 +1,151 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1F4F88E0-2E3B-049F-CEF0-E39F009C12A1" name="Professeur">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>4DB59C3D-3C4F-EA06-50CC-4084A3D0DC47</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<abbreviation>Prof</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_professeur" id="6C33DCED-9DF4-F12C-A504-3A2B51BE2E6F">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>C4768204-A5E5-192A-1542-04C9B8D2F064</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Nom_complet" id="121DE373-5E12-8407-6DEB-1612046DEBED">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>6F9AFEAA-651F-DEC7-4DAE-78824DE026CF</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="etat_professeur" id="835F6992-5379-87DC-50FB-92B539ED32DF">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>E96817E3-911D-89DB-F87D-74E9E4656983</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="id_user" id="7C59A3E3-1522-6E62-394C-16C041A7E33D">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-28 02:20:09 UTC</createdTime>
+<generatorID>610F7206-BA46-53C9-3281-70643C90A1FE</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="utilisateur_id_user1" id="532F82D5-4C7F-C2AF-A9D1-38E1F64C5E3D">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-28 02:36:35 UTC</createdTime>
+<generatorID>ACC1D8BA-8906-5406-DD3B-2513C4299E01</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="695B730E-3EA6-834B-6593-8E52AED30B39" referredColumn="B8927645-AFA2-E7B0-D57E-3C20B1E2FE0A"/>
+</associations>
+</Column>
+<Column name="utilisateur_id_user" id="219C47E8-61C0-FC7B-CC97-37FF068F4DAA">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-03-01 23:37:01 UTC</createdTime>
+<generatorID>B30628EA-2284-FF42-2FFF-C3596CA71E5B</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5CB9FCD6-14C1-D1CF-CCD8-55F3B1C55BCA" referredColumn="B8927645-AFA2-E7B0-D57E-3C20B1E2FE0A"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FCA5E2F7-3915-4F9E-1B87-9C38AC9535BA" name="Professeur_PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>F1C89D3D-A7AA-5C7A-3B44-BAB74C76EE17</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6C33DCED-9DF4-F12C-A504-3A2B51BE2E6F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="009FCC11-5B83-E235-B52D-E25D53271B58" name="Professeur__IDXv1">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-28 02:36:35 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>27FA78D4-9E30-3FEC-E5B4-7DDB414513D9</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="532F82D5-4C7F-C2AF-A9D1-38E1F64C5E3D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4F1F7C9A-BE44-941E-5A63-11465B7E4769" name="Professeur__IDX">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-03-01 23:37:01 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>7F9F3A17-47B5-E82A-115B-DFAD8982D108</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="219C47E8-61C0-FC7B-CC97-37FF068F4DAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B0E04235-8058-9793-E76F-46E3F4398A22" name="Professeur_utilisateur_FKv1">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-28 02:36:35 UTC</createdTime>
+<generatorID>27FA78D4-9E30-3FEC-E5B4-7DDB414513D9</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="532F82D5-4C7F-C2AF-A9D1-38E1F64C5E3D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C1DEFE50-8720-81A8-84FC-1C271263CFE6" name="Professeur_utilisateur_FK">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-03-01 23:37:01 UTC</createdTime>
+<generatorID>7F9F3A17-47B5-E82A-115B-DFAD8982D108</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="219C47E8-61C0-FC7B-CC97-37FF068F4DAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

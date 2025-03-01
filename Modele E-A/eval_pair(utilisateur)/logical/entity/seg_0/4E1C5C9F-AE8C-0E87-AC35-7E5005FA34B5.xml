@@ -1,0 +1,102 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="4E1C5C9F-AE8C-0E87-AC35-7E5005FA34B5" name="Cours">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:01:55 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id cours" id="7E672000-C735-C729-C8F3-123EBA8A8B44">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:02:03 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="code cours" id="EE1A4786-CA47-B846-B238-1C3B56753128">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:02:44 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="description cours" id="4A548AD8-F14C-BDC3-07D1-0FDB8D67C979">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:03:07 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2000</dataTypeSize>
+<ownDataTypeParameters>2000,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="etat cours" id="3079CAB9-3FD3-7D25-0EAD-7053A270B82B">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 01:28:57 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id session" id="763A5BCF-D61F-A897-CE06-47E0DB6B94E0">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:52:54 UTC</createdTime>
+<generatorID>E30A3B01-6BA3-5C60-98F3-CB72B3736AEC</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<referedAttribute>BB320D7C-7513-ED30-E070-EB98AC94834C</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="2E9CC9A7-9495-AA7A-6FC6-8C69C3E77548" name="Cours PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:02:37 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>7E672000-C735-C729-C8F3-123EBA8A8B44</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2F1BDCAD-139E-4027-CFAB-F5D2D9882ED3" name="Session">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>701477EE-1E9A-DF92-9706-92D805F7397B</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_session" id="8E82E317-3608-C7DF-1FFF-D12A2C387A87">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>BB320D7C-7513-ED30-E070-EB98AC94834C</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="code_session" id="309E7E3B-8EC7-6A4D-839D-3B6A2A25A9C8">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>B2805C01-63EB-A45E-82D3-D99EA18C339B</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+<ownDataTypeParameters>200,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date_session" id="59294F16-068B-8FE1-91A2-793DBA60DA77">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>46053E26-BC75-9230-926C-0C7B8781E7FB</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="etat_session" id="B71EE996-F382-2A5A-5F98-96E7DB135C53">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>5B251CB9-6B96-75E9-8BF0-216410ADAB3A</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="64DC598D-9321-FFD1-6D39-1043AF876287" name="Session_PK">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>642577AF-BA66-25F6-FA07-3C9284DF061A</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8E82E317-3608-C7DF-1FFF-D12A2C387A87"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
