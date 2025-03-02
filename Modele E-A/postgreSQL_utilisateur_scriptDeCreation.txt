@@ -1,141 +1,492 @@
--- Création des tables pour PostgreSQL
+-- Généré par Oracle SQL Developer Data Modeler 24.3.0.275.2224
+--   à :        2025-03-01 19:49:34 HNE
+--   site :      Oracle Database 21c
+--   type :      Oracle Database 21c
 
-CREATE TABLE session (
-    id_session SERIAL PRIMARY KEY,
-    code_session VARCHAR(200),
-    date_session DATE,
-    etat_session INTEGER
-);
 
-CREATE TABLE utilisateur (
-    id_user SERIAL PRIMARY KEY,
-    nom_user VARCHAR(200) NOT NULL,
-    mot_de_passe VARCHAR(200) NOT NULL,
-    email VARCHAR(200) NOT NULL,
-    type_utilisateur CHAR(1),
-    etat_utilisateur INTEGER
-);
 
-CREATE TABLE professeur (
-    id_professeur SERIAL PRIMARY KEY,
-    nom_complet VARCHAR(200) NOT NULL,
-    etat_professeur INTEGER,
-    utilisateur_id_user INTEGER NOT NULL UNIQUE REFERENCES utilisateur(id_user)
-);
+-- predefined type, no DDL - MDSYS.SDO_GEOMETRY
 
-CREATE TABLE cours (
-    id_cours SERIAL PRIMARY KEY,
-    code_cours VARCHAR(200),
-    description_cours VARCHAR(2000),
-    etat_cours INTEGER,
-    session_id_session INTEGER NOT NULL REFERENCES session(id_session)
-);
-
-CREATE TABLE classe (
-    id_classe SERIAL PRIMARY KEY,
-    code_cours VARCHAR(200),
-    description VARCHAR(2000),
-    session VARCHAR(20),
-    groupe INTEGER,
-    professeur_id_professeur INTEGER NOT NULL REFERENCES professeur(id_professeur),
-    cours_id_cours INTEGER NOT NULL REFERENCES cours(id_cours),
-    etat_classe INTEGER
-);
-
-CREATE TABLE equipe (
-    id_equipe SERIAL PRIMARY KEY,
-    code_equipe VARCHAR(200),
-    nom VARCHAR(200),
-    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
-    etat_equipe INTEGER
-);
-
-CREATE TABLE etudiant (
-    id_etudiant SERIAL PRIMARY KEY,
-    nom_complet VARCHAR(200),
-    etat_etudiant INTEGER,
-    utilisateur_id_user INTEGER NOT NULL UNIQUE REFERENCES utilisateur(id_user),
-    equipe_id_equipe INTEGER REFERENCES equipe(id_equipe)
-);
-
-CREATE TABLE etudiant_classe (
-    etudiant_id_etudiant INTEGER NOT NULL REFERENCES etudiant(id_etudiant),
-    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
-    PRIMARY KEY (etudiant_id_etudiant, classe_id_classe)
-);
-
-CREATE TABLE instrument (
-    id_instrument SERIAL PRIMARY KEY,
-    code_instrument VARCHAR(200),
-    nom VARCHAR(2000) NOT NULL,
-    sur_denominateur INTEGER,
-    etat_instrument INTEGER,
-    professeur_id_professeur INTEGER NOT NULL REFERENCES professeur(id_professeur)
-);
-
-CREATE TABLE critere (
-    id_critere SERIAL PRIMARY KEY,
-    instrument_id_instrument INTEGER NOT NULL REFERENCES instrument(id_instrument),
-    code_critere VARCHAR(200),
-    description VARCHAR(2000),
-    valeur INTEGER,
-    etat_critere INTEGER
-);
-
-CREATE TABLE niveau_performance (
-    id_niveau SERIAL PRIMARY KEY,
-    critere_id_critere INTEGER NOT NULL REFERENCES critere(id_critere),
-    code_niveau VARCHAR(200),
-    description VARCHAR(2000),
-    niveau INTEGER,
-    afficher_note CHAR(1) NOT NULL,
-    etat_niveauperformance INTEGER
-);
-
-CREATE TABLE travail (
-    id_travail SERIAL PRIMARY KEY,
-    code_travail VARCHAR(200),
-    nom_travail VARCHAR(200),
-    instrument_id_instrument INTEGER REFERENCES instrument(id_instrument),
-    date_cloture DATE,
-    date_travail DATE,
-    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
-    etat_travail INTEGER
-);
+-- predefined type, no DDL - XMLTYPE
 
 CREATE TABLE assignation (
-    id_assignation SERIAL PRIMARY KEY,
-    travail_id_travail INTEGER NOT NULL REFERENCES travail(id_travail),
-    equipe_id_equipe INTEGER NOT NULL REFERENCES equipe(id_equipe)
+    travail_id_travail NUMBER NOT NULL,
+    id_assignation     NUMBER NOT NULL,
+    equipe_id_equipe   NUMBER NOT NULL
 );
+
+ALTER TABLE assignation ADD CONSTRAINT assignation_pk PRIMARY KEY ( travail_id_travail,
+                                                                    id_assignation );
+
+CREATE TABLE classe (
+    id_classe                NUMBER NOT NULL,
+    code_cours               VARCHAR2(200),
+    description              VARCHAR2(2000),
+    "session"                VARCHAR2(20),
+    groupe                   NUMBER,
+    professeur_id_professeur NUMBER NOT NULL,
+    cours_id_cours           NUMBER NOT NULL,
+    etat_classe              NUMBER
+);
+
+ALTER TABLE classe ADD CONSTRAINT classe_pk PRIMARY KEY ( id_classe );
+
+CREATE TABLE cours (
+    id_cours           NUMBER NOT NULL,
+    code_cours         VARCHAR2(200),
+    description_cours  VARCHAR2(2000),
+    etat_cours         NUMBER,
+    session_id_session NUMBER NOT NULL
+);
+
+ALTER TABLE cours ADD CONSTRAINT cours_pk PRIMARY KEY ( id_cours );
+
+CREATE TABLE critere (
+    instrument_id_instrument NUMBER NOT NULL,
+    id_critere               NUMBER NOT NULL,
+    code_critere             VARCHAR2(200),
+    description              VARCHAR2(2000),
+    valeur                   NUMBER,
+    etat_critere             NUMBER
+);
+
+ALTER TABLE critere ADD CONSTRAINT critere_pk PRIMARY KEY ( id_critere );
+
+CREATE TABLE equipe (
+    id_equipe        NUMBER NOT NULL,
+    code_equipe      VARCHAR2(200),
+    nom              VARCHAR2(200),
+    classe_id_classe NUMBER NOT NULL,
+    etat_equipe      NUMBER
+);
+
+CREATE UNIQUE INDEX equipe__idx ON
+    equipe (
+        classe_id_classe
+    ASC );
+
+ALTER TABLE equipe ADD CONSTRAINT equipe_pk PRIMARY KEY ( id_equipe );
+
+CREATE TABLE etudiant (
+    equipe_id_equipe    NUMBER,
+    id_etudiant         NUMBER NOT NULL,
+    nom_complet         VARCHAR2(200),
+    etat_etudiant       NUMBER,
+    utilisateur_id_user NUMBER NOT NULL,
+    id_user             NUMBER NOT NULL
+);
+
+CREATE UNIQUE INDEX etudiant__idx ON
+    etudiant (
+        utilisateur_id_user
+    ASC );
+
+ALTER TABLE etudiant ADD CONSTRAINT etudiant_pk PRIMARY KEY ( id_etudiant );
+
+CREATE TABLE etudiant_classe (
+    etudiant_id_etudiant NUMBER NOT NULL,
+    classe_id_classe     NUMBER NOT NULL
+);
+
+ALTER TABLE etudiant_classe ADD CONSTRAINT etudiant_classe_pk PRIMARY KEY ( etudiant_id_etudiant,
+                                                                            classe_id_classe );
 
 CREATE TABLE evaluation (
-    id_evaluation SERIAL PRIMARY KEY,
-    travail_id_travail INTEGER NOT NULL REFERENCES travail(id_travail),
-    etudiant_id_etudiant INTEGER NOT NULL REFERENCES etudiant(id_etudiant),
-    etudiant_id_etudiant2 INTEGER NOT NULL REFERENCES etudiant(id_etudiant),
-    date_evaluation DATE,
-    instrument_id_instrument INTEGER NOT NULL REFERENCES instrument(id_instrument),
-    equipe_id_equipe INTEGER NOT NULL REFERENCES equipe(id_equipe),
-    code_evaluation VARCHAR(200),
-    description VARCHAR(2000),
-    classe_id_classe INTEGER NOT NULL REFERENCES classe(id_classe),
-    evaluation_terminee INTEGER,
-    etat_evaluation INTEGER
+    travail_id_travail       NUMBER NOT NULL,
+    id_evaluation            NUMBER NOT NULL,
+    etudiant_id_etudiant     NUMBER NOT NULL,
+    etudiant_id_etudiant1    NUMBER NOT NULL,
+    date_evaluation          DATE,
+    instrument_id_instrument NUMBER NOT NULL,
+    equipe_id_equipe         NUMBER NOT NULL,
+    code_evaluation          VARCHAR2(200),
+    description              VARCHAR2(2000),
+    classe_id_classe         NUMBER NOT NULL,
+    evaluation_terminee      NUMBER,
+    etat_evaluation          NUMBER
 );
+
+CREATE UNIQUE INDEX evaluation__idx ON
+    evaluation (
+        etudiant_id_etudiant1
+    ASC );
+
+ALTER TABLE evaluation ADD CONSTRAINT evaluation_pk PRIMARY KEY ( id_evaluation );
+
+CREATE TABLE instrument (
+    professeur_id_professeur NUMBER NOT NULL,
+    id_instrument            NUMBER NOT NULL,
+    code_instrument          VARCHAR2(200),
+    nom                      VARCHAR2(2000) NOT NULL,
+    sur_denominateur         NUMBER,
+    etat_instrument          NUMBER
+);
+
+ALTER TABLE instrument ADD CONSTRAINT instrument_pk PRIMARY KEY ( id_instrument );
+
+CREATE TABLE niveau_performance (
+    reponse_id_reponse     NUMBER NOT NULL,
+    critere_id_critere     NUMBER NOT NULL,
+    id_niveau              NUMBER NOT NULL,
+    code_niveau            VARCHAR2(200),
+    description            VARCHAR2(2000),
+    niveau                 NUMBER,
+    afficher_note          VARCHAR2(1) NOT NULL,
+    etat_niveauperformance NUMBER
+);
+
+CREATE UNIQUE INDEX niveau_performance__idx ON
+    niveau_performance (
+        reponse_id_reponse
+    ASC );
+
+ALTER TABLE niveau_performance ADD CONSTRAINT niveau_performance_pk PRIMARY KEY ( id_niveau );
+
+CREATE TABLE professeur (
+    id_professeur       NUMBER NOT NULL,
+    nom_complet         VARCHAR2(200) NOT NULL,
+    etat_professeur     NUMBER,
+    id_user             NUMBER NOT NULL,
+    utilisateur_id_user NUMBER NOT NULL
+);
+
+CREATE UNIQUE INDEX professeur__idxv2 ON
+    professeur (
+        utilisateur_id_user
+    ASC );
+
+ALTER TABLE professeur ADD CONSTRAINT professeur_pk PRIMARY KEY ( id_professeur );
 
 CREATE TABLE reponse (
-    id_reponse SERIAL PRIMARY KEY,
-    evaluation_id_evaluation INTEGER NOT NULL REFERENCES evaluation(id_evaluation),
-    note INTEGER,
-    commentaire VARCHAR(2000),
-    niveau_performance_id_niveau INTEGER NOT NULL REFERENCES niveau_performance(id_niveau),
-    etat_reponse INTEGER
+    evaluation_id_evaluation     NUMBER NOT NULL,
+    id_reponse                   NUMBER NOT NULL,
+    note                         NUMBER,
+    commentaire                  VARCHAR2(2000),
+    niveau_performance_id_niveau NUMBER NOT NULL,
+    etat_reponse                 NUMBER
 );
 
--- Ajout des index
+CREATE UNIQUE INDEX reponse__idx ON
+    reponse (
+        niveau_performance_id_niveau
+    ASC );
 
-CREATE INDEX idx_equipe_classe ON equipe (classe_id_classe);
-CREATE INDEX idx_etudiant_utilisateur ON etudiant (utilisateur_id_user);
-CREATE INDEX idx_niveau_performance_critere ON niveau_performance (critere_id_critere);
-CREATE INDEX idx_reponse_niveau_performance ON reponse (niveau_performance_id_niveau);
+ALTER TABLE reponse ADD CONSTRAINT reponse_pk PRIMARY KEY ( id_reponse );
+
+CREATE TABLE "Session" (
+    id_session   NUMBER NOT NULL,
+    code_session VARCHAR2(200),
+    date_session DATE,
+    etat_session NUMBER
+);
+
+ALTER TABLE "Session" ADD CONSTRAINT session_pk PRIMARY KEY ( id_session );
+
+CREATE TABLE travail (
+    id_travail               NUMBER NOT NULL,
+    code_travail             VARCHAR2(200),
+    nom_travail              VARCHAR2(200),
+    instrument_id_instrument NUMBER,
+    date_cloture             DATE,
+    date_travail             DATE,
+    classe_id_classe         NUMBER NOT NULL,
+    etat_travail             NUMBER
+);
+
+ALTER TABLE travail
+    ADD CHECK ( instrument_id_instrument IS NULL
+                AND date_cloture IS NULL );
+
+ALTER TABLE travail ADD CONSTRAINT travail_pk PRIMARY KEY ( id_travail );
+
+CREATE TABLE utilisateur (
+    id_user          NUMBER NOT NULL,
+    nom_user         VARCHAR2(200) NOT NULL,
+    mot_de_passe     VARCHAR2(200) NOT NULL,
+    email            VARCHAR2(200) NOT NULL,
+    type_utilisateur CHAR(1),
+    id_professeur    NUMBER NOT NULL,
+    id_etudiant      NUMBER NOT NULL,
+    etat_utilisateur NUMBER
+);
+
+CREATE UNIQUE INDEX utilisateur__idx ON
+    utilisateur (
+        id_professeur
+    ASC );
+
+CREATE UNIQUE INDEX utilisateur__idxv1 ON
+    utilisateur (
+        id_etudiant
+    ASC );
+
+ALTER TABLE utilisateur ADD CONSTRAINT utilisateur_pk PRIMARY KEY ( id_user );
+
+ALTER TABLE assignation
+    ADD CONSTRAINT assignation_equipe_fk FOREIGN KEY ( equipe_id_equipe )
+        REFERENCES equipe ( id_equipe );
+
+ALTER TABLE assignation
+    ADD CONSTRAINT assignation_travail_fk FOREIGN KEY ( travail_id_travail )
+        REFERENCES travail ( id_travail );
+
+ALTER TABLE classe
+    ADD CONSTRAINT classe_cours_fk FOREIGN KEY ( cours_id_cours )
+        REFERENCES cours ( id_cours );
+
+ALTER TABLE classe
+    ADD CONSTRAINT classe_professeur_fk FOREIGN KEY ( professeur_id_professeur )
+        REFERENCES professeur ( id_professeur );
+
+ALTER TABLE cours
+    ADD CONSTRAINT cours_session_fk FOREIGN KEY ( session_id_session )
+        REFERENCES "Session" ( id_session );
+
+ALTER TABLE critere
+    ADD CONSTRAINT critere_instrument_fk FOREIGN KEY ( instrument_id_instrument )
+        REFERENCES instrument ( id_instrument );
+
+ALTER TABLE equipe
+    ADD CONSTRAINT equipe_classe_fk FOREIGN KEY ( classe_id_classe )
+        REFERENCES classe ( id_classe );
+
+ALTER TABLE etudiant_classe
+    ADD CONSTRAINT etudiant_classe_classe_fk FOREIGN KEY ( classe_id_classe )
+        REFERENCES classe ( id_classe );
+
+ALTER TABLE etudiant_classe
+    ADD CONSTRAINT etudiant_classe_etudiant_fk FOREIGN KEY ( etudiant_id_etudiant )
+        REFERENCES etudiant ( id_etudiant );
+
+ALTER TABLE etudiant
+    ADD CONSTRAINT etudiant_equipe_fk FOREIGN KEY ( equipe_id_equipe )
+        REFERENCES equipe ( id_equipe );
+
+ALTER TABLE etudiant
+    ADD CONSTRAINT etudiant_utilisateur_fk FOREIGN KEY ( utilisateur_id_user )
+        REFERENCES utilisateur ( id_user );
+
+ALTER TABLE evaluation
+    ADD CONSTRAINT evaluation_classe_fk FOREIGN KEY ( classe_id_classe )
+        REFERENCES classe ( id_classe );
+
+ALTER TABLE evaluation
+    ADD CONSTRAINT evaluation_equipe_fk FOREIGN KEY ( equipe_id_equipe )
+        REFERENCES equipe ( id_equipe );
+
+ALTER TABLE evaluation
+    ADD CONSTRAINT evaluation_etudiant_fk FOREIGN KEY ( etudiant_id_etudiant )
+        REFERENCES etudiant ( id_etudiant );
+
+ALTER TABLE evaluation
+    ADD CONSTRAINT evaluation_etudiant_fkv1 FOREIGN KEY ( etudiant_id_etudiant1 )
+        REFERENCES etudiant ( id_etudiant );
+
+ALTER TABLE evaluation
+    ADD CONSTRAINT evaluation_instrument_fk FOREIGN KEY ( instrument_id_instrument )
+        REFERENCES instrument ( id_instrument );
+
+ALTER TABLE evaluation
+    ADD CONSTRAINT evaluation_travail_fk FOREIGN KEY ( travail_id_travail )
+        REFERENCES travail ( id_travail );
+
+ALTER TABLE instrument
+    ADD CONSTRAINT instrument_professeur_fk FOREIGN KEY ( professeur_id_professeur )
+        REFERENCES professeur ( id_professeur );
+
+ALTER TABLE niveau_performance
+    ADD CONSTRAINT niveau_performance_critere_fk FOREIGN KEY ( critere_id_critere )
+        REFERENCES critere ( id_critere );
+
+ALTER TABLE professeur
+    ADD CONSTRAINT professeur_utilisateur_fk FOREIGN KEY ( utilisateur_id_user )
+        REFERENCES utilisateur ( id_user );
+
+ALTER TABLE reponse
+    ADD CONSTRAINT reponse_evaluation_fk FOREIGN KEY ( evaluation_id_evaluation )
+        REFERENCES evaluation ( id_evaluation );
+
+ALTER TABLE travail
+    ADD CONSTRAINT travail_classe_fk FOREIGN KEY ( classe_id_classe )
+        REFERENCES classe ( id_classe );
+
+ALTER TABLE travail
+    ADD CONSTRAINT travail_instrument_fk FOREIGN KEY ( instrument_id_instrument )
+        REFERENCES instrument ( id_instrument );
+
+CREATE SEQUENCE assignation_id_assignation_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER assignation_id_assignation_trg BEFORE
+    INSERT ON assignation
+    FOR EACH ROW
+    WHEN ( new.id_assignation IS NULL )
+BEGIN
+    :new.id_assignation := assignation_id_assignation_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE classe_id_classe_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER classe_id_classe_trg BEFORE
+    INSERT ON classe
+    FOR EACH ROW
+    WHEN ( new.id_classe IS NULL )
+BEGIN
+    :new.id_classe := classe_id_classe_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE cours_id_cours_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER cours_id_cours_trg BEFORE
+    INSERT ON cours
+    FOR EACH ROW
+    WHEN ( new.id_cours IS NULL )
+BEGIN
+    :new.id_cours := cours_id_cours_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE critere_id_critere_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER critere_id_critere_trg BEFORE
+    INSERT ON critere
+    FOR EACH ROW
+    WHEN ( new.id_critere IS NULL )
+BEGIN
+    :new.id_critere := critere_id_critere_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE equipe_id_equipe_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER equipe_id_equipe_trg BEFORE
+    INSERT ON equipe
+    FOR EACH ROW
+    WHEN ( new.id_equipe IS NULL )
+BEGIN
+    :new.id_equipe := equipe_id_equipe_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE etudiant_id_etudiant_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER etudiant_id_etudiant_trg BEFORE
+    INSERT ON etudiant
+    FOR EACH ROW
+    WHEN ( new.id_etudiant IS NULL )
+BEGIN
+    :new.id_etudiant := etudiant_id_etudiant_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE evaluation_id_evaluation_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER evaluation_id_evaluation_trg BEFORE
+    INSERT ON evaluation
+    FOR EACH ROW
+    WHEN ( new.id_evaluation IS NULL )
+BEGIN
+    :new.id_evaluation := evaluation_id_evaluation_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE instrument_id_instrument_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER instrument_id_instrument_trg BEFORE
+    INSERT ON instrument
+    FOR EACH ROW
+    WHEN ( new.id_instrument IS NULL )
+BEGIN
+    :new.id_instrument := instrument_id_instrument_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE niveau_performance_id_niveau START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER niveau_performance_id_niveau BEFORE
+    INSERT ON niveau_performance
+    FOR EACH ROW
+    WHEN ( new.id_niveau IS NULL )
+BEGIN
+    :new.id_niveau := niveau_performance_id_niveau.nextval;
+END;
+/
+
+CREATE SEQUENCE prof_id_professeur_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER prof_id_professeur_trg BEFORE
+    INSERT ON professeur
+    FOR EACH ROW
+    WHEN ( new.id_professeur IS NULL )
+BEGIN
+    :new.id_professeur := prof_id_professeur_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE reponse_id_reponse_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER reponse_id_reponse_trg BEFORE
+    INSERT ON reponse
+    FOR EACH ROW
+    WHEN ( new.id_reponse IS NULL )
+BEGIN
+    :new.id_reponse := reponse_id_reponse_seq.nextval;
+END;
+/
+
+CREATE SEQUENCE travail_id_travail_seq START WITH 1 NOCACHE ORDER;
+
+CREATE OR REPLACE TRIGGER travail_id_travail_trg BEFORE
+    INSERT ON travail
+    FOR EACH ROW
+    WHEN ( new.id_travail IS NULL )
+BEGIN
+    :new.id_travail := travail_id_travail_seq.nextval;
+END;
+/
+
+
+
+-- Rapport récapitulatif d'Oracle SQL Developer Data Modeler : 
+-- 
+-- CREATE TABLE                            15
+-- CREATE INDEX                             8
+-- ALTER TABLE                             39
+-- CREATE VIEW                              0
+-- ALTER VIEW                               0
+-- CREATE PACKAGE                           0
+-- CREATE PACKAGE BODY                      0
+-- CREATE PROCEDURE                         0
+-- CREATE FUNCTION                          0
+-- CREATE TRIGGER                          12
+-- ALTER TRIGGER                            0
+-- CREATE COLLECTION TYPE                   0
+-- CREATE STRUCTURED TYPE                   0
+-- CREATE STRUCTURED TYPE BODY              0
+-- CREATE CLUSTER                           0
+-- CREATE CONTEXT                           0
+-- CREATE DATABASE                          0
+-- CREATE DIMENSION                         0
+-- CREATE DIRECTORY                         0
+-- CREATE DISK GROUP                        0
+-- CREATE ROLE                              0
+-- CREATE ROLLBACK SEGMENT                  0
+-- CREATE SEQUENCE                         12
+-- CREATE MATERIALIZED VIEW                 0
+-- CREATE MATERIALIZED VIEW LOG             0
+-- CREATE SYNONYM                           0
+-- CREATE TABLESPACE                        0
+-- CREATE USER                              0
+-- 
+-- DROP TABLESPACE                          0
+-- DROP DATABASE                            0
+-- 
+-- REDACTION POLICY                         0
+-- 
+-- ORDS DROP SCHEMA                         0
+-- ORDS ENABLE SCHEMA                       0
+-- ORDS ENABLE OBJECT                       0
+-- 
+-- ERRORS                                   0
+-- WARNINGS                                 0
