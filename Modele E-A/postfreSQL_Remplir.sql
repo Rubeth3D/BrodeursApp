@@ -1,3 +1,5 @@
+-- Insertion faite par chatGPT à partir de notre script --
+
 INSERT INTO utilisateur (nom_user, mot_de_passe, email, type_utilisateur, etat_utilisateur)
 VALUES
     ('Jean_Dupont', 'JdP@ss123', 'jean.dupont@example.com', 'p', 'A'),
@@ -133,4 +135,16 @@ INSERT INTO Cours (code_cours, description_cours, etat_cours, session_id_session
 ('MATH600', 'Analyse complexe, incluant les fonctions analytiques, les integrales complexes et les series de Laurent.', 0, 12),
 ('CS404', 'Introduction aux systemes d exploitation, incluant la gestion de la memoire, des processus et des systemes de fichiers.', 1, 12),
 ('LING101', 'Introduction a la linguistique, etudiant les sons, la syntaxe, et l evolution des langues humaines.', 1, 13);
+
+INSERT INTO critere (instrument_id_instrument, code_critere, description, valeur, etat_critere) VALUES  
+(1, 'CS_PERF', 'Performance des algorithmes utilisés en simulation', 95, 1),
+(2, 'MATH_PREC', 'Précision des calculs mathématiques appliqués', 98, 1),
+(3, 'BIO_STAB', 'Stabilité des échantillons biologiques en laboratoire', 92, 1),
+(4, 'PHYS_SENS', 'Sensibilité des instruments de mesure en physique', 96, 1),
+(5, 'CHEM_REACT', 'Fiabilité des réactions chimiques en laboratoire', 94, 1),
+(6, 'ENGR_RES', 'Résistance des matériaux testés en ingénierie', 97, 1),
+(7, 'CS_SEC', 'Sécurité des systèmes informatiques en environnement de test', 99, 1),
+(8, 'ECON_MOD', 'Fiabilité des modèles économiques en simulation', 90, 1),
+(9, 'PSY_EXP', 'Validité des expériences en sciences cognitives', 88, 1),
+(10, 'SOC_DATA', 'Qualité et intégrité des données en sciences sociales', 91, 1);
 
