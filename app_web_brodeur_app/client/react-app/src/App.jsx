@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -15,6 +16,9 @@ const router = createBrowserRouter([
   { path: "*", element: <NotfoundPage/> }
 ]);
 function App() {
+  useEffect(() => {
+    document.title = "Évaluation par les pairs"; // Aider par ChatGPT pour le titre de l'onglet
+  }, []);
   return (
     <>
       <RouterProvider router={router} />
