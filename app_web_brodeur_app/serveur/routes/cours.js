@@ -3,7 +3,6 @@ import cors from "cors";
 import winston from "winston";
 import client from "../bd/connexion.js";
 
-// Logger setup with winston
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -20,25 +19,24 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-// Middleware to parse JSON requests
 router.use(express.json());
 
-// GET all courses
+// GET les cours
 router.get("/", async (req, res) => {
   try {
     const result = await client.query("SELECT * FROM cours");
     logger.info("Get des cours effectue avec succes");
-    res.status(200).json(result.rows); // Ensure you're using the correct variable for the query result
+    res.status(200).json(result.rows);
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: "Il y a eu une erreur de type 500" });
   }
 });
 
-// GET course by ID
+// Get d'un cours par le id
 router.get("/:idCours", async (req, res) => {
   try {
-    const { idCours } = req.params; // Correctly access the param
+    const { idCours } = req.params;
     const result = await client.query(
       "SELECT * FROM cours WHERE id_cours = $1",
       [idCours]
@@ -54,7 +52,7 @@ router.get("/:idCours", async (req, res) => {
   }
 });
 
-// POST new course
+// Insert d'un cours
 router.post("/", async (req, res) => {
   try {
     const { code_cours, description_cours, etat_cours, session_id_session } =
@@ -64,16 +62,14 @@ router.post("/", async (req, res) => {
       [code_cours, description_cours, etat_cours, session_id_session]
     );
     logger.info("Cours inséré avec succès");
-    res
-      .status(201)
-      .json({ message: "Cours inséré avec succès!", cours: result.rows[0] });
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     logger.error(error);
     res.status(500).json({ message: "Erreur lors de l'insertion du cours" });
   }
 });
 
-// PUT update a course
+// Update d'un cours
 router.put("/:idCours", async (req, res) => {
   try {
     const { idCours } = req.params;
@@ -96,7 +92,7 @@ router.put("/:idCours", async (req, res) => {
   }
 });
 
-// DELETE a course
+// DELETE un cours
 router.delete("/:idCours", async (req, res) => {
   try {
     const { idCours } = req.params;

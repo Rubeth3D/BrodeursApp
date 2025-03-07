@@ -65,7 +65,7 @@ router.get("/:id", async (req, res) => {
 //Insert d'une classe
 router.post("/", async (req, res) => {
   try {
-    const { codeCours, description, session, groupe, etat_classe } = req.params;
+    const { codeCours, description, session, groupe, etat_classe} = req.params;
     const resultat = await client.query("INSERT");
   } catch (err) {}
 });
