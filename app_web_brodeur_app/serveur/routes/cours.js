@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
       [code_cours, description_cours, etat_cours, session_id_session]
     );
     logger.info("Cours inséré avec succès");
-    res.status(201).json(result.rows[0]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     logger.error(error);
     res.status(500).json({ message: "Erreur lors de l'insertion du cours" });
