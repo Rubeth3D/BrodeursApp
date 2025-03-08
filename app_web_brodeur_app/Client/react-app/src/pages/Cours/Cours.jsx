@@ -1,11 +1,14 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
 import { Link } from "react-router-dom";
-import React, { Fragment, useEffect, useState } from "react";
-
+import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
+import ModifierCours from "../../element/modifierCours";
 function Cours() {
   const [cours, setCours] = useState([]);
+  const isFetched = useRef(false);
+
   //fonction pour delete un cours
+
   const deleteCours = async (id_cours) => {
     try {
       const deleteCours = await fetch(
@@ -30,15 +33,12 @@ function Cours() {
       console.error(`Erreur lors du fetch des cours : ${err}`);
     }
   };
-  const updateCours = async (id_cours) =>{
-    try {
-      const reponse = await fetch("")
-    } catch (err) {
-      console.log(`Erreur lors du update du cours ${err}`);
-    }
-  }
+
   useEffect(() => {
-    getCours();
+    if (!isFetched.current) {
+      getCours();
+      isFetched.current = true;
+    }
   }, []);
   return (
     <>
@@ -66,7 +66,7 @@ function Cours() {
                   >
                     delete
                   </button>
-                  <button className="btn btn-primary">update</button>
+                  <ModifierCours cours={cours} />
                 </td>
               </tr>
             ))}
