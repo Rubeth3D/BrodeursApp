@@ -58,6 +58,35 @@ VALUES
     (48, 'William_Lucas', 'WlE@ss223', 'william.lucas@example.com', 'e', 'A', NULL, 48),
     (49, 'Xavier_Guichard', 'XgE@ss224', 'xavier.guichard@example.com', 'e', 'A', NULL, 49);
 
+--Insertion professeur
+INSERT INTO professeur (id_professeur, nom_complet, etat_professeur, utilisateur_id_user) 
+VALUES
+    (1, 'Jean Dupont', 'A', 1),
+    (2, 'Marie Curie', 'A', 2),
+    (3, 'Albert Einstein', 'A', 3),
+    (4, 'Isaac Newton', 'A', 4),
+    (5, 'Leonard Da Vinci', 'A', 5),
+    (6, 'Nikola Tesla', 'A', 6),
+    (7, 'Galileo Galilei', 'A', 7),
+    (8, 'Ada Lovelace', 'A', 8),
+    (9, 'Alan Turing', 'A', 9),
+    (10, 'Richard Feynman', 'A', 10),
+    (11, 'Carl Sagan', 'A', 11),
+    (12, 'Stephen Hawking', 'A', 12),
+    (13, 'Rosalind Franklin', 'A', 13),
+    (14, 'Katherine Johnson', 'A', 14),
+    (15, 'Dmitri Mendeleev', 'A', 15),
+    (16, 'Niels Bohr', 'A', 16),
+    (17, 'Max Planck', 'A', 17),
+    (18, 'Emmy Noether', 'A', 18),
+    (19, 'Barbara McClintock', 'A', 19),
+    (20, 'Dorothy Hodgkin', 'A', 20),
+    (21, 'Subrahmanyan Chandrasekhar', 'A', 21),
+    (22, 'Michael Faraday', 'A', 22),
+    (23, 'James Maxwell', 'A', 23),
+    (24, 'Erwin Schrodinger', 'A', 24),
+    (25, 'Richard Dawkins', 'A', 25);
+
 --Insertion Session
 INSERT INTO session (id_session, code_session, date_session, etat_session)
 VALUES
@@ -114,6 +143,8 @@ VALUES
 
 -- Fin Insertion pour le Prototype --
 
+
+-- Insertion de table qui ne sont pas dans le Prototype --
 INSERT INTO equipe (code_equipe, nom, classe_id_classe, etat_equipe)
 VALUES
     ('EQUIPE001', 'Les Pionniers', 1, 'A'),
@@ -155,33 +186,6 @@ VALUES
     (7, 'Victor Aubert', 'A', 47),
     (2, 'William Lucas', 'A', 48),
     (8, 'Xavier Guichard', 'A', 49);
-
-INSERT INTO professeur (nom_complet, etat_professeur, utilisateur_id_user) VALUES
-    ('Jean Dupont', 'A', 1),
-    ('Marie Curie', 'A', 2),
-    ('Albert Einstein', 'A', 3),
-    ('Isaac Newton', 'A', 4),
-    ('Leonard Da Vinci', 'A', 5),
-    ('Nikola Tesla', 'A', 6),
-    ('Galileo Galilei', 'A', 7),
-    ('Ada Lovelace', 'A', 8),
-    ('Alan Turing', 'A', 9),
-    ('Richard Feynman', 'A', 10),
-    ('Carl Sagan', 'A', 11),
-    ('Stephen Hawking', 'A', 12),
-    ('Rosalind Franklin', 'A', 13),
-    ('Katherine Johnson', 'A', 14),
-    ('Dmitri Mendeleev', 'A', 15),
-    ('Niels Bohr', 'A', 16),
-    ('Max Planck', 'A', 17),
-    ('Emmy Noether', 'A', 18),
-    ('Barbara McClintock', 'A', 19),
-    ('Dorothy Hodgkin', 'A', 20),
-    ('Subrahmanyan Chandrasekhar', 'A', 21),
-    ('Michael Faraday', 'A', 22),
-    ('James Maxwell', 'A', 23),
-    ('Erwin Schrodinger', 'A', 24),
-    ('Richard Dawkins', 'A', 25);
 
 INSERT INTO critere (instrument_id_instrument, code_critere, description, valeur, etat_critere) VALUES  
 (1, 'CS_PERF', 'Performance des algorithmes utilisés en simulation', 95, 1),
