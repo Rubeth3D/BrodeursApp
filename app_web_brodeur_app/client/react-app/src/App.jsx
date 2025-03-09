@@ -9,11 +9,11 @@ import CreateAccount from "./pages/CreateAccount/CreateAccount.jsx";
 import Cours from "./pages/Cours/Cours.jsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home/>},
+  { path: "/", element: <Home /> },
   { path: "/Connexion", element: <Connexion /> },
-  { path: "/Connexion/CreateAccount", element: <CreateAccount/> },
-  {path: "/cours", element:<Cours/>},
-  { path: "*", element: <NotfoundPage/> }
+  { path: "/Connexion/CreateAccount", element: <CreateAccount /> },
+  { path: "/cours", element: <Cours /> },
+  { path: "*", element: <NotfoundPage /> },
 ]);
 function App() {
   useEffect(() => {

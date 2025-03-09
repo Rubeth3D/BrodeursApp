@@ -1,23 +1,61 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function CreateAccount() {
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [nomUtilisateur, setNomUtilisateur] = useState("");
+  const [email, setEmail] = useState("");
+  const [type_utilisateur, setType_utilisateur] = useState("");
+  const [motDePasse, setMotDePasse] = useState("");
+  const [motDePasseConfirmation, setMotDePasseConfirmation] = useState("");
+  const etat_utilisateur = "A";
+  const id_professeur = null;
+  const id_etudiant = null;
+
+  const changerTypeUtilisateur = (e) => {
+    setType_utilisateur(e.target.value);
+  };
+
+  const creationUtilisateur = async (e) => {
+    e.preventDefault();
+    try {
+      const body = {
+        nomUtilisateur,
+        motDePasse,
+        email,
+        type_utilisateur,
+        id_professeur,
+        id_etudiant,
+        etat_utilisateur,
+      };
+      const response = await fetch(`http://localhost:8080/utilisateur`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      console.log(response);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <>
       <Navbar></Navbar>
       <h2 className=" mb-5"></h2>
-      <div className="container">
+      <form className="container" onSubmit={(e) => creationUtilisateur(e)}>
         <Link to={"/Connexion"}>
           <button className="btn btn-primary m-5">
             <h2 className="text-center fs-6 m-0">
-              {/*Source image: https://icons.getbootstrap.com/icons/arrow-left/ */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
                 fill="currentColor"
-                class="bi bi-arrow-left"
+                className="bi bi-arrow-left"
                 viewBox="0 0 16 16"
               >
                 <path
@@ -34,21 +72,36 @@ function CreateAccount() {
           <div className="col-4 mb-5">
             <div className="form-group">
               <label className="fw-bold fs-4">Nom</label>
-              <input type="text" className="form-control fs-5" />
+              <input
+                type="text"
+                className="form-control fs-5"
+                value={nom}
+                onChange={(e) => setNom(e.target.value)}
+              />
             </div>
           </div>
           <div className="col-4 mb-5">
             <div className="form-group">
               <label className="fw-bold fs-4">Prénom</label>
-              <input type="text" className="form-control fs-5" />
+              <input
+                type="text"
+                className="form-control fs-5"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
+              />
             </div>
           </div>
         </div>
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
             <div className="form-group">
-              <label className="fw-bold fs-4">No Identification</label>
-              <input type="text" className="form-control fs-5" />
+              <label className="fw-bold fs-4">Nom d'utilisateur</label>
+              <input
+                type="text"
+                className="form-control fs-5"
+                value={nomUtilisateur}
+                onChange={(e) => setNomUtilisateur(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -56,7 +109,12 @@ function CreateAccount() {
           <div className="col-8 mb-5">
             <div className="form-group">
               <label className="fw-bold fs-4">Mot de passe</label>
-              <input type="text" className="form-control fs-5" />
+              <input
+                type="password"
+                className="form-control fs-5"
+                value={motDePasse}
+                onChange={(e) => setMotDePasse(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -66,11 +124,16 @@ function CreateAccount() {
               <label className="fw-bold fs-4">
                 Confirmation du Mot de passe
               </label>
-              <input type="text" className="form-control fs-5" />
+              <input
+                type="password"
+                className="form-control fs-5"
+                value={motDePasseConfirmation}
+                onChange={(e) => setMotDePasseConfirmation(e.target.value)}
+              />
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-center align-items-center mt-2">
+        <div className="d-flex justify-content-center align-items-center mt-2">
           <div className="row justify-content-center mt-4">
             <div className="col-6">
               <div className="form-check">
@@ -79,9 +142,11 @@ function CreateAccount() {
                   type="radio"
                   name="flexRadio"
                   id="flexRadioDefault1"
-                  defaultChecked
+                  value="e"
+                  checked={type_utilisateur === "e"}
+                  onChange={changerTypeUtilisateur}
                 />
-                <label className="form-check-label" for="flexRadioDefault1">
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
                   Étudiant
                 </label>
               </div>
@@ -93,21 +158,24 @@ function CreateAccount() {
                   type="radio"
                   name="flexRadio"
                   id="flexRadioDefault2"
+                  value="p"
+                  checked={type_utilisateur === "p"}
+                  onChange={changerTypeUtilisateur}
                 />
-                <label className="form-check-label" for="flexRadioDefault2">
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
                   Professeur
                 </label>
               </div>
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-center align-items-center mt-2">
+        <div className="d-flex justify-content-center align-items-center mt-2">
           <button className="btn btn-primary mt-5 mb-5">
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
         </div>
         <h2 className="mb-5"></h2>
-      </div>
+      </form>
       <Footer></Footer>
     </>
   );
