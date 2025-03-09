@@ -36,18 +36,18 @@ router.get("/", async (req, res) => {
 //get pour un utilisateur
 router.get("/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE id = $1",
+      "SELECT * FROM utilisateur WHERE id_user = $1",
       [id]
     );
 
-    if (resultat.rowCount === 0) {
+    if (resultat.rowCount == 0) {
       logger.error(`Aucun user n'a le id : ${id}`);
       return res.status(404).json({ message: `Aucun user n'a le id :${id}` });
     }
 
-    res.status(200).json(resultat.rows);
+    res.status(200).json(resultat.rows[0]);
     logger.info("Get du user effectue avec succes!");
   } catch (err) {
     logger.error(`Erreur lors du get du user : ${err}`);
