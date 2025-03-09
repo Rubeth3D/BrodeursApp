@@ -42,6 +42,7 @@ router.get("/:id", async (req, res) => {
       [idCours]
     );
     if (result.rows.length === 0) {
+      logger.error("Cours non trouve");
       return res.status(404).json({ message: "Cours non trouvé" });
     }
     logger.info("Get du cours effectue avec succes");
@@ -95,12 +96,13 @@ router.put("/:id", async (req, res) => {
 // DELETE un cours
 router.delete("/:id", async (req, res) => {
   try {
-    const { idCours } = req.params;
+    const { id } = req.params;
     const result = await client.query(
       "DELETE FROM cours WHERE id_cours = $1 RETURNING *",
-      [idCours]
+      [id]
     );
     if (result.rows.length === 0) {
+      logger.error("Ce cours n'existe pas dans la table");
       return res.status(404).json({ message: "Cours non trouvé" });
     }
     logger.info("Cours supprimé avec succès");

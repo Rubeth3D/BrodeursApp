@@ -106,9 +106,10 @@ function Cours() {
   //Ajouter un cours
   const AjouterCours = () => {
     const [cours, nouveauCours] = useState({
-      numero: "",
-      description: "",
-      etat: "",
+      code_cours: "",
+      description_cours: "",
+      etat_cours: "A",
+      session_id_session: "1",
     });
     const gererChangement = (e) => {
       const { name, value } = e.target;
@@ -122,7 +123,7 @@ function Cours() {
       <>
         <div className="container col-3">
           <h2 className="text-center">Ajouter un nouveau cours</h2>
-          <form onSubmit={PostCours}>
+          <form onSubmit={(e) => PostCours(e, cours)}>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span
@@ -134,11 +135,12 @@ function Cours() {
               </div>
               <input
                 type="text"
-                name="numero"
+                name="code_cours"
                 className="form-control"
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
-                value={cours.numero}
+                placeholder="Nouveau numero"
+                value={cours.code_cours}
                 onChange={gererChangement}
               />
             </div>
@@ -153,30 +155,12 @@ function Cours() {
               </div>
               <input
                 type="text"
-                name="description"
+                name="description_cours"
                 className="form-control"
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
-                value={cours.description}
-                onChange={gererChangement}
-              />
-            </div>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span
-                  className="input-group-text"
-                  id="inputGroup-sizing-default"
-                >
-                  État
-                </span>
-              </div>
-              <input
-                type="text"
-                name="etat"
-                className="form-control"
-                aria-label="Default"
-                aria-describedby="inputGroup-sizing-default"
-                value={cours.etat}
+                placeholder="Nouvelle description"
+                value={cours.description_cours}
                 onChange={gererChangement}
               />
             </div>
@@ -192,7 +176,6 @@ function Cours() {
   //Update un cours
   const PutCours = async (e, cours) => {
     e.preventDefault();
-
     try {
       const response = await fetch(
         `http://localhost:8080/cours/${cours.id_cours}`,
@@ -212,8 +195,9 @@ function Cours() {
       console.error(`Erreur lors du update du cours : ${err}`);
     }
   };
+
   //Insert un cours
-  const PostCours = async (e) => {
+  const PostCours = async (e, cours) => {
     e.preventDefault();
     try {
       const reponse = await fetch(`http://localhost:8080/cours`, {
@@ -224,7 +208,7 @@ function Cours() {
       if (!reponse.ok) {
         throw new Error("Erreur lors de la mise a jour du cours");
       }
-      window.location.reload;
+      window.location.reload();
       console.log("Cours insere avec succes");
     } catch (err) {
       console.log(`Erreur lors de l'insertion du cours ${err}`);
