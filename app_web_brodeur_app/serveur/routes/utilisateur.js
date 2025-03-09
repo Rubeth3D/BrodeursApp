@@ -61,35 +61,35 @@ router.get("/:nom_user", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const {
-      nomUser,
-      motDePasse,
+      nom_user,
+      mot_de_passe,
       email,
-      typeUtilisateur,
-      idProfesseur,
-      idEtudiant,
-      etatUtilisateur,
+      type_utilisateur,
+      id_professeur,
+      id_etudiant,
+      etat_utilisateur,
     } = req.body;
 
     logger.info(
-      nomUser +
-        motDePasse +
-        email +
-        typeUtilisateur +
-        idProfesseur +
-        idEtudiant +
-        etatUtilisateur
+      nom_user,
+      mot_de_passe,
+      email,
+      type_utilisateur,
+      id_professeur,
+      id_etudiant,
+      etat_utilisateur
     );
     // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
       "INSERT INTO utilisateur(nom_user, mot_de_passe, email, type_utilisateur, id_professeur, id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
       [
-        nomUser,
-        motDePasse,
+        nom_user,
+        mot_de_passe,
         email,
-        typeUtilisateur,
-        idProfesseur,
-        idEtudiant,
-        etatUtilisateur,
+        type_utilisateur,
+        id_professeur,
+        id_etudiant,
+        etat_utilisateur,
       ]
     );
 

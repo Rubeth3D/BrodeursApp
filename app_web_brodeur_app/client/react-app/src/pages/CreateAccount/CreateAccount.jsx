@@ -1,19 +1,20 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 function CreateAccount() {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
-  const [nomUtilisateur, setNomUtilisateur] = useState("");
+  const [nom_user, setNomUtilisateur] = useState("");
   const [email, setEmail] = useState("");
-  const [type_utilisateur, setType_utilisateur] = useState("");
-  const [motDePasse, setMotDePasse] = useState("");
-  const [motDePasseConfirmation, setMotDePasseConfirmation] = useState("");
+  const [type_utilisateur, setType_utilisateur] = useState("p");
+  const [mot_de_passe, setMotDePasse] = useState("");
+  const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
   const etat_utilisateur = "A";
   const id_professeur = null;
   const id_etudiant = null;
+  const navigate = useNavigate();
 
   const changerTypeUtilisateur = (e) => {
     setType_utilisateur(e.target.value);
@@ -23,20 +24,32 @@ function CreateAccount() {
     e.preventDefault();
     try {
       const body = {
-        nomUtilisateur,
-        motDePasse,
+        nom_user,
+        mot_de_passe,
         email,
         type_utilisateur,
         id_professeur,
         id_etudiant,
         etat_utilisateur,
       };
+      if (nom == "" || prenom == "" || nom_user == "" || email == "") {
+        console.log("Il manque des informations aux formulaire");
+        return;
+      }
+      if (mot_de_passe !== mot_de_passe_confirmation) {
+        console.log("Les deux mot de passe ne sont pas identique");
+        return;
+      }
       const response = await fetch(`http://localhost:8080/utilisateur`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       console.log(response);
+      if (response.ok) {
+        navigate("/cours");
+        //pop-up pour montrer que l'utilisateur est connecté
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -95,11 +108,26 @@ function CreateAccount() {
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
             <div className="form-group">
+              <label className="fw-bold fs-4" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control fs-5"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-8 mb-5">
+            <div className="form-group">
               <label className="fw-bold fs-4">Nom d'utilisateur</label>
               <input
                 type="text"
                 className="form-control fs-5"
-                value={nomUtilisateur}
+                value={nom_user}
                 onChange={(e) => setNomUtilisateur(e.target.value)}
               />
             </div>
@@ -112,7 +140,7 @@ function CreateAccount() {
               <input
                 type="password"
                 className="form-control fs-5"
-                value={motDePasse}
+                value={mot_de_passe}
                 onChange={(e) => setMotDePasse(e.target.value)}
               />
             </div>
@@ -127,7 +155,7 @@ function CreateAccount() {
               <input
                 type="password"
                 className="form-control fs-5"
-                value={motDePasseConfirmation}
+                value={mot_de_passe_confirmation}
                 onChange={(e) => setMotDePasseConfirmation(e.target.value)}
               />
             </div>
