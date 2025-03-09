@@ -1,5 +1,4 @@
 import Navbar from "../../element/navbar";
-import Footer from "../../element/footer";
 import { Link } from "react-router-dom";
 import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
 function Cours() {
@@ -130,8 +129,8 @@ function Cours() {
             ))}
           </tbody>
         </table>
+        <h2 className="mt-5"></h2>
       </Fragment>
-      <Footer />
     </>
   );
 }
