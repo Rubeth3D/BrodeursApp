@@ -1,6 +1,8 @@
+-- Fait Par Chatgpt --
+
 -- Création de la table session
 CREATE TABLE session (
-    id_session   SERIAL PRIMARY KEY,
+    id_session   BIGSERIAL PRIMARY KEY,
     code_session VARCHAR(200),
     date_session DATE,
     etat_session VARCHAR(1)
@@ -8,7 +10,7 @@ CREATE TABLE session (
 
 -- Création de la table professeur
 CREATE TABLE professeur (
-    id_professeur       SERIAL PRIMARY KEY,
+    id_professeur       BIGSERIAL PRIMARY KEY,
     nom_complet         VARCHAR(200) NOT NULL,
     etat_professeur     VARCHAR(1),
     utilisateur_id_user INTEGER NOT NULL
@@ -16,7 +18,7 @@ CREATE TABLE professeur (
 
 -- Création de la table utilisateur
 CREATE TABLE utilisateur (
-    id_user          SERIAL PRIMARY KEY,
+    id_user          BIGSERIAL PRIMARY KEY,
     nom_user         VARCHAR(200) NOT NULL,
     mot_de_passe     VARCHAR(200) NOT NULL,
     email            VARCHAR(200) NOT NULL,
@@ -28,7 +30,7 @@ CREATE TABLE utilisateur (
 
 -- Création de la table cours
 CREATE TABLE cours (
-    id_cours           SERIAL PRIMARY KEY,
+    id_cours           BIGSERIAL PRIMARY KEY,
     code_cours         VARCHAR(200),
     description_cours  VARCHAR(2000),
     etat_cours         VARCHAR(1),
@@ -37,7 +39,7 @@ CREATE TABLE cours (
 
 -- Création de la table classe
 CREATE TABLE classe (
-    id_classe                SERIAL PRIMARY KEY,
+    id_classe                BIGSERIAL PRIMARY KEY,
     code_cours               VARCHAR(200),
     description              VARCHAR(2000),
     groupe                   INTEGER,
@@ -49,7 +51,7 @@ CREATE TABLE classe (
 -- Création de la table instrument
 CREATE TABLE instrument (
     professeur_id_professeur INTEGER NOT NULL,
-    id_instrument            SERIAL PRIMARY KEY,
+    id_instrument            BIGSERIAL PRIMARY KEY,
     code_instrument          VARCHAR(200),
     nom                      VARCHAR(2000) NOT NULL,
     sur_denominateur         INTEGER,
@@ -59,7 +61,7 @@ CREATE TABLE instrument (
 -- Création de la table critere
 CREATE TABLE critere (
     instrument_id_instrument INTEGER NOT NULL,
-    id_critere               SERIAL PRIMARY KEY,
+    id_critere               BIGSERIAL PRIMARY KEY,
     code_critere             VARCHAR(200),
     description              VARCHAR(2000),
     valeur                   INTEGER,
@@ -69,7 +71,7 @@ CREATE TABLE critere (
 -- Création de la table etudiant
 CREATE TABLE etudiant (
     equipe_id_equipe    INTEGER,
-    id_etudiant         SERIAL PRIMARY KEY,
+    id_etudiant         BIGSERIAL PRIMARY KEY,
     nom_complet         VARCHAR(200),
     etat_etudiant       VARCHAR(1),
     utilisateur_id_user INTEGER NOT NULL
@@ -84,7 +86,7 @@ CREATE TABLE etudiant_classe (
 
 -- Création de la table equipe
 CREATE TABLE equipe (
-    id_equipe        SERIAL PRIMARY KEY,
+    id_equipe        BIGSERIAL PRIMARY KEY,
     code_equipe      VARCHAR(200),
     nom              VARCHAR(200),
     classe_id_classe INTEGER NOT NULL,
@@ -94,14 +96,14 @@ CREATE TABLE equipe (
 -- Création de la table assignation
 CREATE TABLE assignation (
     travail_id_travail INTEGER NOT NULL,
-    id_assignation     SERIAL PRIMARY KEY,
+    id_assignation     BIGSERIAL PRIMARY KEY,
     equipe_id_equipe   INTEGER NOT NULL
 );
 
 -- Création de la table evaluation
 CREATE TABLE evaluation (
     travail_id_travail       INTEGER NOT NULL,
-    id_evaluation            SERIAL PRIMARY KEY,
+    id_evaluation            BIGSERIAL PRIMARY KEY,
     etudiant_id_etudiant     INTEGER NOT NULL,
     date_evaluation          DATE,
     instrument_id_instrument INTEGER NOT NULL,
@@ -115,7 +117,7 @@ CREATE TABLE evaluation (
 
 -- Création de la table travail
 CREATE TABLE travail (
-    id_travail               SERIAL PRIMARY KEY,
+    id_travail               BIGSERIAL PRIMARY KEY,
     code_travail             VARCHAR(200),
     nom_travail              VARCHAR(200),
     instrument_id_instrument INTEGER,
@@ -128,7 +130,7 @@ CREATE TABLE travail (
 -- Création de la table reponse
 CREATE TABLE reponse (
     evaluation_id_evaluation     INTEGER NOT NULL,
-    id_reponse                   SERIAL PRIMARY KEY,
+    id_reponse                   BIGSERIAL PRIMARY KEY,
     note                         INTEGER,
     commentaire                  VARCHAR(2000),
     niveau_performance_id_niveau INTEGER NOT NULL,

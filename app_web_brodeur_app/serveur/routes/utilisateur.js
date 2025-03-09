@@ -69,22 +69,38 @@ router.post("/", async (req, res) => {
       idEtudiant,
       etatUtilisateur,
     } = req.body;
+
+    logger.info(
+      nomUser +
+        motDePasse +
+        email +
+        typeUtilisateur +
+        idProfesseur +
+        idEtudiant +
+        etatUtilisateur
+    );
+    // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
-      "INSERT ON utilisateur(nom_user,mot_de_passe,email,type_utilisateur,id_professeur,id_etudiant,etat_utilisateur) VALUES($1,$2,$3,$4,$5,$6)"[
-        (nomUser,
+      "INSERT INTO utilisateur(nom_user, mot_de_passe, email, type_utilisateur, id_professeur, id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      [
+        nomUser,
         motDePasse,
         email,
         typeUtilisateur,
         idProfesseur,
         idEtudiant,
-        etatUtilisateur)
+        etatUtilisateur,
       ]
     );
-    res.status(200).json({ message: "Inscription fait avec succes" });
-    logger.info("Insert du user fait avec succes");
+
+    // Afficher le résultat de l'insertion pour le debug
+    logger.info(resultat.rows[0]); // Affiche la première ligne insérée
+
+    res.status(200).json({ message: "Inscription faite avec succès" });
+    logger.info("Insertion de l'utilisateur effectuée avec succès");
   } catch (err) {
-    logger.error(`Erreur lors du insert ${err}`);
-    res.status(500).json({ message: "Erreur lors du insert" });
+    logger.error(`Erreur lors de l'insertion : ${err}`);
+    res.status(500).json({ message: "Erreur lors de l'insertion" });
   }
 });
 
