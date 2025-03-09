@@ -1,17 +1,27 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function CreateAccount() {
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [nomUtilisateur, setNomUtilisateur] = useState("");
+  const [motDePasse, setMotDePasser] = useState("");
+  const [motDePasseConfirmation, setMotDePasserConfirmation] = useState("");
+
+  const creationUtilisateur = async (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <Navbar></Navbar>
       <h2 className=" mb-5"></h2>
-      <div className="container">
+      <form className="container">
         <Link to={"/Connexion"}>
           <button className="btn btn-primary m-5">
             <h2 className="text-center fs-6 m-0">
-              {/*Source image: https://icons.getbootstrap.com/icons/arrow-left/ */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -47,7 +57,7 @@ function CreateAccount() {
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
             <div className="form-group">
-              <label className="fw-bold fs-4">No Identification</label>
+              <label className="fw-bold fs-4">Nom d'utilisateur</label>
               <input type="text" className="form-control fs-5" />
             </div>
           </div>
@@ -107,7 +117,7 @@ function CreateAccount() {
           </button>
         </div>
         <h2 className="mb-5"></h2>
-      </div>
+      </form>
       <Footer></Footer>
     </>
   );

@@ -1,17 +1,35 @@
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 function Connexion() {
-  const [numeroIdentification, setNumeroIdentification] = useState("");
+  const [nomUtilisateur, setNomUtilisateur] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
+  const navigate = useNavigate();
 
-  const ConnexionUser = async (id) => {
+  const connexionUser = async (nomUser, motDePasse, e) => {
     e.preventDefault();
+    if (!nomUser) {
+      console.error("Nom d'utilisateur requis");
+      return;
+    } else if (!motDePasse) {
+      console.error("Mot de passe requis");
+      return;
+    }
     try {
-      const response = await fetch(`http://localhost:8080/utilisateur/${id}`);
-      console.log(response);
+      nomUser = nomUser.split(" ").join("_");
+      console.log(nomUser);
+      const response = await fetch(
+        `http://localhost:8080/utilisateur/${nomUser}`
+      );
+      const jsonData = await response.json();
+      console.log(jsonData.mot_de_passe);
+      console.log(motDePasse == jsonData.mot_de_passe);
+      if (motDePasse == jsonData.mot_de_passe) {
+        console.log("Connexion réussi!!");
+        navigate("/cours");
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -21,20 +39,23 @@ function Connexion() {
     <>
       <Navbar></Navbar>
       <div className=" mb-5"></div>
-      <form className="container">
+      <form
+        className="container"
+        onSubmit={(e) => connexionUser(nomUtilisateur, motDePasse, e)}
+      >
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
           <div className="col-4">
             <div className="form-group mb-5">
-              <label className="fw-bold fs-4">Numéro d'identification</label>
+              <label className="fw-bold fs-4">Nom d'utilisateur</label>
               <div className="input-group">
                 <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Entrer Numéro d'identification"
+                  placeholder="Entrer Nom d'utilisateur"
                   id="inputNumeroIdentification"
-                  value={numeroIdentification}
-                  onChange={(e) => setNumeroIdentification(e.target.value)}
+                  value={nomUtilisateur}
+                  onChange={(e) => setNomUtilisateur(e.target.value)}
                 />
               </div>
             </div>
@@ -52,10 +73,7 @@ function Connexion() {
           </div>
         </div>
         <div className="text-center mt-5">
-          <button
-            className="btn btn-primary fs-3 mb-1"
-            onClick={() => ConnexionUser(numeroIdentification)}
-          >
+          <button type="submit" className="btn btn-primary fs-3 mb-1">
             Connecter
           </button>
           <p>
