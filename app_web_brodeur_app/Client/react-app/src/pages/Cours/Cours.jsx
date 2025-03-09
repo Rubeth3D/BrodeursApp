@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
 function Cours() {
   const [cours, setCours] = useState([]);
   const estFetched = useRef(false);
-
+  //Modifier un cours
   const ModifierCours = ({ cours }) => {
     const [coursMisAJour, setCoursMisAJour] = useState({
       id_cours: cours.id_cours,
@@ -14,7 +14,7 @@ function Cours() {
       session_id_session: cours.session_id_session,
     });
 
-    const handleInputChange = (e) => {
+    const gererChangement = (e) => {
       const { name, value } = e.target;
       setCoursMisAJour((prev) => ({
         ...prev,
@@ -61,7 +61,7 @@ function Cours() {
                   placeholder="Nouveau code du cours"
                   name="code_cours"
                   value={coursMisAJour.code_cours}
-                  onChange={handleInputChange} // Add the change handler
+                  onChange={gererChangement}
                 />
                 <input
                   type="text"
@@ -69,7 +69,7 @@ function Cours() {
                   placeholder="Nouvelle description"
                   name="description_cours"
                   value={coursMisAJour.description_cours}
-                  onChange={handleInputChange}
+                  onChange={gererChangement}
                 />
                 <input
                   type="text"
@@ -77,7 +77,7 @@ function Cours() {
                   placeholder="Nouvel état du cours"
                   name="etat_cours"
                   value={coursMisAJour.etat_cours}
-                  onChange={handleInputChange}
+                  onChange={gererChangement}
                 />
               </div>
 
@@ -92,7 +92,7 @@ function Cours() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={(e) => UpdateCours(e, coursMisAJour)} // Pass the updated state
+                  onClick={(e) => PutCours(e, coursMisAJour)}
                 >
                   Sauvegarder
                 </button>
@@ -103,17 +103,103 @@ function Cours() {
       </>
     );
   };
+  //Ajouter un cours
+  const AjouterCours = () => {
+    const [cours, nouveauCours] = useState({
+      numero: "",
+      description: "",
+      etat: "",
+    });
+    const gererChangement = (e) => {
+      const { name, value } = e.target;
+      nouveauCours((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
 
-  const UpdateCours = async (e, updatedCours) => {
+    return (
+      <>
+        <div className="container col-3">
+          <h2 className="text-center">Ajouter un nouveau cours</h2>
+          <form onSubmit={PostCours}>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span
+                  className="input-group-text"
+                  id="inputGroup-sizing-default"
+                >
+                  Numéro
+                </span>
+              </div>
+              <input
+                type="text"
+                name="numero"
+                className="form-control"
+                aria-label="Default"
+                aria-describedby="inputGroup-sizing-default"
+                value={cours.numero}
+                onChange={gererChangement}
+              />
+            </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span
+                  className="input-group-text"
+                  id="inputGroup-sizing-default"
+                >
+                  Description
+                </span>
+              </div>
+              <input
+                type="text"
+                name="description"
+                className="form-control"
+                aria-label="Default"
+                aria-describedby="inputGroup-sizing-default"
+                value={cours.description}
+                onChange={gererChangement}
+              />
+            </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span
+                  className="input-group-text"
+                  id="inputGroup-sizing-default"
+                >
+                  État
+                </span>
+              </div>
+              <input
+                type="text"
+                name="etat"
+                className="form-control"
+                aria-label="Default"
+                aria-describedby="inputGroup-sizing-default"
+                value={cours.etat}
+                onChange={gererChangement}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Sauvegarder
+            </button>
+          </form>
+        </div>
+      </>
+    );
+  };
+  //J'ai separe les fonction react des fonctions http pour rendre ca un peu plus clair
+  //Update un cours
+  const PutCours = async (e, cours) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        `http://localhost:8080/cours/${updatedCours.id_cours}`,
+        `http://localhost:8080/cours/${cours.id_cours}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedCours),
+          body: JSON.stringify(cours),
         }
       );
 
@@ -126,8 +212,26 @@ function Cours() {
       console.error(`Erreur lors du update du cours : ${err}`);
     }
   };
-
-  const deleteCours = async (id_cours) => {
+  //Insert un cours
+  const PostCours = async (e) => {
+    e.preventDefault();
+    try {
+      const reponse = await fetch(`http://localhost:8080/cours`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cours),
+      });
+      if (!reponse.ok) {
+        throw new Error("Erreur lors de la mise a jour du cours");
+      }
+      window.location.reload;
+      console.log("Cours insere avec succes");
+    } catch (err) {
+      console.log(`Erreur lors de l'insertion du cours ${err}`);
+    }
+  };
+  //delete un cours
+  const DeleteCours = async (id_cours) => {
     try {
       const deleteCours = await fetch(
         `http://localhost:8080/cours/${id_cours}`,
@@ -141,7 +245,7 @@ function Cours() {
     }
   };
   //fonction pour get les cours
-  const getCours = async () => {
+  const GetCours = async () => {
     try {
       const reponse = await fetch("http://localhost:8080/cours");
       const jsonData = await reponse.json();
@@ -154,45 +258,44 @@ function Cours() {
 
   useEffect(() => {
     if (!estFetched.current) {
-      getCours();
+      GetCours();
       estFetched.current = true;
     }
   }, []);
+  //main de la page
   return (
-    <>
-      <Navbar />
-      <Fragment>
-        <table className="table">
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">Code du cours</th>
-              <th scope="col">Description</th>
-              <th scope="col">Etat du cours</th>
-              <th scope="col">Actions</th>
+    <Fragment>
+      <AjouterCours />
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">Code du cours</th>
+            <th scope="col">Description</th>
+            <th scope="col">Etat du cours</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cours.map((cours) => (
+            <tr key={cours.id_cours}>
+              <td>{cours.code_cours}</td>
+              <td>{cours.description_cours}</td>
+              <td>{cours.etat_cours}</td>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => DeleteCours(cours.id_cours)}
+                >
+                  delete
+                </button>
+                <ModifierCours cours={cours} />
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {cours.map((cours) => (
-              <tr key={cours.id_cours}>
-                <td>{cours.code_cours}</td>
-                <td>{cours.description_cours}</td>
-                <td>{cours.etat_cours}</td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteCours(cours.id_cours)}
-                  >
-                    delete
-                  </button>
-                  <ModifierCours cours={cours} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <h2 className="mt-5"></h2>
-      </Fragment>
-    </>
+          ))}
+        </tbody>
+      </table>
+      <h2 className="mt-5"></h2>
+    </Fragment>
   );
 }
 export default Cours;
