@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get d'un cours par le id
-router.get("/:idCours", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const { idCours } = req.params;
     const result = await client.query(
@@ -70,14 +70,14 @@ router.post("/", async (req, res) => {
 });
 
 // Update d'un cours
-router.put("/:idCours", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const { idCours } = req.params;
+    const { id } = req.params;
     const { code_cours, description_cours, etat_cours, session_id_session } =
       req.body;
     const result = await client.query(
       "UPDATE cours SET code_cours = $1, description_cours = $2, etat_cours = $3, session_id_session = $4 WHERE id_cours = $5 RETURNING *",
-      [code_cours, description_cours, etat_cours, session_id_session, idCours]
+      [code_cours, description_cours, etat_cours, session_id_session, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Cours non trouvé" });
@@ -93,7 +93,7 @@ router.put("/:idCours", async (req, res) => {
 });
 
 // DELETE un cours
-router.delete("/:idCours", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const { idCours } = req.params;
     const result = await client.query(
