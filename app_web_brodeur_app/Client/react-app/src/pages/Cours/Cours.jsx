@@ -13,7 +13,7 @@ function Cours() {
           type="button"
           className="btn btn-primary"
           data-bs-toggle="modal"
-          data-bs-target="#id "
+          data-bs-target={`${id.id_cours}`}
         >
           Modifier
         </button>
