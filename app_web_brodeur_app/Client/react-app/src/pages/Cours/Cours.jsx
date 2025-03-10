@@ -14,7 +14,7 @@ function Cours() {
       session_id_session: cours.session_id_session,
     });
 
-    const gererChangement = (e) => {
+    const GererChangement = (e) => {
       const { name, value } = e.target;
       setCoursMisAJour((prev) => ({
         ...prev,
@@ -61,7 +61,7 @@ function Cours() {
                   placeholder="Nouveau code du cours"
                   name="code_cours"
                   value={coursMisAJour.code_cours}
-                  onChange={gererChangement}
+                  onChange={GererChangement}
                 />
                 <input
                   type="text"
@@ -69,7 +69,7 @@ function Cours() {
                   placeholder="Nouvelle description"
                   name="description_cours"
                   value={coursMisAJour.description_cours}
-                  onChange={gererChangement}
+                  onChange={GererChangement}
                 />
                 <input
                   type="text"
@@ -77,7 +77,7 @@ function Cours() {
                   placeholder="Nouvel état du cours"
                   name="etat_cours"
                   value={coursMisAJour.etat_cours}
-                  onChange={gererChangement}
+                  onChange={GererChangement}
                 />
               </div>
 
@@ -111,7 +111,7 @@ function Cours() {
       etat_cours: "A",
       session_id_session: "1",
     });
-    const gererChangement = (e) => {
+    const GererChangement = (e) => {
       const { name, value } = e.target;
       nouveauCours((prev) => ({
         ...prev,
@@ -141,7 +141,7 @@ function Cours() {
                 aria-describedby="inputGroup-sizing-default"
                 placeholder="Nouveau numero"
                 value={cours.code_cours}
-                onChange={gererChangement}
+                onChange={GererChangement}
               />
             </div>
             <div className="input-group mb-3">
@@ -161,7 +161,7 @@ function Cours() {
                 aria-describedby="inputGroup-sizing-default"
                 placeholder="Nouvelle description"
                 value={cours.description_cours}
-                onChange={gererChangement}
+                onChange={GererChangement}
               />
             </div>
             <button type="submit" className="btn btn-primary">
