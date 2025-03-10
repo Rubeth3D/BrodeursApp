@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
 function Cours() {
   const [cours, setCours] = useState([]);
-  const estFetched = useRef(false);
+  const estFetchedCours = useRef(false);
+
   //Modifier un cours
   const ModifierCours = ({ cours }) => {
     const [coursMisAJour, setCoursMisAJour] = useState({
@@ -14,7 +15,7 @@ function Cours() {
       session_id_session: cours.session_id_session,
     });
 
-    const GererChangement = (e) => {
+    const gererChangement = (e) => {
       const { name, value } = e.target;
       setCoursMisAJour((prev) => ({
         ...prev,
@@ -61,7 +62,7 @@ function Cours() {
                   placeholder="Nouveau code du cours"
                   name="code_cours"
                   value={coursMisAJour.code_cours}
-                  onChange={GererChangement}
+                  onChange={gererChangement}
                 />
                 <input
                   type="text"
@@ -69,7 +70,7 @@ function Cours() {
                   placeholder="Nouvelle description"
                   name="description_cours"
                   value={coursMisAJour.description_cours}
-                  onChange={GererChangement}
+                  onChange={gererChangement}
                 />
                 <input
                   type="text"
@@ -77,7 +78,7 @@ function Cours() {
                   placeholder="Nouvel état du cours"
                   name="etat_cours"
                   value={coursMisAJour.etat_cours}
-                  onChange={GererChangement}
+                  onChange={gererChangement}
                 />
               </div>
 
@@ -105,13 +106,16 @@ function Cours() {
   };
   //Ajouter un cours
   const AjouterCours = () => {
+    const [session, setSession] = useState([]);
+    const [sessionSelected, setSessionSelect] = useState("");
     const [cours, nouveauCours] = useState({
       code_cours: "",
       description_cours: "",
       etat_cours: "A",
-      session_id_session: "1",
     });
-    const GererChangement = (e) => {
+    const estFetchedSession = useRef(false);
+
+    const gererChangement = (e) => {
       const { name, value } = e.target;
       nouveauCours((prev) => ({
         ...prev,
@@ -119,11 +123,30 @@ function Cours() {
       }));
     };
 
+    //fonction pour get les sessions
+    const GetSession = async () => {
+      try {
+        const reponse = await fetch("http://localhost:8080/session");
+        const jsonData = await reponse.json();
+        console.log(jsonData);
+        setSession(jsonData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    useEffect(() => {
+      if (!estFetchedSession.current) {
+        estFetchedSession.current = true;
+        GetSession();
+      }
+    }, []);
+
     return (
       <>
         <div className="container col-3">
           <h2 className="text-center">Ajouter un nouveau cours</h2>
-          <form onSubmit={(e) => PostCours(e, cours)}>
+          <form onSubmit={(e) => PostCours(e, cours, sessionSelected)}>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span
@@ -141,7 +164,7 @@ function Cours() {
                 aria-describedby="inputGroup-sizing-default"
                 placeholder="Nouveau numero"
                 value={cours.code_cours}
-                onChange={GererChangement}
+                onChange={gererChangement}
               />
             </div>
             <div className="input-group mb-3">
@@ -161,8 +184,30 @@ function Cours() {
                 aria-describedby="inputGroup-sizing-default"
                 placeholder="Nouvelle description"
                 value={cours.description_cours}
-                onChange={GererChangement}
+                onChange={gererChangement}
               />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="selectBox" className="form-label">
+                Choisissez une session :
+              </label>
+              <div className="position-relative">
+                <select
+                  id="selectBox"
+                  className="form-select custom-select"
+                  onChange={(e) => setSessionSelect(e.target.value)}
+                  value={sessionSelected}
+                >
+                  <option selected value="">
+                    Choose...
+                  </option>
+                  {session.map((session) => (
+                    <option key={session.id_session} value={session.id_session}>
+                      {session.code_session}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <button type="submit" className="btn btn-primary">
               Sauvegarder
@@ -197,13 +242,22 @@ function Cours() {
   };
 
   //Insert un cours
-  const PostCours = async (e, cours) => {
+  const PostCours = async (e, cours, session) => {
     e.preventDefault();
     try {
+      console.log(cours);
+      console.log(session);
+      const data = {
+        code_cours: cours.code_cours,
+        description_cours: cours.description_cours,
+        etat_cours: cours.etat_cours,
+        session_id_session: session,
+      };
+      console.log(data);
       const reponse = await fetch(`http://localhost:8080/cours`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cours),
+        body: JSON.stringify(data),
       });
       if (!reponse.ok) {
         throw new Error("Erreur lors de la mise a jour du cours");
@@ -241,11 +295,12 @@ function Cours() {
   };
 
   useEffect(() => {
-    if (!estFetched.current) {
+    if (!estFetchedCours.current) {
       GetCours();
-      estFetched.current = true;
+      estFetchedCours.current = true;
     }
   }, []);
+
   //main de la page
   return (
     <Fragment>
