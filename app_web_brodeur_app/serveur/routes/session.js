@@ -2,7 +2,7 @@ import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
 import client from "../bd/connexion.js";
-
+//route de cedryk lelightskin
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
