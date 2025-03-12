@@ -27,7 +27,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 - `React.js`
 - `PostgreSQL`
 - `Docker`
-- `PgAdmin`
+- `PgAdmin 4 //pas obligatoire`
 
 ### Étapes d'installation
 
@@ -63,36 +63,60 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
    npm i react-router-dom
    ```
 
-6. Lancer l'application react:
+6. Installer react-dom pour l'application react:
 
    ```bash
-   npm run dev
+   npm i react-router-dom
    ```
 
-7. Lancer l'application react:
+7. Ouvrir un premier cmd et ouvrir le dossier :
 
    ```bash
-   npm i express : main et routes
+   cd app_web_brodeur_app/serveur/main
    ```
 
-8. Lancer docker:
+8. Installer les packages express pour le dossier main:
 
    ```bash
-   docker run --name postgres -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
-
-   docker exec -it postgres psql -U postgres
-
-    Script créer tables
-
-   \dt : voir les tables
-
-
+   npm i express
    ```
 
-9. Lancer le projet :
+9. Ouvrir le dossier routes :
+
    ```bash
-   npm start
+   cd app_web_brodeur_app/serveur/routes
    ```
+
+10. Installer les packages express pour le dossier routes:
+
+    ```bash
+    npm i express
+    ```
+
+11. Lancer l'application react:
+
+    ```bash
+    npm i express : main et routes
+    ```
+
+12. Lancer docker:
+
+    ```bash
+    docker run --name postgres -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
+
+    docker exec -it postgres psql -U postgres
+
+     Script créer tables
+
+    \dt : voir les tables
+
+
+    ```
+
+13. Lancer le projet :
+    ```bash
+    npm start
+    ```
 
 ## Utilisation
 
