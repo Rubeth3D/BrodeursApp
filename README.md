@@ -37,13 +37,13 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
    git clone https://github.com/Rubeth3D/BrodeursApp.git
    ```
 
-2. Ouvrir un premier cmd et ouvrir le dossier :
+2. Ouvrir un premier cmd et ouvrir le dossier:
 
    ```bash
    cd app_web_brodeur_app/client/react-app
    ```
 
-3. Initialiser le package json pour l'application react :
+3. Initialiser le package json pour l'application react:
 
    ```bash
    npm install init
@@ -69,37 +69,43 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
    npm i react-router-dom
    ```
 
-7. Ouvrir un premier cmd et ouvrir le dossier :
+7. Lancer l'application react:
+
+   ```bash
+   npm  run dev
+   ```
+
+8. Ouvrir un deuxième cmd et ouvrir le dossier:
 
    ```bash
    cd app_web_brodeur_app/serveur/main
    ```
 
-8. Installer les packages express pour le dossier main:
+9. Installer les packages express pour le dossier main:
 
    ```bash
    npm i express
    ```
 
-9. Ouvrir le dossier routes :
+10. Ouvrir le dossier routes:
 
-   ```bash
-   cd app_web_brodeur_app/serveur/routes
-   ```
+    ```bash
+    cd app_web_brodeur_app/serveur/routes
+    ```
 
-10. Installer les packages express pour le dossier routes:
+11. Installer les packages express pour le dossier routes:
 
     ```bash
     npm i express
     ```
 
-11. Lancer l'application react:
+12. Lancer l'application react:
 
     ```bash
     npm i express : main et routes
     ```
 
-12. Lancer docker:
+13. Lancer docker:
 
     ```bash
     docker run --name postgres -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
@@ -113,7 +119,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
     ```
 
-13. Lancer le projet :
+14. Lancer le projet :
     ```bash
     npm start
     ```
