@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-//get pour les etudiants
+//get pour les professeurs
 router.get("/", async (req, res) => {
   try {
     const resultat = await client.query("SELECT * FROM professeur");
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//get pour un etudiant
+//get pour un professeur
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params;
@@ -57,7 +57,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//post pour un etudiant
+//post pour un professeur
 router.post("/", async (req, res) => {
   try {
     const { nomComplet, etat_professeur, utilisateur_id } = req.body;
@@ -74,19 +74,20 @@ router.post("/", async (req, res) => {
   }
 });
 
-//put pour un etudiant
+//put pour un professeur
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params;
-    const { equipeIdEquipe, nomComplet, etatEtudiant } = req.body;
+    const { id_professeur, nom_complet, etat_professeur, utilisateur_id_user } =
+      req.body;
     const resultat = await client.query(
-      "UPDATE ON etudiant SET equipe_id_equipe = $1, nom_complet = $2, etat_etudiant = $3 WHERE id_etudiant = $4 RETURNING *"
+      "UPDATE ON professeur SET nom_complet = $1, etat_professeur = $2, utilisateur_id_user = $3 WHERE id_professeur = $4 RETURNING *"
     );
     if (resultat.rows.length === 0) {
-      logger.error("Aucun etudiant ne correspond a ce id");
+      logger.error("Aucun professeur ne correspond a ce id");
       return res
         .status(404)
-        .json({ message: "Aucun etudiant ne correspond a ce id" });
+        .json({ message: "Aucun professeur ne correspond a ce id" });
     }
     res.status(200).json({ message: "Update fait avec succes!" });
     logger.info("Update fait avec succes!");
@@ -102,20 +103,20 @@ router.delete("/:id", async (req, res) => {
   try {
     const id = req.params;
     const resultat = await client.query(
-      "DELETE FROM etudiant WHERE id = $1 RETURNING *",
+      "DELETE FROM professeur WHERE id_professeur = $1 RETURNING *",
       [id]
     );
     if (resultat.rows.length === 0) {
-      logger.error("Aucun etudiant ne correspond a ce id");
+      logger.error("Aucun professeur ne correspond a ce id");
       return res
         .status(404)
-        .json({ message: "Aucun etudiant ne correspond a ce id" });
+        .json({ message: "Aucun professeur ne correspond a ce id" });
     }
 
     res.status(200).json({ message: "Cours retire" });
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors du delete du cours" });
-    logger.error(`Erreur lors du delete du cours ${err}`);
+    res.status(500).json({ message: "Erreur lors du delete du professeur" });
+    logger.error(`Erreur lors du delete du professeur ${err}`);
   }
 });
 

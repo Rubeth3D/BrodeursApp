@@ -50,7 +50,7 @@ router.get("/:id", async (req, res) => {
     }
 
     res.status(200).json(resultat.rows);
-    logger.info("Get du etudiant effectue avec succes!");
+    logger.info("Get de l'etudiant effectue avec succes!");
   } catch (err) {
     logger.error(`Erreur lors du get du etudiant : ${err}`);
     res.status(500).json({ message: "Erreur lors du get du etudiant" });
