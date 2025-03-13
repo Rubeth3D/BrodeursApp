@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//get pour un critere
+//get pour une classe d'etudiant
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params;
@@ -59,11 +59,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//post pour un critere
+//post pour une classe d'etudiant
 router.post("/", async (req, res) => {
   try {
     const {
-      instrumentIdInstrument,
+      classe_,
       idCritere,
       codeCritere,
       description,
