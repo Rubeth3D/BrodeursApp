@@ -97,7 +97,7 @@ router.delete("/:id", async (req, res) => {
       id
     );
     logger.info("Supprimer le travail effectuer avec succes");
-    res.status(200).json({ message: "Travail supprimé avec succès!" });
+    res.status(200).json({ message: "Travail supprimé avec succes!" });
   } catch (err) {
     logger.error(`Erreur lors de la suppression du travail : ${err}`);
     res.status(500).json({ message: "Erreur lors de la suppression du travail!" });
