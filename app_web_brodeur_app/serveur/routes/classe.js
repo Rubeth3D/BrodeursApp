@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-//get de toutes les classes
+//Get toutes les classes
 router.get("/", async (req, res) => {
   try {
     const resultat = await client.query("GET * FROM classe");
@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//get d'une classe
+//Get d'une classe
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params;

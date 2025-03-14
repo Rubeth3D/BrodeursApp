@@ -21,7 +21,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-//get travaux
+//Get tous les travaux
 router.get("/", async (req, res) => {
   try {
     const resultat = await client.query("SELECT * FROM travail");
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//get un travail
+//Get un travail
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params;
@@ -55,7 +55,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//post travail
+//Post un travail
 router.post("/", async (req, res) => {
   try {
     const {code_travail, nom_travail, instrument_id_instrument, date_cloture, date_travail,classe_id_classe,etat_travail} = req.body;
@@ -71,7 +71,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//put travail
+//Put un travail
 router.put("/:id", async (req, res) => {
   try {
     const { code_travail, nom_travail, instrument_id_instrument, date_cloture, date_travail,classe_id_classe,etat_travail } = req.body;
@@ -88,7 +88,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//delete travail
+//Delete un travail
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params;
