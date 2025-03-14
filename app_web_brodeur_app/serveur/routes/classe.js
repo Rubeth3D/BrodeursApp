@@ -78,12 +78,12 @@ router.post("/", async (req, res) => {
       "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
       [code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe]);
       logger.info("Insertion de la classe effectue avec succes!");
-      res.status(201).json(resultat.rows[0]);
+      res.status(200).json(resultat.rows[0]);
   } catch (err) {
-    logger.error(`Erreur lors de l'insertion de la classe ${err}`);
+    logger.error(`Erreur de l'insertion de la classe ${err}`);
     res.status(500);
     res.json({
-      message: "Erreur lors de l'insertion de la classe",
+      message: "Erreur de l'insertion de la classe",
     });
   }
 });
@@ -105,10 +105,10 @@ router.put("/:id", async (req, res) => {
     logger.info("Update de la classe effectue avec succes!");
     res.status(200).json(resultat.rows[0]);
   } catch (err) {
-    logger.error(`Erreur lors de l'update de la classe ${err}`);
+    logger.error(`Erreur de l'update de la classe ${err}`);
     res.status(500);
     res.json({
-      message: "Erreur lors de l'update de la classe",
+      message: "Erreur de l'update de la classe",
     });
   }
 });
@@ -126,13 +126,13 @@ router.delete("/:id", async (req, res) => {
         .status(404)
         .json({ message: `Aucune classe ne correspond au id : ${id}!` });
     }
-    logger.info("Delete de la classe effectue avec succes!");
+    logger.info("Supprimer la classe effectue avec succes!");
     res.status(200).json(resultat.rows[0]);
   } catch (err) {
-    logger.error(`Erreur lors du delete de la classe ${err}`);
+    logger.error(`Erreur supprimer de la classe ${err}`);
     res.status(500);
     res.json({
-      message: "Erreur lors du delete de la classe",
+      message: "Erreur supprimer de la classe",
     });
   }
 });
