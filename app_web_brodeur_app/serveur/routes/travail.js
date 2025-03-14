@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
     logger.info("Get tous les travaux effectuer avec succes!");
   } catch (err) {
     logger.error(`Erreur lors du fetch des travaux : ${err}`);
-    res.status(500).json({ message: "Erreur lors du fetch des travaux!" });
+    res.status(500).json({ message: "Erreur lors du fetch des travaux" });
   }
 });
 
@@ -51,7 +51,7 @@ router.get("/:id", async (req, res) => {
     logger.info("Get du travail effectuer avec succes!");
   } catch (err) {
     logger.error(`Erreur lors du fetch du travail : ${err}`);
-    res.status(500).json({ message: "Erreur lors du fetch du travail!" });
+    res.status(500).json({ message: "Erreur lors du fetch du travail" });
   }
 });
 
@@ -67,7 +67,7 @@ router.post("/", async (req, res) => {
     res.status(200).json(resultat.rows);
     } catch (err) {
     logger.error(`Erreur lors de l'insertion du travail : ${err}`);
-    res.status(500).json({ message: "Erreur lors de l'insertion du travail!" });
+    res.status(500).json({ message: "Erreur lors de l'insertion du travail" });
   }
 });
 
@@ -97,7 +97,7 @@ router.delete("/:id", async (req, res) => {
       id
     );
     logger.info("Supprimer le travail effectuer avec succes");
-    res.status(200).json({ message: "Travail supprimé avec succes!" });
+    res.status(200).json({ message: "Travail supprime avec succes!" });
   } catch (err) {
     logger.error(`Erreur lors de la suppression du travail : ${err}`);
     res.status(500).json({ message: "Erreur lors de la suppression du travail!" });
