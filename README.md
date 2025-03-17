@@ -10,7 +10,7 @@ Projet fait par l'équipe de développement Brodeur Apps
 
 ## Description
 
-Projet visant à créer un logiciel pour aider les professeurs. Le logiciel permet de créer des activitées pour évaluer ses coéquipier pendant un projet en classe.
+Projet visant à créer un logiciel pour aider les professeurs. Le logiciel permet de créer des activitées pour évaluer ses coéquipier après un projet en classe.
 
 ## Installation
 
