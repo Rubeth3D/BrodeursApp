@@ -6,10 +6,7 @@ Projet fait par l'équipe de développement Brodeur Apps
 
 1. [Description](#description)
 2. [Installation](#installation)
-3. [Utilisation](#utilisation)
-4. [Contribuer](#contribuer)
-5. [License](#license)
-6. [Auteurs](#auteurs)
+3. [Auteurs](#auteurs)
 
 ## Description
 
