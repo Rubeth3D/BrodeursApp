@@ -43,97 +43,71 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
    cd app_web_brodeur_app/client/react-app
    ```
 
-3. Initialiser le package json pour l'application react:
+3. Installer les dépendances pour l'application react:
 
    ```bash
-   npm install init
+   npm i
    ```
 
-4. Installer les dépendances pour l'application react:
+4. Lancer l'application react:
 
    ```bash
-   npm install
+   npm run dev
    ```
 
-5. Installer bootstrap pour l'application react:
+5. Ouvrir un deuxième cmd et ouvrir le dossier:
 
    ```bash
-   npm install bootstrap
-
-   npm i react-router-dom
+   cd app_web_brodeur_app/serveur/routes
    ```
 
-6. Installer react-dom pour l'application react:
-
-   ```bash
-   npm i react-router-dom
-   ```
-
-7. Lancer l'application react:
-
-   ```bash
-   npm  run dev
-   ```
-
-8. Ouvrir un deuxième cmd et ouvrir le dossier:
-
-   ```bash
-   cd app_web_brodeur_app/serveur/main
-   ```
-
-9. Installer les packages express pour le dossier main:
+6. Installer les packages express pour le dossier routes:
 
    ```bash
    npm i express
    ```
 
-10. Ouvrir le dossier routes:
+7. Ouvrir le dossier main:
 
     ```bash
-    cd app_web_brodeur_app/serveur/routes
+    cd app_web_brodeur_app/serveur/main
     ```
 
-11. Installer les packages express pour le dossier routes:
+8. Installer les packages express pour le dossier main:
 
     ```bash
     npm i express
     ```
 
-12. Lancer l'application react:
+9. Lancer le serveur express: 
 
     ```bash
-    npm i express : main et routes
-    ```
+    node serveur.js
+    ``` 
 
-13. Lancer docker:
+10. Installer la base de données dans un terminal:
 
     ```bash
     docker run --name postgres -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
     docker exec -it postgres psql -U postgres
 
-     Script créer tables
-
-    \dt : voir les tables
-
-
     ```
 
-14. Lancer le projet :
+11. Création de la base de données :
+
     ```bash
-    npm start
+      Ouvrir le dossier BrodeursApp\Modele E-A.
+
+      Copier et coller le fichier 'postgreSQL_utilisateur_scriptDeCreation'
     ```
 
-## Utilisation
+12. Peuplé la base de données :
 
-Expliquez comment utiliser le projet une fois qu'il est installé. Si nécessaire, fournissez des exemples de commandes, d'options ou de configurations.
+    ```bash
 
-Exemple d'utilisation basique :
-
-```bash
-node index.js
-
-```
+      Copier et coller le fichier 'postgreSQL_Remplir'
+    ```
 
 ## Auteurs
 
