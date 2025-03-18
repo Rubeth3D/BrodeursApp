@@ -23,97 +23,148 @@ router.use(express.json());
 //get pour les equipes
 router.get("/", async (req, res) => {
   try {
-    const resultat = await client.query("SELECT * FROM equipe");
+    const resultat = await client.query("SELECT * FROM evaluation");
     res.status(200).json(resultat.rows);
-    logger.info("Get des equipes effectue avec succes!");
+    logger.info("Get des evaluations effectue avec succes!");
   } catch (err) {
-    logger.error(`Erreur lors du fetch des equipes : ${err}`);
-    res.status(500).json({ message: "Erreur lors du fetch des equipes!" });
+    logger.error(`Erreur lors du fetch des evaluations : ${err}`);
+    res.status(500).json({ message: "Erreur lors du fetch des evaluations!" });
   }
 });
 
-//get pour un etudiant
+//get pour une evaluation
 router.get("/:id", async (req, res) => {
   try {
     const id = req.params;
     const resultat = await client.query(
-      "SELECT * FROM equipe WHERE id_equipe = $1",
+      "SELECT * FROM evaluation WHERE id_evaluation = $1",
       [id]
     );
 
     if (resultat.rowCount === 0) {
-      logger.error(`Aucune equipe n'a le id : ${id}`);
+      logger.error(`Aucune evaluation n'a le id : ${id}`);
       return res
         .status(404)
-        .json({ message: `Aucune equipe n'a le id :${id}` });
+        .json({ message: `Aucune evaluation n'a le id :${id}` });
     }
 
     res.status(200).json(resultat.rows);
-    logger.info("Get de l'equipe effectue avec succes!");
+    logger.info("Get de l'evaluation effectue avec succes!");
   } catch (err) {
-    logger.error(`Erreur lors du get de l'equipe : ${err}`);
-    res.status(500).json({ message: "Erreur lors du get de l'equipe" });
+    logger.error(`Erreur lors du get de l'evaluation : ${err}`);
+    res.status(500).json({ message: "Erreur lors du get de l'evaluation" });
   }
 });
 
-//post pour un etudiant
+//post pour une evaluation
 router.post("/", async (req, res) => {
   try {
-    const { code_equipe, nom, classe_id_classe, etat_equipe } = req.body;
+    const {
+      travail_id_travail,
+      etudiant_id_etudiant,
+      date_evaluation,
+      instrument_id_instrument,
+      equipe_id_equipe,
+      code_evaluation,
+      description,
+      classe_id_classe,
+      evaluation_terminee,
+      etat_evaluation,
+    } = req.body;
     const resultat = await client.query(
-      "INSERT ON etudiant(code_equipe,nom,classe_id_classe,etat_equipe) VALUES($1,$2,$3,$4)",
-      [(code_equipe, nom, classe_id_classe, etat_equipe)]
+      "INSERT ON etudiant(travail_id_travail, etudiant_id_etudiant, date_evaluation,instrument_id_instrument,equipe_id_equipe,code_evaluation,description,classe_id_classe,evaluation_terminee,etat_evaluation) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+      [
+        (travail_id_travail,
+        etudiant_id_etudiant,
+        date_evaluation,
+        instrument_id_instrument,
+        equipe_id_equipe,
+        code_evaluation,
+        description,
+        classe_id_classe,
+        evaluation_terminee,
+        etat_evaluation),
+      ]
     );
     res.status(200).json({ message: "Inscription fait avec succes" });
-    logger.info("Insert de l'equipe faite avec succes");
+    logger.info("Insert de l'evaluation faite avec succes");
   } catch (err) {
-    logger.error(`Erreur lors de l'insert de l'equipe ${err}`);
-    res.status(500).json({ message: "Erreur lors de l'insert de l'equipe" });
+    logger.error(`Erreur lors de l'insert de l'evaluation ${err}`);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de l'insert de l'evaluation" });
   }
 });
 
-//put pour un etudiant
+//put pour une evaluation
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params;
-    const { code_equipe, nom, classe_id_classe, etat_equipe } = req.body;
+    const {
+      travail_id_travail,
+      etudiant_id_etudiant,
+      date_evaluation,
+      instrument_id_instrument,
+      equipe_id_equipe,
+      code_evaluation,
+      description,
+      classe_id_classe,
+      evaluation_terminee,
+      etat_evaluation,
+    } = req.body;
     const resultat = await client.query(
-      "UPDATE ON etudiant SET code_equipe = $1, nom = $2, classe_id_classe = $3, etat_equipe = $4 WHERE id_etudiant = $5 RETURNING *",
-      [code_equipe, nom, classe_id_classe, etat_equipe, id]
+      "UPDATE ON etudiant SET travail_id_travail = $1, etudiant_id_etudiant = $2, date_evaluation = $3, instrument_id_instrument = $4 , equipe_id_equipe = $5, code_evaluation = $6, description = $7, classe_id_classe = $8,evaluation_terminee = $9, etat_evaluation = $10 WHERE id_evaluation = $11 RETURNING *",
+      [
+        (travail_id_travail,
+        etudiant_id_etudiant,
+        date_evaluation,
+        instrument_id_instrument,
+        equipe_id_equipe,
+        code_evaluation,
+        description,
+        classe_id_classe,
+        evaluation_terminee,
+        etat_evaluation,
+        id),
+      ]
     );
     if (resultat.rows.length === 0) {
-      logger.error("Aucune equipe ne correspond a ce id");
+      logger.error("Aucune evaluation ne correspond a ce id");
       return res
         .status(404)
-        .json({ message: "Aucune equipe ne correspond a ce id" });
+        .json({ message: "Aucune evaluation ne correspond a ce id" });
     }
-    res.status(200).json({ message: "Update de l'equipe fait avec succes!" });
-    logger.info("Update de l'equipe fait avec succes!");
+    res
+      .status(200)
+      .json({ message: "Update de l'evaluation fait avec succes!" });
+    logger.info("Update de l'evaluation fait avec succes!");
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors de l'update de l'equipe" });
-    logger.error(`Erreur lors de l'update de l'equipe : ${err}`);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de l'update de l'evaluation" });
+    logger.error(`Erreur lors de l'update de l'evaluation : ${err}`);
   }
 });
 
-//delete pour une equipe
+//delete pour une evaluation
 
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params;
     const resultat = await client.query(
-      "DELETE FROM equipe WHERE id = $1 RETURNING *",
+      "DELETE FROM evaluation WHERE id = $1 RETURNING *",
       [id]
     );
     if (resultat.rows.length === 0) {
-      logger.error("Aucune equipe ne correspond a ce id");
+      logger.error("Aucune evaluation ne correspond a ce id");
       return res
         .status(404)
-        .json({ message: "Aucune equipe ne correspond a ce id" });
+        .json({ message: "Aucune evaluation ne correspond a ce id" });
     }
 
-    res.status(200).json({ message: "Equipe retire" });
+    res.status(200).json({ message: "evaluation retire" });
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors du delete de l'equipe" });
+    res.status(500).json({ message: "Erreur lors du delete de l'evaluation" });
     logger.error(`Erreur lors du delete de l'equipe : ${err}`);
   }
 });
