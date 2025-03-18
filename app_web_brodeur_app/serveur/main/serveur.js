@@ -1,4 +1,5 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import winston from "winston";
 import cours from "../routes/cours.js";
@@ -21,6 +22,7 @@ const logger = winston.createLogger({
 
 const app = express();
 app.use(cors());
+app.use(cookieParser());
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", session);

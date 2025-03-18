@@ -48,7 +48,6 @@ router.get("/:nom_user", async (req, res) => {
         .status(404)
         .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
     }
-
     res.status(200).json(resultat.rows[0]);
     logger.info("Get du user effectue avec succes!");
   } catch (err) {
@@ -60,6 +59,7 @@ router.get("/:nom_user", async (req, res) => {
 //vérifier la connexion d'un utilisateur
 router.get("/:nom_user/:motDePasse", async (req, res) => {
   try {
+    console.log(req.cookies);
     const { nom_user, motDePasse } = req.params;
     const resultat = await client.query(
       "SELECT * FROM utilisateur WHERE nom_user = $1 AND mot_de_passe = $2",
@@ -73,7 +73,12 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
         .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
     }
 
-    res.status(200).json([{ message: "Connexion réussie!" }]);
+    res
+      //cookie expire après 1h
+      .cookie("Connexion", "connect", { maxAge: 60000 * 60 })
+      .status(200)
+      .json([{ message: "Connexion réussie!" }]);
+
     logger.info("Connexion de l'utilisateur effectuer avec succes!");
   } catch (err) {
     logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
