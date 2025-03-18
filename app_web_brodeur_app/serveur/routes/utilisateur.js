@@ -57,6 +57,33 @@ router.get("/:nom_user", async (req, res) => {
   }
 });
 
+//vérifier la connexion d'un utilisateur
+router.get("/:nom_user/:motDePasse", async (req, res) => {
+  try {
+    const { nom_user, motDePasse } = req.params;
+    const resultat = await client.query(
+      "SELECT * FROM utilisateur WHERE nom_user = $1 AND mot_de_passe = $2",
+      [nom_user, motDePasse]
+    );
+
+    if (resultat.rowCount == 0) {
+      logger.error(`Aucun utilisateur ne correspond`);
+      return res
+        .status(404)
+        .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
+    }
+
+    res.status(200).json([{ message: "Connexion réussie!" }]);
+    logger.info("Connexion de l'utilisateur effectuer avec succes!");
+  } catch (err) {
+    logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la connexion de l'utilisateur" });
+    logger.error(`Erreur lors de la: ${err}`);
+  }
+});
+
 //post pour un utilisateur
 router.post("/", async (req, res) => {
   try {

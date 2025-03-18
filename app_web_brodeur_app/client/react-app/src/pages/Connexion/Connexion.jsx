@@ -18,17 +18,15 @@ function Connexion() {
       return;
     }
     try {
-      nomUser = nomUser.split(" ").join("_");
-      console.log(nomUser);
       const response = await fetch(
-        `http://localhost:8080/utilisateur/${nomUser}`
+        `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`
       );
-      const jsonData = await response.json();
-      console.log(jsonData.mot_de_passe);
-      console.log(motDePasse == jsonData.mot_de_passe);
-      if (motDePasse == jsonData.mot_de_passe) {
-        console.log("Connexion réussi!!");
+      const dataJson = await response.json();
+      if (response.status == 200) {
+        console.log(dataJson.message);
         navigate("/cours");
+      } else if (response.status == 404) {
+        console.log(dataJson.message);
       }
     } catch (err) {
       console.log(err.message);
