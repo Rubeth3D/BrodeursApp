@@ -36,6 +36,18 @@ router.get("/", async (req, res) => {
 //get pour un utilisateur
 router.get("/:nom_user", async (req, res) => {
   try {
+    if (!req.cookies.UserData) {
+      return res.status(401).json({ message: "Accès refusé, cookie manquant" });
+    }
+
+    let cookieData;
+    try {
+      cookieData = JSON.parse(req.cookies.UserData);
+      //après vérifier que le idSession est bon
+    } catch (error) {
+      return res.status(400).json({ message: "Cookie invalide" });
+    }
+
     const { nom_user } = req.params;
     const resultat = await client.query(
       "SELECT * FROM utilisateur WHERE nom_user = $1",
@@ -59,7 +71,8 @@ router.get("/:nom_user", async (req, res) => {
 //vérifier la connexion d'un utilisateur
 router.get("/:nom_user/:motDePasse", async (req, res) => {
   try {
-    console.log(req.cookies);
+    //const cookieData = JSON.parse(req.cookies.UserData);
+    //console.log(cookieData.idSession);
     const { nom_user, motDePasse } = req.params;
     const resultat = await client.query(
       "SELECT * FROM utilisateur WHERE nom_user = $1 AND mot_de_passe = $2",
@@ -75,9 +88,18 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
 
     res
       //cookie expire après 1h
-      .cookie("Connexion", "connect", { maxAge: 60000 * 60 })
-      .status(200)
-      .json([{ message: "Connexion réussie!" }]);
+      .cookie(
+        "UserData",
+        JSON.stringify({
+          idSession: 1,
+          connection: "Connect",
+          role: "Utilisateur",
+        }),
+        {
+          maxAge: 60000 * 60,
+        }
+      );
+    res.status(200).json([{ message: "Connexion réussie!" }]);
 
     logger.info("Connexion de l'utilisateur effectuer avec succes!");
   } catch (err) {

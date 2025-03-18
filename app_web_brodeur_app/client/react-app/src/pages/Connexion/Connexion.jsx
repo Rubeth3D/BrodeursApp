@@ -17,6 +17,7 @@ function Connexion() {
       console.error("Mot de passe requis");
       return;
     }
+    console.log(motDePasse + " " + nomUser);
     try {
       const response = await fetch(
         `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`
