@@ -118,27 +118,6 @@ function Etudiant() {
   };
   //J'ai separe les fonction react des fonctions http pour rendre ca un peu plus clair
   //Update un cours
-  const PutCours = async (e, cours) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:8080/cours/${cours.id_cours}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cours),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de la mise à jour du cours");
-      }
-      window.location.reload();
-      console.log("Cours mis à jour avec succès !");
-    } catch (err) {
-      console.error(`Erreur lors du update du cours : ${err}`);
-    }
-  };
 
   //Insert un cours
   const PostCours = async (e, cours, session) => {
