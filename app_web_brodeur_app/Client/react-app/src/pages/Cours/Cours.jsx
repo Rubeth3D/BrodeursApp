@@ -1,6 +1,8 @@
 import Navbar from "../../element/navbar";
 import { Link } from "react-router-dom";
 import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
+import popUpModifier from "../../element/PopUpModifier";
+
 function Cours() {
   const [cours, setCours] = useState([]);
   const estFetchedCours = useRef(false);
@@ -8,10 +10,10 @@ function Cours() {
   //Modifier un cours
   const ModifierCours = ({ cours }) => {
     const [coursMisAJour, setCoursMisAJour] = useState({
-      id_cours : cours.id_cours,
-      code_cours : cours.code_cours,
-      description_cours : cours.description_cours,
-      etat_cours : cours.etat_cours,
+      id_cours: cours.id_cours,
+      code_cours: cours.code_cours,
+      description_cours: cours.description_cours,
+      etat_cours: cours.etat_cours,
       session_id_session: cours.session_id_session,
     });
 
@@ -327,7 +329,7 @@ function Cours() {
                 >
                   delete
                 </button>
-                <ModifierCours cours={cours} />
+                <popUpModifier cours={cours} />
               </td>
             </tr>
           ))}

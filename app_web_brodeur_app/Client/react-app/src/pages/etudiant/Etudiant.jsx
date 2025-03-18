@@ -1,7 +1,8 @@
 import Navbar from "../../element/navbar";
 import { Link } from "react-router-dom";
 import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
-import popUpModifier from "../../element/popUpModifier";
+// @ts-ignore
+import PopUpModifier from "../../element/PopUpModifier";
 function Etudiant() {
   //Ajouter un cours
   const AjouterCours = () => {
@@ -40,7 +41,6 @@ function Etudiant() {
         GetSession();
       }
     }, []);
-    <popUpModifier />;
     return (
       <>
         <div className="container col-3">
@@ -226,7 +226,7 @@ function Etudiant() {
                 >
                   delete
                 </button>
-                <ModifierCours cours={cours} />
+                <popUpModifier cours={cours} />;
               </td>
             </tr>
           ))}
