@@ -43,7 +43,7 @@ router.get("/:nom_user", async (req, res) => {
     let cookieData;
     try {
       cookieData = JSON.parse(req.cookies.UserData);
-      //après vérifier que le idSession est bon
+      //après vérifier que le idSession est bon dans la bd
     } catch (error) {
       return res.status(400).json({ message: "Cookie invalide" });
     }
@@ -71,8 +71,6 @@ router.get("/:nom_user", async (req, res) => {
 //vérifier la connexion d'un utilisateur
 router.get("/:nom_user/:motDePasse", async (req, res) => {
   try {
-    //const cookieData = JSON.parse(req.cookies.UserData);
-    //console.log(cookieData.idSession);
     const { nom_user, motDePasse } = req.params;
     const resultat = await client.query(
       "SELECT * FROM utilisateur WHERE nom_user = $1 AND mot_de_passe = $2",
@@ -99,9 +97,9 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
           maxAge: 60000 * 60,
         }
       );
-    res.status(200).json([{ message: "Connexion réussie!" }]);
 
     logger.info("Connexion de l'utilisateur effectuer avec succes!");
+    return res.status(200).json([{ message: "Connexion réussie!" }]);
   } catch (err) {
     logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
     res
