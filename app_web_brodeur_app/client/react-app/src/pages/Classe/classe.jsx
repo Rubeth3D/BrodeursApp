@@ -37,6 +37,7 @@ function Classe() {
         <div className="d-flex justify-content-end mt-5 mx-5" >
             <button type="button" className="btn btn-primary"> + Ajouter une classe</button>
         </div>
+        
         <Footer/>
         </>
     ); 
