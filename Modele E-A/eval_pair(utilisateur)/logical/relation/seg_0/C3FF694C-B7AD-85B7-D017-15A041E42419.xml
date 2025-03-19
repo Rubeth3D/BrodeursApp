@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Classe Cours FK" directorySegmentName="seg_0" id="C3FF694C-B7AD-85B7-D017-15A041E42419">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:03:41 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<sourcePk>2E9CC9A7-9495-AA7A-6FC6-8C69C3E77548</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>être divisé</nameOnSource>
+<nameOnTarget>être associée</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>4E1C5C9F-AE8C-0E87-AC35-7E5005FA34B5</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>C679008A-2D41-F7DC-0CF5-72AD0D9256F1</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

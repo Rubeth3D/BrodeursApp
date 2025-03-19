@@ -1,0 +1,140 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4BD4452D-23A3-91BA-71B3-780205D35C9B" name="Reponse">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>5EE5E782-6856-DD01-D70C-9A9CEB875970</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Evaluation_id_evaluation" id="1E6ACD94-9DF9-1818-C4E4-502299547019">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>A4D1453D-1215-4688-7700-94422D27FD63</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0ADDA6A0-3122-A4D7-A642-AB2AE4D7F374" referredColumn="1BDC215A-1341-C6EC-6F68-26B59B9D2296"/>
+</associations>
+</Column>
+<Column name="id_reponse" id="74D05C41-0AD9-58EF-2565-0EA75B12803D">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>F18C6FA3-3E5A-2552-70C0-7C67CC4E5501</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="note" id="26703623-7BBC-B24A-86A7-C1C99DF2B2B3">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>EEF8F828-CE5A-F051-57E8-7FAAC40A3463</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="commentaire" id="F56B8395-D79B-D2BD-08E2-D2E78F1C9314">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>302EDFF8-DA37-E594-87E9-1B38F8EAFE42</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2000</dataTypeSize>
+<ownDataTypeParameters>2000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Niveau_performance_id_niveau" id="C0D5186C-AC3B-AAC2-3B14-209F2381FEC6">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>FB12AF58-FABE-71D4-BF71-C7363A25971D</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="448B921E-2AB8-D9AF-27F6-F248750FAC9C" referredColumn="401D67FE-0A38-B123-DE8D-0939324C5204"/>
+</associations>
+</Column>
+<Column name="etat_reponse" id="1EEFCE84-A75D-A836-4E81-0358AE3BA576">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<generatorID>605AB70A-B433-79F3-5C63-5129704AD7C4</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1BAA3105-D3BC-BA44-35F9-E148B3C07D60" name="Reponse_PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>8B67EDF0-9A1F-BBF8-4629-ABACBCA1E8B1</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="74D05C41-0AD9-58EF-2565-0EA75B12803D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="48F81003-E70B-8561-4FD9-FBFD31607DDA" name="Reponse__IDX">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:56:16 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>032E5A5F-F5D3-B1CE-4151-6820CDFC5C33</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="C0D5186C-AC3B-AAC2-3B14-209F2381FEC6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="57BB3D10-D7B2-E19B-5AE2-D91C1256B9B0" name="Reponse_Evaluation_FK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2024-10-11 15:46:50 UTC</createdTime>
+<generatorID>BFC0A0E4-4EE1-BE51-1CFD-8862D5622BE0</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1E6ACD94-9DF9-1818-C4E4-502299547019"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="16C78CB2-A71F-132A-16D3-215F598F8EE6" name="Reponse_Niveau_performance_FK">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-03-01 23:37:01 UTC</createdTime>
+<generatorID>032E5A5F-F5D3-B1CE-4151-6820CDFC5C33</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C0D5186C-AC3B-AAC2-3B14-209F2381FEC6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

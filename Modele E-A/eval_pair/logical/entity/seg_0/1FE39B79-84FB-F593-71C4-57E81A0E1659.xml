@@ -79,6 +79,20 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="id_utilisateur" id="093E7E1A-3687-C271-8909-D56C4484BDF0">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:23:29 UTC</createdTime>
+<generatorID>1E88230E-6E73-C7C0-F186-0B1A4BEBB646</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<referedAttribute>BE7CF122-B0D6-D273-4284-977C11AA6979</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="8A10FE13-F004-2FF7-58C8-F66283932C59" name="Etudiant PK">

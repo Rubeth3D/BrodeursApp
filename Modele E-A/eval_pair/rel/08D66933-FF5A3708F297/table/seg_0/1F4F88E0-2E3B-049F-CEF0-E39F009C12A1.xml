@@ -54,6 +54,21 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="Utilisateur_id_utilisateur" id="82D936EA-D8C5-FDFB-F6BD-4EEC4D504E24">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>FAAB0D8A-EDA3-5458-5871-D0AB9CFFF82F</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AEAABD76-DF32-279F-31DE-FBA8644D8794" referredColumn="D38152F9-0D72-FB1D-59E7-9387CCAFFD42"/>
+</associations>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="FCA5E2F7-3915-4F9E-1B87-9C38AC9535BA" name="Professeur_PK">
@@ -66,6 +81,28 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="6C33DCED-9DF4-F12C-A504-3A2B51BE2E6F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="05CD6890-D1D5-1E85-0068-1C530D6FA4B0" name="Professeur__IDX">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>4ABFD765-BF86-9E88-4181-8F559EEE565B</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="82D936EA-D8C5-FDFB-F6BD-4EEC4D504E24"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="06664599-5478-093C-B603-F25496FD69B9" name="Professeur_Utilisateur_FK">
+<createdBy>rubethrokonuzzaman</createdBy>
+<createdTime>2025-02-26 14:24:08 UTC</createdTime>
+<generatorID>4ABFD765-BF86-9E88-4181-8F559EEE565B</generatorID>
+<ownerDesignName>eval_pair</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="82D936EA-D8C5-FDFB-F6BD-4EEC4D504E24"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

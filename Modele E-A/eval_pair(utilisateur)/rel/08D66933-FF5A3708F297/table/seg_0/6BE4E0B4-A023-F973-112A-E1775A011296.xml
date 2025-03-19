@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6BE4E0B4-A023-F973-112A-E1775A011296" name="etudiant_classe">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Etudiant_id_etudiant" id="40A16127-E6FA-0E25-2CD7-A2913066D28E">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="75FE4276-CB43-6D9D-BFF7-1297D2B8DFAA" referredColumn="8F38F039-B2D1-10B2-4742-37F16C867995"/>
+</associations>
+</Column>
+<Column name="Classe_id_classe" id="764D2FA0-9462-35CC-08C6-ECDE6582635C">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="11EB8E76-0394-F062-A3AB-4ACFB5578D60" referredColumn="63F68179-391F-BAD7-6BF7-ADF810F5B18C"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B1CFBAF4-28BF-5BCD-13E2-09D4BC16C283" name="etudiant_classe_PK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="40A16127-E6FA-0E25-2CD7-A2913066D28E"/>
+<colUsage columnID="764D2FA0-9462-35CC-08C6-ECDE6582635C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="92D9D0CF-8E92-6366-842E-D5AD0D521807" name="etudiant_classe_Etudiant_FK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>2D6DE8FF-ECD7-3A4E-A490-4266145ECBCC</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="40A16127-E6FA-0E25-2CD7-A2913066D28E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3EDAC450-B6A3-1847-7919-76852A7A05D0" name="etudiant_classe_Classe_FK">
+<createdBy>jifbrodeur</createdBy>
+<createdTime>2025-02-13 19:31:52 UTC</createdTime>
+<generatorID>2D6DE8FF-ECD7-3A4E-A490-4266145ECBCC</generatorID>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="764D2FA0-9462-35CC-08C6-ECDE6582635C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

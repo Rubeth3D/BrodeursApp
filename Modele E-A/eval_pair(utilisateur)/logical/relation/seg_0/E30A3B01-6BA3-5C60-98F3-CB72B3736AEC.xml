@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Cours Session FK" directorySegmentName="seg_0" id="E30A3B01-6BA3-5C60-98F3-CB72B3736AEC">
+<createdBy>cedryk leblanc</createdBy>
+<createdTime>2025-02-21 17:52:54 UTC</createdTime>
+<ownerDesignName>eval_pair(utilisateur)</ownerDesignName>
+<engineerTo>
+<item key="08D66933-784E-012C-1F7D-FF5A3708F297" value="true"/>
+</engineerTo>
+<sourcePk>642577AF-BA66-25F6-FA07-3C9284DF061A</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>701477EE-1E9A-DF92-9706-92D805F7397B</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>4E1C5C9F-AE8C-0E87-AC35-7E5005FA34B5</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
