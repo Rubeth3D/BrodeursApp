@@ -1,9 +1,27 @@
-import React from "react";
+import React, { use, useState, useEffect } from "react";
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
 import { Link } from "react-router-dom";
 
 function Classe() {
+
+    const fetchClasses = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/classe');
+            const data = await response.json();
+            console.log(data);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+    
+    useEffect(() => {
+        fetchClasses();
+    }
+    , []);
+
+
     return(
         <>
         <Navbar/>
@@ -22,6 +40,7 @@ function Classe() {
         <Footer/>
         </>
     ); 
+
 }
 
 export default Classe;
