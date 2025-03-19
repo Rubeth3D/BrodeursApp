@@ -19,7 +19,11 @@ function Connexion() {
     }
     try {
       const response = await fetch(
-        `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`
+        `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const dataJson = await response.json();
       if (response.status == 200) {

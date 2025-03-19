@@ -95,6 +95,9 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
         }),
         {
           maxAge: 60000 * 60,
+          httpOnly: false,
+          secure: false,
+          sameSite: "Lax",
         }
       );
 
