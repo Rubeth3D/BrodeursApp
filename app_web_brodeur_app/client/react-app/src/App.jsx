@@ -7,14 +7,16 @@ import Connexion from "./pages/Connexion/Connexion.jsx";
 import NotfoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import CreateAccount from "./pages/CreateAccount/CreateAccount.jsx";
 import Cours from "./pages/Cours/Cours.jsx";
+import Classe from "./pages/Classe/classe.jsx";
 import Etudiant from "./pages/etudiant/etudiant.jsx";
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/Connexion", element: <Connexion /> },
-  { path: "/Connexion/CreateAccount", element: <CreateAccount /> },
-  { path: "/cours", element: <Cours /> },
-  { path: "/etudiant", element: <Etudiant /> },
-  { path: "*", element: <NotfoundPage /> },
+  { path: "/", element: <Home /> }, // Ajout de la route pour la page d'accueil
+  { path: "/Connexion", element: <Connexion /> }, // Ajout de la route pour la page de connexion
+  { path: "/Connexion/CreateAccount", element: <CreateAccount /> }, // Ajout de la route pour la page de création de compte
+  { path: "/cours", element: <Cours /> }, // Ajout de la route pour la page de cours
+  { path: "/etudiant", element: <Etudiant /> }, // Ajout de la route pour la page de l'étudiant
+  { path: "/classe", element: <Classe /> }, // Ajout de la route pour la page de classe
+  { path: "*", element: <NotfoundPage /> }, // Ajout de la route pour la page non trouvée
 ]);
 function App() {
   useEffect(() => {

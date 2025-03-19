@@ -12,7 +12,6 @@ function Classe() {
             <div className="mt-3">
                 <input type="text" className="form-control fs-5" />
             </div>
-
         </div>
         </>
     ); 
