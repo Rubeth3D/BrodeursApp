@@ -1,11 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-function navbar() {
+function Navbar() {
+  let location = useLocation();
+  var titre;
+  function GererLeTitre() {
+    if (
+      location.pathname !== "/Etudiant" &&
+      location.pathname !== "/Enseignant"
+    ) {
+      return (
+        <Link to={"/"} className="navbar-brand text-white mx-5">
+          Évaluation par les pairs
+        </Link>
+      );
+    }
+    return <div>eille le twit</div>;
+  }
+  // const url = "http://localhost/8080/utilisateur/";
+  // const GetUtilisateur = async () => {
+  //   try {
+  //     const reponse = await fetch(url);
+  //   } catch (err) {}
+  // };
+
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-primary sticky-top justify-content-between">
-      <Link to={"/"} className="navbar-brand text-white mx-5">
-        Évaluation par les pairs
-      </Link>
+      {GererLeTitre()}
       <ul className="navbar-nav mx-5">
         <li className="nav-item dropdown">
           <button
@@ -48,4 +68,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Navbar;

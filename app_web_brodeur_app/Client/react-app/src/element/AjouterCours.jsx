@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const AjouterCours = () => {
-  const url = "http://localhost:8080/cours";
+  const urlCours = "http://localhost:8080/cours";
+  const urlSession = "http://localhost:8080/session";
+  const estFetchedSession = useRef(false);
   const [session, setSession] = useState([]);
   const [sessionSelected, setSessionSelect] = useState("");
   const [cours, nouveauCours] = useState({
@@ -9,11 +11,19 @@ const AjouterCours = () => {
     description_cours: "",
     etat_cours: "A",
   });
+  const GetSession = async () => {
+    try {
+      const reponse = await fetch(urlSession);
+      const objetSession = await reponse.json();
+      setSession(objetSession);
+    } catch (err) {
+      console.log(`Erreur lors du fetch des sessions : ${err}`);
+    }
+  };
   const PostCours = async (e, cours, session) => {
     e.preventDefault();
     try {
       console.log(cours);
-      console.log(session);
       const data = {
         code_cours: cours.code_cours,
         description_cours: cours.description_cours,
@@ -21,7 +31,7 @@ const AjouterCours = () => {
         session_id_session: session,
       };
       console.log(data);
-      const reponse = await fetch(`${url}`, {
+      const reponse = await fetch(`${urlCours}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -42,6 +52,12 @@ const AjouterCours = () => {
       [name]: value,
     }));
   };
+  useEffect(() => {
+    if (!estFetchedSession.current) {
+      GetSession();
+      estFetchedSession.current = false;
+    }
+  }, []);
   return (
     <>
       <div className="container col-3">

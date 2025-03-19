@@ -1,4 +1,4 @@
-import Navbar from "../../element/navbar";
+import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
@@ -35,7 +35,7 @@ function Connexion() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar DansLeDashBoard={false} />
       <div className=" mb-5"></div>
       <form
         className="container"

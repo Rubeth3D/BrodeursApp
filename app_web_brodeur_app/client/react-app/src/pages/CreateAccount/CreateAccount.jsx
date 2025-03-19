@@ -1,4 +1,4 @@
-import Navbar from "../../element/navbar";
+import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
@@ -57,7 +57,7 @@ function CreateAccount() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar DansLeDashBoard={false} />
       <h2 className=" mb-5"></h2>
       <form className="container" onSubmit={(e) => creationUtilisateur(e)}>
         <Link to={"/Connexion"}>

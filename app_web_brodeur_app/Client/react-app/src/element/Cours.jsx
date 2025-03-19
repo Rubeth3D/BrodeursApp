@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import PopUpModifier from "../element/popUpModifier";
+import PopUpModifier from "./PopUpModifier";
 function Cours() {
   const url = "http://localhost:8080/cours";
   const [cours, setCours] = useState([]);
@@ -55,7 +55,7 @@ function Cours() {
                 >
                   delete
                 </button>
-                <PopUpModifier cours={cours} />;
+                <PopUpModifier cours={cours} />
               </td>
             </tr>
           ))}
