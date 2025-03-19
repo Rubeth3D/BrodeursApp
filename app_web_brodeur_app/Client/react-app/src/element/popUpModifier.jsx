@@ -23,7 +23,6 @@ function PopUpModifier({ cours }) {
       console.error(`Erreur lors du update du cours : ${err}`);
     }
   };
-
   const [coursMisAJour, setCoursMisAJour] = useState({
     id_cours: cours.id_cours,
     code_cours: cours.code_cours,
