@@ -1,7 +1,6 @@
 import Navbar from "../../element/navbar";
 import { Link } from "react-router-dom";
 import React, { Fragment, useEffect, useState, useRef, fetchData } from "react";
-import PopUpModifier from "../../element/PopUpModifier";
 
 function Cours() {
   const [cours, setCours] = useState([]);

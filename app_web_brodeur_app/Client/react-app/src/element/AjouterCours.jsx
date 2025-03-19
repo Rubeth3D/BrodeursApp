@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const AjouterCours = () => {
+  const url = "http://localhost:8080/cours";
   const [session, setSession] = useState([]);
   const [sessionSelected, setSessionSelect] = useState("");
   const [cours, nouveauCours] = useState({
@@ -20,7 +21,7 @@ const AjouterCours = () => {
         session_id_session: session,
       };
       console.log(data);
-      const reponse = await fetch(`http://localhost:8080/cours`, {
+      const reponse = await fetch(`${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -91,9 +92,6 @@ const AjouterCours = () => {
                 onChange={(e) => setSessionSelect(e.target.value)}
                 value={sessionSelected}
               >
-                <option selected value="">
-                  Choose...
-                </option>
                 {session.map((session) => (
                   <option key={session.id_session} value={session.id_session}>
                     {session.code_session}
