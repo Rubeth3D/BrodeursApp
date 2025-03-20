@@ -1,10 +1,11 @@
+//@ts-ignore
 import Navbar from "../../element/Navbar.jsx";
 import Footer from "./../../element/footer.jsx";
 
 function Home() {
   return (
     <>
-      <Navbar DansLeDashBoard={false} />
+      <Navbar />
       <div className="mt5 mb-5"></div>
       <div className="container">
         <h2 className="text-center display-2 fw-normal text-wrap text-dark">

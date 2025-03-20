@@ -1,29 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 function Navbar() {
-  let location = useLocation();
   function GererLeTitre() {
-    if (
-      location.pathname !== "/Etudiant" &&
-      location.pathname !== "/Enseignant"
-    ) {
-      return (
-        <Link to={"/"} className="navbar-brand text-white mx-5">
-          Évaluation par les pairs
-        </Link>
-      );
+    const location = useLocation();
+    console.log();
+    if (location.pathname === "/DashBoard") {
+      const username = location.state.username;
+      return <div className="navbar-brand text-white mx-5">{username}</div>;
     }
-    const id_user = "null";
-    const url = `http://localhost/8080/utilisateur/${id_user}`;
-    const [utilisateur, setUtilisateur] = useState();
-    const GetUtilisateur = async () => {
-      try {
-        const reponse = await fetch(url);
-        const jsonData = await reponse.json();
-        setUtilisateur(jsonData);
-      } catch (err) {}
-    };
-    return <div>allo</div>;
+    return (
+      <Link to={"/"} className="navbar-brand text-white mx-5">
+        Évaluation par les pairs
+      </Link>
+    );
   }
 
   return (

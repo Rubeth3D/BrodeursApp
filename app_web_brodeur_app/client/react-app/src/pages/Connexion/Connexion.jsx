@@ -1,3 +1,4 @@
+//@ts-ignore
 import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,9 +23,17 @@ function Connexion() {
         `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`
       );
       const dataJson = await response.json();
+      // if (!document.cookie.includes("UserData")) {
+      //   console.error("Accès refusé, cookie manquant");
+      //   return;
+      // }
+      // const cookiesData = Json.parse(req);
       if (response.status == 200) {
-        console.log(dataJson.message);
-        navigate("/cours");
+        console.log(dataJson);
+        console.log(dataJson.nom_user);
+        navigate("/DashBoard", {
+          state: { username: `${dataJson.nom_user}` },
+        });
       } else if (response.status == 404) {
         console.log(dataJson.message);
       }
@@ -35,7 +44,7 @@ function Connexion() {
 
   return (
     <>
-      <Navbar DansLeDashBoard={false} />
+      <Navbar />
       <div className=" mb-5"></div>
       <form
         className="container"

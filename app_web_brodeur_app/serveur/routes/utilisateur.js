@@ -76,22 +76,23 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
       "SELECT * FROM utilisateur WHERE nom_user = $1 AND mot_de_passe = $2",
       [nom_user, motDePasse]
     );
-
     if (resultat.rowCount == 0) {
       logger.error(`Aucun utilisateur ne correspond`);
       return res
         .status(404)
         .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
     }
+    const utilisateur = resultat.rows[0];
 
     res
       //cookie expire après 1h
       .cookie(
-        "UserData",
+        "Utilisateur_Session",
         JSON.stringify({
           idSession: 1,
+          nomUser: `${utilisateur.nom_user}`,
           connection: "Connect",
-          role: "Utilisateur",
+          role: `${utilisateur.type_utilisateur}`,
         }),
         {
           maxAge: 60000 * 60,
@@ -99,7 +100,7 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
       );
 
     logger.info("Connexion de l'utilisateur effectuer avec succes!");
-    return res.status(200).json([{ message: "Connexion réussie!" }]);
+    return res.status(200).json(utilisateur);
   } catch (err) {
     logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
     res

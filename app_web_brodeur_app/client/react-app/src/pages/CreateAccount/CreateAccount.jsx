@@ -1,3 +1,4 @@
+//@ts-ignore
 import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
@@ -57,7 +58,7 @@ function CreateAccount() {
 
   return (
     <>
-      <Navbar DansLeDashBoard={false} />
+      <Navbar />
       <h2 className=" mb-5"></h2>
       <form className="container" onSubmit={(e) => creationUtilisateur(e)}>
         <Link to={"/Connexion"}>
