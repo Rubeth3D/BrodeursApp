@@ -1,8 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
 function Navbar() {
   let location = useLocation();
-  var titre;
   function GererLeTitre() {
     if (
       location.pathname !== "/Etudiant" &&
@@ -14,14 +13,18 @@ function Navbar() {
         </Link>
       );
     }
-    return <div>eille le twit</div>;
+    const id_user = "null";
+    const url = `http://localhost/8080/utilisateur/${id_user}`;
+    const [utilisateur, setUtilisateur] = useState();
+    const GetUtilisateur = async () => {
+      try {
+        const reponse = await fetch(url);
+        const jsonData = await reponse.json();
+        setUtilisateur(jsonData);
+      } catch (err) {}
+    };
+    return <div>allo</div>;
   }
-  // const url = "http://localhost/8080/utilisateur/";
-  // const GetUtilisateur = async () => {
-  //   try {
-  //     const reponse = await fetch(url);
-  //   } catch (err) {}
-  // };
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-primary sticky-top justify-content-between">
