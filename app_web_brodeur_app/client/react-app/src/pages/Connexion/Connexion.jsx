@@ -22,6 +22,7 @@ function Connexion() {
       const response = await fetch(
         `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`
       );
+
       const dataJson = await response.json();
       // if (!document.cookie.includes("UserData")) {
       //   console.error("Accès refusé, cookie manquant");
