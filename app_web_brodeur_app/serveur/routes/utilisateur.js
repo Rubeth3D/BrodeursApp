@@ -91,11 +91,9 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
     );
     if (!isMatch) {
       logger.error("Cet utilisateur ne possede pas ce mot de passe!");
-      return res
-        .status(401)
-        .json({
-          message: "Le mot de passe ou le nom d'utilisateur est mauvais",
-        });
+      return res.status(401).json({
+        message: "Le mot de passe ou le nom d'utilisateur est mauvais",
+      });
     }
 
     res
@@ -218,7 +216,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const id = req.params;
     const resultat = await client.query(
-      "DELETE FROM utilisateur WHERE id = $1 RETURNING *",
+      "DELETE FROM utilisateur WHERE id_utilisateur = $1 RETURNING *",
       [id]
     );
     if (resultat.rows.length === 0) {

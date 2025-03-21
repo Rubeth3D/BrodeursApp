@@ -5,13 +5,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/Home.jsx";
 import Connexion from "./pages/Connexion/Connexion.jsx";
 import NotfoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
-import CreateAccount from "./pages/CreateAccount/CreateAccount.jsx";
+import Inscription from "./pages/Inscription/Inscription.jsx";
 import Classe from "./pages/Classe/classe.jsx";
 import DashBoard from "./pages/DashBoard/DashBoard.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <Home /> }, // Ajout de la route pour la page d'accueil
   { path: "/Connexion", element: <Connexion /> }, // Ajout de la route pour la page de connexion
-  { path: "/Connexion/CreateAccount", element: <CreateAccount /> }, // Ajout de la route pour la page de création de compte
+  { path: "/Inscription", element: <Inscription /> }, // Ajout de la route pour la page de création de compte
   { path: "/DashBoard", element: <DashBoard /> }, // Ajout de la route pour la page de l'étudiant
   { path: "/classe", element: <Classe /> }, // Ajout de la route pour la page de classe
   { path: "*", element: <NotfoundPage /> }, // Ajout de la route pour la page non trouvée

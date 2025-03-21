@@ -1,10 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 function Navbar() {
-  function GererConnexion() {
-    const location = useLocation();
+  const location = useLocation();
+  const [username, setUsername] = useState(null);
+  const [estConnecte, setEstConnecte] = useState(false);
+
+  useEffect(() => {
     if (location.pathname === "/DashBoard") {
-      const username = location.state.username;
+      setUsername(location.state.username);
+      setEstConnecte(true);
+    } else {
+    }
+  }, [location]);
+  function GererConnexion() {
+    if (estConnecte) {
       return (
         <li>
           <Link to={"/DashBoard"} className="dropdown-item">
@@ -12,35 +21,31 @@ function Navbar() {
           </Link>
         </li>
       );
-    }
-    return (
-      <li>
-        <Link to={"/Connexion"} className="dropdown-item">
-          Connexion
-        </Link>
-      </li>
-    );
-  }
-  function GererInscription() {
-    const location = useLocation();
-    console.log();
-    if (location.pathname === "/DashBoard") {
+    } else {
       return (
         <li>
-          <Link to={"/DashBoard"} className="dropdown-item">
-            Se deconnecter
+          <Link to={"/Connexion"} className="dropdown-item">
+            Connexion
           </Link>
         </li>
       );
     }
-    return (
-      <li>
-        <Link to={"/Connexion"} className="dropdown-item">
-          S'inscrire
-        </Link>
-      </li>
-    );
   }
+
+  function GererInscription() {
+    if (estConnecte) {
+      return <div></div>;
+    } else {
+      return (
+        <div>
+          <Link to={"/Inscription"} className="dropdown-item">
+            Inscription
+          </Link>
+        </div>
+      );
+    }
+  }
+
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-primary sticky-top justify-content-between">
       <Link to={"/"} className="navbar-brand text-white mx-5">
@@ -65,7 +70,7 @@ function Navbar() {
             >
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
               />
             </svg>

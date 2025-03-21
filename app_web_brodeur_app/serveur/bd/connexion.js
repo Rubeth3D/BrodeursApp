@@ -3,7 +3,7 @@ const { Client } = pkg;
 import winston from "winston";
 const client = new Client({
   user: "postgres",
-  password: "postgres",
+  password: "oracle",
   host: "localhost",
   port: 5000,
 });

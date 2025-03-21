@@ -4,7 +4,7 @@ import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
-function CreateAccount() {
+function Inscription() {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [nom_user, setNomUtilisateur] = useState("");
@@ -48,7 +48,9 @@ function CreateAccount() {
       });
       console.log(response);
       if (response.ok) {
-        navigate("/cours");
+        navigate("/DashBoard", {
+          state: { username: `${body.nom_user}` },
+        });
         //pop-up pour montrer que l'utilisateur est connecté
       }
     } catch (err) {
@@ -91,6 +93,7 @@ function CreateAccount() {
                 className="form-control fs-5"
                 value={nom}
                 onChange={(e) => setNom(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -102,6 +105,7 @@ function CreateAccount() {
                 className="form-control fs-5"
                 value={prenom}
                 onChange={(e) => setPrenom(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -117,6 +121,7 @@ function CreateAccount() {
                 className="form-control fs-5"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -130,6 +135,7 @@ function CreateAccount() {
                 className="form-control fs-5"
                 value={nom_user}
                 onChange={(e) => setNomUtilisateur(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -143,6 +149,7 @@ function CreateAccount() {
                 className="form-control fs-5"
                 value={mot_de_passe}
                 onChange={(e) => setMotDePasse(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -158,6 +165,7 @@ function CreateAccount() {
                 className="form-control fs-5"
                 value={mot_de_passe_confirmation}
                 onChange={(e) => setMotDePasseConfirmation(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -209,4 +217,4 @@ function CreateAccount() {
     </>
   );
 }
-export default CreateAccount;
+export default Inscription;
