@@ -3,7 +3,7 @@ const { Client } = pkg;
 import winston from "winston";
 const client = new Client({
   user: "postgres",
-  password: "oracle",
+  password: "postgres",
   host: "localhost",
   port: 5000,
 });
@@ -25,6 +25,6 @@ const logger = winston.createLogger({
 client
   .connect()
   .then(() => logger.info("Connecté à la base de données"))
-  .catch((err) => logger.error(err));
+  .catch((err) => logger.error(`Erreur de bd : ${err}`));
 
 export default client;
