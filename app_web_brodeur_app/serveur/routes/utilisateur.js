@@ -2,7 +2,7 @@ import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
 import client from "../bd/connexion.js";
-
+import bcrypt from "bcrypt";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -72,10 +72,12 @@ router.get("/:nom_user", async (req, res) => {
 router.get("/:nom_user/:motDePasse", async (req, res) => {
   try {
     const { nom_user, motDePasse } = req.params;
+
     const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE nom_user = $1 AND mot_de_passe = $2",
-      [nom_user, motDePasse]
+      "SELECT * FROM utilisateur WHERE nom_user = $1",
+      [nom_user]
     );
+
     if (resultat.rowCount == 0) {
       logger.error(`Aucun utilisateur ne correspond`);
       return res
@@ -83,6 +85,18 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
         .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
     }
     const utilisateur = resultat.rows[0];
+    const isMatch = await bcrypt.compare(
+      `${motDePasse}`,
+      utilisateur.mot_de_passe
+    );
+    if (!isMatch) {
+      logger.error("Cet utilisateur ne possede pas ce mot de passe!");
+      return res
+        .status(401)
+        .json({
+          message: "Le mot de passe ou le nom d'utilisateur est mauvais",
+        });
+    }
 
     res
       //cookie expire après 1h
@@ -122,10 +136,11 @@ router.post("/", async (req, res) => {
       id_etudiant,
       etat_utilisateur,
     } = req.body;
-
+    const salt = bcrypt.genSaltSync(10);
+    const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
     logger.info(
       nom_user,
-      mot_de_passe,
+      mot_de_passe_hash,
       email,
       type_utilisateur,
       id_professeur,
@@ -137,7 +152,7 @@ router.post("/", async (req, res) => {
       "INSERT INTO utilisateur(nom_user, mot_de_passe, email, type_utilisateur, id_professeur, id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
       [
         nom_user,
-        mot_de_passe,
+        mot_de_passe_hash,
         email,
         type_utilisateur,
         id_professeur,
