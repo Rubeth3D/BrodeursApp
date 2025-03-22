@@ -40,7 +40,7 @@ function Classe() {
           + Ajouter une classe
         </button>
       </div>
-
+      
       <Footer />
     </>
   );
