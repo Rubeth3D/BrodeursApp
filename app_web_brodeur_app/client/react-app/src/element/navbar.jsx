@@ -4,14 +4,35 @@ function Navbar() {
   const location = useLocation();
   const [username, setUsername] = useState(null);
   const [estConnecte, setEstConnecte] = useState(false);
-
-  useEffect(() => {
-    if (location.pathname === "/DashBoard") {
-      setUsername(location.state.username);
-      setEstConnecte(true);
-    } else {
+  const urlUtilisateur = "http://localhost:8080/utilisateur";
+  const VerifierCookies = async () => {
+    try {
+      const reponse = await fetch(`${urlUtilisateur}/VerifierCookies`, {
+        credentials: "include",
+      });
+      const jsonData = await reponse.json();
+      if (reponse.ok) {
+        setEstConnecte(true);
+        setUsername(jsonData.nom_user);
+        console.log(username);
+      }
+    } catch (err) {
+      console.log(`Erreur lors du fetch du user : ${err}`);
     }
-  }, [location]);
+  };
+  const Deconnexion = async () => {
+    try {
+      const reponse = await fetch(`${urlUtilisateur}/Deconnexion`, {
+        credentials: "include",
+      });
+      setEstConnecte(false);
+    } catch (err) {
+      console.error(`Erreur lors de la deconnexion : ${err}`);
+    }
+  };
+  useEffect(() => {
+    VerifierCookies();
+  }, []);
   function GererConnexion() {
     if (estConnecte) {
       return (
@@ -34,7 +55,11 @@ function Navbar() {
 
   function GererInscription() {
     if (estConnecte) {
-      return <div></div>;
+      return (
+        <Link to={"/"} onClick={() => Deconnexion()} className="dropdown-item">
+          Deconnexion
+        </Link>
+      );
     } else {
       return (
         <div>
@@ -45,7 +70,6 @@ function Navbar() {
       );
     }
   }
-
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-primary sticky-top justify-content-between">
       <Link to={"/"} className="navbar-brand text-white mx-5">
@@ -84,5 +108,4 @@ function Navbar() {
     </nav>
   );
 }
-
 export default Navbar;
