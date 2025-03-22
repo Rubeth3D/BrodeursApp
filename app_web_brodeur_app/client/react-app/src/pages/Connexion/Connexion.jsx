@@ -22,7 +22,8 @@ function Connexion() {
     }
     try {
       const response = await fetch(
-        `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`
+        `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`,
+        { credentials: "include" }
       );
 
       const dataJson = await response.json();
