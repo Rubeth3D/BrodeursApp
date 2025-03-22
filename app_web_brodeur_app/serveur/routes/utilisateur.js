@@ -97,29 +97,31 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
     }
 
     res
-      //cookie expire après 1h
-      .cookie(
-        "Utilisateur_Session",
-        JSON.stringify({
-          idSession: 1,
-          nomUser: `${utilisateur.nom_user}`,
-          connection: "Connect",
-          role: `${utilisateur.type_utilisateur}`,
-        }),
-        {
-          maxAge: 60000 * 60,
-        }
-      );
+    //cookie expire après 1h
+    .cookie(
+      "UserData",
+      JSON.stringify({
+        idSession: 1,
+        connection: "Connect",
+        role: "Utilisateur",
+      }),
+      {
+        maxAge: 60000 * 60,
+        httpOnly: false,
+        secure: false,
+        sameSite: "Lax",
+      }
+    );
 
-    logger.info("Connexion de l'utilisateur effectuer avec succes!");
-    return res.status(200).json(utilisateur);
-  } catch (err) {
-    logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
-    res
-      .status(500)
-      .json({ message: "Erreur lors de la connexion de l'utilisateur" });
-    logger.error(`Erreur lors de la: ${err}`);
-  }
+  logger.info("Connexion de l'utilisateur effectuer avec succes!");
+  return res.status(200).json([{ message: "Connexion réussie!" }]);
+} catch (err) {
+  logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
+  res
+    .status(500)
+    .json({ message: "Erreur lors de la connexion de l'utilisateur" });
+  logger.error(`Erreur lors de la: ${err}`);
+}
 });
 
 //post pour un utilisateur
