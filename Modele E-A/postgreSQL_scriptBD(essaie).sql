@@ -119,8 +119,8 @@ CREATE TABLE utilisateur (
     nom_utilisateur VARCHAR(200),
     courriel VARCHAR(250),
     mot_passe VARCHAR(2000),
-    etat_utilisateur VARCHAR(20) CHECK (etat_utilisateur IN ('Actif', 'Inactif')),
-    type_utilisateur CHAR(1) CHECK (type_utilisateur IN ('E', 'P', 'A')),
+    etat_utilisateur VARCHAR(20) CHECK (etat_utilisateur IN ('Actif', 'Inactif')), --Seulement Actif ou Inactif
+    type_utilisateur CHAR(1) CHECK (type_utilisateur IN ('E', 'P', 'A')), --Seulement E, P ou A
     professeur_id_professeur INT UNIQUE,
     etudiant_id_etudiant INT UNIQUE,
     CONSTRAINT check_utilisateur CHECK (
