@@ -37,7 +37,7 @@ CREATE TABLE critere (
 CREATE TABLE equipe (
     id_equipe SERIAL PRIMARY KEY,
     code_equipe VARCHAR(200),
-    nom VARCHAR(200),
+    nom VARCHAR(2000),
     classe_id_classe INTEGER NOT NULL,
     etat_equipe CHAR(1)
 );
