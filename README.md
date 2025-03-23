@@ -82,7 +82,13 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
     node serveur.js
     ``` 
 
-10. Installer la base de données dans un terminal:
+10. Installer l'image de postgres sur docker :
+    ```bash
+    docker pull postgres
+    ```
+    
+
+11. Installer la base de données dans un terminal:
 
     ```bash
     docker run --name postgres -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
@@ -91,7 +97,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
     ```
 
-11. Création de la base de données :
+12. Création de la base de données :
 
     ```bash
       Ouvrir le dossier BrodeursApp\Modele E-A.
@@ -99,7 +105,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
       Copier et coller le fichier 'postgreSQL_utilisateur_scriptDeCreation'
     ```
 
-12. Peuplé la base de données :
+13. Remplir la base de données :
 
     ```bash
 
