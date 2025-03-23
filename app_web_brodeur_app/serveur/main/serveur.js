@@ -19,9 +19,12 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: "server.log" }),
   ],
 });
-
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
 const app = express();
-app.use(cors());
+app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);

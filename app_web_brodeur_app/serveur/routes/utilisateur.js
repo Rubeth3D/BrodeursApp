@@ -22,43 +22,44 @@ const router = express.Router();
 router.use(express.json());
 
 //get pour les utilisateurs
-router.get("/", async (req, res) => {
-  try {
-    const resultat = await client.query("SELECT * FROM utilisateur");
-    res.status(200).json(resultat.rows);
-    logger.info("Get des user effectue avec succes!");
-  } catch (err) {
-    logger.error(`Erreur lors du fetch des user : ${err}`);
-    res.status(500).json({ message: "Erreur lors du fetch des user!" });
-  }
-});
+// router.get("/", async (req, res) => {
+//   try {
+//     const resultat = await client.query("SELECT * FROM utilisateur");
+//     res.status(200).json(resultat.rows);
+//     logger.info("Get des user effectue avec succes!");
+//   } catch (err) {
+//     logger.error(`Erreur lors du fetch des user : ${err}`);
+//     res.status(500).json({ message: "Erreur lors du fetch des user!" });
+//   }
+// });
 
 //get pour un utilisateur
-router.get("/:nom_user", async (req, res) => {
+router.get("/VerifierCookies", async (req, res) => {
   try {
     if (!req.cookies.UserData) {
+      logger.error("Acces refuse : cookie manquant !");
       return res.status(401).json({ message: "Accès refusé, cookie manquant" });
     }
-
-    let cookieData;
+    logger.info("Connexion...");
+    var cookieData;
+    var resultat;
     try {
       cookieData = JSON.parse(req.cookies.UserData);
+      logger.info(cookieData.idSession);
+
       //après vérifier que le idSession est bon dans la bd
+      resultat = await client.query(
+        "SELECT * FROM utilisateur WHERE id_user = $1",
+        [cookieData.idSession]
+      );
     } catch (error) {
       return res.status(400).json({ message: "Cookie invalide" });
     }
-
-    const { nom_user } = req.params;
-    const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE nom_user = $1",
-      [nom_user]
-    );
-
     if (resultat.rowCount == 0) {
-      logger.error(`Aucun user n'a le nom_user : ${nom_user}`);
-      return res
-        .status(404)
-        .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
+      logger.error(`Aucun user n'a le id de Session : ${cookieData.idSession}`);
+      return res.status(404).json({
+        message: `Aucun user n'a le id de Session :${cookieData.idSession}`,
+      });
     }
     res.status(200).json(resultat.rows[0]);
     logger.info("Get du user effectue avec succes!");
@@ -67,7 +68,17 @@ router.get("/:nom_user", async (req, res) => {
     res.status(500).json({ message: "Erreur lors du get du user" });
   }
 });
-
+//Fonction de logout qui detruit le cookie du user
+router.get("/Deconnexion", async (req, res) => {
+  logger.info("Deconnexion...");
+  if (!req.cookies.UserData) {
+    logger.error("Acces refuse : cookie manquant !");
+    return res.status(401).json({ message: "Accès refusé, cookie manquant" });
+  }
+  res.clearCookie("UserData");
+  logger.info("Utilisateur deconnecte avec succes");
+  return res.status(200).json({ message: "Deconnexion reussi !" });
+});
 //vérifier la connexion d'un utilisateur
 router.get("/:nom_user/:motDePasse", async (req, res) => {
   try {
@@ -97,31 +108,31 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
     }
 
     res
-    //cookie expire après 1h
-    .cookie(
-      "UserData",
-      JSON.stringify({
-        idSession: 1,
-        connection: "Connect",
-        role: "Utilisateur",
-      }),
-      {
-        maxAge: 60000 * 60,
-        httpOnly: false,
-        secure: false,
-        sameSite: "Lax",
-      }
-    );
+      //cookie expire après 1h
+      .cookie(
+        "UserData",
+        JSON.stringify({
+          idSession: utilisateur.id_user,
+          connection: "Connect",
+          role: "Utilisateur",
+        }),
+        {
+          maxAge: 60000 * 60,
+          httpOnly: false,
+          secure: false,
+          sameSite: "Lax",
+        }
+      );
 
-  logger.info("Connexion de l'utilisateur effectuer avec succes!");
-  return res.status(200).json([{ message: "Connexion réussie!" }]);
-} catch (err) {
-  logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
-  res
-    .status(500)
-    .json({ message: "Erreur lors de la connexion de l'utilisateur" });
-  logger.error(`Erreur lors de la: ${err}`);
-}
+    logger.info("Connexion de l'utilisateur effectuer avec succes!");
+    return res.status(200).json([{ message: "Connexion réussie!" }]);
+  } catch (err) {
+    logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la connexion de l'utilisateur" });
+    logger.error(`Erreur lors de la: ${err}`);
+  }
 });
 
 //post pour un utilisateur
