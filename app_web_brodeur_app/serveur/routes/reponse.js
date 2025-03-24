@@ -1,6 +1,6 @@
 import express, { json, query } from "express";
 import winston from "winston";
-import client from "../bd/connexion.js";
+import client from "../bd/postgresBD/connexion.js";
 
 const logger = winston.createLogger({
   level: "info",

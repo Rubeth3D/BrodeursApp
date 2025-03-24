@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import winston, { log } from "winston";
-import client from "../bd/connexion.js";
+import client from "../bd/postgresBD/connexion.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -62,16 +62,30 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
 //Insert d'une classe
 router.post("/", async (req, res) => {
   try {
-    const {code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe} = req.body;
+    const {
+      code_cours,
+      description,
+      groupe,
+      professeur_id_professeur,
+      cours_id_cours,
+      etat_classe,
+    } = req.body;
     const resultat = await client.query(
       "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
-      [code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe]);
-      logger.info("Insertion de la classe effectue avec succes!");
-      res.status(200).json(resultat.rows[0]);
+      [
+        code_cours,
+        description,
+        groupe,
+        professeur_id_professeur,
+        cours_id_cours,
+        etat_classe,
+      ]
+    );
+    logger.info("Insertion de la classe effectue avec succes!");
+    res.status(200).json(resultat.rows[0]);
   } catch (err) {
     logger.error(`Erreur de l'insertion de la classe ${err}`);
     res.status(500);
@@ -85,10 +99,25 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params;
-    const {code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe} = req.body;
+    const {
+      code_cours,
+      description,
+      groupe,
+      professeur_id_professeur,
+      cours_id_cours,
+      etat_classe,
+    } = req.body;
     const resultat = await client.query(
       "UPDATE classe SET code_cours = $1, description = $2, groupe = $3, professeur_id_professeur = $4, cours_id_cours = $5, etat_classe = $6 WHERE id_classe = $7 RETURNING *",
-      [code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe,id]
+      [
+        code_cours,
+        description,
+        groupe,
+        professeur_id_professeur,
+        cours_id_cours,
+        etat_classe,
+        id,
+      ]
     );
     if (resultat.rowCount === 0) {
       return res
