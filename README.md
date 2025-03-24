@@ -66,27 +66,27 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
 7. Ouvrir le dossier main:
 
-    ```bash
-    cd app_web_brodeur_app/serveur/main
-    ```
+   ```bash
+   cd app_web_brodeur_app/serveur/main
+   ```
 
 8. Installer les packages express pour le dossier main:
 
-    ```bash
-    npm i express
-    ```
+   ```bash
+   npm i express
+   ```
 
-9. Lancer le serveur express: 
+9. Lancer le serveur express:
 
-    ```bash
-    node serveur.js
-    ``` 
+   ```bash
+   node serveur.js
+   ```
 
 10. Installer l'image de postgres sur docker :
+
     ```bash
     docker pull postgres
     ```
-    
 
 11. Installer la base de données dans un terminal:
 
@@ -110,6 +110,20 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
     ```bash
 
       Copier et coller le fichier 'postgreSQL_Remplir'
+    ```
+
+14. Installer l'image de mongodb sur docker:
+
+    ```bash
+
+      docker pull mongo:latest
+    ```
+
+15. Installer la base de données dans un terminal
+
+    ```bash
+
+      docker run -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
     ```
 
 ## Auteurs
