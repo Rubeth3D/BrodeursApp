@@ -290,6 +290,14 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.id_utilisateur IS NULL THEN
+        NEW.id_utilisateur := nextval('utilisateur_id_utilisateur_seq');
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER utilisateur_id_utilisateur_trg
 BEFORE INSERT ON utilisateur

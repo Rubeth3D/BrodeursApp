@@ -18,8 +18,8 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-
 router.use(express.json());
+router.use(cors());
 
 //Get toutes les classes
 router.get("/", async (req, res) => {
