@@ -1,5 +1,5 @@
 -- Généré par Oracle SQL Developer Data Modeler 24.3.1.347.1153
---   à :        2025-03-23 17:17:45 HAE
+--   à :        2025-03-23 19:24:30 HAE
 --   site :      Oracle Database 21c
 --   type :      Oracle Database 21c
 
@@ -62,17 +62,21 @@ ALTER TABLE critere ADD CONSTRAINT critere_pk PRIMARY KEY ( id_critere );
 CREATE TABLE equipe (
     id_equipe        NUMBER NOT NULL,
     code_equipe      VARCHAR2(200),
-    nom              VARCHAR2(200),
+    nom              VARCHAR2(2000),
     classe_id_classe NUMBER NOT NULL,
     etat_equipe      VARCHAR2(20),
     id_cours         NUMBER NOT NULL,
     id_session       NUMBER NOT NULL
 );
 
+CREATE UNIQUE INDEX equipe__idx ON
+    equipe (
+        classe_id_classe
+    ASC );
+
 ALTER TABLE equipe ADD CONSTRAINT equipe_pk PRIMARY KEY ( id_equipe );
 
 CREATE TABLE etudiant (
-    equipe_id_equipe           NUMBER,
     id_etudiant                NUMBER NOT NULL,
     nom_complet                VARCHAR2(200),
     utilisateur_id_utilisateur NUMBER,
@@ -95,11 +99,19 @@ CREATE TABLE etudiant_classe (
 ALTER TABLE etudiant_classe ADD CONSTRAINT etudiant_classe_pk PRIMARY KEY ( etudiant_id_etudiant,
                                                                             classe_id_classe );
 
+CREATE TABLE etudiant_equipe (
+    equipe_id_equipe     NUMBER NOT NULL,
+    etudiant_id_etudiant NUMBER NOT NULL
+);
+
+ALTER TABLE etudiant_equipe ADD CONSTRAINT etudiant_equipe_pk PRIMARY KEY ( equipe_id_equipe,
+                                                                            etudiant_id_etudiant );
+
 CREATE TABLE evaluation (
     travail_id_travail       NUMBER NOT NULL,
     id_evaluation            NUMBER NOT NULL,
     etudiant_id_etudiant     NUMBER NOT NULL,
-    etudiant_id_etudiant2    NUMBER NOT NULL,
+    etudiant_id_etudiant1    NUMBER NOT NULL,
     date_evaluation          DATE,
     instrument_id_instrument NUMBER NOT NULL,
     equipe_id_equipe         NUMBER NOT NULL,
@@ -110,6 +122,11 @@ CREATE TABLE evaluation (
     id_session               NUMBER NOT NULL,
     etat_evaluation          VARCHAR2(20)
 );
+
+CREATE UNIQUE INDEX evaluation__idx ON
+    evaluation (
+        etudiant_id_etudiant1
+    ASC );
 
 ALTER TABLE evaluation ADD CONSTRAINT evaluation_pk PRIMARY KEY ( id_evaluation );
 
@@ -158,7 +175,7 @@ CREATE TABLE reponse (
 
 ALTER TABLE reponse ADD CONSTRAINT reponse_pk PRIMARY KEY ( id_reponse );
 
-CREATE TABLE "Session" (
+CREATE TABLE Session (
     id_session   NUMBER NOT NULL,
     code_session VARCHAR2(200),
     date_session DATE,
@@ -208,17 +225,9 @@ CREATE TABLE utilisateur (
     etat_utilisateur         VARCHAR2(20),
     type_utilisateur         VARCHAR2(1) NOT NULL,
     professeur_id_professeur NUMBER,
-    etudiant_id_etudiant     NUMBER
+    etudiant_id_etudiant     NUMBER,
+    date_creation            DATE
 );
-
-ALTER TABLE utilisateur
-    ADD CONSTRAINT arc_1
-        CHECK ( ( ( etudiant_id_etudiant IS NOT NULL )
-                  AND ( professeur_id_professeur IS NULL ) )
-                OR ( ( professeur_id_professeur IS NOT NULL )
-                     AND ( etudiant_id_etudiant IS NULL ) )
-                OR ( ( etudiant_id_etudiant IS NULL )
-                     AND ( professeur_id_professeur IS NULL ) ) );
 
 COMMENT ON COLUMN utilisateur.etat_utilisateur IS
     'Actif/Inactif';
@@ -277,17 +286,17 @@ ALTER TABLE etudiant_classe
     ADD CONSTRAINT etudiant_classe_etudiant_fk FOREIGN KEY ( etudiant_id_etudiant )
         REFERENCES etudiant ( id_etudiant );
 
-ALTER TABLE etudiant
-    ADD CONSTRAINT etudiant_equipe_fk FOREIGN KEY ( equipe_id_equipe )
+ALTER TABLE etudiant_equipe
+    ADD CONSTRAINT etudiant_equipe_equipe_fk FOREIGN KEY ( equipe_id_equipe )
         REFERENCES equipe ( id_equipe );
+
+ALTER TABLE etudiant_equipe
+    ADD CONSTRAINT etudiant_equipe_etudiant_fk FOREIGN KEY ( etudiant_id_etudiant )
+        REFERENCES etudiant ( id_etudiant );
 
 ALTER TABLE etudiant
     ADD CONSTRAINT etudiant_professeur_fk FOREIGN KEY ( professeur_id_professeur )
         REFERENCES professeur ( id_professeur );
-
-ALTER TABLE etudiant
-    ADD CONSTRAINT etudiant_utilisateur_fk FOREIGN KEY ( utilisateur_id_utilisateur )
-        REFERENCES utilisateur ( id_utilisateur );
 
 ALTER TABLE evaluation
     ADD CONSTRAINT evaluation_classe_fk FOREIGN KEY ( classe_id_classe )
@@ -302,7 +311,7 @@ ALTER TABLE evaluation
         REFERENCES etudiant ( id_etudiant );
 
 ALTER TABLE evaluation
-    ADD CONSTRAINT evaluation_etudiant_fkv2 FOREIGN KEY ( etudiant_id_etudiant2 )
+    ADD CONSTRAINT evaluation_etudiant_fkv1 FOREIGN KEY ( etudiant_id_etudiant1 )
         REFERENCES etudiant ( id_etudiant );
 
 ALTER TABLE evaluation
@@ -325,10 +334,6 @@ ALTER TABLE niveau_performance
     ADD CONSTRAINT niveau_performance_reponse_fk FOREIGN KEY ( reponse_id_reponse )
         REFERENCES reponse ( id_reponse );
 
-ALTER TABLE professeur
-    ADD CONSTRAINT professeur_utilisateur_fk FOREIGN KEY ( utilisateur_id_utilisateur )
-        REFERENCES utilisateur ( id_utilisateur );
-
 ALTER TABLE reponse
     ADD CONSTRAINT reponse_evaluation_fk FOREIGN KEY ( evaluation_id_evaluation )
         REFERENCES evaluation ( id_evaluation );
@@ -345,14 +350,6 @@ ALTER TABLE travail
     ADD CONSTRAINT travail_instrument_fk FOREIGN KEY ( instrument_id_instrument )
         REFERENCES instrument ( id_instrument );
 
-ALTER TABLE utilisateur
-    ADD CONSTRAINT utilisateur_etudiant_fk FOREIGN KEY ( etudiant_id_etudiant )
-        REFERENCES etudiant ( id_etudiant );
-
-ALTER TABLE utilisateur
-    ADD CONSTRAINT utilisateur_professeur_fk FOREIGN KEY ( professeur_id_professeur )
-        REFERENCES professeur ( id_professeur );
-
 CREATE SEQUENCE utilisateur_id_utilisateur_seq START WITH 1 NOCACHE ORDER;
 
 CREATE OR REPLACE TRIGGER utilisateur_id_utilisateur_trg BEFORE
@@ -368,9 +365,9 @@ END;
 
 -- Rapport récapitulatif d'Oracle SQL Developer Data Modeler : 
 -- 
--- CREATE TABLE                            17
--- CREATE INDEX                             4
--- ALTER TABLE                             46
+-- CREATE TABLE                            18
+-- CREATE INDEX                             6
+-- ALTER TABLE                             43
 -- CREATE VIEW                              0
 -- ALTER VIEW                               0
 -- CREATE PACKAGE                           0
