@@ -91,7 +91,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 11. Installer la base de données dans un terminal:
 
     ```bash
-    docker run --name postgres -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
+    docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
     docker exec -it postgres psql -U postgres
 
@@ -123,7 +123,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
     ```bash
 
-      docker run -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
+      docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
     ```
 
 ## Auteurs
