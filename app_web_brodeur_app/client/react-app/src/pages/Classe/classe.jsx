@@ -3,7 +3,7 @@ import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
 import { Link } from "react-router-dom";
 
-const Classe = () => {
+const classe = () => {
   const [classes, setClasses] = useState([]);
   const [form, setForm] = useState({
     code_cours: "",
@@ -80,21 +80,122 @@ const Classe = () => {
       <Navbar />
       <div className="container mt-5">
         <h1 className="text-center">Liste des classes</h1>
-      </div>
-      <div className="container mt-5">
         <div className="mt-3">
           <input
             type="text"
             className="form-control"
             placeholder="Rechercher une classe"
+            onChange={(e) => {                                                    // Aider par ChatGPT pour la recherche de classe
+              const searchTerm = e.target.value.toLowerCase();
+              setClasses((prevClasses) =>
+                prevClasses.filter((classe) =>
+                  classe.description.toLowerCase().includes(searchTerm)
+                )
+              );
+            }}
           />
         </div>
+        <div className="d-flex justify-content-end mt-3">
+          <button
+            type="button"
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#createClassModal"
+          >
+            + Ajouter une classe
+          </button>
+        </div>
+        <table className="table table-striped table-hover mt-4">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Groupe</th>
+              <th>Cours</th>
+              <th>Professeur</th>
+              <th>Etat</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {classes.map((classe) => (
+              <tr key={classe.id_classe}>
+                <td>{classe.code_cours}</td>
+                <td>{classe.description}</td>
+                <td>{classe.groupe}</td>
+                <td>{classe.cours_id_cours}</td>
+                <td>{classe.professeur_id_professeur}</td>
+                <td>{classe.etat_classe}</td>
+                <td>
+                  <button
+                    className="btn btn-warning me-2"
+                    onClick={() => modifierClasse(classe.id_classe)}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => supprimerClasse(classe.id_classe)}
+                  >
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      <div className="d-flex justify-content-end mt-5 mx-5">
-        <button type="button" className="btn btn-primary">
-          + Ajouter une classe
-        </button>
+      <div
+       // source: https://getbootstrap.com/docs/4.0/components/modal/
+        className="modal fade"                           
+        id="createClassModal"
+        tabIndex="-1"
+        aria-labelledby="createClassModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="createClassModalLabel">
+                Ajout une nouvelle classe
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={creerClasse}>
+                {[
+                  { label: "Nom classe", id: "description" },
+                  { label: "Groupe", id: "groupe" },
+                  { label: "Etat Classe", id: "etat_classe" },
+                ].map(({ label, id }) => (
+                  <div className="mb-3" key={id}>
+                    <label htmlFor={id} className="form-label">
+                      {label}
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id={id}
+                      value={form[id]}
+                      onChange={(e) =>
+                        setForm({ ...form, [id]: e.target.value })
+                      }
+                    />
+                  </div>
+                ))}
+                <button type="submit" className="btn btn-primary">
+                  Ajouter
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
 
       <Footer />
