@@ -4,6 +4,7 @@ import Navbar from "../../element/Navbar";
 //@ts-ignore
 import Footer from "../../element/Footer";
 import AjouterCours from "../../element/AjouterCours";
+
 function DashBoard() {
   function cours() {
     const [cours, setCours] = useState([]);
