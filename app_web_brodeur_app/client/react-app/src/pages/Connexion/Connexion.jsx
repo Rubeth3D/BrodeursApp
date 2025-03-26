@@ -1,7 +1,3 @@
-//@ts-ignore
-import Navbar from "../../element/Navbar";
-//@ts-ignore
-import Footer from "../../element/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
@@ -27,11 +23,6 @@ function Connexion() {
       );
 
       const dataJson = await response.json();
-      // if (!document.cookie.includes("UserData")) {
-      //   console.error("Accès refusé, cookie manquant");
-      //   return;
-      // }
-      // const cookiesData = Json.parse(req);
       if (response.status == 200) {
         console.log(dataJson);
         console.log(dataJson.nom_user);
@@ -51,7 +42,6 @@ function Connexion() {
   };
   return (
     <>
-      <Navbar />
       <div className=" mb-5"></div>
       <form
         className="container"
@@ -103,7 +93,6 @@ function Connexion() {
           </p>
         </div>
       </form>
-      <Footer></Footer>
     </>
   );
 }

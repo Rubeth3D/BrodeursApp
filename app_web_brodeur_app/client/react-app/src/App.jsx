@@ -11,11 +11,11 @@ import Cours from "./pages/Cours/Cours.jsx";
 import DashBoard from "./pages/DashBoard/DashBoard.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
-  { path: "/Connexion", element: <Connexion /> }, 
+  { path: "/Connexion", element: <Connexion /> },
   { path: "/Inscription", element: <Inscription /> },
-  { path: "/DashBoard", element: <DashBoard /> }, 
-  { path: "/classe", element: <Classe /> }, 
-  { path: "/cours", element: <Cours />},
+  { path: "/DashBoard", element: <DashBoard /> },
+  { path: "/classe", element: <Classe /> },
+  { path: "/cours", element: <Cours /> },
   { path: "*", element: <NotfoundPage /> },
 ]);
 function App() {
