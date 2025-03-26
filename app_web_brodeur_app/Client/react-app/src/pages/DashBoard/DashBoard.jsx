@@ -17,7 +17,6 @@ const SVGI = (
 function DashBoard() {
   return (
     <>
-      <HoverDiv text={"Arnaud"} svgImage={SVGI}></HoverDiv>
       <h2 className="text-primary mx-3 mt-5 fw-normal">
         Évaluation par les pairs
       </h2>
@@ -176,6 +175,7 @@ function DashBoard() {
             ></HoverText>
           </div>
         </div>
+        <HoverDiv text={"Arnaud"} svgImage={SVGI}></HoverDiv>
       </div>
     </>
   );
