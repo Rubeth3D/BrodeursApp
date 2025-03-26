@@ -203,4 +203,4 @@ const classe = () => {
   );
 };
 
-export default Classe;
+export default classe;

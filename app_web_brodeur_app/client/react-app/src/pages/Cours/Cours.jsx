@@ -12,7 +12,6 @@ const Cours = () => {
         session_id_session: "",
     });
 
-
 const fetchCours = async () => {
     try {
         const response = await fetch("http://localhost:8080/cours", {
