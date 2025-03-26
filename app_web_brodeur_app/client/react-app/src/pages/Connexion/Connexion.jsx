@@ -1,0 +1,111 @@
+//@ts-ignore
+import Navbar from "../../element/Navbar";
+//@ts-ignore
+import Footer from "../../element/Footer";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+
+function Connexion() {
+  const [nomUtilisateur, setNomUtilisateur] = useState("");
+  const [reponseStatus, setReponseStatus] = useState(null);
+  const [motDePasse, setMotDePasse] = useState("");
+  const navigate = useNavigate();
+
+  const connexionUser = async (nomUser, motDePasse, e) => {
+    e.preventDefault();
+    if (!nomUser) {
+      console.error("Nom d'utilisateur requis");
+      return;
+    } else if (!motDePasse) {
+      console.error("Mot de passe requis");
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:8080/utilisateur/${nomUser}/${motDePasse}`,
+        { credentials: "include" }
+      );
+
+      const dataJson = await response.json();
+      // if (!document.cookie.includes("UserData")) {
+      //   console.error("Accès refusé, cookie manquant");
+      //   return;
+      // }
+      // const cookiesData = Json.parse(req);
+      if (response.status == 200) {
+        console.log(dataJson);
+        console.log(dataJson.nom_user);
+        navigate("/DashBoard", {
+          state: { username: `${dataJson.nom_user}` },
+        });
+      } else if (response.status == 404) {
+        console.log(dataJson.message);
+        setReponseStatus(response.status);
+      } else if (response.status == 401) {
+        console.log(dataJson.json);
+        setReponseStatus(response.status);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  return (
+    <>
+      <Navbar />
+      <div className=" mb-5"></div>
+      <form
+        className="container"
+        onSubmit={(e) => connexionUser(nomUtilisateur, motDePasse, e)}
+      >
+        <h2 className="text-center display-3 fw-normal">Connexion</h2>
+        <div className="row justify-content-center mt-5">
+          <div className="col-4">
+            <div className="form-group mb-5">
+              <label className="fw-bold fs-4">Nom d'utilisateur</label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Entrer Nom d'utilisateur"
+                  id="inputNumeroIdentification"
+                  value={nomUtilisateur}
+                  onChange={(e) => setNomUtilisateur(e.target.value)}
+                  required
+                />
+              </div>
+              <div id="validationServer03Feedback" class="invalid-feedback" />
+            </div>
+            <div className="form-group">
+              <label className="fw-bold fs-4">Mot de passe</label>
+              <input
+                type="password"
+                className="form-control form-control-lg "
+                placeholder="Entrer Mot de passe"
+                id="inputMotDePasse"
+                value={motDePasse}
+                onChange={(e) => setMotDePasse(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div className="text-center mt-5">
+          <button type="submit" className="btn btn-primary fs-3 mb-1">
+            Connecter
+          </button>
+          <p>
+            <Link
+              to={"/Inscription"}
+              className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
+            >
+              Inscription
+            </Link>
+          </p>
+        </div>
+      </form>
+      <Footer></Footer>
+    </>
+  );
+}
+
+export default Connexion;

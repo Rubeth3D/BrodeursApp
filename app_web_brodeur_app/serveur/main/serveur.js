@@ -1,7 +1,11 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import winston from "winston";
-import cours from "./r"
+import cours from "../routes/cours.js";
+import utilisateur from "../routes/utilisateur.js";
+import session from "../routes/session.js";
+import logSessions from "../routes/logSessions.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -15,12 +19,17 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: "server.log" }),
   ],
 });
-
-function main() {
-  const app = express();
-
-  app.listen(8080, () => {
-    logger.info("Le serveur roule sur le port 8080");
-  });
-}
-main();
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
+const app = express();
+app.use(cors(corsConfig));
+app.use(cookieParser());
+app.use("/cours", cours);
+app.use("/utilisateur", utilisateur);
+app.use("/session", session);
+app.use("/logSessions", logSessions);
+app.listen(8080, () => {
+  logger.info("Le serveur roule sur le port 8080");
+});
