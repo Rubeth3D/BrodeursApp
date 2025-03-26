@@ -18,6 +18,7 @@ const logger = winston.createLogger({
 });
 config();
 const url = process.env.POSTGRES_URL;
+console.log(url);
 const client = new Client(url);
 
 try {
