@@ -5,7 +5,9 @@ import winston from "winston";
 import cours from "../routes/cours.js";
 import utilisateur from "../routes/utilisateur.js";
 import session from "../routes/session.js";
-
+import role from "../routes/role.js";
+import connexionMongo from "../bd/MongoBD/Connexion.js";
+import connexionPostgres from "../bd/postgresBD/Connexion.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -29,6 +31,7 @@ app.use(cookieParser());
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", session);
+app.use("/role", role);
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });

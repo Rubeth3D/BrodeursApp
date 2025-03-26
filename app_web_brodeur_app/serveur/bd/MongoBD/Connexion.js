@@ -1,8 +1,6 @@
-import pkg from "pg";
-const { Client } = pkg;
-import winston from "winston";
+import { MongoClient } from "mongodb";
 import { config } from "dotenv";
-
+import winston from "winston";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -17,16 +15,16 @@ const logger = winston.createLogger({
   ],
 });
 config();
-const url = process.env.POSTGRES_URL;
-const client = new Client(url);
-
+const url = process.env.MONGODB_URL;
+var mongoClient;
 try {
-  logger.info("Connexion à la BD Postgres...");
-  await client.connect();
-  logger.info("Connecté à la BD Postgres!");
+  mongoClient = new MongoClient(url);
+  logger.info("Connexion à la BD Mongo...");
+  await mongoClient.connect();
+  logger.info("Connecté à la BD Mongo!");
 } catch (err) {
-  logger.error(`Erreur de BD Postgres : ${err}`);
+  console.error(`Erreur lors de la connexion à la BD Mongo : ${err}`);
   process.exit(1);
 }
 
-export default client;
+export default mongoClient;

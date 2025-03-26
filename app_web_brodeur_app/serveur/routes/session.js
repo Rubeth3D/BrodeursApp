@@ -1,7 +1,7 @@
 import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
-import client from "../bd/postgresBD/connexion.js";
+import connexionPostgres from "../bd/postgresBD/Connexion.js";
 
 //route de cedryk lelightskin
 const logger = winston.createLogger({
@@ -25,7 +25,7 @@ router.use(express.json());
 //get pour les sessions
 router.get("/", async (req, res) => {
   try {
-    const resultat = await client.query("SELECT * FROM session");
+    const resultat = await connexionPostgres.query("SELECT * FROM session");
     res.status(200).json(resultat.rows);
     logger.info("Get des sessions effectuer avec succes!");
   } catch (err) {

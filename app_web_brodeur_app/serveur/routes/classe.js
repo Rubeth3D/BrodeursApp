@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import winston, { log } from "winston";
-import client from "../bd/postgresBD/connexion.js";
+import winston from "winston";
+import client from "../bd/postgresBD/Connexion.js";
 
 const logger = winston.createLogger({
   level: "info",

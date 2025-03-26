@@ -1,8 +1,6 @@
-import pkg from "pg";
-const { Client } = pkg;
+import mongoClient from "../bd/MongoBD/Connexion.js";
 import winston from "winston";
-import { config } from "dotenv";
-
+import express from "express";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -16,17 +14,6 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: "server.log" }),
   ],
 });
-config();
-const url = process.env.POSTGRES_URL;
-const client = new Client(url);
-
-try {
-  logger.info("Connexion à la BD Postgres...");
-  await client.connect();
-  logger.info("Connecté à la BD Postgres!");
-} catch (err) {
-  logger.error(`Erreur de BD Postgres : ${err}`);
-  process.exit(1);
-}
-
-export default client;
+const router = express.Router();
+router.use(express.json());
+export default router;
