@@ -48,8 +48,8 @@ router.get("/:id", async (req, res) => {
     }
     logger.info("Get du cours effectue avec succes");
     res.status(200).json(result.rows);
-  } catch (error) {
-    logger.error(error);
+  } catch (err) {
+    logger.error(`Erreur lors du fetch du cours : ${err}`);
     res.status(500).json({ message: "Erreur de serveur" });
   }
 });
@@ -65,8 +65,8 @@ router.post("/", async (req, res) => {
     );
     logger.info("Cours inséré avec succès");
     res.status(200).json(result.rows[0]);
-  } catch (error) {
-    logger.error(error);
+  } catch (err) {
+    logger.error(`Erreur lors du insert du cours : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insertion du cours" });
   }
 });
@@ -89,7 +89,7 @@ router.put("/:id", async (req, res) => {
       .status(200)
       .json({ message: "Cours mis à jour avec succès", cours: result.rows[0] });
   } catch (error) {
-    logger.error(error);
+    logger.error(`Erreur lors du update du cours : ${err}`);
     res.status(500).json({ message: "Erreur de mise à jour du cours" });
   }
 });
@@ -108,8 +108,8 @@ router.delete("/:id", async (req, res) => {
     }
     logger.info("Cours supprimé avec succès");
     res.status(200).json({ message: "Cours supprimé avec succès" });
-  } catch (error) {
-    logger.error(error);
+  } catch (err) {
+    logger.error(`Erreur lors du delete du cours : ${err}`);
     res.status(500).json({ message: "Erreur de suppression du cours" });
   }
 });
