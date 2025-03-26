@@ -78,7 +78,7 @@ return (
     <>
     <Navbar/>
     <div className="container mt-5">
-        <h1 className="text-center">Liste des Cours</h1>
+        <h1 className="text-center">Liste des cours</h1>
         <div className="mt-3">
           <input
             type="text"
@@ -148,11 +148,11 @@ return (
     </div>
 
     <div
-    className="modal fade"
-    id="creerCours"
-    tabIndex="-1"
-    aria-labelledby="creerCoursLabel"
-    aria-hidden="true"
+        className="modal fade"
+        id="creerCours"
+        tabIndex="-1"
+        aria-labelledby="creerCoursLabel"
+        aria-hidden="true"
     >
         <div className="modal-dialog">
             <div className="modal-content">
