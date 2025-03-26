@@ -77,7 +77,127 @@ useEffect(() => {
 return (
     <>
     <Navbar/>
+    <div className="container mt-5">
+        <h1 className="text-center">Liste des cours</h1>
+        <div className="mt-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Rechercher un cours"
+            onChange={(e) => {                                                    // Aider par ChatGPT pour la recherche de classe
+              const searchTerm = e.target.value.toLowerCase();
+                setCours((prevCours) =>
+                prevCours.filter((cours) =>
+                  cours.description_cours.toLowerCase().includes(searchTerm)
+                )
+              );
+            }}
+          />
+        </div>
 
+        <div className="d-flex justify-content-end mt-3">
+            <button 
+            type="button"
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#creerCours"
+            >
+                + Ajouter un cours
+            </button>
+        </div>
+
+        <table className="table table-striped table-hover mt-4">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Etat</th>
+                    <th>Session</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {cours.map((cours) => (
+                    <tr key={cours.id_cours}>
+                        <td>{cours.code_cours}</td>
+                        <td>{cours.description_cours}</td>
+                        <td>{cours.etat_cours}</td>
+                        <td>{cours.session_id_session}</td>
+                        <td>
+                            <button
+                            type="button"
+                            className="btn btn-warning"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modifierCours"
+                            onClick={() => setForm(cours)}
+                            >
+                                Modifier
+                            </button>
+                            <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => supprimerCours(cours.id_cours)}
+                            >
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+
+    <div
+        className="modal fade"
+        id="creerCours"
+        tabIndex="-1"
+        aria-labelledby="creerCoursLabel"
+        aria-hidden="true"
+    >
+        <div className="modal-dialog">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="creerCoursLabel">
+                        Ajouter un cours
+                    </h5>
+                    <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    />
+                </div>
+                <div className="modal-body">
+                <form onSubmit={creerCours}>
+                {[
+                    { label: "Code cours", id: "code_cours" },
+                    { label: "Nom cours", id: "description_cours" },
+                    { label: "Etat Classe", id: "etat_classe" },
+                    { label: "Session", id: "session_id_session" },
+                ].map(({ label, id }) => (
+                  <div className="mb-3" key={id}>
+                    <label htmlFor={id} className="form-label">
+                      {label}
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id={id}
+                      value={form[id]}
+                      onChange={(e) =>
+                        setForm({ ...form, [id]: e.target.value })
+                      }
+                    />
+                  </div>
+                ))}
+                <button type="submit" className="btn btn-primary">
+                  Ajouter
+                </button>
+              </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <Footer/>
     </>
 );

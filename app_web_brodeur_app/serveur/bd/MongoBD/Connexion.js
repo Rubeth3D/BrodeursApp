@@ -16,7 +16,6 @@ const logger = winston.createLogger({
 });
 config();
 const url = process.env.MONGO_URL;
-console.log(url);
 var mongoClient;
 try {
   mongoClient = new MongoClient(url);
