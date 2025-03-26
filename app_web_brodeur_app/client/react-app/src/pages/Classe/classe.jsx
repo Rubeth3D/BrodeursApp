@@ -14,7 +14,7 @@ const classe = () => {
     etat_classe: "",
   });
 
-  const fetchClasses = async () => {
+  const fetchClasses = async () => { 
     try {
       const response = await fetch("http://localhost:8080/classe", {
         method: "GET",
@@ -78,7 +78,7 @@ const classe = () => {
   return (
     <>
       <Navbar />
-      <div className="container mt-5">
+      <div className="container mt-5"> 
         <h1 className="text-center">Liste des classes</h1>
         <div className="mt-3">
           <input
@@ -87,7 +87,7 @@ const classe = () => {
             placeholder="Rechercher une classe"
             onChange={(e) => {
               const searchTerm = e.target.value.toLowerCase();
-              fetchClasses(); // Re-fetch the classes to reset the list
+              fetchClasses(); 
               setClasses((prevClasses) =>
                 prevClasses.filter((classe) =>
                   classe.description.toLowerCase().includes(searchTerm)
@@ -197,7 +197,6 @@ const classe = () => {
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );
