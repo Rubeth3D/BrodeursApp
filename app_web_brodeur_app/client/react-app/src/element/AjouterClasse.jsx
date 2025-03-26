@@ -7,6 +7,7 @@ const AjouterClasse = () => {
     const [cours, setCours] = useState([]);
     const [coursSelected, setCoursSelect] = useState("");
     const [classe, nouvelleClasse] = useState({
+        code_cours: "",
         description : "",
         session : "",
         groupe : "",
@@ -28,6 +29,7 @@ const AjouterClasse = () => {
         try {
             console.log(classe);
             const data = {
+                code_cours: classe.code_cours,
                 description : classe.description,
                 session : classe.session,
                 groupe : classe.groupe,
@@ -73,6 +75,23 @@ const AjouterClasse = () => {
             <div className="input-group mb-3">
                 <div className="input-group-prepend">
                     <span className="input-group-text" id="inputGroup-sizing-default">
+                        Numéro de la classe
+                    </span>
+                </div>
+                <input
+                    type="text"
+                    name="code_cours"
+                    className="form-control"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    value={classe.code_cours}
+                    onChange={modifierClasse}
+                />
+            </div>
+            
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id="inputGroup-sizing-default">
                         Description
                     </span>
                 </div>
@@ -82,10 +101,45 @@ const AjouterClasse = () => {
                     className="form-control"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default"
-                    onChange={modifierClasse}
                     value={classe.description}
+                    onChange={modifierClasse}
                 />
             </div>
+
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id="inputGroup-sizing-default">
+                        Session
+                    </span>
+                </div>
+                <input
+                    type="text"
+                    name="session"
+                    className="form-control"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    value={classe.session}
+                    onChange={modifierClasse}
+                />
+            </div>
+
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id="inputGroup-sizing-default">
+                        Groupe
+                    </span>
+                </div>
+                <input
+                    type="text"
+                    name="groupe"
+                    className="form-control"
+                    aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-default"
+                    value={classe.groupe}
+                    onChange={modifierClasse}
+                />
+            </div>
+
             <div className="mb-3">
                 <label htmlFor="selectbox" className="form-label">
                     Selectionner le cours
