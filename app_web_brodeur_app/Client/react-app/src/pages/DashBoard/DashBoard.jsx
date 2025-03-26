@@ -13,7 +13,7 @@ function DashBoard() {
         style={{ width: "12rem" }}
       >
         <div className="mb-4 rounded-3">
-          <div className="d-flex align-items-center btn btn-secondary ">
+          <div className="d-flex align-items-center btn btn-secondary opacity-75">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
