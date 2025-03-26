@@ -85,8 +85,9 @@ const classe = () => {
             type="text"
             className="form-control"
             placeholder="Rechercher une classe"
-            onChange={(e) => {                                                    // Aider par ChatGPT pour la recherche de classe
+            onChange={(e) => {
               const searchTerm = e.target.value.toLowerCase();
+              fetchClasses(); // Re-fetch the classes to reset the list
               setClasses((prevClasses) =>
                 prevClasses.filter((classe) =>
                   classe.description.toLowerCase().includes(searchTerm)
@@ -147,8 +148,7 @@ const classe = () => {
       </div>
 
       <div
-       // source: https://getbootstrap.com/docs/4.0/components/modal/
-        className="modal fade"                           
+        className="modal fade"
         id="createClassModal"
         tabIndex="-1"
         aria-labelledby="createClassModalLabel"
