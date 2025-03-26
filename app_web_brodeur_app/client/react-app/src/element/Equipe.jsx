@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Enseignant = () => {
-}
+const Equipe = () => {};
 
-export default Enseignant;
+export default Equipe;
