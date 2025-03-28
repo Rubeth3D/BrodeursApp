@@ -2,8 +2,8 @@ import mongoClient from "../bd/MongoBD/Connexion.js";
 import winston from "winston";
 import express from "express";
 const collection = await mongoClient
-.db("BrodeurAppBD")
-.collection("logSessions");
+  .db("BrodeurAppBD")
+  .collection("logSessions");
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const{
+    const {
       nomComplet_utilisateur,
       username,
       email,
@@ -79,42 +79,51 @@ router.put("/:id", async (req, res) => {
       raison_deconnexion,
     } = req.body;
     const resultat = await collection.updateOne(
-      {id_utilisateur : id},
+      { id_utilisateur: id },
       {
-        $set:{
+        $set: {
           nomComplet_utilisateur: nomComplet_utilisateur,
           username: username,
           email: email,
           debut_session: debut_session,
           fin_session: fin_session,
           raison_deconnexion: raison_deconnexion,
-        }
+        },
       }
     );
-    if(resultat.matchedCount === 0){
-        logger.error(`Aucun logSession avec le id  : ${id} n'existe!`);
-        res.status(404).json({message : `Aucun logSession avec le id  : ${id} n'existe!`});
+    if (resultat.matchedCount === 0) {
+      logger.error(`Aucun logSession avec le id  : ${id} n'existe!`);
+      res
+        .status(404)
+        .json({ message: `Aucun logSession avec le id  : ${id} n'existe!` });
     }
-    logger.info("Le update à été effectué avec succès!")
-    res.status(200).json({ message : "Update sur le logSession effectué avec succès "});
+    logger.info("Le update à été effectué avec succès!");
+    res
+      .status(200)
+      .json({ message: "Update sur le logSession effectué avec succès " });
   } catch (err) {
     logger.error(`Erreur lors de l'update du document ${err}`);
-    res.status(500).json({message : `Erreur lors du update du logSession`});
+    res.status(500).json({ message: `Erreur lors du update du logSession` });
   }
 });
-router.delete("/" ,async (req,res) =>{
+router.delete("/", async (req, res) => {
   try {
     const id = req.params.id;
-    const resultat =  collection.deleteOne({id_utilisateur : id});
-    if(resultat.matchedCount === 0){
+    const resultat = collection.deleteOne({ id_utilisateur: id });
+
+    if (resultat.matchedCount === 0) {
       logger.error(`Aucun logSession avec le id  : ${id} n'existe!`);
-      res.status(404).json({message : `Aucun logSession avec le id  : ${id} n'existe!`});
+      res
+        .status(404)
+        .json({ message: `Aucun logSession avec le id  : ${id} n'existe!` });
     }
     logger.info("delete sur le logSession effectué avec succès");
-    res.status(200).json({ message : "Delete sur le logSession effectué avec succès "});
+    res
+      .status(200)
+      .json({ message: "Delete sur le logSession effectué avec succès " });
   } catch (error) {
     logger.error("Erreur lors du delete du logSession");
-    res.status(500).json({message : "Erreur lors du delete du logSession"});
+    res.status(500).json({ message: "Erreur lors du delete du logSession" });
   }
-})
+});
 export default router;
