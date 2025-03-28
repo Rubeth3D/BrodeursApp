@@ -21,6 +21,10 @@ const router = createBrowserRouter([
 function App() {
   useEffect(() => {
     document.title = "Évaluation par les pairs"; // Aider par ChatGPT pour le titre de l'onglet
+    const link = document.querySelector("link[rel~='icon']");
+    if (link) {
+      link.href = "/Logo.png"; // Aider par ChatGPT pour l'icône de l'onglet
+    }
   }, []);
   return (
     <>
