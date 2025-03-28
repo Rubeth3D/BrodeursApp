@@ -13,6 +13,28 @@ import ResultatsSVG from "../../image/ResultatsSVG";
 import AdminSVG from "../../image/AdminSVG";
 
 function DashBoard() {
+
+  const [etatBoutton, setEtatBoutton] = useState([
+    {id:"Dashboard", text:"Dashboard", isActiver: false},
+    {id:"Cours", text:"Cours", isActiver: false},
+    {id:"Classes", text:"Classes", isActiver: false},
+    {id:"Equipes", text:"Equipes", isActiver: false},
+    {id:"Activité", text:"Activité", isActiver: false},
+    {id:"Assignations", text:"Assignations", isActiver: false},
+    {id:"Resultats", text:"Resultats", isActiver: false},
+    {id:"Admin", text:"Admin", isActiver: false},
+  ]);
+
+  const Cliquer = (id) => {
+    setEtatBoutton((prevEtat) =>
+      prevEtat.map((bouton) =>
+        bouton.id === id
+          ? { ...bouton, isActiver: true }  // Active le bouton cliqué
+          : { ...bouton, isActiver: false } // Désactive les autres boutons
+      )
+    );
+  };
+
   return (
     <>
       <h2 className="text-primary mx-3 mt-5 fw-normal">
@@ -22,14 +44,14 @@ function DashBoard() {
         className="justify-content-start mt-5 mx-3"
         style={{ width: "12rem" }}
       >
-        <HoverDiv text={"Dashboard"} svgImage={<DashBoardSVG/>}></HoverDiv>
-        <HoverDiv text={"Cours"} svgImage={<CoursSVG/>}></HoverDiv>
-        <HoverDiv text={"Classes"} svgImage={<ClassesSVG/>}></HoverDiv>
-        <HoverDiv text={"Equipes"} svgImage={<EquipeSVG/>}></HoverDiv>
-        <HoverDiv text={"Activité"} svgImage={<ActiviteSVG/>}></HoverDiv>
-        <HoverDiv text={"Assignations"} svgImage={<AssignationsSVG/>}></HoverDiv>
-        <HoverDiv text={"Resultats"} svgImage={<ResultatsSVG/>}></HoverDiv>
-        <HoverDiv text={"Admin"} svgImage={<AdminSVG/>}></HoverDiv>
+        <HoverDiv text={"Dashboard"} svgImage={<DashBoardSVG/>} isCliquer={etatBoutton[0].isActiver}></HoverDiv>
+        <HoverDiv text={"Cours"} svgImage={<CoursSVG/>} isCliquer={etatBoutton[1].isActiver}></HoverDiv>
+        <HoverDiv text={"Classes"} svgImage={<ClassesSVG/>} isCliquer={etatBoutton[2].isActiver}></HoverDiv>
+        <HoverDiv text={"Equipes"} svgImage={<EquipeSVG/>} isCliquer={etatBoutton[3].isActiver}></HoverDiv>
+        <HoverDiv text={"Activité"} svgImage={<ActiviteSVG/>} isCliquer={etatBoutton[4].isActiver}></HoverDiv>
+        <HoverDiv text={"Assignations"} svgImage={<AssignationsSVG/>} isCliquer={etatBoutton[5].isActiver}></HoverDiv>
+        <HoverDiv text={"Resultats"} svgImage={<ResultatsSVG/>} isCliquer={etatBoutton[6].isActiver}></HoverDiv>
+        <HoverDiv text={"Admin"} svgImage={<AdminSVG/>} isCliquer={etatBoutton[7].isActiver}></HoverDiv>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function HoverDiv({ text, svgImage }) {
+function HoverDiv({ text, svgImage, isCliquer}) {
   // État pour gérer la couleur de la div au survol
   const [isHovered, setIsHovered] = useState(false);
   const [opacity, setOpacity] = useState(1);
@@ -13,8 +13,10 @@ function HoverDiv({ text, svgImage }) {
 
   // Rétablir la couleur de fond lors du retrait du survol
   const handleMouseOut = () => {
-    setIsHovered(false);
-    setOpacity(1);
+    if(!isCliquer){
+      setIsHovered(false);
+      setOpacity(1);
+    }
   };
 
   return (
