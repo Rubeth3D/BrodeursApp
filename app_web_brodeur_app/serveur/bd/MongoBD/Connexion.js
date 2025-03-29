@@ -23,7 +23,14 @@ try {
   await mongoClient.connect();
   logger.info("Connecté à la BD Mongo!");
 } catch (err) {
-  console.error(`Erreur lors de la connexion à la BD Mongo : ${err}`);
+  if (err instanceof AggregateError) {
+    console.error("Plusieurs erreurs détectées :");
+    for (const error of err.errors) {
+      console.error(`- Erreur: ${error.message}`);
+    }
+  } else {
+    console.error(`Erreur unique : ${err}`);
+  }
   process.exit(1);
 }
 

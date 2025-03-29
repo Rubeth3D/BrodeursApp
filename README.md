@@ -126,7 +126,18 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
       docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
     ```
 
+16. Connexion aux deux bd
+
+````.env
+   créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
+   POSTGRES_URL=postgres://postgres:oracle@localhost:5000
+   MONGO_URL=mongodb://localhost:2717
+```
+```Connexion
+   Lancer la commande node : .\main\serveur.js\ depuis le dossier serveur
+```
 ## Auteurs
 
 L'équipe de développement Brodeur Apps est composé de trois étudiant du collège de bois-de-boulogne.
 Arnaud Simard Desmeules, Rubeth Rokonuzzaman, Cedryk Leblanc.
+````
