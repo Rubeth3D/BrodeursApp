@@ -13,7 +13,7 @@ const Equipe = () => {
         etat_equipe: "A",
     });
 
-    const GetClasse = async () => {
+    const getClasse = async () => {
         try {
             const reponse = await fetch(urlClasse);
             const objetClasse = await reponse.json();
@@ -25,7 +25,7 @@ const Equipe = () => {
     
     useEffect(() => {
         if (!estFetchedClasse.current) {
-            GetClasse();
+            getClasse();
             estFetchedClasse.current = true;
         }
     }
@@ -89,6 +89,7 @@ const Equipe = () => {
             console.log(`Erreur lors de la suppression de l'equipe ${err}`);
         }
     }
+
     return(
         <>
             <div className="container">
@@ -121,7 +122,6 @@ const Equipe = () => {
                 </form>
             </div>
 
-            {/* Affichage des équipes */}
             <div className="container mt-5">
                 <h2>Liste des équipes</h2>
                 <table className="table">
@@ -145,6 +145,7 @@ const Equipe = () => {
                     </tbody>
                 </table>
             </div>
+            
             <div className="container mt-5">
                 <h2>Modifier/Supprimer une équipe</h2>
                 {classe.map((item) => (
