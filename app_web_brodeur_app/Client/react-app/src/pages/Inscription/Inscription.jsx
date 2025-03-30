@@ -60,7 +60,6 @@ function Inscription() {
 
   return (
     <>
-      <Navbar />
       <h2 className=" mb-5"></h2>
       <form className="container" onSubmit={(e) => creationUtilisateur(e)}>
         <Link to={"/Connexion"}>
@@ -213,7 +212,6 @@ function Inscription() {
         </div>
         <h2 className="mb-5"></h2>
       </form>
-      <Footer></Footer>
     </>
   );
 }

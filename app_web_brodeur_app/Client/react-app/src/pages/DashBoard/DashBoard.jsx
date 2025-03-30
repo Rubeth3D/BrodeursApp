@@ -1,84 +1,60 @@
-import React, { useState, useRef, useEffect } from "react";
-//@ts-ignore
-import Navbar from "../../element/Navbar";
-//@ts-ignore
-import Footer from "../../element/Footer";
-import AjouterCours from "../../element/AjouterCours";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import HoverText from "../../element/HoverText";
+import HoverDiv from "../../element/HoverDiv";
+import ActiviteSVG from "../../image/ActiviteSVG";
+import Admin from "../../image/AdminSVG";
+import AssignationsSVG from "../../image/AssignationsSVG";
+import ClassesSVG from "../../image/ClassesSVG";
+import CoursSVG from "../../image/CoursSVG";
+import DashBoardSVG from "../../image/DashboardSVG";
+import EquipeSVG from "../../image/EquipesSVG";
+import ResultatsSVG from "../../image/ResultatsSVG";
+import AdminSVG from "../../image/AdminSVG";
 
 function DashBoard() {
-  function cours() {
-    const [cours, setCours] = useState([]);
-    const url = "http://localhost:8080/cours";
-    const GetCours = async () => {
-      try {
-        const reponse = await fetch(url);
-        const jsonData = await reponse.json();
-        console.log(jsonData);
-        setCours(jsonData);
-      } catch (err) {
-        console.error(`Erreur lors du fetch des cours : ${err}`);
-      }
-    };
-    const estFetchedCours = useRef(false);
-    useEffect(() => {
-      if (!estFetchedCours.current) {
-        GetCours();
-        estFetchedCours.current = true;
-        console.log(estFetchedCours.current);
-      }
-    }, []);
-    const DeleteCours = async (id_cours) => {
-      try {
-        const deleteCours = await fetch(`${url}/${id_cours}`, {
-          method: "DELETE",
-        });
-        setCours(cours.filter((cours) => cours.id_cours !== id_cours));
-      } catch (err) {
-        console.log(`Erreur lors du delete du cours : ${err}`);
-      }
-    };
-    return (
-      <>
-        <table className="table">
-          <thead className="thead-dark">
-            <tr></tr>
-          </thead>
-          <tbody>
-            {cours.map((cours) => (
-              <tr key={cours.id_cours}>
-                <td>{cours.description_cours}</td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => DeleteCours(cours.id_cours)}
-                  >
-                    delete
-                  </button>
-                  <PopUpModifier cours={cours} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <h2 className="mt-5"></h2>
-      </>
+
+  const [etatBoutton, setEtatBoutton] = useState([
+    {id:"Dashboard", text:"Dashboard", isActiver: false},
+    {id:"Cours", text:"Cours", isActiver: false},
+    {id:"Classes", text:"Classes", isActiver: false},
+    {id:"Equipes", text:"Equipes", isActiver: false},
+    {id:"Activité", text:"Activité", isActiver: false},
+    {id:"Assignations", text:"Assignations", isActiver: false},
+    {id:"Resultats", text:"Resultats", isActiver: false},
+    {id:"Admin", text:"Admin", isActiver: false},
+  ]);
+
+  const Cliquer = (id) => {
+    setEtatBoutton((prevEtat) =>
+      prevEtat.map((bouton) =>
+        bouton.id === id
+          ? { ...bouton, isActiver: true }  // Active le bouton cliqué
+          : { ...bouton, isActiver: false } // Désactive les autres boutons
+      )
     );
-  }
+  };
+
   return (
     <>
-      <Navbar />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="">
-            <AjouterCours />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col 1"> {cours()}</div>
-        </div>
-        <Footer />
+      <h2 className="text-primary mx-3 mt-5 fw-normal">
+        Évaluation par les pairs
+      </h2>
+      <div
+        className="justify-content-start mt-5 mx-3"
+        style={{ width: "12rem" }}
+      >
+        <HoverDiv text={"Dashboard"} svgImage={<DashBoardSVG/>} isCliquer={etatBoutton[0].isActiver}></HoverDiv>
+        <HoverDiv text={"Cours"} svgImage={<CoursSVG/>} isCliquer={etatBoutton[1].isActiver}></HoverDiv>
+        <HoverDiv text={"Classes"} svgImage={<ClassesSVG/>} isCliquer={etatBoutton[2].isActiver}></HoverDiv>
+        <HoverDiv text={"Equipes"} svgImage={<EquipeSVG/>} isCliquer={etatBoutton[3].isActiver}></HoverDiv>
+        <HoverDiv text={"Activité"} svgImage={<ActiviteSVG/>} isCliquer={etatBoutton[4].isActiver}></HoverDiv>
+        <HoverDiv text={"Assignations"} svgImage={<AssignationsSVG/>} isCliquer={etatBoutton[5].isActiver}></HoverDiv>
+        <HoverDiv text={"Resultats"} svgImage={<ResultatsSVG/>} isCliquer={etatBoutton[6].isActiver}></HoverDiv>
+        <HoverDiv text={"Admin"} svgImage={<AdminSVG/>} isCliquer={etatBoutton[7].isActiver}></HoverDiv>
       </div>
     </>
   );
 }
+
 export default DashBoard;
