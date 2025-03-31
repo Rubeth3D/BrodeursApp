@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../../element/navbar";
+import Footer from "../../element/footer";
 
 const AjouterCours = () => {
   const urlCours = "http://localhost:8080/cours";
@@ -60,6 +62,7 @@ const AjouterCours = () => {
   }, []);
   return (
     <>
+      <Navbar />
       <div className="container col-3">
         <h2 className="text-center">Ajouter un nouveau cours</h2>
         <form onSubmit={(e) => PostCours(e, cours, sessionSelected)}>
@@ -121,6 +124,7 @@ const AjouterCours = () => {
           </button>
         </form>
       </div>
+      <Footer/>
     </>
   );
 };

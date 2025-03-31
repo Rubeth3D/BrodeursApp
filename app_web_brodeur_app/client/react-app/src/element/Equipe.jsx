@@ -1,5 +1,9 @@
 import e from "express";
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../../element/navbar";
+import Footer from "../../element/footer";
+import { Link } from "react-router-dom";
+
 
 const Equipe = () => {
     const urlEquipe = "http://localhost:8080/equipe";
@@ -92,6 +96,7 @@ const Equipe = () => {
 
     return(
         <>
+            <Navbar/>
             <div className="container">
                 <h1>Gestion des équipes</h1>
                 <form onSubmit={(e) => postEquipe(e, equipe, classeSelected)}>
@@ -159,6 +164,7 @@ const Equipe = () => {
                     </div>
                 ))}
             </div>
+            <Footer/>
         </>
     )
 };

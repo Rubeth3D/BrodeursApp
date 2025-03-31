@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../../element/navbar";
+import Footer from "../../element/footer";
+import { Link } from "react-router-dom";
+
 
 const AjouterClasse = () => {
     const urlClasse = "http://localhost:8080/classe";
@@ -150,6 +154,7 @@ const AjouterClasse = () => {
 
     return (
         <>
+        <Navbar/>
         <div className="container col-3">
             <h2>Ajouter une nouvelle classe</h2>
             
@@ -205,6 +210,7 @@ const AjouterClasse = () => {
                 <button type="button" className="btn btn-danger" onClick={(e) => DeleteClasse(e)}>Supprimer Classe</button>  
             </form>
         </div>
+        <Footer/>
         </>
     );
 }

@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../../element/navbar";
+import Footer from "../../element/footer";
+import { Link } from "react-router-dom";
+
 
 const Professeurs = ()=>{
     const urlProfesseur = "http://localhost:8080/professeur";
@@ -78,6 +82,7 @@ const Professeurs = ()=>{
 
     return(
         <>
+            <Navbar />
             <div className="container">
                 <h1>Gestion des professeurs</h1>
 
@@ -133,6 +138,7 @@ const Professeurs = ()=>{
                     </div>
                 ))}
             </div>
+            <Footer/>
         </>
     )
 };
