@@ -1,45 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function HoverDiv({ text, svgImage, isCliquer}) {
-  // État pour gérer la couleur de la div au survol
+function HoverDiv({ text, svgImage, isCliquer, onclick }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [opacity, setOpacity] = useState(1);
 
-  // Changer la couleur de fond lors du survol
-  const handleMouseOver = () => {
-    setIsHovered(true);
-    setOpacity(0.8);
-  };
-
-  // Rétablir la couleur de fond lors du retrait du survol
-  const handleMouseOut = () => {
-    if(!isCliquer){
-      setIsHovered(false);
-      setOpacity(1);
-    }
-  };
+  // Fonction pour gérer l'effet de survol
+  const handleMouseOver = () => setIsHovered(true);
+  const handleMouseOut = () => setIsHovered(false);
 
   return (
     <div
+      onClick={() => {
+        onclick();
+      }}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
       style={{
         display: "flex",
-        alignItems: "center", // Aligne verticalement l'image et le texte
+        alignItems: "center",
         padding: "8px",
         margin: "0.75rem",
-        opacity: opacity,
-        backgroundColor: isHovered ? "#0d6efd" : "transparent", // Change la couleur de fond en bleu au survol
-        borderRadius: "8px", // Ajoute un rayon pour arrondir les coins de la div
-        cursor: "pointer", // Change le curseur en pointeur lorsqu'on survole
-        transition: "background-color 0.3s ease", // Animation de transition lors du changement de couleur
+        backgroundColor: isCliquer
+          ? "#0d6efd" // Bleu si le bouton est cliqué
+          : isHovered
+          ? "#007bff" // Bleu clair au survol
+          : "transparent", // Transparent par défaut
+        borderRadius: "8px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease", // Animation pour adoucir les transitions de couleur
       }}
     >
-      <div style={{ marginRight: "1rem",color: isHovered ? "white" : "black"  }}>
+      <div
+        style={{
+          marginRight: "1rem",
+          color: isCliquer || isHovered ? "white" : "black",
+        }}
+      >
         {svgImage}
       </div>
-      <div style={{ fontSize: "20px", color: isHovered ? "white" : "black" }}>
-        {/* Affiche le texte */}
+      <div
+        style={{
+          fontSize: "20px",
+          color: isCliquer || isHovered ? "white" : "black",
+        }}
+      >
         {text}
       </div>
     </div>
