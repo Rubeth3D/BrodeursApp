@@ -1,5 +1,9 @@
 import e from "express";
 import React, { useState, useEffect, useRef } from "react";
+import Navbar from "../../element/navbar";
+import Footer from "../../element/footer";
+import { Link } from "react-router-dom";
+
 
 const Evaluation = () => {
     const urlEvaluation = "http://localhost:8080/evaluation";
@@ -98,10 +102,10 @@ const Evaluation = () => {
     }
 
     return (
+        <>
+        <Navbar/>
         <div className="container">
-
             <h1>Ajouter Evaluation</h1>
-
             <form
                 onSubmit={(e) => {
                     postEvaluation(e, evaluation, classeSelected);
@@ -266,6 +270,8 @@ const Evaluation = () => {
                 </button>
             </div>
         </div>
+        <Footer/>
+        </>
     );
 }
 export default Evaluation;
