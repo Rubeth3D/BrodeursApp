@@ -134,8 +134,6 @@ CREATE TABLE "Session" (
 
 CREATE TABLE session_utilisateur (
     id_session_utilisateur     SERIAL PRIMARY KEY,
-    sel                        VARCHAR(2000) NOT NULL,
-    token_init                 VARCHAR(4000) NOT NULL,
     date_connexion             DATE,
     date_jeton_expiration      DATE,
     tentatives_echoues         INTEGER,
