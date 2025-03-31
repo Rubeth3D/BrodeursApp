@@ -152,6 +152,7 @@ const Equipe = () => {
                     <div key={item.id_classe} className="card mb-3">
                         <div className="card-body">
                             <h5 className="card-title">{item.nom}</h5>
+                            <p className="card-text">Etat: {item.etat_equipe}</p>
                             <button className="btn btn-danger" onClick={() => deleteEquipe(item)}>Supprimer</button>
                             <button className="btn btn-warning" onClick={() => putEquipe(item)}>Modifier</button>
                         </div>
