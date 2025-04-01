@@ -7,6 +7,9 @@ import utilisateur from "../routes/utilisateur.js";
 import session from "../routes/sessionCours.js";
 import logSessions from "../routes/logSessions.js";
 import passport from "passport";
+import flash from "express-session";
+import sessionExpress from "express-session";
+import { config } from "dotenv";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -24,9 +27,18 @@ const corsConfig = {
   credentials: true,
   origin: true,
 };
+config();
 const app = express();
+app.use(
+  sessionExpress({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);

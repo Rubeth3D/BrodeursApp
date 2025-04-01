@@ -3,8 +3,8 @@ import cors from "cors";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
-import { tableauSession } from "../tableauSession/tableauSession.js";
-
+import passport from "passport";
+import initPassport from "../strategies/local-strategie.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -22,6 +22,12 @@ const logger = winston.createLogger({
 const router = express.Router();
 
 router.use(express.json());
+initPassport(passport, async (id_utilisateur) => {
+  return await client.query(
+    "SELECT * FROM utilisateur WHERE id_utilisateur = $1",
+    id_utilisateur
+  );
+});
 
 //get pour les utilisateurs
 // router.get("/", async (req, res) => {
