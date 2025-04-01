@@ -126,7 +126,14 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
       docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
     ```
 
-16. Connexion aux deux bd
+16. Creer la collection sur docker
+
+    ```bash
+      Entrer la commande : docker exec -it mongoBrodeurApps mongosh -u mongoadmin -p mongo
+
+    ```
+
+17. Connexion aux deux bd
 
 ````.env
    créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
@@ -134,7 +141,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
    MONGO_URL=mongodb://localhost:2717
 ```
 ```Connexion
-   Lancer la commande node : .\main\serveur.js\ depuis le dossier serveur
+   Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
 ```
 ## Auteurs
 
