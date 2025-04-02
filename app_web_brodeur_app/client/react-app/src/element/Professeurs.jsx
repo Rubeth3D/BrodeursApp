@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
-import { Link } from "react-router-dom";
+
 
 
 const Professeurs = ()=>{

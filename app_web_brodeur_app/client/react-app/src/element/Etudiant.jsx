@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, use } from "react";
 import Navbar from "../../element/navbar";
 import Footer from "../../element/footer";
-import { Link } from "react-router-dom";
 
 const Etudiant = () => {
     const urlEtudiant = "http://localhost:8080/etudiant";
