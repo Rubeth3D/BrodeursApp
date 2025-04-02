@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState } from "react";
 //image SVG
 import ActiviteSVG from "../../image/ActiviteSVG";
-import AssignationsSVG from "../../image/AssignationsSVG";
+import AssignationsSVG from "../../image/ModifierSVG";
 import ClassesSVG from "../../image/ClassesSVG";
 import CoursSVG from "../../image/CoursSVG";
 import DashBoardSVG from "../../image/DashboardSVG";
