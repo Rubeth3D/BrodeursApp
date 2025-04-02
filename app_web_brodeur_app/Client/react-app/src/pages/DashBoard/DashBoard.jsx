@@ -9,6 +9,10 @@ import DashBoardSVG from "../../image/DashboardSVG";
 import EquipeSVG from "../../image/EquipesSVG";
 import ResultatsSVG from "../../image/ResultatsSVG";
 import AdminSVG from "../../image/AdminSVG";
+import Classe from "../../element/classe";
+import Cours from "../../element/Cours";
+import Navbar from "../../element/navbar";
+import Footer from "../../element/footer";
 
 function DashBoard() {
   const [etatBoutton, setEtatBoutton] = useState([
@@ -22,6 +26,7 @@ function DashBoard() {
     { id: "Admin", isActiver: false },
   ]);
 
+  
   const Cliquer = (id) => {
     const updatedState = etatBoutton.map((button) => {
       if (button.id === id) {
@@ -33,11 +38,16 @@ function DashBoard() {
     setEtatBoutton(updatedState);
   };
 
+
   return (
     <>
+      <Navbar/>
+      {/*  
       <h2 className="text-primary mx-3 mt-5 fw-normal">
         Évaluation par les pairs
       </h2>
+      */}
+      
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 ms-0 d-flex justify-content-start">
@@ -53,6 +63,7 @@ function DashBoard() {
                   Cliquer("Dashboard");
                 }}
               ></HoverDiv>
+
               <HoverDiv
                 text={"Cours"}
                 svgImage={<CoursSVG />}
@@ -61,6 +72,7 @@ function DashBoard() {
                   Cliquer("Cours");
                 }}
               ></HoverDiv>
+
               <HoverDiv
                 text={"Classes"}
                 svgImage={<ClassesSVG />}
@@ -69,6 +81,7 @@ function DashBoard() {
                   Cliquer("Classes");
                 }}
               ></HoverDiv>
+
               <HoverDiv
                 text={"Equipes"}
                 svgImage={<EquipeSVG />}
@@ -77,6 +90,7 @@ function DashBoard() {
                   Cliquer("Equipes");
                 }}
               ></HoverDiv>
+
               <HoverDiv
                 text={"Activité"}
                 svgImage={<ActiviteSVG />}
@@ -93,6 +107,7 @@ function DashBoard() {
                   Cliquer("Assignations");
                 }}
               ></HoverDiv>
+
               <HoverDiv
                 text={"Resultats"}
                 svgImage={<ResultatsSVG />}
@@ -101,6 +116,7 @@ function DashBoard() {
                   Cliquer("Resultats");
                 }}
               ></HoverDiv>
+
               <HoverDiv
                 text={"Admin"}
                 svgImage={<AdminSVG />}
@@ -111,9 +127,13 @@ function DashBoard() {
               ></HoverDiv>
             </div>
           </div>
-          <div className="col-10"></div>
+          <div className="col-10">
+            {etatBoutton[1].isActiver && <Cours/>}
+            {etatBoutton[2].isActiver && <Classe/>}
+          </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }
