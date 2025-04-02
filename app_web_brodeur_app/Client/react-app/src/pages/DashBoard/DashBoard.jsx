@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState } from "react";
 //image SVG
 import ActiviteSVG from "../../image/ActiviteSVG";
-import AssignationsSVG from "../../image/ModifierSVG";
 import ClassesSVG from "../../image/ClassesSVG";
 import CoursSVG from "../../image/CoursSVG";
 import DashBoardSVG from "../../image/DashboardSVG";
@@ -10,6 +9,7 @@ import EquipeSVG from "../../image/EquipesSVG";
 import ResultatsSVG from "../../image/ResultatsSVG";
 import AdminSVG from "../../image/AdminSVG";
 import DeconnexionSVG from "../../image/DeconnexionSVG";
+import CompteSVG from "../../image/CompteSVG";
 //element
 import HoverDiv from "../../element/HoverDiv";
 import HoverText from "../../element/HoverText";
@@ -47,9 +47,55 @@ function DashBoard() {
           <h2 className="navbar-brand text-primary fs-2 fw-normal">
             Évaluation par les pairs
           </h2>
-          <div className="nav-item d-flex">
-            <h2 className="me-5 fs-4 fw-light">david sévastien</h2>
-            <div className="me-5 fw-light">
+          <div className="nav-item d-flex align-items-center">
+            <h2 className="me-5 mb-0 fs-4 fw-light align-content-center">
+              Sévastien Céleste
+            </h2>
+            <div className="me-5 fw-light btn align-content-center border-0">
+              <ul className="navbar-nav">
+                <li className="nav-item dropdown-center">
+                  <button
+                    className="btn p-0 border-0"
+                    id="dropdownUtilisateurBouton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <CompteSVG></CompteSVG>
+                  </button>
+                  <ul
+                    className="dropdown-menu py-0 border-0"
+                    aria-labelledby="dropdownUtilisateurBouton"
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "2rem",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    <div className="card" style={{ width: "18rem" }}>
+                      <div className="card-body">
+                        <h2 className="card-title fs-5 fw-normal">
+                          Sévastien Céleste
+                        </h2>
+                        <h2 className="card-subtitle fs-5 mb-2 text-muted fw-light">
+                          étudiant
+                        </h2>
+                        <div className="align-content-end mt-1">
+                          <p className="card-text m-0 fs-6">
+                            2244552@bdeb.qc.ca
+                          </p>
+                          <p className="card-text m-0 fs-6">2244552</p>
+                          <p className="card-text m-0 fs-6">
+                            College de Bois-de-boulogne
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div className="me-5 fw-light btn align-content-center border-0">
               <HoverText text={<DeconnexionSVG />} />
             </div>
           </div>
