@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./navbar";
-import Footer from "./footer";
-import { Link } from "react-router-dom";
 
 const classe = () => {
   const [classes, setClasses] = useState([]);
@@ -14,7 +11,7 @@ const classe = () => {
     etat_classe: "",
   });
 
-  const fetchClasses = async () => { 
+  const fetchClasses = async () => {
     try {
       const response = await fetch("http://localhost:8080/classe", {
         method: "GET",
@@ -77,35 +74,43 @@ const classe = () => {
 
   return (
     <>
-      <div className="container mt-5"> 
-        <h1 className="text-center">Liste des classes</h1>
-        <div className="mt-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Rechercher une classe"
-            onChange={(e) => {
-              const searchTerm = e.target.value.toLowerCase();
-              fetchClasses(); 
-              setClasses((prevClasses) =>
-                prevClasses.filter((classe) =>
-                  classe.description.toLowerCase().includes(searchTerm)
-                )
-              );
-            }}
-          />
+      <div className="container mt-5">
+        <h1 className="text-center mb-5">Tableau des classes</h1>
+        <div className="container my-3">
+          <div className="row">
+            <div className="col-10">
+              <div className="d-flex m-0">
+                <input
+                  type="text"
+                  className="form-control rounded-2"
+                  placeholder="Rechercher une classe"
+                  onChange={(e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    fetchClasses();
+                    setClasses((prevClasses) =>
+                      prevClasses.filter((classe) =>
+                        classe.description.toLowerCase().includes(searchTerm)
+                      )
+                    );
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-2">
+              <div className="d-flex m-0">
+                <button
+                  type="button"
+                  className="btn btn-primary rounded-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#createClassModal"
+                >
+                  + Ajouter une classe
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="d-flex justify-content-end mt-3">
-          <button
-            type="button"
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#createClassModal"
-          >
-            + Ajouter une classe
-          </button>
-        </div>
-        <table className="table table-striped table-hover mt-4">
+        <table className="table table-hover mt-5">
           <thead>
             <tr>
               <th>Code</th>

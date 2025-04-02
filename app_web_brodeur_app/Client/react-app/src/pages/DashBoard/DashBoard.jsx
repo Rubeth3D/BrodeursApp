@@ -14,6 +14,7 @@ import DeconnexionSVG from "../../image/DeconnexionSVG";
 import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
+import TravauxSVG from "../../image/TravauxSVG";
 
 function DashBoard() {
   const [etatBoutton, setEtatBoutton] = useState([
@@ -107,7 +108,7 @@ function DashBoard() {
               ></HoverDiv>
               <HoverDiv
                 text={"Travaux"}
-                svgImage={<AssignationsSVG />}
+                svgImage={<TravauxSVG />}
                 isCliquer={etatBoutton[5].isActiver}
                 onclick={() => {
                   Cliquer("Travaux");
