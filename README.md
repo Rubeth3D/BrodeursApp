@@ -93,7 +93,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
     ```bash
     docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
-    docker exec -it postgres psql -U postgres
+    docker exec -it postgresBrodeurApps psql -U postgres
 
     ```
 

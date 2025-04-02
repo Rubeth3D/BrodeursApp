@@ -6,10 +6,13 @@ import cours from "../routes/cours.js";
 import utilisateur from "../routes/utilisateur.js";
 import session from "../routes/sessionCours.js";
 import logSessions from "../routes/logSessions.js";
+import authentification from "../routes/authentification.js";
 import passport from "passport";
-import flash from "express-session";
 import sessionExpress from "express-session";
 import { config } from "dotenv";
+import initPassport from "../strategies/local-strategie.js";
+import client from "../bd/postgresBD/Connexion.js";
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -34,17 +37,38 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 1000 * 60 * 60,
+    },
   })
+);
+//initialisation du passport
+initPassport(
+  passport,
+  async (nom_utilisateur) => {
+    return await client.query(
+      "SELECT * FROM utilisateur WHERE nom_utilisateur = $1",
+      [nom_utilisateur]
+    );
+  },
+  async (id_utilisateur) => {
+    return await client.query(
+      "SELECT * FROM utilisateur WHERE id_utilisateur = $1",
+      [id_utilisateur]
+    );
+  }
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/sessionCoursS", session);
 app.use("/logSessions", logSessions);
+app.use("/authentification", authentification);
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
