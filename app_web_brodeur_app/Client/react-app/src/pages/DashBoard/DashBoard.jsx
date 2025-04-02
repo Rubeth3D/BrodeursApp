@@ -12,6 +12,7 @@ import AdminSVG from "../../image/AdminSVG";
 import DeconnexionSVG from "../../image/DeconnexionSVG";
 //element
 import HoverDiv from "../../element/HoverDiv";
+import HoverText from "../../element/HoverText";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
 import TravauxSVG from "../../image/TravauxSVG";
@@ -49,7 +50,7 @@ function DashBoard() {
           <div className="nav-item d-flex">
             <h2 className="me-5 fs-4 fw-light">david sévastien</h2>
             <div className="me-5 fw-light">
-              <DeconnexionSVG />
+              <HoverText text={<DeconnexionSVG />} />
             </div>
           </div>
         </div>
