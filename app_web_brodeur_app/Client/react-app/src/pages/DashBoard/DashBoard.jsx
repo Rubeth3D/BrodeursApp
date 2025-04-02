@@ -20,13 +20,12 @@ function DashBoard() {
     { id: "Cours", isActiver: false },
     { id: "Classes", isActiver: false },
     { id: "Equipes", isActiver: false },
-    { id: "Activité", isActiver: false },
-    { id: "Assignations", isActiver: false },
+    { id: "Critère", isActiver: false },
+    { id: "Travaux", isActiver: false },
     { id: "Resultats", isActiver: false },
     { id: "Admin", isActiver: false },
   ]);
 
-  
   const Cliquer = (id) => {
     const updatedState = etatBoutton.map((button) => {
       if (button.id === id) {
@@ -38,16 +37,11 @@ function DashBoard() {
     setEtatBoutton(updatedState);
   };
 
-
   return (
     <>
-      <Navbar/>
-      {/*  
       <h2 className="text-primary mx-3 mt-5 fw-normal">
         Évaluation par les pairs
       </h2>
-      */}
-      
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 ms-0 d-flex justify-content-start">
@@ -92,24 +86,24 @@ function DashBoard() {
               ></HoverDiv>
 
               <HoverDiv
-                text={"Activité"}
+                text={"Critère"}
                 svgImage={<ActiviteSVG />}
                 isCliquer={etatBoutton[4].isActiver}
                 onclick={() => {
-                  Cliquer("Activité");
+                  Cliquer("Critère");
                 }}
               ></HoverDiv>
               <HoverDiv
-                text={"Assignations"}
+                text={"Travaux"}
                 svgImage={<AssignationsSVG />}
                 isCliquer={etatBoutton[5].isActiver}
                 onclick={() => {
-                  Cliquer("Assignations");
+                  Cliquer("Travaux");
                 }}
               ></HoverDiv>
 
               <HoverDiv
-                text={"Resultats"}
+                text={"Résultats"}
                 svgImage={<ResultatsSVG />}
                 isCliquer={etatBoutton[6].isActiver}
                 onclick={() => {
@@ -128,12 +122,12 @@ function DashBoard() {
             </div>
           </div>
           <div className="col-10">
-            {etatBoutton[1].isActiver && <Cours/>}
-            {etatBoutton[2].isActiver && <Classe/>}
+            {etatBoutton[1].isActiver && <Cours />}
+            {etatBoutton[2].isActiver && <Classe />}
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
