@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState } from "react";
-import HoverDiv from "../../element/HoverDiv";
+//image SVG
 import ActiviteSVG from "../../image/ActiviteSVG";
 import AssignationsSVG from "../../image/AssignationsSVG";
 import ClassesSVG from "../../image/ClassesSVG";
@@ -9,16 +9,17 @@ import DashBoardSVG from "../../image/DashboardSVG";
 import EquipeSVG from "../../image/EquipesSVG";
 import ResultatsSVG from "../../image/ResultatsSVG";
 import AdminSVG from "../../image/AdminSVG";
+import DeconnexionSVG from "../../image/DeconnexionSVG";
+//element
+import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
-import Navbar from "../../element/navbar";
-import Footer from "../../element/footer";
 
 function DashBoard() {
   const [etatBoutton, setEtatBoutton] = useState([
     { id: "Dashboard", isActiver: false },
     { id: "Cours", isActiver: false },
-    { id: "Classes", isActiver: false },
+    { id: "Classes", isActiver: true },
     { id: "Equipes", isActiver: false },
     { id: "Critère", isActiver: false },
     { id: "Travaux", isActiver: false },
@@ -39,9 +40,20 @@ function DashBoard() {
 
   return (
     <>
-      <h2 className="text-primary mx-3 mt-5 fw-normal">
-        Évaluation par les pairs
-      </h2>
+      <div className="navbar ms-3 me-5 mt-5">
+        <div className="container-fluid">
+          <h2 className="navbar-brand text-primary fs-2 fw-normal">
+            Évaluation par les pairs
+          </h2>
+          <div className="nav-item d-flex">
+            <h2 className="me-5 fs-4 fw-light">david sévastien</h2>
+            <div className="me-5 fw-light">
+              <DeconnexionSVG />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 ms-0 d-flex justify-content-start">
@@ -121,13 +133,12 @@ function DashBoard() {
               ></HoverDiv>
             </div>
           </div>
-          <div className="col-10">
+          <div className="col-9">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
