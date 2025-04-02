@@ -37,7 +37,7 @@ const creationUtilisateur = async (req, res, next) => {
     const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
     // Correction de la syntaxe de la requête SQL
     const resultat_utilisateur = await client.query(
-      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur, mot_passe, courriel, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9);",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur, mot_passe, courriel, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9) RETURNING *; ",
       [
         nom,
         prenom,
@@ -51,6 +51,13 @@ const creationUtilisateur = async (req, res, next) => {
       ]
     );
     logger.info("Insertion de l'utilisateur effectuée avec succès");
+    const utilisateur = resultat_utilisateur.rows[0];
+    req.login(utilisateur, (err) => {
+      logger.error(err);
+    });
+    req.body = {};
+    req.body.type_utilisateur = type_utilisateur;
+    req.body.id_utilisateur = id_utilisateur;
     next();
   } catch (err) {
     logger.error(`Erreur lors de l'insertion : ${err}`);
@@ -58,7 +65,16 @@ const creationUtilisateur = async (req, res, next) => {
   }
 };
 const creationSession = async (req, res) => {
-  res.status(201).json({ message: "test" });
+  try {
+    if (!req.cookie) {
+      return res.status(401).json({ message: "cookie inexistant!" });
+    }
+    console.log(req.user);
+    // const { id_utilisateur, type_utilisateur } = req.body;
+    // await client.query(
+    //   "INSERT INTO session_utilisateur(date_connexion,date_jeton_expiration)"
+    // );
+  } catch (error) {}
 };
 const fetchDataUtilisateur = async (req, res) => {};
 router.get("/connexionEchoue", async (req, res) => {
