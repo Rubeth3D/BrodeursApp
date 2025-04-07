@@ -74,9 +74,7 @@ const Cours = () => {
     fetchCours();
   }, []);
 
-   const constCoursActif = cours.filter(
-    (cours) => cours.etat_cours === "actif"
-  );
+  const constCoursActif = cours.filter((cours) => cours.etat_cours === "actif");
   const constCoursInactif = cours.filter(
     (cours) => cours.etat_cours === "inactif"
   );
@@ -84,30 +82,34 @@ const Cours = () => {
     <>
       <div className="container mt-5">
         <div className="row mb-3">
-        <div className="col-3">
+          <div className="col-3">
             <div className="card">
-                <div className="card-body">
-                    <h2 className="card-title fs-6"> Nombre de cours total:</h2>
-                    <b className="card-text fs-6 text-primary">{cours.length}</b>
-                </div>
+              <div className="card-body">
+                <h2 className="card-title fs-6"> Nombre de cours total:</h2>
+                <b className="card-text fs-6 text-primary">{cours.length}</b>
+              </div>
             </div>
-        </div>
-        <div className="col-3">
+          </div>
+          <div className="col-3">
             <div className="card">
-                <div className="card-body">
-                    <h2 className="card-title fs-6"> Nombre de cours actif:</h2>
-                    <b className="card-text fs-6 text-primary">{constCoursActif.length}</b>
-                </div>
+              <div className="card-body">
+                <h2 className="card-title fs-6"> Nombre de cours actif:</h2>
+                <b className="card-text fs-6 text-primary">
+                  {constCoursActif.length}
+                </b>
+              </div>
             </div>
-        </div>
-        <div className="col-3">
+          </div>
+          <div className="col-3">
             <div className="card">
-                <div className="card-body">
-                    <h2 className="card-title fs-6"> Nombre de cours inactif:</h2>
-                    <b className="card-text fs-6 text-primary">{constCoursInactif.length}</b>
-                </div>
+              <div className="card-body">
+                <h2 className="card-title fs-6"> Nombre de cours inactif:</h2>
+                <b className="card-text fs-6 text-primary">
+                  {constCoursInactif.length}
+                </b>
+              </div>
             </div>
-        </div>
+          </div>
         </div>
         <br />
         <h1 className="text-center mb-5">Liste des cours</h1>
@@ -139,7 +141,7 @@ const Cours = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#createClassModal"
                 >
-                  + Ajouter cours
+                  + Ajouter un cours
                 </button>
               </div>
             </div>

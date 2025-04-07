@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+
 function Navbar() {
   const location = useLocation();
   const [username, setUsername] = useState(null);
@@ -106,6 +107,7 @@ function Navbar() {
           </ul>
         </li>
       </ul>
+      {dashBoard && <BoutonsNavbarDashboard />}
     </nav>
   );
 }
