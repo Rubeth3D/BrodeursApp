@@ -112,7 +112,7 @@ const classe = () => {
         <h1 className="text-center mb-5">Tableau des classes</h1>
         <div className="container my-3">
           <div className="row">
-            <div className="col-10">
+            <div className=" col-xxl-10 col-lg-8 col-sm-6">
               <div className="d-flex m-0">
                 <input
                   type="text"
@@ -130,7 +130,7 @@ const classe = () => {
                 />
               </div>
             </div>
-            <div className="col-2">
+            <div className="col-xxl-2 col-lg-4">
               <div className="d-flex m-0">
                 <div className="d-flex m-0">
                   <button
