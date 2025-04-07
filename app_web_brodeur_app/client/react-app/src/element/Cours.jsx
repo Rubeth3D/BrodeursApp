@@ -80,6 +80,7 @@ const Cours = () => {
   );
   return (
     <>
+      {/* Inspirer par Jean-François Brodeur */}
       <div className="container mt-2">
         <div className="row mb-2 justify-content-center">
           <div className="col-4">
