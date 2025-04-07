@@ -26,24 +26,26 @@ const creationUtilisateur = async (req, res, next) => {
       nom,
       prenom,
       nom_utilisateur,
-      mot_de_passe,
       courriel,
+      mot_passe,
+      numero_da,
       type_utilisateur,
       professeur_id_professeur,
       etudiant_id_etudiant,
       etat_utilisateur,
     } = req.body;
     const salt = bcrypt.genSaltSync(10);
-    const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
+    const mot_passe_hash = await bcrypt.hash(mot_passe, salt);
     // Correction de la syntaxe de la requête SQL
     const resultat_utilisateur = await client.query(
-      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur, mot_passe, courriel, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9) RETURNING *; ",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur, courriel, mot_passe,numero_da, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10) RETURNING *; ",
       [
         nom,
         prenom,
         nom_utilisateur,
-        mot_de_passe_hash,
         courriel,
+        mot_passe_hash,
+        numero_da,
         type_utilisateur,
         professeur_id_professeur,
         etudiant_id_etudiant,
@@ -52,13 +54,18 @@ const creationUtilisateur = async (req, res, next) => {
     );
     logger.info("Insertion de l'utilisateur effectuée avec succès");
     const utilisateur = resultat_utilisateur.rows[0];
+    logger.info(`Id utilisateur cree : ${utilisateur.id_utilisateur}`);
     req.login(utilisateur, (err) => {
-      logger.error(err);
+      if (err) {
+        logger.error(`Erreur lors du login de l'utilisateur : ${err}`);
+        return next(err);
+      }
+      req.body = {};
+      req.body.type_utilisateur = type_utilisateur;
+      req.body.id_utilisateur = utilisateur.id_utilisateur;
+      req.body.type_utilisateur = utilisateur.type_utilisateur;
+      next();
     });
-    req.body = {};
-    req.body.type_utilisateur = type_utilisateur;
-    req.body.id_utilisateur = id_utilisateur;
-    next();
   } catch (err) {
     logger.error(`Erreur lors de l'insertion : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insertion" });
@@ -66,16 +73,42 @@ const creationUtilisateur = async (req, res, next) => {
 };
 const creationSession = async (req, res) => {
   try {
-    if (!req.cookie) {
+    logger.info(`Utilisateur actif : ${req.user.nom_utilisateur}`);
+    if (!req.session.cookie) {
       return res.status(401).json({ message: "cookie inexistant!" });
     }
-    // const { id_utilisateur, type_utilisateur } = req.body;
     const date_connexion = new Date();
-    const date_jeton_expiration = req.cookie.Date;
-    // await client.query(
-    //   "INSERT INTO session_utilisateur(date_connexion,date_jeton_expiration)"
-    // );
-  } catch (error) {}
+    const date_jeton_expiration = req.session.cookie.expires;
+    const tentatives_echoues = 0;
+    const date_derniere_tentative = new Date();
+    const ip_derniere_connexion = req.ip;
+    const type_utilisateur = req.body.type_utilisateur;
+    const utilisateur_id_utilisateur = req.body.id_utilisateur;
+    const etat_session_utilisateur = req.body.type_utilisateur;
+
+    const resultat = await client.query(
+      "INSERT INTO session_utilisateur(date_connexion,date_jeton_expiration,tentatives_echoues, date_derniere_tentative, ip_derniere_connexion,type_utilisateur,utilisateur_id_utilisateur, etat_session_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *; ",
+      [
+        date_connexion,
+        date_jeton_expiration,
+        tentatives_echoues,
+        date_derniere_tentative,
+        ip_derniere_connexion,
+        type_utilisateur,
+        utilisateur_id_utilisateur,
+        etat_session_utilisateur,
+      ]
+    );
+    logger.info(
+      `Creation de la session_utilisateur : ${resultat.rows[0].id_session_utilisateur} fait avec succes`
+    );
+    return res.status(200);
+  } catch (err) {
+    logger.info(`Erreur lors de la creation de la session utilisateur ${err}`);
+    return res
+      .status(500)
+      .json({ message: "erreur lors de la creation de la session" });
+  }
 };
 const fetchDataUtilisateur = async (req, res) => {};
 router.get("/connexionEchoue", async (req, res) => {
@@ -87,7 +120,11 @@ router.post(
   "/connexionManuelle",
   passport.authenticate("local", {
     failureRedirect: "/authentification/connexionEchoue",
-  })
+  }),
+  (req, res) => {
+    logger.info(req.user);
+    res.status(200).json({ message: "Connexion reussi!" });
+  }
 );
 
 export default router;

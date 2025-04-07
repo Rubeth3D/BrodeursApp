@@ -28,59 +28,59 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
 ### Étapes d'installation
 
-1. Clonez le repository :
+1.  Clonez le repository :
 
-   ```bash
-   git clone https://github.com/Rubeth3D/BrodeursApp.git
-   ```
+    ```bash
+    git clone https://github.com/Rubeth3D/BrodeursApp.git
+    ```
 
-2. Ouvrir un premier cmd et ouvrir le dossier:
+2.  Ouvrir un premier cmd et ouvrir le dossier:
 
-   ```bash
-   cd app_web_brodeur_app/client/react-app
-   ```
+    ```bash
+    cd app_web_brodeur_app/client/react-app
+    ```
 
-3. Installer les dépendances pour l'application react:
+3.  Installer les dépendances pour l'application react:
 
-   ```bash
-   npm i
-   ```
+    ```bash
+    npm i
+    ```
 
-4. Lancer l'application react:
+4.  Lancer l'application react:
 
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    npm run dev
+    ```
 
-5. Ouvrir un deuxième cmd et ouvrir le dossier:
+5.  Ouvrir un deuxième cmd et ouvrir le dossier:
 
-   ```bash
-   cd app_web_brodeur_app/serveur/routes
-   ```
+    ```bash
+    cd app_web_brodeur_app/serveur/routes
+    ```
 
-6. Installer les packages express pour le dossier routes:
+6.  Installer les packages express pour le dossier routes:
 
-   ```bash
-   npm i express
-   ```
+    ```bash
+    npm i express
+    ```
 
-7. Ouvrir le dossier main:
+7.  Ouvrir le dossier main:
 
-   ```bash
-   cd app_web_brodeur_app/serveur/main
-   ```
+    ```bash
+    cd app_web_brodeur_app/serveur/main
+    ```
 
-8. Installer les packages express pour le dossier main:
+8.  Installer les packages express pour le dossier main:
 
-   ```bash
-   npm i express
-   ```
+    ```bash
+    npm i express
+    ```
 
-9. Lancer le serveur express:
+9.  Lancer le serveur express:
 
-   ```bash
-   node serveur.js
-   ```
+    ```bash
+    node serveur.js
+    ```
 
 10. Installer l'image de postgres sur docker :
 
@@ -90,12 +90,14 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
 11. Installer la base de données dans un terminal:
 
-    ```bash
-    docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
+        ```bash
+        docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
-    docker exec -it postgresBrodeurApps psql -U postgres
+        docker exec -it postgresBrodeurApps psql -U postgres
 
-    ```
+        ```
+
+    sel
 
 12. Création de la base de données :
 

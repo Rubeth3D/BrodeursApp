@@ -121,7 +121,7 @@ CREATE TABLE session_utilisateur (
     date_jeton_expiration DATE,
     tentatives_echoues INTEGER,
     date_derniere_tentative DATE,
-    ip_derniere_connexion INTEGER,
+    ip_derniere_connexion INET,
     type_utilisateur CHAR(1) NOT NULL,
     utilisateur_id_utilisateur INTEGER NOT NULL,
     etat_session_utilisateur VARCHAR(20)
@@ -145,6 +145,7 @@ CREATE TABLE utilisateur (
     nom_utilisateur VARCHAR(200),
     courriel VARCHAR(250),
     mot_passe VARCHAR(2000),
+    numero_da INTEGER,
     etat_utilisateur VARCHAR(20),
     type_utilisateur CHAR(1) NOT NULL,
     professeur_id_professeur INTEGER,
