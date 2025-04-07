@@ -10,7 +10,7 @@ import authentification from "../routes/authentification.js";
 import passport from "passport";
 import sessionExpress from "express-session";
 import { config } from "dotenv";
-import initPassport from "../strategies/local-strategie.js";
+import initialize from "../strategies/local-strategie.js";
 import client from "../bd/postgresBD/Connexion.js";
 
 const logger = winston.createLogger({
@@ -45,7 +45,7 @@ app.use(
   })
 );
 //initialisation du passport
-initPassport(
+initialize(
   passport,
   async (nom_utilisateur) => {
     return await client.query(

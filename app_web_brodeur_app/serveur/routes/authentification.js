@@ -60,6 +60,9 @@ const creationUtilisateur = async (req, res, next) => {
         logger.error(`Erreur lors du login de l'utilisateur : ${err}`);
         return next(err);
       }
+      const utilisateur_connecter = JSON.stringify(req.user);
+      logger.info(`Utilisateur connecte : ${utilisateur_connecter}`);
+      //on reset req.body pour pas avoir de conflits de nom
       req.body = {};
       req.body.type_utilisateur = type_utilisateur;
       req.body.id_utilisateur = utilisateur.id_utilisateur;
@@ -102,7 +105,7 @@ const creationSession = async (req, res) => {
     logger.info(
       `Creation de la session_utilisateur : ${resultat.rows[0].id_session_utilisateur} fait avec succes`
     );
-    return res.status(200);
+    return res.status(200).json(req.user);
   } catch (err) {
     logger.info(`Erreur lors de la creation de la session utilisateur ${err}`);
     return res
@@ -110,21 +113,35 @@ const creationSession = async (req, res) => {
       .json({ message: "erreur lors de la creation de la session" });
   }
 };
-const fetchDataUtilisateur = async (req, res) => {};
-router.get("/connexionEchoue", async (req, res) => {
-  res.status(201).json({ estConnecte: false });
-});
+// const fetchDataUtilisateur = async (req, res) => {};
 
+router.get("/connexionAutomatique", async (req, res) => {
+  if (!req.session) {
+    req.session.urlPrecedent = "/connexionAutomatique";
+    res.redirect("/connexionEchoue");
+  }
+  res.status(200).json(req.session);
+});
+//operationnel
 router.post("/creationCompte", [creationUtilisateur, creationSession]);
-router.post(
-  "/connexionManuelle",
+router.post("/connexionManuelle", [
+  (req, res, next) => {
+    req.session.urlPrecedent = "/connexionManuelle";
+    next();
+  },
   passport.authenticate("local", {
     failureRedirect: "/authentification/connexionEchoue",
   }),
-  (req, res) => {
-    logger.info(req.user);
-    res.status(200).json({ message: "Connexion reussi!" });
+  creationSession,
+]);
+router.get("/connexionEchoue", async (req, res) => {
+  logger.info("La connexion a echoue!");
+  const provenance = req.session.urlPrecedent || "inconnue";
+  switch (provenance) {
+    case "/connexionManuelle":
+      return res.status(308).json({ estConnecte: false });
+    case "/connexionAutomatique":
+      return res.status(301).json({ estConnecte: false });
   }
-);
-
+});
 export default router;
