@@ -4,6 +4,7 @@ function Navbar() {
   const location = useLocation();
   const [username, setUsername] = useState(null);
   const [estConnecte, setEstConnecte] = useState(false);
+  const [dashBoard, setDashboard] = useState(false);
   const urlUtilisateur = "http://localhost:8080/utilisateur";
   const VerifierCookies = async () => {
     try {

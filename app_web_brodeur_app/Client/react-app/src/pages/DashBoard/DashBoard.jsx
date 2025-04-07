@@ -42,9 +42,9 @@ function DashBoard() {
 
   return (
     <>
-      <div className="navbar ms-3 me-5 mt-5">
+      <div className="navbar navbar-dark bg-primary sticky-top text-bg-primary">
         <div className="container-fluid">
-          <h2 className="navbar-brand text-primary fs-2 fw-normal">
+          <h2 className="navbar-brand fs-2 fw-normal">
             Évaluation par les pairs
           </h2>
           <div className="nav-item d-flex align-items-center">
@@ -181,7 +181,7 @@ function DashBoard() {
               ></HoverDiv>
             </div>
           </div>
-          <div className="col-9">
+          <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
           </div>

@@ -75,6 +75,40 @@ const classe = () => {
   return (
     <>
       <div className="container mt-5">
+        <div className="row mb-5">
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <h1 className="text-center mb-5">Tableau des classes</h1>
         <div className="container my-3">
           <div className="row">
