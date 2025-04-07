@@ -69,8 +69,9 @@ const creationSession = async (req, res) => {
     if (!req.cookie) {
       return res.status(401).json({ message: "cookie inexistant!" });
     }
-    console.log(req.user);
     // const { id_utilisateur, type_utilisateur } = req.body;
+    const date_connexion = new Date();
+    const date_jeton_expiration = req.cookie.Date;
     // await client.query(
     //   "INSERT INTO session_utilisateur(date_connexion,date_jeton_expiration)"
     // );

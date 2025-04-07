@@ -24,7 +24,7 @@ try {
   logger.info("Connecté à la BD Mongo!");
 } catch (err) {
   if (err instanceof AggregateError) {
-    console.error("Plusieurs erreurs détectées :");
+    console.error("Plusieurs erreurs de bd Mongo détectées :");
     for (const error of err.errors) {
       console.error(`- Erreur: ${error.message}`);
     }

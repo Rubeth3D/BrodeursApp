@@ -4,10 +4,8 @@ import bcrypt from "bcrypt";
 async function initialize(passport, getUtilisateurParNom, getUtilisateurParId) {
   const authentifierUtilisateur = async (nom_utilisateur, mot_passe, done) => {
     try {
-      console.log(nom_utilisateur);
       const resultat_nom = await getUtilisateurParNom(nom_utilisateur);
       const utilisateur = resultat_nom.rows[0];
-      console.log(utilisateur);
       if (utilisateur == null) {
         return done(null, false, {
           message: "Aucun utilisateur ne possede ce id",

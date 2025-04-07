@@ -1,6 +1,8 @@
 -- Converted to PostgreSQL
 -- predefined type, no DDL - MDSYS.SDO_GEOMETRY
 -- predefined type, no DDL - XMLTYPE
+
+
 CREATE TABLE affectation (id_affectation SERIAL PRIMARY KEY);
 CREATE TABLE assignation (
     travail_id_travail INTEGER NOT NULL,
