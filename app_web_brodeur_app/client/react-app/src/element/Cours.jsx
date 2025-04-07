@@ -74,6 +74,7 @@ const Cours = () => {
     fetchCours();
   }, []);
 
+<<<<<<< Updated upstream
    const constCoursActif = cours.filter(
     (cours) => cours.etat_cours === "actif"
   );
@@ -125,6 +126,120 @@ return (
                                 )
                             );
                         }}
+=======
+const compteCoursActif = cours.filter(
+    (cours) => cours.etat_cours === "Actif"
+).length;
+
+const compteCoursInactif = cours.filter(
+    (cours) => cours.etat_cours === "Inactif"
+).length;
+const compteCoursTotal = cours.length;
+
+return (
+    <>
+    <div class="card mb-3">
+        <div class="card-body">
+                 Nombre total de cours: {compteCoursTotal}
+        </div>
+    </div>
+    <h2 className="text-center mt-5">
+        Nombre total de cours: {compteCoursTotal}
+        <br />
+        Nombre de cours actifs: {compteCoursActif}
+        <br />
+        Nombre de cours inactifs: {compteCoursInactif}
+        <br />
+    </h2>
+    <div className="container mt-5">
+        <h1 className="text-center">Liste des cours</h1>
+        <div className="mt-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Rechercher un cours"
+            onChange={(e) => {                                                    // Aider par ChatGPT pour la recherche de classe
+              const searchTerm = e.target.value.toLowerCase();
+                setCours((prevCours) =>
+                prevCours.filter((cours) =>
+                  cours.description_cours.toLowerCase().includes(searchTerm)
+                )
+              );
+            }}
+          />
+        </div>
+
+        <div className="d-flex justify-content-end mt-3">
+            <button 
+            type="button"
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#creerCours"
+            >
+                + Ajouter un cours
+            </button>
+        </div>
+
+        <table className="table table-striped table-hover mt-4">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Etat</th>
+                    <th>Session</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {cours.map((cours) => (
+                    <tr key={cours.id_cours}>
+                        <td>{cours.code_cours}</td>
+                        <td>{cours.description_cours}</td>
+                        <td>{cours.etat_cours}</td>
+                        <td>{cours.session_id_session}</td>
+                        <td>
+                            <button
+                            type="button"
+                            className="btn btn-warning"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modifierCours"
+                            onClick={() => setForm(cours)}
+                            >
+                                Modifier
+                            </button>
+                            <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => supprimerCours(cours.id_cours)}
+                            >
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+
+    <div
+        className="modal fade"
+        id="creerCours"
+        tabIndex="-1"
+        aria-labelledby="creerCoursLabel"
+        aria-hidden="true"
+    >
+        <div className="modal-dialog">
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="creerCoursLabel">
+                        Ajouter un cours
+                    </h5>
+                    <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+>>>>>>> Stashed changes
                     />
                 </div>
                 <br />
