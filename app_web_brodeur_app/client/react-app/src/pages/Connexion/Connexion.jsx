@@ -1,7 +1,3 @@
-//@ts-ignore
-import Navbar from "../../element/Navbar";
-//@ts-ignore
-import Footer from "../../element/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
@@ -27,11 +23,6 @@ function Connexion() {
       );
 
       const dataJson = await response.json();
-      // if (!document.cookie.includes("UserData")) {
-      //   console.error("Accès refusé, cookie manquant");
-      //   return;
-      // }
-      // const cookiesData = Json.parse(req);
       if (response.status == 200) {
         console.log(dataJson);
         console.log(dataJson.nom_user);
@@ -51,7 +42,6 @@ function Connexion() {
   };
   return (
     <>
-      <Navbar />
       <div className=" mb-5"></div>
       <form
         className="container"
@@ -66,7 +56,7 @@ function Connexion() {
                 <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Entrer Nom d'utilisateur"
+                  placeholder="Entrer votre nom d'utilisateur"
                   id="inputNumeroIdentification"
                   value={nomUtilisateur}
                   onChange={(e) => setNomUtilisateur(e.target.value)}
@@ -80,7 +70,7 @@ function Connexion() {
               <input
                 type="password"
                 className="form-control form-control-lg "
-                placeholder="Entrer Mot de passe"
+                placeholder="Entrer votre mot de passe"
                 id="inputMotDePasse"
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
@@ -91,7 +81,7 @@ function Connexion() {
         </div>
         <div className="text-center mt-5">
           <button type="submit" className="btn btn-primary fs-3 mb-1">
-            Connecter
+            Connexion
           </button>
           <p>
             <Link
@@ -103,7 +93,6 @@ function Connexion() {
           </p>
         </div>
       </form>
-      <Footer></Footer>
     </>
   );
 }
