@@ -132,14 +132,16 @@ const classe = () => {
             </div>
             <div className="col-2">
               <div className="d-flex m-0">
-                <button
-                  type="button"
-                  className="btn btn-primary rounded-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#createClassModal"
-                >
-                  + Ajouter une classe
-                </button>
+                <div className="d-flex m-0">
+                  <button
+                    type="button"
+                    className="btn btn-btn btn-outline-success btn-rounded" // source : https://mdbootstrap.com/docs/standard/components/buttons/
+                    data-bs-toggle="modal"
+                    data-bs-target="#createClassModal"
+                  >
+                    + Ajouter un cours
+                  </button>
+                </div>
               </div>
             </div>
           </div>
