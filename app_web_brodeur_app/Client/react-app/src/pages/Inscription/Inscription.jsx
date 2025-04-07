@@ -113,7 +113,7 @@ function Inscription() {
           <div className="col-8 mb-5">
             <div className="form-group">
               <label className="fw-bold fs-4" htmlFor="email">
-                Email
+                Courriel
               </label>
               <input
                 type="email"
@@ -157,7 +157,7 @@ function Inscription() {
           <div className="col-8">
             <div className="form-group">
               <label className="fw-bold fs-4">
-                Confirmation du Mot de passe
+                Confirmation du mot de passe
               </label>
               <input
                 type="password"

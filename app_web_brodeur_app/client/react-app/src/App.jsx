@@ -6,16 +6,13 @@ import Home from "./pages/Home/Home.jsx";
 import Connexion from "./pages/Connexion/Connexion.jsx";
 import NotfoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import Inscription from "./pages/Inscription/Inscription.jsx";
-import Classe from "./pages/Classe/classe.jsx";
-import Cours from "./pages/Cours/Cours.jsx";
 import DashBoard from "./pages/DashBoard/DashBoard.jsx";
+
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/Connexion", element: <Connexion /> },
   { path: "/Inscription", element: <Inscription /> },
   { path: "/DashBoard", element: <DashBoard /> },
-  { path: "/classe", element: <Classe /> },
-  { path: "/cours", element: <Cours /> },
   { path: "*", element: <NotfoundPage /> },
 ]);
 function App() {
@@ -23,7 +20,7 @@ function App() {
     document.title = "Évaluation par les pairs"; // Aider par ChatGPT pour le titre de l'onglet
     const link = document.querySelector("link[rel~='icon']");
     if (link) {
-      link.href = "/Logo_BA.png"; // Aider par ChatGPT pour l'icône de l'onglet
+      link.href = "/BA_Logo.png"; // Aider par ChatGPT pour l'icône de l'onglet
     }
   }, []);
   return (

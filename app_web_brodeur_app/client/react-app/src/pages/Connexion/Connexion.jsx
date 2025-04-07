@@ -56,7 +56,7 @@ function Connexion() {
                 <input
                   type="text"
                   className="form-control form-control-lg"
-                  placeholder="Entrer Nom d'utilisateur"
+                  placeholder="Entrer votre nom d'utilisateur"
                   id="inputNumeroIdentification"
                   value={nomUtilisateur}
                   onChange={(e) => setNomUtilisateur(e.target.value)}
@@ -70,7 +70,7 @@ function Connexion() {
               <input
                 type="password"
                 className="form-control form-control-lg "
-                placeholder="Entrer Mot de passe"
+                placeholder="Entrer votre mot de passe"
                 id="inputMotDePasse"
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
@@ -81,7 +81,7 @@ function Connexion() {
         </div>
         <div className="text-center mt-5">
           <button type="submit" className="btn btn-primary fs-3 mb-1">
-            Connecter
+            Connexion
           </button>
           <p>
             <Link

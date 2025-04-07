@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../element/navbar";
-import Footer from "../../element/footer";
+import Navbar from "./navbar";
+import Footer from "./footer";
 import { Link } from "react-router-dom";
 
 const Cours = () => {
@@ -76,7 +76,6 @@ useEffect(() => {
 
 return (
     <>
-    <Navbar/>
     <div className="container mt-5">
         <h1 className="text-center">Liste des cours</h1>
         <div className="mt-3">
@@ -198,7 +197,6 @@ return (
             </div>
         </div>
     </div>
-    <Footer/>
     </>
 );
 };
