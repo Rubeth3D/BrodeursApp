@@ -80,31 +80,32 @@ const Cours = () => {
   );
   return (
     <>
-      <div className="container mt-5">
-        <div className="row mb-3">
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
+      {/* Inspirer par Jean-François Brodeur */}
+      <div className="container mt-2">
+        <div className="row mb-2 justify-content-center">
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body" >
                 <h2 className="card-title fs-6"> Nombre de cours total:</h2>
                 <b className="card-text fs-6 text-primary">{cours.length}</b>
               </div>
             </div>
           </div>
-          <div className="col-3">
-            <div className="card">
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body">
                 <h2 className="card-title fs-6"> Nombre de cours actif:</h2>
-                <b className="card-text fs-6 text-primary">
+                <b className="card-text fs-6 text-success">
                   {constCoursActif.length}
                 </b>
               </div>
             </div>
           </div>
-          <div className="col-3">
-            <div className="card">
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body">
                 <h2 className="card-title fs-6"> Nombre de cours inactif:</h2>
-                <b className="card-text fs-6 text-primary">
+                <b className="card-text fs-6 text-danger">
                   {constCoursInactif.length}
                 </b>
               </div>
@@ -209,7 +210,7 @@ const Cours = () => {
               />
             </div>
             <div className="modal-body">
-              <form onSubmit={creerCours}>
+              <form onSubmit={creerCours} >
                 {[
                   { label: "Code cours", id: "code_cours" },
                   { label: "Nom cours", id: "description_cours" },
