@@ -7,8 +7,6 @@ BEGIN
         -- Suppression de la table
         EXECUTE 'DROP TABLE IF EXISTS public.' || r.tablename || ' CASCADE';
     END LOOP;
-<<<<<<< Updated upstream
 END $$;
 =======
 END $$;
->>>>>>> Stashed changes
