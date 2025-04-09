@@ -33,5 +33,16 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Erreur lors du fetch des sessions!" });
   }
 });
-router.post("/", async (req,res) =>)
+router.post("/", async (req, res) => {
+  try {
+    const { 
+      code_session, 
+      date_session, 
+      etat_professeur, 
+      utilisateur_id_user } 
+      = req.body;
+    const resultat = await connexionPostgres.query("INSERT INTO session(code_session, date_session, etat_professeur, utilisateur_id_user) VALUE($1,$2,$3,$4) RETURNING *");
+
+  } catch (error) {}
+});
 export default router;
