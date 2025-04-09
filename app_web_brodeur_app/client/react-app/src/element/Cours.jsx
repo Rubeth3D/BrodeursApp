@@ -75,9 +75,15 @@ const Cours = () => {
   }, []);
 
   const constCoursActif = cours.filter((cours) => cours.etat_cours === "actif");
+<<<<<<< HEAD
   const constCoursInactif = cours.filter(
     (cours) => cours.etat_cours === "inactif"
   );
+=======
+  const constCoursInactif = cours.filter((cours) => cours.etat_cours === "inactif");
+
+  
+>>>>>>> parent of c4eadd1 (changement html)
   return (
     <>
       {/* Inspirer par Jean-François Brodeur */}

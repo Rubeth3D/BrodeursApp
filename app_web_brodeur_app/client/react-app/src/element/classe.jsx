@@ -212,6 +212,11 @@ const classe = () => {
                 {[
                   { label: "Nom classe", id: "description" },
                   { label: "Groupe", id: "groupe" },
+<<<<<<< HEAD
+=======
+
+                  //on doit pas mettre l'etat, mais d'autres choses pourrait etre pertinent
+>>>>>>> parent of c4eadd1 (changement html)
                   { label: "Etat Classe", id: "etat_classe" },
                 ].map(({ label, id }) => (
                   <div className="mb-3" key={id}>
