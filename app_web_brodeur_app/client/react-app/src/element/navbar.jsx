@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+
 function Navbar() {
   const location = useLocation();
   const [username, setUsername] = useState(null);
@@ -87,8 +88,8 @@ function Navbar() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
+              width="24"
+              height="24"
               fill="currentColor"
               class="bi bi-person-circle"
               viewBox="0 0 16 16"
@@ -106,6 +107,7 @@ function Navbar() {
           </ul>
         </li>
       </ul>
+      {dashBoard && <BoutonsNavbarDashboard />}
     </nav>
   );
 }

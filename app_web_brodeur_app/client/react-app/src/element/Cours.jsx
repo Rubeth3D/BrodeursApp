@@ -74,9 +74,42 @@ const Cours = () => {
     fetchCours();
   }, []);
 
+  const constCoursActif = cours.filter((cours) => cours.etat_cours === "actif");
+  const constCoursInactif = cours.filter(
+    (cours) => cours.etat_cours === "inactif"
+  );
+
   return (
     <>
-      <div className="container mt-5">
+      {/* Inspirer par Jean-François Brodeur */}
+      <div className="container mt-2">
+        <div className="row mb-2 justify-content-center">
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de cours total:</h2>
+                <p className="card-text fs-4 text-primary mt-4">0</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de cours actif:</h2>
+                <p className="card-text fs-4 text-success mt-4">0</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de cours inactif:</h2>
+                <p className="card-text fs-4 text-danger mt-4">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
         <h1 className="text-center mb-5">Liste des cours</h1>
         <div className="container my-3">
           <div className="row">
@@ -102,7 +135,7 @@ const Cours = () => {
               <div className="d-flex m-0">
                 <button
                   type="button"
-                  className="btn btn-primary rounded-2"
+                  className="btn btn-btn btn-outline-success btn-rounded" // source : https://mdbootstrap.com/docs/standard/components/buttons/
                   data-bs-toggle="modal"
                   data-bs-target="#createClassModal"
                 >
