@@ -48,17 +48,21 @@ app.use(
 initialize(
   passport,
   async (nom_utilisateur) => {
-    return await client.query(
+    const resultat = await client.query(
       "SELECT * FROM utilisateur WHERE nom_utilisateur = $1",
       [nom_utilisateur]
     );
+    return resultat;
   },
   async (id_utilisateur) => {
-    return await client.query(
+    console.log("Recherche de l'utilisateur du deserialize...");
+    const resultat = await client.query(
       "SELECT * FROM utilisateur WHERE id_utilisateur = $1",
       [id_utilisateur]
     );
-  }
+    return resultat;
+  },
+  2
 );
 app.use(passport.initialize());
 app.use(passport.session());

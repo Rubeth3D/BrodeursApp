@@ -85,9 +85,9 @@ const creationSession = async (req, res) => {
     const tentatives_echoues = 0;
     const date_derniere_tentative = new Date();
     const ip_derniere_connexion = req.ip;
-    const type_utilisateur = req.body.type_utilisateur;
-    const utilisateur_id_utilisateur = req.body.id_utilisateur;
-    const etat_session_utilisateur = req.body.type_utilisateur;
+    const type_utilisateur = req.user.type_utilisateur;
+    const utilisateur_id_utilisateur = req.user.id_utilisateur;
+    const etat_session_utilisateur = "active";
 
     const resultat = await client.query(
       "INSERT INTO session_utilisateur(date_connexion,date_jeton_expiration,tentatives_echoues, date_derniere_tentative, ip_derniere_connexion,type_utilisateur,utilisateur_id_utilisateur, etat_session_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *; ",
@@ -105,7 +105,7 @@ const creationSession = async (req, res) => {
     logger.info(
       `Creation de la session_utilisateur : ${resultat.rows[0].id_session_utilisateur} fait avec succes`
     );
-    return res.status(200).json(req.user);
+    return res.status(200).json({ estConnecte: true });
   } catch (err) {
     logger.info(`Erreur lors de la creation de la session utilisateur ${err}`);
     return res
@@ -147,21 +147,24 @@ router.get("/connexionEchoue", async (req, res) => {
   }
 });
 //deconnexion
-router.post("/Deconnexion", async (req, res) => {
+router.post("/deconnexion", async (req, res) => {
   try {
-    const etat_session_utilisateur = "inactive";
-    const utilisateur_id_utilisateur = req.user.id_utilisateur;
+    // console.log("Tentative de déconnexion");
+    // console.log("req.user:", req.user);
+    // console.log("req.session:", req.session);
+    // const etat_session_utilisateur = "inactive";
+    // const utilisateur_id_utilisateur = req.user.id_utilisateur;
 
-    const resultat = await client.query(
-      "UPDATE session_utilisateur SET etat_session_utilisateur = $1 WHERE utilisateur_id_utilisateur = $2 RETURNING *",
-      [etat_session_utilisateur, utilisateur_id_utilisateur]
-    );
-    if (resultat.rowCount == 0) {
-      logger.error(
-        `Aucune session appartenant au id ${utilisateur_id_utilisateur}`
-      );
-      return res.status(404).json({ message: "Session inexistante" });
-    }
+    // const resultat = await client.query(
+    //   "UPDATE session_utilisateur SET etat_session_utilisateur = $1 WHERE utilisateur_id_utilisateur = $2 RETURNING *",
+    //   [etat_session_utilisateur, utilisateur_id_utilisateur]
+    // );
+    // if (resultat.rowCount == 0) {
+    //   logger.error(
+    //     `Aucune session appartenant au id ${utilisateur_id_utilisateur}`
+    //   );
+    //   return res.status(404).json({ message: "Session inexistante" });
+    // }
 
     req.logOut((err) => {
       if (err) {
@@ -175,7 +178,7 @@ router.post("/Deconnexion", async (req, res) => {
     return res.status(200).json({ estConnecte: false });
   } catch (err) {
     logger.error(`Erreur lors de la deconnexion : ${err}`);
-    return res.status(500).json({ estConnecte: false });
+    return res.status(500).json({ estConnecte: true });
   }
 });
 export default router;

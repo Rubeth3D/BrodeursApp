@@ -1,11 +1,34 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
-import { Logger } from "winston";
+import winston from "winston";
+import { json } from "express";
+
 //work in progress
-async function initialize(passport, getUtilisateurParNom, getUtilisateurParId) {
+const initialize = async (
+  passport,
+  getUtilisateurParNom,
+  getUtilisateurParId,
+  bb = 1
+) => {
+  if (bb == 1) {
+    return;
+  }
+  const logger = winston.createLogger({
+    level: "info",
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.printf(({ timestamp, level, message }) => {
+        return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+      })
+    ),
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: "server.log" }),
+    ],
+  });
   const authentifierUtilisateur = async (nom_utilisateur, mot_passe, done) => {
     try {
-      console.log("✅ STRATÉGIE LOCALE APPELÉE");
+      console.log("Strategie appelle");
       const resultat_nom = await getUtilisateurParNom(nom_utilisateur);
       const utilisateur = resultat_nom.rows[0];
       if (utilisateur == null) {
@@ -13,12 +36,15 @@ async function initialize(passport, getUtilisateurParNom, getUtilisateurParId) {
           message: "Aucun utilisateur ne possede ce id",
         });
       }
-      const verification = await bcrypt.compare(
-        mot_passe,
-        utilisateur.mot_passe
+      const verifierMotDePasse = bcrypt.compare(
+        resultat_nom.mot_passe,
+        mot_passe
       );
-      if (!verification) {
-        return done(null, false, { message: "Mauvais mot de passe" });
+      if (verifierMotDePasse) {
+        logger.log("Mauvais mot de passe");
+        return done(null, false, {
+          message: "Mauvais mot de passe",
+        });
       }
       return done(null, utilisateur);
     } catch (err) {
@@ -32,14 +58,18 @@ async function initialize(passport, getUtilisateurParNom, getUtilisateurParId) {
     )
   );
   passport.serializeUser((utilisateur, done) => {
-    console.log("Le serialize est appelle ");
+    console.log("Serialize l'utilisateur");
     done(null, utilisateur.id_utilisateur);
   });
   passport.deserializeUser(async (id_utilisateur, done) => {
     try {
+      console.log("Deserialize l'utilisateur");
+      console.log(getUtilisateurParId);
       const resultat = await getUtilisateurParId(id_utilisateur);
+      console.log(resultat);
       const utilisateur = resultat.rows[0];
-      console.log("Le deserialize est appelle ");
+      const utilisateurString = JSON.stringify(utilisateur);
+      console.log(`Utilisateur deserialize : ${utilisateurString}`);
       if (!utilisateur) {
         return done(null, false, {
           message: "Utilisateur introuvable",
@@ -52,11 +82,12 @@ async function initialize(passport, getUtilisateurParNom, getUtilisateurParId) {
         numero_da: utilisateur.numero_da,
       };
       done(null, utilisateur_filtre);
-    } catch (error) {
+    } catch (err) {
+      logger.error(`Erreur lors du deserialize : ${err}`);
       return done(null, false, {
         message: "Aucun utilisateur ne possede ce id",
       });
     }
   });
-}
+};
 export default initialize;
