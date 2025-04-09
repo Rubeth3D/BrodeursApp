@@ -139,7 +139,7 @@ const classe = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#createClassModal"
                   >
-                    + Ajouter une classe
+                    + Ajouter un cours
                   </button>
                 </div>
               </div>
@@ -212,8 +212,6 @@ const classe = () => {
                 {[
                   { label: "Nom classe", id: "description" },
                   { label: "Groupe", id: "groupe" },
-
-                  //on doit pas mettre l'etat, mais d'autres choses pourrait etre pertinent
                   { label: "Etat Classe", id: "etat_classe" },
                 ].map(({ label, id }) => (
                   <div className="mb-3" key={id}>
