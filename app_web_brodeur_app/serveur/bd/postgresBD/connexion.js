@@ -25,14 +25,7 @@ try {
   await client.connect();
   logger.info("Connecté à la BD Postgres!");
 } catch (err) {
-  if (err instanceof AggregateError) {
-    console.error("Plusieurs erreurs détectées :");
-    for (const error of err.errors) {
-      console.error(`- Erreur: ${error.message}`);
-    }
-  } else {
-    console.error(`Erreur unique : ${err}`);
-  }
+  logger.error(`Erreur de BD Postgres : ${err}`);
   process.exit(1);
 }
 
