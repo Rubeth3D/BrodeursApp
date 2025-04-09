@@ -75,9 +75,9 @@ const Cours = () => {
   }, []);
 
   const constCoursActif = cours.filter((cours) => cours.etat_cours === "actif");
-  const constCoursInactif = cours.filter((cours) => cours.etat_cours === "inactif");
-
-  
+  const constCoursInactif = cours.filter(
+    (cours) => cours.etat_cours === "inactif"
+  );
   return (
     <>
       {/* Inspirer par Jean-François Brodeur */}
