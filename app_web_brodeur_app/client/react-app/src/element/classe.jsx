@@ -75,10 +75,44 @@ const classe = () => {
   return (
     <>
       <div className="container mt-5">
+        <div className="row mb-5">
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title fs-5">Nombre de classe:</h2>
+                <p className=" card-text">Vous avez 5 classes</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <h1 className="text-center mb-5">Tableau des classes</h1>
         <div className="container my-3">
           <div className="row">
-            <div className="col-10">
+            <div className=" col-xxl-10 col-lg-8 col-sm-6">
               <div className="d-flex m-0">
                 <input
                   type="text"
@@ -96,16 +130,18 @@ const classe = () => {
                 />
               </div>
             </div>
-            <div className="col-2">
+            <div className="col-xxl-2 col-lg-4">
               <div className="d-flex m-0">
-                <button
-                  type="button"
-                  className="btn btn-primary rounded-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#createClassModal"
-                >
-                  + Ajouter une classe
-                </button>
+                <div className="d-flex m-0">
+                  <button
+                    type="button"
+                    className="btn btn-btn btn-outline-success btn-rounded" // source : https://mdbootstrap.com/docs/standard/components/buttons/
+                    data-bs-toggle="modal"
+                    data-bs-target="#createClassModal"
+                  >
+                    + Ajouter un cours
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -176,6 +212,11 @@ const classe = () => {
                 {[
                   { label: "Nom classe", id: "description" },
                   { label: "Groupe", id: "groupe" },
+<<<<<<< HEAD
+=======
+
+                  //on doit pas mettre l'etat, mais d'autres choses pourrait etre pertinent
+>>>>>>> parent of c4eadd1 (changement html)
                   { label: "Etat Classe", id: "etat_classe" },
                 ].map(({ label, id }) => (
                   <div className="mb-3" key={id}>

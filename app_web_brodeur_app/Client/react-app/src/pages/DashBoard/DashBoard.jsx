@@ -42,20 +42,20 @@ function DashBoard() {
 
   return (
     <>
-      <div className="navbar ms-3 me-5 mt-5">
+      <div className="navbar navbar-dark bg-primary sticky-top text-bg-primary p-2">
         <div className="container-fluid">
-          <h2 className="navbar-brand text-primary fs-2 fw-normal">
+          <Link to={"/"} className="navbar-brand text-white mx-5">
             Évaluation par les pairs
-          </h2>
+          </Link>
           <div className="nav-item d-flex align-items-center">
             <h2 className="me-5 mb-0 fs-4 fw-light align-content-center">
               Sévastien Céleste
             </h2>
-            <div className="me-5 fw-light btn align-content-center border-0">
+            <div className="me-5 fw-light btn align-content-center border-0 ">
               <ul className="navbar-nav">
                 <li className="nav-item dropdown-center">
                   <button
-                    className="btn p-0 border-0"
+                    className="btn p-0 border-0 text-light"
                     id="dropdownUtilisateurBouton"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -95,8 +95,8 @@ function DashBoard() {
                 </li>
               </ul>
             </div>
-            <div className="me-5 fw-light btn align-content-center border-0">
-              <HoverText text={<DeconnexionSVG />} />
+            <div className="me-5 fw-light btn align-content-center border-0 text-light">
+              <DeconnexionSVG />
             </div>
           </div>
         </div>
@@ -104,11 +104,8 @@ function DashBoard() {
 
       <div className="container-fluid">
         <div className="row">
-          <div className="col-2 ms-0 d-flex justify-content-start">
-            <div
-              className="justify-content-start mt-5 mx-3 col-6"
-              style={{ width: "12rem" }}
-            >
+          <div className="col-2 bg-light" style={{ height: "100vh" }}>
+            <div className="justify-content-start mt-5">
               <HoverDiv
                 text={"Dashboard"}
                 svgImage={<DashBoardSVG />}
@@ -181,7 +178,7 @@ function DashBoard() {
               ></HoverDiv>
             </div>
           </div>
-          <div className="col-9">
+          <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
           </div>

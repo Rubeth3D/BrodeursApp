@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+
 function Navbar() {
   const location = useLocation();
   const [username, setUsername] = useState(null);
   const [estConnecte, setEstConnecte] = useState(false);
+  const [dashBoard, setDashboard] = useState(false);
   const urlUtilisateur = "http://localhost:8080/utilisateur";
   const VerifierCookies = async () => {
     try {
@@ -105,6 +107,7 @@ function Navbar() {
           </ul>
         </li>
       </ul>
+      {dashBoard && <BoutonsNavbarDashboard />}
     </nav>
   );
 }
