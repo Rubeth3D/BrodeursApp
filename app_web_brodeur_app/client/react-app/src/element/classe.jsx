@@ -74,37 +74,29 @@ const classe = () => {
 
   return (
     <>
-      <div className="container mt-5">
-        <div className="row mb-5">
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
+      <div className="container mt-2">
+        <div className="row mb-2 justify-content-center">
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de classe total:</h2>
+                <p className="card-text fs-4 text-primary mt-4">0</p>
               </div>
             </div>
           </div>
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de classe actif:</h2>
+                <p className="card-text fs-4 text-success mt-4">0</p>
               </div>
             </div>
           </div>
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de classe inactif:</h2>
+                <p className="card-text fs-4 text-danger mt-4">0</p>
               </div>
             </div>
           </div>
@@ -214,7 +206,7 @@ const classe = () => {
                   { label: "Groupe", id: "groupe" },
 
                   //on doit pas mettre l'etat, mais d'autres choses pourrait etre pertinent
-                  { label: "Etat Classe", id: "etat_classe" },
+                  //{ label: "Etat Classe", id: "etat_classe" },
                 ].map(({ label, id }) => (
                   <div className="mb-3" key={id}>
                     <label htmlFor={id} className="form-label">

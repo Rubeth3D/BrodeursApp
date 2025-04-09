@@ -75,9 +75,10 @@ const Cours = () => {
   }, []);
 
   const constCoursActif = cours.filter((cours) => cours.etat_cours === "actif");
-  const constCoursInactif = cours.filter((cours) => cours.etat_cours === "inactif");
+  const constCoursInactif = cours.filter(
+    (cours) => cours.etat_cours === "inactif"
+  );
 
-  
   return (
     <>
       {/* Inspirer par Jean-François Brodeur */}
@@ -85,29 +86,25 @@ const Cours = () => {
         <div className="row mb-2 justify-content-center">
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
-              <div className="card-body" >
-                <h2 className="card-title fs-6"> Nombre de cours total:</h2>
-                <b className="card-text fs-6 text-primary">{cours.length}</b>
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de cours total:</h2>
+                <p className="card-text fs-4 text-primary mt-4">0</p>
               </div>
             </div>
           </div>
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
-              <div className="card-body">
-                <h2 className="card-title fs-6"> Nombre de cours actif:</h2>
-                <b className="card-text fs-6 text-success">
-                  {constCoursActif.length}
-                </b>
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de cours actif:</h2>
+                <p className="card-text fs-4 text-success mt-4">0</p>
               </div>
             </div>
           </div>
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
-              <div className="card-body">
-                <h2 className="card-title fs-6"> Nombre de cours inactif:</h2>
-                <b className="card-text fs-6 text-danger">
-                  {constCoursInactif.length}
-                </b>
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de cours inactif:</h2>
+                <p className="card-text fs-4 text-danger mt-4">0</p>
               </div>
             </div>
           </div>
@@ -210,7 +207,7 @@ const Cours = () => {
               />
             </div>
             <div className="modal-body">
-              <form onSubmit={creerCours} >
+              <form onSubmit={creerCours}>
                 {[
                   { label: "Code cours", id: "code_cours" },
                   { label: "Nom cours", id: "description_cours" },
