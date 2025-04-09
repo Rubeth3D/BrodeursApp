@@ -120,10 +120,11 @@ router.get("/connexionAutomatique", async (req, res) => {
     req.session.urlPrecedent = "/connexionAutomatique";
     res.redirect("/connexionEchoue");
   }
-  res.status(200).json(req.session);
+  res.status(200).json(req.user);
 });
-//operationnel
+//creation de compte
 router.post("/creationCompte", [creationUtilisateur, creationSession]);
+//connexion manuelle
 router.post("/connexionManuelle", [
   (req, res, next) => {
     req.session.urlPrecedent = "/connexionManuelle";
@@ -134,6 +135,7 @@ router.post("/connexionManuelle", [
   }),
   creationSession,
 ]);
+//connexion echoue
 router.get("/connexionEchoue", async (req, res) => {
   logger.info("La connexion a echoue!");
   const provenance = req.session.urlPrecedent || "inconnue";
@@ -142,6 +144,38 @@ router.get("/connexionEchoue", async (req, res) => {
       return res.status(308).json({ estConnecte: false });
     case "/connexionAutomatique":
       return res.status(301).json({ estConnecte: false });
+  }
+});
+//deconnexion
+router.post("/Deconnexion", async (req, res) => {
+  try {
+    const etat_session_utilisateur = "inactive";
+    const utilisateur_id_utilisateur = req.user.id_utilisateur;
+
+    const resultat = await client.query(
+      "UPDATE session_utilisateur SET etat_session_utilisateur = $1 WHERE utilisateur_id_utilisateur = $2 RETURNING *",
+      [etat_session_utilisateur, utilisateur_id_utilisateur]
+    );
+    if (resultat.rowCount == 0) {
+      logger.error(
+        `Aucune session appartenant au id ${utilisateur_id_utilisateur}`
+      );
+      return res.status(404).json({ message: "Session inexistante" });
+    }
+
+    req.logOut((err) => {
+      if (err) {
+        logger.error(`Erreur lors de la deconnexion : ${err} `);
+        return res
+          .status(500)
+          .json({ message: "Erreur lors de la deconnexion " });
+      }
+    });
+
+    return res.status(200).json({ estConnecte: false });
+  } catch (err) {
+    logger.error(`Erreur lors de la deconnexion : ${err}`);
+    return res.status(500).json({ estConnecte: false });
   }
 });
 export default router;
