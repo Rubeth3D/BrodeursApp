@@ -10,6 +10,7 @@ const initialize = async (
   getUtilisateurParId,
   bb = 1
 ) => {
+  console.log(bb);
   if (bb == 1) {
     return;
   }
@@ -36,11 +37,11 @@ const initialize = async (
           message: "Aucun utilisateur ne possede ce id",
         });
       }
-      const verifierMotDePasse = bcrypt.compare(
-        resultat_nom.mot_passe,
+      const verifierMotDePasse = await bcrypt.compare(
+        utilisateur.mot_passe,
         mot_passe
       );
-      if (verifierMotDePasse) {
+      if (!verifierMotDePasse) {
         logger.log("Mauvais mot de passe");
         return done(null, false, {
           message: "Mauvais mot de passe",
@@ -64,12 +65,10 @@ const initialize = async (
   passport.deserializeUser(async (id_utilisateur, done) => {
     try {
       console.log("Deserialize l'utilisateur");
-      console.log(getUtilisateurParId);
       const resultat = await getUtilisateurParId(id_utilisateur);
-      console.log(resultat);
       const utilisateur = resultat.rows[0];
-      const utilisateurString = JSON.stringify(utilisateur);
-      console.log(`Utilisateur deserialize : ${utilisateurString}`);
+      console.log(utilisateur);
+      // const utilisateurString = JSON.stringify(utilisateur);
       if (!utilisateur) {
         return done(null, false, {
           message: "Utilisateur introuvable",

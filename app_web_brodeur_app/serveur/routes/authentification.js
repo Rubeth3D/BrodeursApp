@@ -126,12 +126,9 @@ router.get("/connexionAutomatique", async (req, res) => {
 router.post("/creationCompte", [creationUtilisateur, creationSession]);
 //connexion manuelle
 router.post("/connexionManuelle", [
-  (req, res, next) => {
-    req.session.urlPrecedent = "/connexionManuelle";
-    next();
-  },
   passport.authenticate("local", {
     failureRedirect: "/authentification/connexionEchoue",
+    failureMessage: "echec de l'authentification",
   }),
   creationSession,
 ]);
@@ -144,27 +141,26 @@ router.get("/connexionEchoue", async (req, res) => {
       return res.status(308).json({ estConnecte: false });
     case "/connexionAutomatique":
       return res.status(301).json({ estConnecte: false });
+    default:
+      return res.status(500).json({ message: "erreur improbable" });
   }
 });
 //deconnexion
 router.post("/deconnexion", async (req, res) => {
   try {
-    // console.log("Tentative de déconnexion");
-    // console.log("req.user:", req.user);
-    // console.log("req.session:", req.session);
-    // const etat_session_utilisateur = "inactive";
-    // const utilisateur_id_utilisateur = req.user.id_utilisateur;
-
-    // const resultat = await client.query(
-    //   "UPDATE session_utilisateur SET etat_session_utilisateur = $1 WHERE utilisateur_id_utilisateur = $2 RETURNING *",
-    //   [etat_session_utilisateur, utilisateur_id_utilisateur]
-    // );
-    // if (resultat.rowCount == 0) {
-    //   logger.error(
-    //     `Aucune session appartenant au id ${utilisateur_id_utilisateur}`
-    //   );
-    //   return res.status(404).json({ message: "Session inexistante" });
-    // }
+    console.log("Tentative de déconnexion");
+    const etat_session_utilisateur = "inactive";
+    const utilisateur_id_utilisateur = req.user.id_utilisateur;
+    const resultat = await client.query(
+      "UPDATE session_utilisateur SET etat_session_utilisateur = $1 WHERE utilisateur_id_utilisateur = $2 RETURNING *",
+      [etat_session_utilisateur, utilisateur_id_utilisateur]
+    );
+    if (resultat.rowCount == 0) {
+      logger.error(
+        `Aucune session appartenant au id ${utilisateur_id_utilisateur}`
+      );
+      return res.status(404).json({ message: "Session inexistante" });
+    }
 
     req.logOut((err) => {
       if (err) {
@@ -174,7 +170,7 @@ router.post("/deconnexion", async (req, res) => {
           .json({ message: "Erreur lors de la deconnexion " });
       }
     });
-
+    logger.info("Deconnexion faite avec succes");
     return res.status(200).json({ estConnecte: false });
   } catch (err) {
     logger.error(`Erreur lors de la deconnexion : ${err}`);
