@@ -2,17 +2,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import winston from "winston";
-import cours from "../routes/cours.js";
-import utilisateur from "../routes/utilisateur.js";
-import session from "../routes/sessionCours.js";
-import logSessions from "../routes/logSessions.js";
-import authentification from "../routes/authentification.js";
 import passport from "passport";
 import sessionExpress from "express-session";
 import { config } from "dotenv";
 import initialize from "../strategies/local-strategie.js";
 import client from "../bd/postgresBD/Connexion.js";
-
+import index from "../routes/index.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -68,11 +63,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsConfig));
 app.use(cookieParser());
-app.use("/cours", cours);
-app.use("/utilisateur", utilisateur);
-app.use("/sessionCoursS", session);
-app.use("/logSessions", logSessions);
-app.use("/authentification", authentification);
+app.use("/index", index);
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });

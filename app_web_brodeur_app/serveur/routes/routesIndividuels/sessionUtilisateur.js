@@ -1,7 +1,7 @@
 import express, { json, query } from "express";
 import cors from "cors";
 import winston, { log } from "winston";
-import connexionPostgres from "../bd/postgresBD/Connexion.js";
+import connexionPostgres from "../../bd/postgresBD/Connexion.js";
 import { Strategy } from "passport-local";
 import passport from "passport";
 

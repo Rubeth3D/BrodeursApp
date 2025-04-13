@@ -1,7 +1,7 @@
 import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
-import client from "../bd/postgresBD/Connexion.js";
+import client from "../../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
 import passport from "passport";
 const logger = winston.createLogger({

@@ -1,0 +1,13 @@
+import { Router } from "express";
+import cours from "./routesIndividuels/cours.js";
+import utilisateur from "./routesIndividuels/utilisateur.js";
+import session from "./routesIndividuels/sessionCours.js";
+import logSessions from "./routesIndividuels/logSessions.js";
+import authentification from "./routesIndividuels/authentification.js";
+const router = Router();
+router.use("/cours", cours);
+router.use("/utilisateur", utilisateur);
+router.use("/session", session);
+router.use("/logSessions", logSessions);
+router.use("/authetification", authentification);
+export default router;

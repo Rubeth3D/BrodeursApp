@@ -1,10 +1,10 @@
 import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
-import client from "../bd/postgresBD/Connexion.js";
+import client from "../../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
 import passport from "passport";
-import initPassport from "../strategies/local-strategie.js";
+import initPassport from "../../strategies/local-strategie.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(

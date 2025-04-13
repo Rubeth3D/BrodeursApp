@@ -1,7 +1,7 @@
 import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
-import connexionPostgres from "../bd/postgresBD/Connexion.js";
+import connexionPostgres from "../../bd/postgresBD/Connexion.js";
 
 //route de cedryk lelightskin
 const logger = winston.createLogger({
@@ -35,14 +35,11 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   try {
-    const { 
-      code_session, 
-      date_session, 
-      etat_professeur, 
-      utilisateur_id_user } 
-      = req.body;
-    const resultat = await connexionPostgres.query("INSERT INTO session(code_session, date_session, etat_professeur, utilisateur_id_user) VALUE($1,$2,$3,$4) RETURNING *");
-
+    const { code_session, date_session, etat_professeur, utilisateur_id_user } =
+      req.body;
+    const resultat = await connexionPostgres.query(
+      "INSERT INTO session(code_session, date_session, etat_professeur, utilisateur_id_user) VALUE($1,$2,$3,$4) RETURNING *"
+    );
   } catch (error) {}
 });
 export default router;

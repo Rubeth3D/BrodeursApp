@@ -1,4 +1,4 @@
-import mongoClient from "../bd/MongoBD/Connexion.js";
+import mongoClient from "../../bd/MongoBD/Connexion.js";
 import winston from "winston";
 import express from "express";
 import { ObjectId } from "mongodb";
