@@ -33,5 +33,4 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Erreur lors du fetch des sessions!" });
   }
 });
-router.post("/", async (req,res) =>)
 export default router;
