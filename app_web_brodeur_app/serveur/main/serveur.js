@@ -6,6 +6,7 @@ import cours from "../routes/cours.js";
 import utilisateur from "../routes/utilisateur.js";
 import session from "../routes/session.js";
 import logSessions from "../routes/logSessions.js";
+import passport from "passport";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -24,6 +25,8 @@ const corsConfig = {
   origin: true,
 };
 const app = express();
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);
