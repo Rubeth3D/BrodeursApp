@@ -5,9 +5,8 @@ import winston from "winston";
 import passport from "passport";
 import sessionExpress from "express-session";
 import { config } from "dotenv";
-import initialize from "../strategies/local-strategie.js";
-import client from "../bd/postgresBD/Connexion.js";
 import index from "../routes/index.js";
+import "../strategies/local-strategie.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -40,25 +39,6 @@ app.use(
   })
 );
 //initialisation du passport
-initialize(
-  passport,
-  async (nom_utilisateur) => {
-    const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE nom_utilisateur = $1",
-      [nom_utilisateur]
-    );
-    return resultat;
-  },
-  async (id_utilisateur) => {
-    console.log("Recherche de l'utilisateur du deserialize...");
-    const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE id_utilisateur = $1",
-      [id_utilisateur]
-    );
-    return resultat;
-  },
-  2
-);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsConfig));
