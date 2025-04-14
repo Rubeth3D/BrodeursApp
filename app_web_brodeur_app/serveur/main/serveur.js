@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request, response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import winston from "winston";
@@ -7,6 +7,8 @@ import utilisateur from "../routes/utilisateur.js";
 import session from "../routes/session.js";
 import logSessions from "../routes/logSessions.js";
 import passport from "passport";
+import "./../strategies/local-strategy.mjs";
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -27,6 +29,12 @@ const corsConfig = {
 const app = express();
 app.use(passport.initialize());
 app.use(passport.session());
+app.post(
+  "/api/auth",
+  passport.authenticate("local"),
+  (request, response) => {}
+);
+
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);

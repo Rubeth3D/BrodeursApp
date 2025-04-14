@@ -34,6 +34,33 @@ router.use(express.json());
 // });
 
 //get pour un utilisateur
+router.get("/:nom_user", async (req, res) => {
+  try {
+    const { nom_user, motDePasse } = req.params;
+
+    const resultat = await client.query(
+      "SELECT * FROM utilisateur WHERE nom_user = $1",
+      [nom_user]
+    );
+
+    if (resultat.rowCount == 0) {
+      logger.error(`Aucun utilisateur ne correspond`);
+      return res
+        .status(404)
+        .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
+    }
+    logger.info("Connexion de l'utilisateur effectuer avec succes!");
+    return res.status(200).json([{ message: "Connexion réussie!" }]);
+  } catch (err) {
+    logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la connexion de l'utilisateur" });
+    logger.error(`Erreur lors de la: ${err}`);
+  }
+});
+
+//autre
 router.get("/VerifierCookies", async (req, res) => {
   try {
     if (!req.cookies.UserData) {
