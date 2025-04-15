@@ -74,21 +74,19 @@ const Cours = () => {
     fetchCours();
   }, []);
 
-  const constCoursActif = cours.filter((cours) => cours.etat_cours === "actif");
-  const constCoursInactif = cours.filter(
-    (cours) => cours.etat_cours === "inactif"
-  );
+  const coursActif = cours.filter((cours) => cours.etat_cours === "actif").length;
+  const coursInactif = cours.filter((cours) => cours.etat_cours === "inactif").length;
+  const totalCours = cours.length;
 
   return (
     <>
-      {/* Inspirer par Jean-François Brodeur */}
       <div className="container mt-2">
         <div className="row mb-2 justify-content-center">
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre de cours total:</h2>
-                <p className="card-text fs-4 text-primary mt-4">0</p>
+                <p className="card-text fs-4 text-primary mt-4">{totalCours}</p>
               </div>
             </div>
           </div>
@@ -96,7 +94,7 @@ const Cours = () => {
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre de cours actif:</h2>
-                <p className="card-text fs-4 text-success mt-4">0</p>
+                <p className="card-text fs-4 text-success mt-4">{coursActif}</p>
               </div>
             </div>
           </div>
@@ -104,27 +102,26 @@ const Cours = () => {
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre de cours inactif:</h2>
-                <p className="card-text fs-4 text-danger mt-4">0</p>
+                <p className="card-text fs-4 text-danger mt-4">{coursInactif}</p>
               </div>
             </div>
           </div>
         </div>
         <br />
         <h1 className="text-center mb-5">Liste des cours</h1>
-        <div className="container my-3">
+        <div className="container my-4">
           <div className="row">
             <div className="col-10">
               <div className="d-flex m-0">
                 <input
                   type="text"
                   className="form-control rounded-2"
-                  placeholder="Rechercher une classe"
+                  placeholder="Rechercher un cours"
                   onChange={(e) => {
                     const searchTerm = e.target.value.toLowerCase();
-                    fetchClasses();
-                    setClasses((prevClasses) =>
-                      prevClasses.filter((classe) =>
-                        classe.description.toLowerCase().includes(searchTerm)
+                    setCours((prevCours) =>
+                      prevCours.filter((cours) =>
+                        cours.description_cours.toLowerCase().includes(searchTerm)
                       )
                     );
                   }}
@@ -135,11 +132,11 @@ const Cours = () => {
               <div className="d-flex m-0">
                 <button
                   type="button"
-                  className="btn btn-btn btn-outline-success btn-rounded" // source : https://mdbootstrap.com/docs/standard/components/buttons/
+                  className="btn btn-outline-success btn-rounded"
                   data-bs-toggle="modal"
-                  data-bs-target="#createClassModal"
+                  data-bs-target="#creerCours"
                 >
-                  + Ajouter un cours
+                  + Ajouter
                 </button>
               </div>
             </div>
@@ -207,28 +204,52 @@ const Cours = () => {
               />
             </div>
             <div className="modal-body">
-              <form onSubmit={creerCours}>
-                {[
-                  { label: "Code cours", id: "code_cours" },
-                  { label: "Nom cours", id: "description_cours" },
-                  { label: "Etat Classe", id: "etat_classe" },
-                  { label: "Session", id: "session_id_session" },
-                ].map(({ label, id }) => (
-                  <div className="mb-3" key={id}>
-                    <label htmlFor={id} className="form-label">
-                      {label}
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id={id}
-                      value={form[id]}
-                      onChange={(e) =>
-                        setForm({ ...form, [id]: e.target.value })
-                      }
-                    />
-                  </div>
-                ))}
+              <form  className="row g-3 needs-validation" noValidate onSubmit={creerCours}>
+                <div class='col-mb-4'>
+                  <label for="validationCustom01" className="form-label"> Code du cours</label>
+                  <
+                    input type="text" 
+                    className="form-control" 
+                    id="validationCustom01" 
+                    value={form.code_cours} 
+                    onChange={(e) => setForm({ ...form, code_cours: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                </div>
+                <div class='col-mb-4'>
+                  <label for="validationCustom02" className="form-label"> Nom du cours</label>
+                  <input type="text" 
+                    className="form-control" 
+                    id="validationCustom02" 
+                    value={form.description_cours} 
+                    onChange={(e) => setForm({ ...form, description_cours: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                </div>
+                <div class='col-mb-4'>
+                  <label for="validationCustom03" className="form-label"> Etat du cours</label>
+                  <input type="text" 
+                    className="form-control" 
+                    id="validationCustom03" 
+                    value={form.etat_cours} 
+                    onChange={(e) => setForm({ ...form, etat_cours: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                </div>
+                <div class='col-mb-4'>
+                  <label for="validationCustom04" className="form-label"> Session</label>
+                  <input type="text" 
+                    className="form-control" 
+                    id="validationCustom04" 
+                    value={form.session_id_session} 
+                    onChange={(e) => setForm({ ...form, session_id_session: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                </div>
                 <button type="submit" className="btn btn-primary">
                   Ajouter
                 </button>
@@ -239,6 +260,23 @@ const Cours = () => {
       </div>
     </>
   );
-};
+}
+
+(function () {
+  'use strict'
+  var forms = document.querySelectorAll('.needs-validation')
+
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
 
 export default Cours;
