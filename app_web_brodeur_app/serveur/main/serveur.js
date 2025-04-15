@@ -6,6 +6,7 @@ import cours from "../routes/cours.js";
 import utilisateur from "../routes/utilisateur.js";
 import session from "../routes/session.js";
 import logSessions from "../routes/logSessions.js";
+import classe from "../routes/classe.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -30,6 +31,7 @@ app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", session);
 app.use("/logSessions", logSessions);
+app.use("/classe", classe);
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });

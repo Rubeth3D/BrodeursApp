@@ -24,7 +24,7 @@ router.use(cors());
 //Get toutes les classes
 router.get("/", async (req, res) => {
   try {
-    const resultat = await client.query("GET * FROM classe");
+    const resultat = await client.query("SELECT * FROM classe");
     res.json(resultat.rows);
     logger.info("Get des classes effectue avec succes!");
     res.status(200);
@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params;
     const resultat = await client.query(
-      "GET * FROM classe WHERE id_classe = $1",
+      "SELECT * FROM classe WHERE id_classe = $1",
       [id]
     );
 
@@ -138,10 +138,10 @@ router.put("/:id", async (req, res) => {
 //Delete d'une classe
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
     const resultat = await client.query(
       "DELETE FROM classe WHERE id_classe = $1 RETURNING *",
-      id
+      [id]
     );
     if (resultat.rowCount === 0) {
       return res

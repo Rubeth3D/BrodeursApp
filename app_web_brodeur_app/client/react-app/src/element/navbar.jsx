@@ -7,21 +7,21 @@ function Navbar() {
   const [estConnecte, setEstConnecte] = useState(false);
   const [dashBoard, setDashboard] = useState(false);
   const urlUtilisateur = "http://localhost:8080/utilisateur";
-  const VerifierCookies = async () => {
-    try {
-      const reponse = await fetch(`${urlUtilisateur}/VerifierCookies`, {
-        credentials: "include",
-      });
-      const jsonData = await reponse.json();
-      if (reponse.ok) {
-        setEstConnecte(true);
-        setUsername(jsonData.nom_user);
-        console.log(username);
-      }
-    } catch (err) {
-      console.log(`Erreur lors du fetch du user : ${err}`);
-    }
-  };
+  // const VerifierCookies = async () => {
+  //   try {
+  //     const reponse = await fetch(`${urlUtilisateur}/VerifierCookies`, {
+  //       credentials: "include",
+  //     });
+  //     const jsonData = await reponse.json();
+  //     if (reponse.ok) {
+  //       setEstConnecte(true);
+  //       setUsername(jsonData.nom_user);
+  //       console.log(username);
+  //     }
+  //   } catch (err) {
+  //     console.log(`Erreur lors du fetch du user : ${err}`);
+  //   }
+  // };
   const Deconnexion = async () => {
     try {
       const reponse = await fetch(`${urlUtilisateur}/Deconnexion`, {
@@ -33,7 +33,7 @@ function Navbar() {
     }
   };
   useEffect(() => {
-    VerifierCookies();
+    // VerifierCookies();
   }, []);
   function GererConnexion() {
     if (estConnecte) {
@@ -91,7 +91,7 @@ function Navbar() {
               width="24"
               height="24"
               fill="currentColor"
-              class="bi bi-person-circle"
+              className="bi bi-person-circle"
               viewBox="0 0 16 16"
             >
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />

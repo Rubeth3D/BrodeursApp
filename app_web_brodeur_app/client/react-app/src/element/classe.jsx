@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import SupprimerSVG from "../image/SupprimerSVG.jsx"
+import ModifierSVG from "../image/ModifierSVG.jsx"
 const classe = () => {
   const [classes, setClasses] = useState([]);
   const [form, setForm] = useState({
@@ -10,7 +11,15 @@ const classe = () => {
     professeur_id_professeur: "",
     etat_classe: "",
   });
-
+  //Ya des placeholders
+  const[nouvelleClasse,setNouvelleClasse] =useState({
+    code_cours: "",
+    description: "",
+    groupe: "Groupe 1 du cours INF101",
+    cours_id_cours: "1",
+    professeur_id_professeur: "1",
+    etat_classe: "A",
+  });
   const fetchClasses = async () => {
     try {
       const response = await fetch("http://localhost:8080/classe", {
@@ -18,6 +27,7 @@ const classe = () => {
         headers: { "Content-Type": "application/json" },
       });
       const data = await response.json();
+      console.log(data)
       setClasses(data);
     } catch (error) {
       console.error(error);
@@ -68,10 +78,19 @@ const classe = () => {
     }
   };
 
+  const test = (e) =>{
+    setClasses({
+      ...classes,
+      [e.target.name]: e.target.value
+    })
+  }
+
   useEffect(() => {
     fetchClasses();
   }, []);
-
+  // const  inputNouvelleClasse = e =>{
+  //   console.log(e.target.value);
+  // }
   return (
     <>
       <div className="container mt-2">
@@ -161,16 +180,16 @@ const classe = () => {
                 <td>{classe.etat_classe}</td>
                 <td>
                   <button
-                    className="btn btn-warning me-2"
+                    className="btn "
                     onClick={() => modifierClasse(classe.id_classe)}
                   >
-                    Modifier
+                    {ModifierSVG()}
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className="btn "
                     onClick={() => supprimerClasse(classe.id_classe)}
                   >
-                    Supprimer
+                    {SupprimerSVG()}
                   </button>
                 </td>
               </tr>
@@ -201,28 +220,16 @@ const classe = () => {
             </div>
             <div className="modal-body">
               <form onSubmit={creerClasse}>
-                {[
-                  { label: "Nom classe", id: "description" },
-                  { label: "Groupe", id: "groupe" },
-
-                  //on doit pas mettre l'etat, mais d'autres choses pourrait etre pertinent
-                  //{ label: "Etat Classe", id: "etat_classe" },
-                ].map(({ label, id }) => (
-                  <div className="mb-3" key={id}>
-                    <label htmlFor={id} className="form-label">
-                      {label}
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id={id}
-                      value={form[id]}
-                      onChange={(e) =>
-                        setForm({ ...form, [id]: e.target.value })
-                      }
-                    />
+                <div className="container">
+                  <div className="row">
+                    <label for ="nom">Nom cours</label><br />
+                    < input name="description" type="text" className="mb-3" onChange={(e) =>{({
+                    })}}/>
+                    <label for ="nom">Description</label><br />
+                    < input type="text" className="mb-3"/>
                   </div>
-                ))}
+                </div>
+                
                 <button type="submit" className="btn btn-primary">
                   Ajouter
                 </button>

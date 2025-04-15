@@ -5,7 +5,7 @@ function DeconnexionSVG() {
       width="24"
       height="24"
       fill="currentColor"
-      class="bi bi-door-open"
+      className="bi bi-door-open"
       viewBox="0 0 16 16"
     >
       <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1" />
