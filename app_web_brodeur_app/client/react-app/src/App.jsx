@@ -20,7 +20,7 @@ function App() {
     document.title = "Évaluation par les pairs"; // Aider par ChatGPT pour le titre de l'onglet
     const link = document.querySelector("link[rel~='icon']");
     if (link) {
-      link.href = "/BA_Logo.png"; // Aider par ChatGPT pour l'icône de l'onglet
+      link.href = "/LogoIcon.png"; // Aider par ChatGPT pour l'icône de l'onglet
     }
   }, []);
   return (
