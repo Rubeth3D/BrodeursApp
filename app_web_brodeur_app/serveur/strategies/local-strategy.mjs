@@ -1,22 +1,48 @@
 import passport from "passport";
-import { Strategy } from "passport-local";
+import { Strategy as LocalStrategy } from "passport-local";
+import client from "../bd/postgresBD/Connexion.js";
 
 export default passport.use(
-  new Strategy((username, password, done) => {
+  new LocalStrategy((username, password, done) => {
     console.log(`Username: ${username}`);
     console.log(`Password: ${password}`);
-    try {
-      const findUser = fetch(`http://localhost:8080/utilisateur/${username}`);
-      if (!findUser) {
-        throw new Error("user pas trouver");
+    const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1;";
+    const parametre = [username];
+    client.query(requete, parametre, function (err, result) {
+      //console.log(result.rows[0]);
+      //console.log(result.rows[0].nom_utilisateur);
+      //console.log(result.rows[0].mot_passe);
+      if (err) {
+        console.log(err);
+        return done(err);
       }
-      if (findUser.password != password) {
-        throw new Error("mot de passe invalide");
+      if (result.rows.length == 0) {
+        console.log("Le nom d'utilisateur ou le mot de passe est mauvais");
+        return done(null, false, {
+          message: "Le nom d'utilisateur ou le mot de passe est mauvais",
+        });
       }
-      done(null, findUser);
-    } catch (error) {
-      console.error(error);
-      done(err, null);
-    }
+      if (
+        username == result.rows[0].nom_utilisateur &&
+        password == result.rows[0].mot_passe
+      ) {
+        console.log("YEAAAAH!!!");
+        return done(null, result);
+      } else {
+        console.log("BRUHHH so closes");
+        return done(null, false, {
+          message: "Le nom d'utilisateur ou le mot de passe est mauvais",
+        });
+      }
+      /**const bcrypt = require('bcrypt');
+bcrypt.compare(password, user.password, function(err, isMatch) {
+  if (err) return done(err);
+  if (isMatch) {
+    return done(null, user);
+  } else {
+    return done(null, false, { message: "Le nom d'utilisateur ou le mot de passe est mauvais" });
+  }
+}); */
+    });
   })
 );

@@ -43,9 +43,11 @@ function Connexion() {
   return (
     <>
       <div className=" mb-5"></div>
+
       <form
         className="container"
-        onSubmit={(e) => connexionUser(nomUtilisateur, motDePasse, e)}
+        action="http://localhost:8080/api/auth"
+        method="POST"
       >
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
@@ -60,6 +62,7 @@ function Connexion() {
                   id="inputNumeroIdentification"
                   value={nomUtilisateur}
                   onChange={(e) => setNomUtilisateur(e.target.value)}
+                  name="username"
                   required
                 />
               </div>
@@ -75,6 +78,7 @@ function Connexion() {
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
                 required
+                name="password"
               />
             </div>
           </div>

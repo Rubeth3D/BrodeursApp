@@ -42,17 +42,24 @@ app.use(
 
 app.use(cors(corsConfig));
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", sessionDeCours);
 app.use("/logSessions", logSessions);
+app.use(passport.initialize());
+app.use(passport.session());
+app.post("/api/auth", function (req, res, next) {
+  console.log(req.body);
+
+  const cb = passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/tset123",
+  });
+  return cb(req, res, next);
+});
+
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
-app.use(passport.initialize());
-app.use(passport.session());
-app.post(
-  "/api/auth",
-  passport.authenticate("local"),
-  (request, response) => {}
-);
