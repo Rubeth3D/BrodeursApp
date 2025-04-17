@@ -205,71 +205,73 @@ const Cours = () => {
             </div>
 
             {/* Source : https://getbootstrap.com/docs/5.0/forms/validation/ */}
-              <div className="modal-body">
-                <form className="row g-3 needs-validation" noValidate onSubmit={creerCours}>
-                  
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom01" className="form-label">Code du cours</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom01" 
-                      value={form.code_cours} 
-                      onChange={(e) => setForm({ ...form, code_cours: e.target.value })}
-                      required
-                    />
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Code du cours requis</div>
-                  </div>
+            <div className="modal-body">
+              <form className="row g-3 needs-validation" noValidate onSubmit={creerCours}>
+                
+                <div className='col-mb-4'>
+                  <label htmlFor="validationCustom01" className="form-label">Code du cours</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    id="validationCustom01" 
+                    value={form.code_cours} 
+                    onChange={(e) => setForm({ ...form, code_cours: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                  <div className="invalid-feedback">Code du cours requis</div>
+                </div>
 
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom02" className="form-label">Nom du cours</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom02" 
-                      value={form.description_cours} 
-                      onChange={(e) => setForm({ ...form, description_cours: e.target.value })}
-                      required
-                    />
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Nom du cours requis</div>
-                  </div>
+                <div className='col-mb-4'>
+                  <label htmlFor="validationCustom02" className="form-label">Nom du cours</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    id="validationCustom02" 
+                    value={form.description_cours} 
+                    onChange={(e) => setForm({ ...form, description_cours: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                  <div className="invalid-feedback">Nom du cours requis</div>
+                </div>
 
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom03" className="form-label">État du cours</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom03" 
-                      value={form.etat_cours} 
-                      onChange={(e) => setForm({ ...form, etat_cours: e.target.value })}
-                      required
-                    />
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">État du cours requis</div>
-                  </div>
+                <div className='col-mb-4'>
+                  <label htmlFor="validationCustom03" className="form-label">État du cours</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    id="validationCustom03" 
+                    value={form.etat_cours} 
+                    onChange={(e) => setForm({ ...form, etat_cours: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                  <div className="invalid-feedback">État du cours requis</div>
+                </div>
 
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom04" className="form-label">Session</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom04" 
-                      value={form.session_id_session} 
-                      onChange={(e) => setForm({ ...form, session_id_session: e.target.value })}
-                      required
-                    />
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Session requise</div>
-                  </div>
+                <div className='col-mb-4'>
+                  <label htmlFor="validationCustom04" className="form-label">Session</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    id="validationCustom04" 
+                    value={form.session_id_session} 
+                    onChange={(e) => setForm({ ...form, session_id_session: e.target.value })}
+                    required
+                  />
+                  <div className="valid-feedback">Bien</div>
+                  <div className="invalid-feedback">Session requise</div>
+                </div>
 
-                  <button type="submit" className="btn btn-primary">
-                    <span className="visually-hidden">Ajouter un cours</span>
-                    Ajouter
-                  </button>
-                </form>
-              </div>
+                <button type="submit" className="btn btn-primary">
+                  <span className="visually-hidden">Ajouter un cours</span>
+                  Ajouter
+                </button>
+
+              </form>
+            </div>
+
           </div>
         </div>
       </div>
@@ -277,8 +279,10 @@ const Cours = () => {
   );
 }
 
+
 (function () {
   'use strict'
+
   var forms = document.querySelectorAll('.needs-validation')
 
   Array.prototype.slice.call(forms)
