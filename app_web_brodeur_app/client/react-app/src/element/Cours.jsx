@@ -279,7 +279,7 @@ const Cours = () => {
   );
 }
 
-
+// Validation de formulaire
 (function () {
   'use strict'
 
