@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-
+import SupprimerSVG from "../image/SupprimerSVG.jsx"
+import ModifierSVG from "../image/ModifierSVG.jsx"
 const classe = () => {
   const [classes, setClasses] = useState([]);
-  const [form, setForm] = useState({
+  
+  //Ya des placeholders
+  const[nouvelleClasse,setNouvelleClasse] =useState({
     code_cours: "",
     description: "",
-    groupe: "",
-    cours_id_cours: "",
-    professeur_id_professeur: "",
-    etat_classe: "",
+    groupe: "1",
+    professeur_id_professeur: "1",
+    cours_id_cours : "1",
+    etat_classe: "A",
   });
-
   const fetchClasses = async () => {
     try {
       const response = await fetch("http://localhost:8080/classe", {
@@ -18,6 +20,7 @@ const classe = () => {
         headers: { "Content-Type": "application/json" },
       });
       const data = await response.json();
+      console.log(data)
       setClasses(data);
     } catch (error) {
       console.error(error);
@@ -30,7 +33,7 @@ const classe = () => {
       const response = await fetch("http://localhost:8080/classe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(nouvelleClasse),
       });
       if (response.ok) {
         fetchClasses();
@@ -68,43 +71,44 @@ const classe = () => {
     }
   };
 
+  const NouvelleClasseSetData = (e) =>{
+    setNouvelleClasse({
+      ...nouvelleClasse,
+      [e.target.name]: e.target.value
+    })
+  }
+
   useEffect(() => {
     fetchClasses();
   }, []);
-
+  // const  inputNouvelleClasse = e =>{
+  //   console.log(e.target.value);
+  // }
   return (
     <>
-      <div className="container mt-5">
-        <div className="row mb-5">
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
+      <div className="container mt-2">
+        <div className="row mb-2 justify-content-center">
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de classe total:</h2>
+                <p className="card-text fs-4 text-primary mt-4">0</p>
               </div>
             </div>
           </div>
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de classe actif:</h2>
+                <p className="card-text fs-4 text-success mt-4">0</p>
               </div>
             </div>
           </div>
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="card-title fs-5">Nombre de classe:</h2>
-                <p className=" card-text">Vous avez 5 classes</p>
+          <div className="col-4">
+            <div className="card shadow-sm p-2 mb-2 bg-body rounded">
+              <div className="card-body text-center">
+                <h2 className="card-title fs-5"> Nombre de classe inactif:</h2>
+                <p className="card-text fs-4 text-danger mt-4">0</p>
               </div>
             </div>
           </div>
@@ -139,7 +143,7 @@ const classe = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#createClassModal"
                   >
-                    + Ajouter un cours
+                    + Ajouter une classe
                   </button>
                 </div>
               </div>
@@ -169,16 +173,16 @@ const classe = () => {
                 <td>{classe.etat_classe}</td>
                 <td>
                   <button
-                    className="btn btn-warning me-2"
+                    className="btn "
                     onClick={() => modifierClasse(classe.id_classe)}
                   >
-                    Modifier
+                    {ModifierSVG()}
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className="btn "
                     onClick={() => supprimerClasse(classe.id_classe)}
                   >
-                    Supprimer
+                    {SupprimerSVG()}
                   </button>
                 </td>
               </tr>
@@ -207,28 +211,50 @@ const classe = () => {
                 aria-label="Close"
               ></button>
             </div>
+
             <div className="modal-body">
               <form onSubmit={creerClasse}>
-                {[
-                  { label: "Nom classe", id: "description" },
-                  { label: "Groupe", id: "groupe" },
-                  { label: "Etat Classe", id: "etat_classe" },
-                ].map(({ label, id }) => (
-                  <div className="mb-3" key={id}>
-                    <label htmlFor={id} className="form-label">
-                      {label}
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id={id}
-                      value={form[id]}
-                      onChange={(e) =>
-                        setForm({ ...form, [id]: e.target.value })
-                      }
-                    />
+                <div className="container">
+                  <div className="row">
+                    <label for ="nom">Code du cours</label><br />
+                    < input name="code_cours" type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
+                    <label for ="nom">Description</label><br />
+                    < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
                   </div>
-                ))}
+                </div>
+                
+                <button type="submit" className="btn btn-primary">
+                  Ajouter
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="modifierClasse">
+                Modifier la classe
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={creerClasse}>
+                <div className="container">
+                  <div className="row">
+                    <label for ="nom">Code du cours</label><br />
+                    < input name="code_cours" type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
+                    <label for ="nom">Description</label><br />
+                    < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
+                  </div>
+                </div>
+                
                 <button type="submit" className="btn btn-primary">
                   Ajouter
                 </button>
