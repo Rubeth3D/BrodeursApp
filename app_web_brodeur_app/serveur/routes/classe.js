@@ -65,6 +65,7 @@ router.get("/:id", async (req, res) => {
 //Insert d'une classe
 router.post("/", async (req, res) => {
   try {
+    console.log(req.body);
     const {
       code_cours,
       description,

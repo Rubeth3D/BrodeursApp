@@ -3,21 +3,14 @@ import SupprimerSVG from "../image/SupprimerSVG.jsx"
 import ModifierSVG from "../image/ModifierSVG.jsx"
 const classe = () => {
   const [classes, setClasses] = useState([]);
-  const [form, setForm] = useState({
-    code_cours: "",
-    description: "",
-    groupe: "",
-    cours_id_cours: "",
-    professeur_id_professeur: "",
-    etat_classe: "",
-  });
+  
   //Ya des placeholders
   const[nouvelleClasse,setNouvelleClasse] =useState({
     code_cours: "",
     description: "",
-    groupe: "Groupe 1 du cours INF101",
-    cours_id_cours: "1",
+    groupe: "1",
     professeur_id_professeur: "1",
+    cours_id_cours : "1",
     etat_classe: "A",
   });
   const fetchClasses = async () => {
@@ -40,7 +33,7 @@ const classe = () => {
       const response = await fetch("http://localhost:8080/classe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(nouvelleClasse),
       });
       if (response.ok) {
         fetchClasses();
@@ -78,9 +71,9 @@ const classe = () => {
     }
   };
 
-  const test = (e) =>{
-    setClasses({
-      ...classes,
+  const NouvelleClasseSetData = (e) =>{
+    setNouvelleClasse({
+      ...nouvelleClasse,
       [e.target.name]: e.target.value
     })
   }
@@ -218,15 +211,47 @@ const classe = () => {
                 aria-label="Close"
               ></button>
             </div>
+
             <div className="modal-body">
               <form onSubmit={creerClasse}>
                 <div className="container">
                   <div className="row">
-                    <label for ="nom">Nom cours</label><br />
-                    < input name="description" type="text" className="mb-3" onChange={(e) =>{({
-                    })}}/>
+                    <label for ="nom">Code du cours</label><br />
+                    < input name="code_cours" type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
                     <label for ="nom">Description</label><br />
-                    < input type="text" className="mb-3"/>
+                    < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
+                  </div>
+                </div>
+                
+                <button type="submit" className="btn btn-primary">
+                  Ajouter
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="modifierClasse">
+                Modifier la classe
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={creerClasse}>
+                <div className="container">
+                  <div className="row">
+                    <label for ="nom">Code du cours</label><br />
+                    < input name="code_cours" type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
+                    <label for ="nom">Description</label><br />
+                    < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
                   </div>
                 </div>
                 
