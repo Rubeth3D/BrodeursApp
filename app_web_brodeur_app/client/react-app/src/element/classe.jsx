@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import SupprimerSVG from "../image/SupprimerSVG.jsx"
 import ModifierSVG from "../image/ModifierSVG.jsx"
+import ModalModifierClasse from "./ModalModifierClasse.jsx";
 const classe = () => {
   const [classes, setClasses] = useState([]);
-  
+  const[estOuvert,setEstOuvert] = useState(false);
   //Ya des placeholders
   const[nouvelleClasse,setNouvelleClasse] =useState({
     code_cours: "",
@@ -13,6 +14,14 @@ const classe = () => {
     cours_id_cours : "1",
     etat_classe: "A",
   });
+  const[classeModifier,setClasseModifier] = useState({
+     code_cours: "",
+    description: "",
+    groupe: "",
+    professeur_id_professeur: "",
+    cours_id_cours : "",
+    etat_classe: "",
+  })
   const fetchClasses = async () => {
     try {
       const response = await fetch("http://localhost:8080/classe", {
@@ -48,7 +57,7 @@ const classe = () => {
       const response = await fetch(`http://localhost:8080/classe/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(classeModifier),
       });
       if (response.ok) {
         fetchClasses();
@@ -74,6 +83,12 @@ const classe = () => {
   const NouvelleClasseSetData = (e) =>{
     setNouvelleClasse({
       ...nouvelleClasse,
+      [e.target.name]: e.target.value
+    })
+  }
+    const ModifierClasseSetData = (e) =>{
+    setClasseModifier({
+      ...classeModifier,
       [e.target.name]: e.target.value
     })
   }
@@ -173,13 +188,15 @@ const classe = () => {
                 <td>{classe.etat_classe}</td>
                 <td>
                   <button
-                    className="btn "
-                    onClick={() => modifierClasse(classe.id_classe)}
+                    
+                    onClick={() =>{setEstOuvert(true)}}
                   >
                     {ModifierSVG()}
                   </button>
+                  <ModalModifierClasse  open={estOuvert} classe={1} estFermee={() => setEstOuvert(false)}>allo</ModalModifierClasse>
                   <button
                     className="btn "
+
                     onClick={() => supprimerClasse(classe.id_classe)}
                   >
                     {SupprimerSVG()}
@@ -191,7 +208,7 @@ const classe = () => {
         </table>
       </div>
 
-      <div
+      {/* <div
         className="modal fade"
         id="createClassModal"
         tabIndex="-1"
@@ -222,7 +239,6 @@ const classe = () => {
                     < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
                   </div>
                 </div>
-                
                 <button type="submit" className="btn btn-primary">
                   Ajouter
                 </button>
@@ -230,40 +246,10 @@ const classe = () => {
             </div>
           </div>
         </div>
+      </div> */}
 
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="modifierClasse">
-                Modifier la classe
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={creerClasse}>
-                <div className="container">
-                  <div className="row">
-                    <label for ="nom">Code du cours</label><br />
-                    < input name="code_cours" type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
-                    <label for ="nom">Description</label><br />
-                    < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
-                  </div>
-                </div>
-                
-                <button type="submit" className="btn btn-primary">
-                  Ajouter
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
+
   );
 };
 
