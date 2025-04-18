@@ -39,7 +39,6 @@ app.use(
     },
   })
 );
-
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use(express.json());
