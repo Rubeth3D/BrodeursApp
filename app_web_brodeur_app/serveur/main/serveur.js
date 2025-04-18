@@ -49,14 +49,25 @@ app.use("/session", sessionDeCours);
 app.use("/logSessions", logSessions);
 app.use(passport.initialize());
 app.use(passport.session());
-app.post("/api/auth", function (req, res, next) {
-  console.log(req.body);
 
-  const cb = passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/tset123",
-  });
-  return cb(req, res, next);
+app.post("/api/auth", function (req, res, next) {
+  passport.authenticate("local", function (err, user, info) {
+    if (err) {
+      console.error("Erreur serveur :", err);
+      return res.status(500).json({ message: "Erreur serveur" });
+    }
+
+    if (!user) {
+      return res.status(401).json({ message: info?.message || "Authentification échouée" });
+    }
+
+    // Si authentification réussie, on retourne les infos utiles
+    return res.status(200).json({
+      nom_user: user.nom_utilisateur,
+      session_id: user.session_id,
+      type_utilisateur: user.type_utilisateur,
+    });
+  })(req, res, next); // Ne pas oublier d'appeler avec req, res, next
 });
 
 app.listen(8080, () => {

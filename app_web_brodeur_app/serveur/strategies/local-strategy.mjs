@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import client from "../bd/postgresBD/Connexion.js";
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 export default passport.use(
   new LocalStrategy((username, password, done) => {
@@ -10,9 +11,6 @@ export default passport.use(
     const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1;";
     const parametre = [username];
     client.query(requete, parametre, function (err, result) {
-      //console.log(result.rows[0]);
-      //console.log(result.rows[0].nom_utilisateur);
-      //console.log(result.rows[0].mot_passe);
       if (err) {
         console.log(err);
         return done(err);
@@ -28,23 +26,63 @@ export default passport.use(
         password == result.rows[0].mot_passe
       ) {
         console.log("YEAAAAH!!!");
+
+        const generateSecureNumericId = () => {
+          // Génère un nombre entier entre 100000 et 999999 (6 chiffres)
+          return Math.floor(100000 + Math.random() * 900000);
+        };
+
+        const sessionId = generateSecureNumericId();
         const utilisateur = result.rows[0];
         const utilisateurId = utilisateur.id_utilisateur;
-        const dateConnexion = new Date();
-        const dateJetonExpiration = new Date(dateConnexion.getTime() + (60 * 60 * 1000)); 
+        const dateConnexion = new Date().toISOString(); 
+        const dateJetonExpiration = new Date(Date.now() + 60 * 60 * 1000).toISOString();
         const typeUtilisateur = utilisateur.type_utilisateur;
         const etatSession = "A";
 
-        const insertSessionQuery = `
+        const regarderSessionQuery = `
+        SELECT * FROM session_utilisateur 
+        WHERE utilisateur_id_utilisateur = $1 AND etat_session_utilisateur = 'A';
+        `;
+        client.query(regarderSessionQuery, [utilisateurId], function (err, sessionCheckResult) {
+          if (err) {
+            console.log("Erreur lors de la vérification de la session", err);
+            return done(err);
+          }
+          if(sessionCheckResult.rows.length > 0){
+            const sessionId = sessionCheckResult.rows[0].id_session_utilisateur;
+            const updateSessionQuery = `
+              UPDATE session_utilisateur
+              SET 
+                date_connexion = $1, 
+                date_jeton_expiration = $2
+              WHERE id_session_utilisateur = $3
+              RETURNING id_session_utilisateur;
+            `;
+            const updateParams = [dateConnexion, dateJetonExpiration, sessionId];
+
+            client.query(updateSessionQuery, updateParams, function (err, updatedSessionResult) {
+              if (err) {
+                console.log("Erreur lors de la mise à jour de la session", err);
+                return done(err);
+              }
+
+              utilisateur.session_id = updatedSessionResult.rows[0].id_session_utilisateur;
+              return done(null, utilisateur);  // Utilisateur et session à jour
+            });
+          } else {
+
+            const insertSessionQuery = `
             INSERT INTO session_utilisateur (
+              id_session_utilisateur,
               date_connexion,
               date_jeton_expiration,
               type_utilisateur,
               utilisateur_id_utilisateur,
               etat_session_utilisateur
-            ) VALUES ($1, $2, $3, $4, $5) RETURNING id_session_utilisateur;
+            ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_session_utilisateur;
           `;
-          const params = [dateConnexion, dateJetonExpiration, typeUtilisateur, utilisateurId, etatSession];
+          const params = [sessionId, dateConnexion, dateJetonExpiration, typeUtilisateur, utilisateurId, etatSession];
           
           client.query(insertSessionQuery,params, function (err, sessionResult){
             if(err){
@@ -57,6 +95,8 @@ export default passport.use(
             utilisateur.session_id = sessionId;
             return done(null, utilisateur);
           });
+          }
+        });
       } else {
         console.log("BRUHHH so closes");
         return done(null, false, {
@@ -88,3 +128,4 @@ passport.deserializeUser((id, done) => {
     return done(null, result.rows[0]);  // L'utilisateur sera disponible dans req.user
   });
 });
+
