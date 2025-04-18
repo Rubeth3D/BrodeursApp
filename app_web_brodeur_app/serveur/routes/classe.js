@@ -108,6 +108,7 @@ router.put("/:id", async (req, res) => {
       cours_id_cours,
       etat_classe,
     } = req.body;
+    console.log(req.params);
     const resultat = await client.query(
       "UPDATE classe SET code_cours = $1, description = $2, groupe = $3, professeur_id_professeur = $4, cours_id_cours = $5, etat_classe = $6 WHERE id_classe = $7 RETURNING *",
       [

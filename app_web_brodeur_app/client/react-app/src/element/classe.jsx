@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from "react";
-import SupprimerSVG from "../image/SupprimerSVG.jsx"
-import ModifierSVG from "../image/ModifierSVG.jsx"
-import ModalModifierClasse from "./ModalModifierClasse.jsx";
+import SupprimerSVG from "../image/SupprimerSVG.jsx";
+import ModifierSVG from "../image/ModifierSVG.jsx";
+import ModalModifierClasse from "./modalModifierClasse.jsx";
 const classe = () => {
   const [classes, setClasses] = useState([]);
-  const[estOuvert,setEstOuvert] = useState(false);
+  const [estOuvert, setEstOuvert] = useState(false);
   //Ya des placeholders
-  const[nouvelleClasse,setNouvelleClasse] =useState({
+  const [nouvelleClasse, setNouvelleClasse] = useState({
     code_cours: "",
     description: "",
     groupe: "1",
     professeur_id_professeur: "1",
-    cours_id_cours : "1",
+    cours_id_cours: "1",
     etat_classe: "A",
   });
-  const[classeModifier,setClasseModifier] = useState({
-     code_cours: "",
-    description: "",
-    groupe: "",
-    professeur_id_professeur: "",
-    cours_id_cours : "",
-    etat_classe: "",
-  })
   const fetchClasses = async () => {
     try {
       const response = await fetch("http://localhost:8080/classe", {
@@ -29,7 +21,7 @@ const classe = () => {
         headers: { "Content-Type": "application/json" },
       });
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setClasses(data);
     } catch (error) {
       console.error(error);
@@ -52,21 +44,6 @@ const classe = () => {
     }
   };
 
-  const modifierClasse = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8080/classe/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(classeModifier),
-      });
-      if (response.ok) {
-        fetchClasses();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const supprimerClasse = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/classe/${id}`, {
@@ -80,18 +57,12 @@ const classe = () => {
     }
   };
 
-  const NouvelleClasseSetData = (e) =>{
+  const NouvelleClasseSetData = (e) => {
     setNouvelleClasse({
       ...nouvelleClasse,
-      [e.target.name]: e.target.value
-    })
-  }
-    const ModifierClasseSetData = (e) =>{
-    setClasseModifier({
-      ...classeModifier,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   useEffect(() => {
     fetchClasses();
@@ -188,15 +159,21 @@ const classe = () => {
                 <td>{classe.etat_classe}</td>
                 <td>
                   <button
-                    
-                    onClick={() =>{setEstOuvert(true)}}
+                    className="btn "
+                    onClick={() => {
+                      setEstOuvert(true);
+                    }}
                   >
                     {ModifierSVG()}
                   </button>
-                  <ModalModifierClasse  open={estOuvert} classe={1} estFermee={() => setEstOuvert(false)}>allo</ModalModifierClasse>
+                  <ModalModifierClasse
+                    open={estOuvert}
+                    classe={classe}
+                    estFermee={() => setEstOuvert()}
+                    rafraichir={() => fetchClasses()}
+                  ></ModalModifierClasse>
                   <button
                     className="btn "
-
                     onClick={() => supprimerClasse(classe.id_classe)}
                   >
                     {SupprimerSVG()}
@@ -207,49 +184,7 @@ const classe = () => {
           </tbody>
         </table>
       </div>
-
-      {/* <div
-        className="modal fade"
-        id="createClassModal"
-        tabIndex="-1"
-        aria-labelledby="createClassModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="createClassModalLabel">
-                Ajout une nouvelle classe
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-
-            <div className="modal-body">
-              <form onSubmit={creerClasse}>
-                <div className="container">
-                  <div className="row">
-                    <label for ="nom">Code du cours</label><br />
-                    < input name="code_cours" type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
-                    <label for ="nom">Description</label><br />
-                    < input  type="text" className="mb-3" onChange={NouvelleClasseSetData}/>
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Ajouter
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
     </>
-
   );
 };
 

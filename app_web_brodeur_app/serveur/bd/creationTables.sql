@@ -1,8 +1,4 @@
--- Converted to PostgreSQL
--- predefined type, no DDL - MDSYS.SDO_GEOMETRY
--- predefined type, no DDL - XMLTYPE
-
-
+-- Création des tables
 CREATE TABLE affectation (id_affectation SERIAL PRIMARY KEY);
 CREATE TABLE assignation (
     travail_id_travail INTEGER NOT NULL,
@@ -154,8 +150,10 @@ CREATE TABLE utilisateur (
     UNIQUE (etudiant_id_etudiant),
     UNIQUE (professeur_id_professeur)
 );
+-- Ajout des commentaires sur les colonnes
 COMMENT ON COLUMN utilisateur.etat_utilisateur IS 'Actif/Inactif';
 COMMENT ON COLUMN utilisateur.type_utilisateur IS 'E étudiant / P professeur / A admin';
+-- Ajout des contraintes de clés étrangères
 ALTER TABLE assignation
 ADD CONSTRAINT assignation_equipe_fk FOREIGN KEY (equipe_id_equipe) REFERENCES equipe (id_equipe);
 ALTER TABLE assignation
@@ -206,16 +204,14 @@ ALTER TABLE travail
 ADD CONSTRAINT travail_classe_fk FOREIGN KEY (classe_id_classe) REFERENCES classe (id_classe);
 ALTER TABLE travail
 ADD CONSTRAINT travail_instrument_fk FOREIGN KEY (instrument_id_instrument) REFERENCES instrument (id_instrument);
+-- Création de la séquence pour l'utilisateur
 CREATE SEQUENCE utilisateur_id_utilisateur_seq START WITH 1;
+-- Fonction pour assigner automatiquement un id_utilisateur
 CREATE OR REPLACE FUNCTION utilisateur_id_utilisateur_trg() RETURNS TRIGGER AS $$ BEGIN IF NEW.id_utilisateur IS NULL THEN NEW.id_utilisateur := nextval('utilisateur_id_utilisateur_seq');
 END IF;
 RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-RETURNS TRIGGER AS $$ BEGIN IF NEW.id_utilisateur IS NULL THEN NEW.id_utilisateur := nextval('utilisateur_id_utilisateur_seq');
-END IF;
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+-- Déclencheur pour l'automatisation de l'id_utilisateur
 CREATE TRIGGER utilisateur_id_utilisateur_trg BEFORE
 INSERT ON utilisateur FOR EACH ROW EXECUTE FUNCTION utilisateur_id_utilisateur_trg();
