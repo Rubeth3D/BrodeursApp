@@ -35,10 +35,12 @@ app.use(
     saveUninitialized: false,
     resave: false,
     cookie: {
+      httpOnly: true, 
       maxAge: 1000 * 60 * 24,
     },
   })
 );
+
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use(express.json());
@@ -50,24 +52,24 @@ app.use("/logSessions", logSessions);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post("/api/auth", function (req, res, next) {
-  passport.authenticate("local", function (err, user, info) {
-    if (err) {
-      console.error("Erreur serveur :", err);
-      return res.status(500).json({ message: "Erreur serveur" });
-    }
+// Route de connexion
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return res.status(500).send('Erreur serveur');
+    if (!user) return res.status(401).send(info.message || 'Nom d’utilisateur ou mot de passe incorrect');
 
-    if (!user) {
-      return res.status(401).json({ message: info?.message || "Authentification échouée" });
-    }
+    req.login(user, (err) => {
+      if (err) return res.status(500).send('Erreur lors de la création de la session');
 
-    // Si authentification réussie, on retourne les infos utiles
-    return res.status(200).json({
-      nom_user: user.nom_utilisateur,
-      session_id: user.session_id,
-      type_utilisateur: user.type_utilisateur,
+      // Ajouter l'ID de session au cookie
+      res.cookie('session_id', user.session_id, {
+        //httpOnly: true,
+        maxAge: 1000 * 60 * 60, // 1 heure
+      });
+
+      res.json({ message: 'Connexion réussie', user: user });
     });
-  })(req, res, next); // Ne pas oublier d'appeler avec req, res, next
+  })(req, res, next);
 });
 
 app.listen(8080, () => {

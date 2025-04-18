@@ -120,6 +120,7 @@ passport.serializeUser((user, done) => {
   done(null, user.id_utilisateur);
 });
 
+//A refaire pour que ca regarde la session et non l'utilisateur
 passport.deserializeUser((id, done) => {
   const requete = "SELECT * FROM utilisateur WHERE id_utilisateur = $1;";
   client.query(requete, [id], (err, result) => {

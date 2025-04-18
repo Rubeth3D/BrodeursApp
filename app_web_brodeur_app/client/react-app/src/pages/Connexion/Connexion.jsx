@@ -20,7 +20,7 @@ function Connexion() {
     }
   
     try {
-      const response = await fetch("http://localhost:8080/api/auth", {
+      const response = await fetch("http://localhost:8080/login", {
         method: "POST",
         credentials: "include", // Permet d'envoyer les cookies pour la session
         headers: {
@@ -32,12 +32,13 @@ function Connexion() {
       const dataJson = await response.json();
   
       if (response.status === 200) {
-        console.log(dataJson); // Affiche la réponse dans la console
+        //console.log(dataJson); // Affiche la réponse dans la console
         console.log(dataJson.nom_user);
         navigate("/DashBoard", {
           //passe un objet avec les informations de la personnes pour la prochaine pages
           state: { username: `${dataJson.nom_user}` },
         });
+        console.log(document.cookie);
       } else if (response.status === 404) {
         console.log(dataJson.message);
         setReponseStatus("Utilisateur non trouvé");
