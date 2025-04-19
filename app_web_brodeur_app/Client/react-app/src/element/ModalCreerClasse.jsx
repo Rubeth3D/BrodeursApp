@@ -1,68 +1,58 @@
-import { bottom } from "@popperjs/core";
 import React, { useState } from "react";
-import ReactDom from "react-dom";
-
-function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
+function ModalCreerClasse({ open, estFermee, rafraichir }) {
   if (!open) {
     return null;
   }
-  if (!classe) {
-    return <div>Chargement...</div>;
-  } 
-
-  const [classeAModifier, setclasseAModifier] = useState({
-    code_cours: classe.code_cours,
-    description: classe.description,
-    session: classe.session,
-    groupe: classe.groupe,
-    professeur_id_professeur: classe.professeur_id_professeur,
-    etat_classe: classe.etat_classe,
-    cours_id_cours: classe.cours_id_cours,
-    cours_session_id_session: classe.cours_session_id_session,
-  });
-  const ModifierClasseSetData = (e) => {
-    setclasseAModifier({
-      ...classeAModifier,
-      [e.target.name]: e.target.value,
+    const [nouvelleClasse, setNouvelleClasse] = useState({
+      code_cours: "",
+      description: "",
+      groupe: "1",
+      professeur_id_professeur: "1",
+      cours_id_cours: "1",
+      etat_classe: "Actif",
+      cours_session_id_session: "1"
     });
-  };
-  const modifierClasse = async (id) => {
+
+  //fonction creation de classe
+  const creerClasse = async () => {
     try {
-      console.log("CLasse a modifier : ",classeAModifier);
-      const response = await fetch(`http://localhost:8080/classe/${id}`,{
-        method: "PUT",
+      const response = await fetch("http://localhost:8080/classe", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(classeAModifier),
+        body: JSON.stringify(nouvelleClasse),
       });
-      if (response.ok) {
-      }
+
     } catch (error) {
       console.error(error);
     }
   };
-  const SauvegarderClasse = () => {
-    modifierClasse(classe.id_classe);
+
+
+  //gerer les changements au niveau du usestate
+  const GererChangement = (e) => {
+    setNouvelleClasse({
+      ...nouvelleClasse,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const EnregistrerClasse = () => {
+    creerClasse();
     estFermee(false);
     rafraichir();
   };
-
-  
- 
   return (
     <>
       <div
         className=" modal fade show d-block"
         style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-        id={`id${classe.id_classe}`}
         tabIndex="-1"
-        aria-labelledby={`modalLabel${classe.id_classe}`}
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id={`modalLabel${classe.id_classe}`}>
-                Modifier la classe {classe.code_cours}
+              <h5 className="modal-title" >
+                Nouvelle classe 
               </h5>
             </div>
 
@@ -72,16 +62,14 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
                 className="form-control"
                 placeholder="Nouveau code du cours"
                 name="code_cours"
-                value={classeAModifier.code_cours}
-                onChange={ModifierClasseSetData}
+                onChange={GererChangement}
               />
               <input
                 type="text"
                 className="form-control mt-2"
                 placeholder="Nouvelle description"
                 name="description"
-                value={classeAModifier.description}
-                onChange={ModifierClasseSetData}
+                onChange={GererChangement}
               />
             </div>
             <div className="modal-footer">
@@ -96,7 +84,7 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
                 type="button"
                 className="btn btn-primary"
                 onClick={() => {
-                  SauvegarderClasse();
+                  EnregistrerClasse();
                 }}
               >
                 Sauvegarder
@@ -108,4 +96,4 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
     </>
   );
 }
-export default ModalModifierClasse;
+export default ModalCreerClasse;

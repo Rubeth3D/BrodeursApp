@@ -1,12 +1,14 @@
 import React, { useState, useEffect,useRef } from "react";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
-import ModalModifierClasse from "./modalModifierClasse.jsx";
+import ModalModifierClasse from "./ModalModifierClasse.jsx";
+import ModalCreerClasse from "./ModalCreerClasse.jsx";
 const classe = () => {
   const [donneesModal,setDonnesModal] = useState(null)
   const [classes, setClasses] = useState([]);
   console.log("Render")
-  const [estOuvert, setEstOuvert] = useState(false);
+  const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
+   const[modalCreerClasseEstOuvert,setModalCreerClasseEstOuvert] = useState(false);
   const [classeSelectionnee, setClasseSelectionnee] = useState([]);
   //Ya des placeholders
   const [nouvelleClasse, setNouvelleClasse] = useState({
@@ -30,21 +32,7 @@ const classe = () => {
     }
   };
 
-  const creerClasse = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:8080/classe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(nouvelleClasse),
-      });
-      if (response.ok) {
-        fetchClasses();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
 
   const supprimerClasse = async (id) => {
     try {
@@ -115,15 +103,15 @@ const classe = () => {
                   type="text"
                   className="form-control rounded-2"
                   placeholder="Rechercher une classe"
-                  onChange={(e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    fetchClasses();
-                    setClasses((prevClasses) =>
-                      prevClasses.filter((classe) =>
-                        classe.description.toLowerCase().includes(searchTerm)
-                      )
-                    );
-                  }}
+                  // onChange={(e) => {
+                  //   const searchTerm = e.target.value.toLowerCase();
+                  //   fetchClasses();
+                  //   setClasses((prevClasses) =>
+                  //     prevClasses.filter((classe) =>
+                  //       classe.description.toLowerCase().includes(searchTerm)
+                  //     )
+                  //   );
+                  // }}
                 />
               </div>
             </div>
@@ -135,12 +123,20 @@ const classe = () => {
                     className="btn btn-btn btn-outline-success btn-rounded" // source : https://mdbootstrap.com/docs/standard/components/buttons/
                     data-bs-toggle="modal"
                     data-bs-target="#createClassModal"
+                    onClick={() => {setModalCreerClasseEstOuvert(true)}}
                   >
                     + Ajouter une classe
                   </button>
                 </div>
               </div>
             </div>
+            <ModalCreerClasse
+            open={modalCreerClasseEstOuvert}
+            estFermee={() =>{
+              setModalCreerClasseEstOuvert()
+            }}
+            rafraichir={() => {fetchClasses()}}
+            />
           </div>
         </div>
         <table className="table table-hover mt-5">
@@ -168,7 +164,7 @@ const classe = () => {
       <button
         className="btn"
         onClick={() => {
-          setEstOuvert(true);
+          setModalModifierEstOuvert(true);
           setDonnesModal(classe)
           console.log(donneesModal.current);
         }}
@@ -176,9 +172,9 @@ const classe = () => {
         {ModifierSVG()}
       </button>
       <ModalModifierClasse
-        open={estOuvert}
+        open={modalModifierEstOuvert}
         classe={donneesModal}
-        estFermee={() => setEstOuvert(false)}
+        estFermee={() => setModalModifierEstOuvert(false)}
         rafraichir={fetchClasses}
       />
       <button

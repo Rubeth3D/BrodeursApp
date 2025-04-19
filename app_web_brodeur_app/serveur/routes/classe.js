@@ -73,9 +73,10 @@ router.post("/", async (req, res) => {
       professeur_id_professeur,
       cours_id_cours,
       etat_classe,
+      cours_session_id_session,
     } = req.body;
     const resultat = await client.query(
-      "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
+      "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe,cours_session_id_session) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
       [
         code_cours,
         description,
@@ -83,6 +84,7 @@ router.post("/", async (req, res) => {
         professeur_id_professeur,
         cours_id_cours,
         etat_classe,
+        cours_session_id_session,
       ]
     );
     logger.info("Insertion de la classe effectue avec succes!");
@@ -99,7 +101,8 @@ router.post("/", async (req, res) => {
 //Update d'une classe
 router.put("/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
+    console.log(req.body);
     const {
       code_cours,
       description,
@@ -108,7 +111,6 @@ router.put("/:id", async (req, res) => {
       cours_id_cours,
       etat_classe,
     } = req.body;
-    console.log(req.params);
     const resultat = await client.query(
       "UPDATE classe SET code_cours = $1, description = $2, groupe = $3, professeur_id_professeur = $4, cours_id_cours = $5, etat_classe = $6 WHERE id_classe = $7 RETURNING *",
       [
