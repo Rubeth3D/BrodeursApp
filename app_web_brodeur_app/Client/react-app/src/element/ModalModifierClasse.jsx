@@ -3,6 +3,13 @@ import React, { useState } from "react";
 import ReactDom from "react-dom";
 
 function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
+  if (!open) {
+    return null;
+  }
+  if (!classe) {
+    return <div>Chargement...</div>;
+  } 
+
   const [classeAModifier, setclasseAModifier] = useState({
     code_cours: classe.code_cours,
     description: classe.description,
@@ -36,9 +43,9 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
     estFermee(false);
     rafraichir();
   };
-  if (!open) {
-    return null;
-  }
+
+  
+ 
   return (
     <>
       <div

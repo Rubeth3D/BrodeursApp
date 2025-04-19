@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./modalModifierClasse.jsx";
 const classe = () => {
+  const [donneesModal,setDonnesModal] = useState(null)
   const [classes, setClasses] = useState([]);
+  console.log("Render")
   const [estOuvert, setEstOuvert] = useState(false);
+  const [classeSelectionnee, setClasseSelectionnee] = useState([]);
   //Ya des placeholders
   const [nouvelleClasse, setNouvelleClasse] = useState({
     code_cours: "",
@@ -21,7 +24,6 @@ const classe = () => {
         headers: { "Content-Type": "application/json" },
       });
       const data = await response.json();
-      console.log(data);
       setClasses(data);
     } catch (error) {
       console.error(error);
@@ -57,6 +59,9 @@ const classe = () => {
     }
   };
 
+ 
+  
+
   const NouvelleClasseSetData = (e) => {
     setNouvelleClasse({
       ...nouvelleClasse,
@@ -64,12 +69,14 @@ const classe = () => {
     });
   };
 
+
   useEffect(() => {
+    console.log("Fetch de la classe");
     fetchClasses();
   }, []);
-  // const  inputNouvelleClasse = e =>{
-  //   console.log(e.target.value);
-  // }
+
+
+
   return (
     <>
       <div className="container mt-2">
@@ -149,43 +156,46 @@ const classe = () => {
             </tr>
           </thead>
           <tbody>
-            {classes.map((classe) => (
-              <tr key={classe.id_classe}>
-                <td>{classe.code_cours}</td>
-                <td>{classe.description}</td>
-                <td>{classe.groupe}</td>
-                <td>{classe.cours_id_cours}</td>
-                <td>{classe.professeur_id_professeur}</td>
-                <td>{classe.etat_classe}</td>
-                <td>
-                  <button
-                    className="btn "
-                    onClick={() => {
-                      setEstOuvert(true);
-                    }}
-                  >
-                    {ModifierSVG()}
-                  </button>
-                  <ModalModifierClasse
-                    open={estOuvert}
-                    classe={classe}
-                    estFermee={() => setEstOuvert()}
-                    rafraichir={() => fetchClasses()}
-                  ></ModalModifierClasse>
-                  <button
-                    className="btn "
-                    onClick={() => supprimerClasse(classe.id_classe)}
-                  >
-                    {SupprimerSVG()}
-                  </button>
-                </td>
-              </tr>
-            ))}
+            { classes.map((classe) => (
+  <tr key={classe.id_classe}>
+    <td>{classe.code_cours}</td>
+    <td>{classe.description}</td>
+    <td>{classe.groupe}</td>
+    <td>{classe.cours_id_cours}</td>
+    <td>{classe.professeur_id_professeur}</td>
+    <td>{classe.etat_classe}</td>
+    <td>
+      <button
+        className="btn"
+        onClick={() => {
+          setEstOuvert(true);
+          setDonnesModal(classe)
+          console.log(donneesModal.current);
+        }}
+      >
+        {ModifierSVG()}
+      </button>
+      <ModalModifierClasse
+        open={estOuvert}
+        classe={donneesModal}
+        estFermee={() => setEstOuvert(false)}
+        rafraichir={fetchClasses}
+      />
+      <button
+        className="btn"
+        onClick={() => supprimerClasse(classe.id_classe)}
+      >
+        {SupprimerSVG()}
+      </button>
+    </td>
+  </tr>
+)) 
+}
           </tbody>
         </table>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default classe;
