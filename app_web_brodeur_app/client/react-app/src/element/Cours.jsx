@@ -182,7 +182,8 @@ const Cours = () => {
           </tbody>
         </table>
       </div>
-
+      
+      {/* Modal pour ajouter un cours */}
       <div
         className="modal fade"
         id="creerCours"
@@ -268,10 +269,8 @@ const Cours = () => {
                   <span className="visually-hidden">Ajouter un cours</span>
                   Ajouter
                 </button>
-
               </form>
             </div>
-
           </div>
         </div>
       </div>
