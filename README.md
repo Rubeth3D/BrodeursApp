@@ -104,7 +104,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
     ```bash
       Ouvrir le dossier BrodeursApp\Modele E-A.
 
-      Copier et coller le fichier 'postgreSQL_utilisateur_scriptDeCreation'
+      Copier et coller le fichier 'ConversionSQL_PostgreSQL.sql'
     ```
 
 13. Remplir la base de données :
