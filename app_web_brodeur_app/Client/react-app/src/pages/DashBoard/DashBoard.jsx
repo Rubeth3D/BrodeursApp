@@ -21,7 +21,7 @@ function DashBoard() {
   const [etatBoutton, setEtatBoutton] = useState([
     { id: "Dashboard", isActiver: false },
     { id: "Cours", isActiver: false },
-    { id: "Classes", isActiver: true },
+    { id: "Classes", isActiver: false },
     { id: "Equipes", isActiver: false },
     { id: "Critère", isActiver: false },
     { id: "Travaux", isActiver: false },
@@ -49,7 +49,7 @@ function DashBoard() {
           </Link>
           <div className="nav-item d-flex align-items-center">
             <h2 className="me-5 mb-0 fs-4 fw-light align-content-center">
-              Sévastien Céleste
+              Sébastien Céleste
             </h2>
             <div className="me-5 fw-light btn align-content-center border-0 ">
               <ul className="navbar-nav">
@@ -75,7 +75,7 @@ function DashBoard() {
                     <div className="card" style={{ width: "18rem" }}>
                       <div className="card-body">
                         <h2 className="card-title fs-5 fw-normal">
-                          Sévastien Céleste
+                          Sébastien Céleste
                         </h2>
                         <h2 className="card-subtitle fs-5 mb-2 text-muted fw-light">
                           étudiant
