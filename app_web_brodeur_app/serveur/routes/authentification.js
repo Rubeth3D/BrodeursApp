@@ -57,11 +57,12 @@ router.get("/", async (req, res) => {
       if (date > expiration) {
         logger.info(`Session expirée : ID ${sessionId}`);
         logger.info(`-- Session Supprimer --`);
-        const updateSessionQuery = `
-         DELETE FROM session_utilisateur
-         WHERE id_session_utilisateur = $1;`;
-        
-        client.query(updateSessionQuery, [sessionId]);
+        const deleteExpiredOrInactiveSessionsQuery = `
+        DELETE FROM session_utilisateur
+        WHERE 
+        (NOW() > date_jeton_expiration OR etat_session_utilisateur = 'N');`;
+
+        client.query(deleteExpiredOrInactiveSessionsQuery);
         return res.status(401).json({ authenticated: false, reason: "Session expirée" });
       }
   
