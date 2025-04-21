@@ -607,7 +607,7 @@ VALUES ('Jean Dupont', 'A', 1),
     ('Erwin Schrodinger', 'A', 24),
     ('Richard Dawkins', 'A', 25);
 --Insertion Session
-INSERT INTO Session (code_session, date_session, etat_session)
+INSERT INTO session_utilisateur (code_session, date_session, etat_session)
 VALUES ('SESSION_HIVER_2024', '2024-01-15', 'Actif'),
     ('SESSION_PRINTEMPS_2024', '2024-04-10', 'Actif'),
     ('SESSION_ETE_2024', '2024-07-05', 'Actif'),

@@ -105,7 +105,7 @@ CREATE TABLE reponse (
     note NUMERIC,
     commentaire VARCHAR(2000)
 );
-CREATE TABLE "Session" (
+CREATE TABLE session_cours (
     id_session SERIAL PRIMARY KEY,
     code_session VARCHAR(200),
     date_session DATE,

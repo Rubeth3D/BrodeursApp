@@ -8,7 +8,7 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   }
   if (!classe) {
     return <div>Chargement...</div>;
-  } 
+  }
 
   const [classeAModifier, setclasseAModifier] = useState({
     code_cours: classe.code_cours,
@@ -28,13 +28,13 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   };
   const modifierClasse = async (id) => {
     try {
-      console.log("CLasse a modifier : ",classeAModifier);
-      const response = await fetch(`http://localhost:8080/classe/${id}`,{
+      console.log("CLasse a modifier : ", classeAModifier);
+      const reponse = await fetch(`http://localhost:8080/classe/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(classeAModifier),
       });
-      if (response.ok) {
+      if (reponse.ok) {
       }
     } catch (error) {
       console.error(error);
@@ -46,8 +46,6 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
     rafraichir();
   };
 
-  
- 
   return (
     <>
       <div

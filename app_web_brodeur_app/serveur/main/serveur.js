@@ -37,7 +37,7 @@ app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
-app.use("/sessionCoursS", session);
+app.use("/sessionCours", session);
 app.use("/logSessions", logSessions);
 app.use("/classe", classe);
 app.listen(8080, () => {
