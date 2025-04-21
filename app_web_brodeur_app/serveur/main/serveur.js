@@ -8,8 +8,11 @@ import sessionDeCours from "../routes/session.js";
 import logSessions from "../routes/logSessions.js";
 import passport from "passport";
 import session from "express-session";
+import authentification from "../routes/authentification.js"
 import "./../strategies/local-strategy.mjs";
-const { v4: uuidv4 } = require('uuid');
+import { encrypt, decrypt } from '../utils/crypto.js';
+const secret = 'BrodeurApps';
+const ivLength = 16;
 
 const app = express();
 const logger = winston.createLogger({
@@ -50,12 +53,15 @@ app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", sessionDeCours);
 app.use("/logSessions", logSessions);
+app.use("/auth", authentification);
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Route de connexion
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
+    const sessionId = String(user.session_id);
+    const encryptedSessionId = encrypt(sessionId);
     if (err) return res.status(500).send('Erreur serveur');
     if (!user) return res.status(401).send(info.message || 'Nom d’utilisateur ou mot de passe incorrect');
 
@@ -63,9 +69,10 @@ app.post('/login', (req, res, next) => {
       if (err) return res.status(500).send('Erreur lors de la création de la session');
 
       // Ajouter l'ID de session au cookie
-      res.cookie('session_id', user.session_id, {
-        //httpOnly: true,
+      res.cookie('session_id', encryptedSessionId, {
         maxAge: 1000 * 60 * 60, // 1 heure
+        httpOnly: true,
+        sameSite: 'Strict',
       });
 
       res.json({ message: 'Connexion réussie', user: user });
@@ -76,3 +83,4 @@ app.post('/login', (req, res, next) => {
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
+
