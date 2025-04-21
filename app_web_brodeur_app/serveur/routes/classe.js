@@ -3,6 +3,7 @@ import cors from "cors";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
 
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -21,19 +22,16 @@ const router = express.Router();
 router.use(express.json());
 router.use(cors());
 
-//Get toutes les classes
+//Get toutes les classes //exemple avec vérification de l'utilisateur
 router.get("/", async (req, res) => {
   try {
-    const resultat = await client.query("GET * FROM classe");
+    const resultat = await client.query("SELECT * FROM classe");
     res.json(resultat.rows);
     logger.info("Get des classes effectue avec succes!");
-    res.status(200);
+    res.status(200)
   } catch (err) {
     logger.error(`Erreur lors du get des classes ${err}`);
-    res.status(500);
-    res.json({
-      message: "Erreur lors du fetch des classes",
-    });
+    res.status(500).json({ message: "Erreur lors du fetch des classes" });
   }
 });
 

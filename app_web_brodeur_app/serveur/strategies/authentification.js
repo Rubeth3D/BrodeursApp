@@ -22,7 +22,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(cors());
 
-router.get("/", async (req, res) => {
+export const verifierSessionUtilisateur = async (req, res, next) => {
     const encryptedSessionId = req.cookies?.session_id;
     if (!encryptedSessionId) {
       logger.warn("Session absente dans le cookie.");
@@ -56,26 +56,31 @@ router.get("/", async (req, res) => {
   
       if (date > expiration) {
         logger.info(`Session expirée : ID ${sessionId}`);
-        logger.info(`-- Session Supprimer --`);
-        const deleteExpiredOrInactiveSessionsQuery = `
-        DELETE FROM session_utilisateur
-        WHERE 
-        (NOW() > date_jeton_expiration OR etat_session_utilisateur = 'N');`;
+        const UpdateEtatSessionsQuery = `
+            UPDATE session_utilisateur
+            SET 
+              etat_session_utilisateur = 'N'
+            WHERE id_session_utilisateur = $1
+          `;
 
-        client.query(deleteExpiredOrInactiveSessionsQuery);
+        client.query(UpdateEtatSessionsQuery, [sessionId]);
         return res.status(401).json({ authenticated: false, reason: "Session expirée" });
       }
   
       logger.info(`La session ${sessionId} est valide`);
-      return res.status(200).json({
+      req.sessionData = {
         authentification: true,
         utilisateurId: session.utilisateur_id_utilisateur,
         type: session.type_utilisateur,
-      });
+      }
+      /*return res.status(200).json({
+        authentification: true,
+        utilisateurId: session.utilisateur_id_utilisateur,
+        type: session.type_utilisateur,
+      });*/
+      next();
     } catch (err) {
       logger.error("Erreur serveur lors de la vérification de session : " + err.message);
       return res.status(500).json({ authenticated: false, reason: "Erreur serveur" });
     }
-  });
-
-  export default router;
+  };

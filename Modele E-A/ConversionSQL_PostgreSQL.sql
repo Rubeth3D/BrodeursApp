@@ -27,8 +27,8 @@ CREATE TABLE classe (
 );
 
 CREATE TABLE cours (
-    id_cours           INTEGER NOT NULL,
-    code_cours         INTEGER,
+    id_cours           SERIAL,
+    code_cours         VARCHAR(200),
     description_cours  VARCHAR(4000),
     etat_cours         VARCHAR(20),
     session_id_session INTEGER NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE etudiant (
 CREATE TABLE etudiant_classe (
     etudiant_id_etudiant INTEGER NOT NULL,
     classe_id_classe     INTEGER NOT NULL,
-    PRIMARY KEY (etudiant_id_etudiant, classe_id_classe)
+    PRIMARY KEY (etudiant_id_etudiant, classe_id_classe);
 );
 
 CREATE TABLE etudiant_equipe (
@@ -280,14 +280,6 @@ ALTER TABLE travail
 CREATE SEQUENCE utilisateur_id_utilisateur_seq START WITH 1;
 
 CREATE OR REPLACE FUNCTION utilisateur_id_utilisateur_trg()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.id_utilisateur IS NULL THEN
-        NEW.id_utilisateur := nextval('utilisateur_id_utilisateur_seq');
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.id_utilisateur IS NULL THEN

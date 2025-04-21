@@ -8,7 +8,6 @@ import sessionDeCours from "../routes/session.js";
 import logSessions from "../routes/logSessions.js";
 import passport from "passport";
 import session from "express-session";
-import authentification from "../routes/authentification.js"
 import "./../strategies/local-strategy.mjs";
 import { encrypt, decrypt } from '../utils/crypto.js';
 const secret = 'BrodeurApps';
@@ -53,7 +52,6 @@ app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", sessionDeCours);
 app.use("/logSessions", logSessions);
-app.use("/auth", authentification);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -76,6 +74,7 @@ app.post('/login', (req, res, next) => {
       });
 
       res.json({ message: 'Connexion réussie', user: user.nom_utilisateur });
+      logger.info("Connexion réussie");
     });
   })(req, res, next);
 });
