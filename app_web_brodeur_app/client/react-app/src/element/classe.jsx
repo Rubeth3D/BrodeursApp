@@ -6,7 +6,9 @@ import ModalCreerClasse from "./ModalCreerClasse.jsx";
 const classe = () => {
   const [donneesModal,setDonnesModal] = useState(null)
   const [classes, setClasses] = useState([]);
-  console.log("Render")
+  const compteurClasse = useRef(0);
+  const compteurClasseActive = useRef(0)
+  const compteurClasseInactive = useRef(0)
   const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
    const[modalCreerClasseEstOuvert,setModalCreerClasseEstOuvert] = useState(false);
   const [classeSelectionnee, setClasseSelectionnee] = useState([]);
@@ -62,7 +64,18 @@ const classe = () => {
     console.log("Fetch de la classe");
     fetchClasses();
   }, []);
-
+  function GererCompteursClasses() {
+    compteurClasseActive.current = 0;
+    compteurClasse.current = classes.length;
+    classes.forEach((classe) => {
+      if(classe.etat_classe === "Active"){
+        console.log("Classe actives : ",classe.etat_classe)
+        compteurClasseActive.current ++
+      }else{
+        compteurClasseInactive.current++
+      }
+    });
+  }
 
 
   return (
@@ -72,24 +85,24 @@ const classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classe total:</h2>
-                <p className="card-text fs-4 text-primary mt-4">0</p>
+                <h2 className="card-title fs-5"> Nombre de classes total:</h2>
+                <p className="card-text fs-4 text-primary mt-4">{compteurClasse.current}</p>
               </div>
             </div>
           </div>
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classe actif:</h2>
-                <p className="card-text fs-4 text-success mt-4">0</p>
+                <h2 className="card-title fs-5"> Nombre de classes active:</h2>
+                <p className="card-text fs-4 text-success mt-4">{compteurClasseActive.current}</p>
               </div>
             </div>
           </div>
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classe inactif:</h2>
-                <p className="card-text fs-4 text-danger mt-4">0</p>
+                <h2 className="card-title fs-5"> Nombre de classes inactive:</h2>
+                <p className="card-text fs-4 text-danger mt-4">{compteurClasseInactive.current}</p>
               </div>
             </div>
           </div>
@@ -103,15 +116,7 @@ const classe = () => {
                   type="text"
                   className="form-control rounded-2"
                   placeholder="Rechercher une classe"
-                  // onChange={(e) => {
-                  //   const searchTerm = e.target.value.toLowerCase();
-                  //   fetchClasses();
-                  //   setClasses((prevClasses) =>
-                  //     prevClasses.filter((classe) =>
-                  //       classe.description.toLowerCase().includes(searchTerm)
-                  //     )
-                  //   );
-                  // }}
+
                 />
               </div>
             </div>
@@ -153,6 +158,7 @@ const classe = () => {
           </thead>
           <tbody>
             { classes.map((classe) => (
+              
   <tr key={classe.id_classe}>
     <td>{classe.code_cours}</td>
     <td>{classe.description}</td>
@@ -190,8 +196,10 @@ const classe = () => {
           </tbody>
         </table>
       </div>
+      {GererCompteursClasses()}
     </>
   )
+
 }
 
 export default classe;

@@ -71,6 +71,9 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
                 name="description"
                 onChange={GererChangement}
               />
+              <select name="listeSession" id="">
+                <option value="">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</option>
+              </select>
             </div>
             <div className="modal-footer">
               <button
