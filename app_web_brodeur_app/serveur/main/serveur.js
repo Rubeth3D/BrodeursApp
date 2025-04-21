@@ -9,6 +9,7 @@ import logSessions from "../routes/logSessions.js";
 import passport from "passport";
 import session from "express-session";
 import "./../strategies/local-strategy.mjs";
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const logger = winston.createLogger({

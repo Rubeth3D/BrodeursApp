@@ -133,15 +133,15 @@ CREATE TABLE "Session" (
 );
 
 CREATE TABLE session_utilisateur (
-    id_session_utilisateur     SERIAL PRIMARY KEY,
-    date_connexion             TIMESTAMPTZ,
-    date_jeton_expiration      TIMESTAMPTZ,
-    tentatives_echoues         INTEGER,
-    date_derniere_tentative    DATE,
-    ip_derniere_connexion      INTEGER,
-    type_utilisateur           CHAR(1) NOT NULL,
+    id_session_utilisateur UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    date_connexion TIMESTAMPTZ,
+    date_jeton_expiration TIMESTAMPTZ,
+    tentatives_echoues INTEGER,
+    date_derniere_tentative DATE,
+    ip_derniere_connexion INTEGER,
+    type_utilisateur CHAR(1) NOT NULL,
     utilisateur_id_utilisateur INTEGER NOT NULL,
-    etat_session_utilisateur   VARCHAR(20)
+    etat_session_utilisateur VARCHAR(20)
 );
 
 CREATE TABLE travail (

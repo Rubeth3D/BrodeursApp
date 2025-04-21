@@ -27,12 +27,11 @@ export default passport.use(
       ) {
         console.log("YEAAAAH!!!");
 
-        const generateSecureNumericId = () => {
-          // Génère un nombre entier entre 100000 et 999999 (6 chiffres)
-          return Math.floor(100000 + Math.random() * 900000);
+        const generateSessionId = () => {
+          return Date.now().toString() + Math.floor(1000 + Math.random() * 9000).toString();
         };
 
-        const sessionId = generateSecureNumericId();
+        const sessionId = generateSessionId();
         const utilisateur = result.rows[0];
         const utilisateurId = utilisateur.id_utilisateur;
         const dateConnexion = new Date().toISOString(); 
