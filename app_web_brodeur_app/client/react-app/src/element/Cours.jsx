@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./navbar";
+//@ts-ignore
+import Navbar from "./navbar.jsx";
 import Footer from "./footer";
 import { Link } from "react-router-dom";
 
@@ -74,8 +75,12 @@ const Cours = () => {
     fetchCours();
   }, []);
 
-  const coursActif = cours.filter((cours) => cours.etat_cours === "actif").length;
-  const coursInactif = cours.filter((cours) => cours.etat_cours === "inactif").length;
+  const coursActif = cours.filter(
+    (cours) => cours.etat_cours === "actif"
+  ).length;
+  const coursInactif = cours.filter(
+    (cours) => cours.etat_cours === "inactif"
+  ).length;
   const totalCours = cours.length;
 
   return (
@@ -102,7 +107,9 @@ const Cours = () => {
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre de cours inactif:</h2>
-                <p className="card-text fs-4 text-danger mt-4">{coursInactif}</p>
+                <p className="card-text fs-4 text-danger mt-4">
+                  {coursInactif}
+                </p>
               </div>
             </div>
           </div>
@@ -121,7 +128,9 @@ const Cours = () => {
                     const searchTerm = e.target.value.toLowerCase();
                     setCours((prevCours) =>
                       prevCours.filter((cours) =>
-                        cours.description_cours.toLowerCase().includes(searchTerm)
+                        cours.description_cours
+                          .toLowerCase()
+                          .includes(searchTerm)
                       )
                     );
                   }}
@@ -207,58 +216,77 @@ const Cours = () => {
 
             {/* Source : https://getbootstrap.com/docs/5.0/forms/validation/ */}
             <div className="modal-body">
-              <form className="row g-3 needs-validation" noValidate onSubmit={creerCours}>
-                
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom01" className="form-label">Code du cours</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom01" 
-                    value={form.code_cours} 
-                    onChange={(e) => setForm({ ...form, code_cours: e.target.value })}
+              <form
+                className="row g-3 needs-validation"
+                noValidate
+                onSubmit={creerCours}
+              >
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom01" className="form-label">
+                    Code du cours
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="validationCustom01"
+                    value={form.code_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, code_cours: e.target.value })
+                    }
                     required
                   />
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Code du cours requis</div>
                 </div>
 
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom02" className="form-label">Nom du cours</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom02" 
-                    value={form.description_cours} 
-                    onChange={(e) => setForm({ ...form, description_cours: e.target.value })}
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom02" className="form-label">
+                    Nom du cours
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="validationCustom02"
+                    value={form.description_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, description_cours: e.target.value })
+                    }
                     required
                   />
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Nom du cours requis</div>
                 </div>
 
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom03" className="form-label">État du cours</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom03" 
-                    value={form.etat_cours} 
-                    onChange={(e) => setForm({ ...form, etat_cours: e.target.value })}
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom03" className="form-label">
+                    État du cours
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="validationCustom03"
+                    value={form.etat_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, etat_cours: e.target.value })
+                    }
                     required
                   />
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">État du cours requis</div>
                 </div>
 
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom04" className="form-label">Session</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom04" 
-                    value={form.session_id_session} 
-                    onChange={(e) => setForm({ ...form, session_id_session: e.target.value })}
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom04" className="form-label">
+                    Session
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="validationCustom04"
+                    value={form.session_id_session}
+                    onChange={(e) =>
+                      setForm({ ...form, session_id_session: e.target.value })
+                    }
                     required
                   />
                   <div className="valid-feedback">Bien</div>
@@ -276,25 +304,28 @@ const Cours = () => {
       </div>
     </>
   );
-}
+};
 
 // Validation de formulaire
 (function () {
-  'use strict'
+  "use strict";
 
-  var forms = document.querySelectorAll('.needs-validation')
+  var forms = document.querySelectorAll(".needs-validation");
 
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
         if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
+          event.preventDefault();
+          event.stopPropagation();
         }
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();
 
 export default Cours;
