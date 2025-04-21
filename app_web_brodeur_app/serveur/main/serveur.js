@@ -75,7 +75,7 @@ app.post('/login', (req, res, next) => {
         sameSite: 'Strict',
       });
 
-      res.json({ message: 'Connexion réussie', user: user });
+      res.json({ message: 'Connexion réussie', user: user.nom_utilisateur });
     });
   })(req, res, next);
 });

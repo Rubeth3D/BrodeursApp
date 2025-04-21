@@ -55,17 +55,17 @@ router.get("/", async (req, res) => {
         return res.status(403).json({ authenticated: false, reason: "Session inactive" });
       }
   
-      const now = new Date();
+      const date = new Date();
       const expiration = new Date(session.date_jeton_expiration);
   
-      if (now > expiration) {
+      if (date > expiration) {
         logger.info(`Session expirée : ID ${sessionId}`);
         return res.status(401).json({ authenticated: false, reason: "Session expirée" });
       }
   
-      logger.info(`Session OK pour l'utilisateur ${session.utilisateur_id_utilisateur}`);
+      logger.info(`La session ${sessionId} est valide`);
       return res.status(200).json({
-        authenticated: true,
+        authentification: true,
         utilisateurId: session.utilisateur_id_utilisateur,
         type: session.type_utilisateur,
       });

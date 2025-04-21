@@ -1,13 +1,9 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import client from "../bd/postgresBD/Connexion.js";
-import bcrypt from 'bcrypt';
-import crypto from 'crypto';
 
 export default passport.use(
   new LocalStrategy((username, password, done) => {
-    console.log(`Username: ${username}`);
-    console.log(`Password: ${password}`);
     const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1;";
     const parametre = [username];
     client.query(requete, parametre, function (err, result) {
@@ -25,14 +21,25 @@ export default passport.use(
         username == result.rows[0].nom_utilisateur &&
         password == result.rows[0].mot_passe
       ) {
-        console.log("YEAAAAH!!!");
+        console.log("Mot de passe et Nom d'utilisateur Valide");
 
-        const generateSecureNumericId = () => {
-          // Génère un nombre entier entre 100000 et 999999 (6 chiffres)
-          return Math.floor(100000 + Math.random() * 900000);
-        };
+        async function generateUniqueSessionId(client) {
+          let id;
+          let exists = true;
+        
+          while (exists) {
+            id = Math.floor(100000 + Math.random() * 900000);
+            const result = await client.query(
+              'SELECT 1 FROM session_utilisateur WHERE id_session_utilisateur = $1',
+              [id]
+            );
+            exists = result.rowCount > 0;
+          }
+        
+          return id;
+        }
 
-        const sessionId = generateSecureNumericId();
+        const sessionId = generateUniqueSessionId();
         const utilisateur = result.rows[0];
         const utilisateurId = utilisateur.id_utilisateur;
         const dateConnexion = new Date().toISOString(); 
@@ -50,6 +57,7 @@ export default passport.use(
             return done(err);
           }
           if(sessionCheckResult.rows.length > 0){
+            console.log("Aucune session existante ou active");
             const sessionId = sessionCheckResult.rows[0].id_session_utilisateur;
             const updateSessionQuery = `
               UPDATE session_utilisateur
