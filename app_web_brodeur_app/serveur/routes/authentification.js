@@ -39,7 +39,8 @@ router.get("/", async (req, res) => {
   
     try {
       const result = await client.query(
-        `SELECT * FROM session_utilisateur WHERE id_session_utilisateur = $1`,
+        `SELECT * FROM session_utilisateur 
+        WHERE id_session_utilisateur = $1 AND etat_session_utilisateur = 'A'`,
         [sessionId]
       );
   
@@ -49,17 +50,18 @@ router.get("/", async (req, res) => {
         logger.warn(`Session introuvable : ID ${sessionId}`);
         return res.status(401).json({ authenticated: false, reason: "Session inconnue" });
       }
-  
-      if (session.etat_session_utilisateur !== "A") {
-        logger.info(`Session inactive : ID ${sessionId}`);
-        return res.status(403).json({ authenticated: false, reason: "Session inactive" });
-      }
-  
+
       const date = new Date();
       const expiration = new Date(session.date_jeton_expiration);
   
       if (date > expiration) {
         logger.info(`Session expirée : ID ${sessionId}`);
+        logger.info(`-- Session Supprimer --`);
+        const updateSessionQuery = `
+         DELETE FROM session_utilisateur
+         WHERE id_session_utilisateur = $1;`;
+        
+        client.query(updateSessionQuery, [sessionId]);
         return res.status(401).json({ authenticated: false, reason: "Session expirée" });
       }
   
