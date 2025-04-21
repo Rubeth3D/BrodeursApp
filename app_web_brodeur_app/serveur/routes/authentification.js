@@ -23,7 +23,6 @@ router.use(express.json());
 router.use(cors());
 
 router.get("/", async (req, res) => {
-    logger.log("je suis rentré");
     const encryptedSessionId = req.cookies?.session_id;
     if (!encryptedSessionId) {
       logger.warn("Session absente dans le cookie.");
@@ -51,7 +50,7 @@ router.get("/", async (req, res) => {
         return res.status(401).json({ authenticated: false, reason: "Session inconnue" });
       }
   
-      if (session.etat_session_utilisateur !== "active") {
+      if (session.etat_session_utilisateur !== "A") {
         logger.info(`Session inactive : ID ${sessionId}`);
         return res.status(403).json({ authenticated: false, reason: "Session inactive" });
       }
