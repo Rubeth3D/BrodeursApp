@@ -1,6 +1,4 @@
-import { bottom } from "@popperjs/core";
-import React, { useState } from "react";
-import ReactDom from "react-dom";
+import React, {useState} from "react";
 
 function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   if (!open) {
@@ -9,7 +7,6 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   if (!classe) {
     return <div>Chargement...</div>;
   }
-
   const [classeAModifier, setclasseAModifier] = useState({
     code_cours: classe.code_cours,
     description: classe.description,
