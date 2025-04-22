@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   if (!open) {
