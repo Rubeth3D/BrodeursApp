@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { Value } from "sass";
+
 function ModalCreerClasse({ open, estFermee, rafraichir }) {
   if (!open) {
     return null;
