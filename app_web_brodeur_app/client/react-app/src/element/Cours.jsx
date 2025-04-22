@@ -74,8 +74,17 @@ const Cours = () => {
     fetchCours();
   }, []);
 
+<<<<<<< Updated upstream
   const coursActif = cours.filter((cours) => cours.etat_cours === "actif").length;
   const coursInactif = cours.filter((cours) => cours.etat_cours === "inactif").length;
+=======
+  const coursActif = cours.filter(
+    (cours) => cours.etat_cours === "Actif"
+  ).length;
+  const coursInactif = cours.filter(
+    (cours) => cours.etat_cours === "Inactif"
+  ).length;
+>>>>>>> Stashed changes
   const totalCours = cours.length;
 
   return (
@@ -274,6 +283,96 @@ const Cours = () => {
           </div>
         </div>
       </div>
+
+
+      {/* Modal pour modifier un cours */}
+    <div
+      className="modal fade"
+      id="modifierCours"
+      tabIndex="-1"
+      aria-labelledby="modifierCoursLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="modifierCoursLabel">
+              Modifier un cours
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="modal-body">
+            <form
+              className="row g-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                modifierCours(form.id_cours);
+                const modal = bootstrap.Modal.getInstance(
+                  document.getElementById("modifierCours")
+                );
+              }}
+            >
+              <div className="mb-3">
+                <label className="form-label">Code du cours</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={form.code_cours}
+                  onChange={(e) =>
+                    setForm({ ...form, code_cours: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={form.description_cours}
+                  onChange={(e) =>
+                    setForm({ ...form, description_cours: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">État</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={form.etat_cours}
+                  onChange={(e) =>
+                    setForm({ ...form, etat_cours: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Session</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={form.session_id_session}
+                  onChange={(e) =>
+                    setForm({ ...form, session_id_session: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Enregistrer les modifications
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     </>
   );
 }
