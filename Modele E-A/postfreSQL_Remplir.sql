@@ -92,7 +92,7 @@ VALUES
     ( 'Richard Dawkins', 'A', 25);
 
 --Insertion Session
-INSERT INTO Session (code_session, date_session, etat_session)
+INSERT INTO "Session" (code_session, date_session, etat_session)
 VALUES
     ( 'SESSION_HIVER_2024', '2024-01-15', 'Actif'),
     ( 'SESSION_PRINTEMPS_2024', '2024-04-10', 'Actif'),

@@ -3,6 +3,7 @@ import cors from "cors";
 import winston from "winston";
 //@ts-ignore
 import client from "../bd/postgresBD/Connexion.js";
+import { verifierSessionUtilisateur } from "../strategies/authentification.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -23,14 +24,28 @@ const router = express.Router();
 router.use(express.json());
 
 // GET les cours
-router.get("/", async (req, res) => {
+router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
+    // Log avant la récupération des cours pour vérifier que la fonction suivante s'exécute
+    if(req.sessionData.authentification){
+      logger.info("Session validée, récupération des cours");
+
     const result = await client.query("SELECT * FROM cours");
-    logger.info("Get des cours effectue avec succes");
-    res.status(200).json(result.rows);
+
+    // Vérifie ici si tu récupères bien les cours
+    if (result.rows.length > 0) {
+      logger.info("Get des cours effectué avec succès");
+      return res.status(200).json(result.rows);  // Renvoie les cours ici
+    } else {
+      logger.info("Aucun cours trouvé dans la base de données");
+      return res.status(404).json({ message: "Aucun cours trouvé" });
+    }
+    }else{
+      return res.status(401).json({ message: "Session Non Valide" });
+    }
   } catch (error) {
-    logger.error(error.message);
-    res.status(500).json({ message: "Il y a eu une erreur de type 500" });
+    logger.error("Erreur lors de la récupération des cours : " + error.message);
+    return res.status(500).json({ message: "Il y a eu une erreur de type 500" });
   }
 });
 

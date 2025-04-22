@@ -1,18 +1,19 @@
-import express from "express";
+import express, { request, response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import winston from "winston";
 import cours from "../routes/cours.js";
 import utilisateur from "../routes/utilisateur.js";
-import session from "../routes/sessionCours.js";
+import sessionDeCours from "../routes/session.js";
 import logSessions from "../routes/logSessions.js";
 import passport from "passport";
-import sessionExpress from "express-session";
-import { config } from "dotenv";
-import initialize from "../strategies/local-strategie.js";
-import client from "../bd/postgresBD/Connexion.js";
-import classe from "../routes/classe.js";
+import session from "express-session";
+import "./../strategies/local-strategy.mjs";
+import { encrypt, decrypt } from '../utils/crypto.js';
+const secret = 'BrodeurApps';
+const ivLength = 16;
 
+const app = express();
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -30,16 +31,55 @@ const corsConfig = {
   credentials: true,
   origin: true,
 };
-config();
-const app = express();
-//initialisation du passport
+
+app.use(
+  session({
+    secret: "BrodeurApps",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      httpOnly: true, 
+      maxAge: 1000 * 60 * 24,
+    },
+  })
+);
+
 app.use(cors(corsConfig));
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
-app.use("/sessionCours", session);
+app.use("/session", sessionDeCours);
 app.use("/logSessions", logSessions);
-app.use("/classe", classe);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Route de connexion
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    const sessionId = String(user.session_id);
+    const encryptedSessionId = encrypt(sessionId);
+    if (err) return res.status(500).send('Erreur serveur');
+    if (!user) return res.status(401).send(info.message || 'Nom d’utilisateur ou mot de passe incorrect');
+
+    req.login(user, (err) => {
+      if (err) return res.status(500).send('Erreur lors de la création de la session');
+
+      // Ajouter l'ID de session au cookie
+      res.cookie('session_id', encryptedSessionId, {
+        maxAge: 1000 * 60 * 60, // 1 heure
+        httpOnly: true,
+        sameSite: 'Strict',
+      });
+
+      res.json({ message: 'Connexion réussie', user: user.nom_utilisateur });
+      logger.info("Connexion réussie");
+    });
+  })(req, res, next);
+});
+
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
+
