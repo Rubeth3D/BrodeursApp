@@ -7,12 +7,12 @@ import ModalCreerClasse from "./ModalCreerClasse.jsx";
 
 const Classe = () => {
   const [donneesModal, setDonnesModal] = useState(null);
+  const EtatDesactiverClasse = "Inactive";
   const [requete, setRequete] = useState(null);
   const [classes, setClasses] = useState([]);
   const [compteurClasse, setCompteurClasse] = useState(0);
   const [compteurClasseActive, setCompteurClasseActive] = useState(0);
   const [compteurClasseInactive, setCompteurClasseInactive] = useState(0);
-
   const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
   const [modalCreerClasseEstOuvert, setModalCreerClasseEstOuvert] =
     useState(false);
@@ -43,11 +43,19 @@ const Classe = () => {
     }
   };
 
-  const supprimerClasse = async (id) => {
+  const desactiverClasse = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/classe/${id}`, {
-        method: "DELETE",
-      });
+      console.log("Classe a modifier : ", EtatDesactiverClasse);
+      const response = await fetch(
+        `http://localhost:8080/classe/desactiverClasse/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ etat_classe: EtatDesactiverClasse }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
       if (response.ok) {
         fetchClasses();
       }
@@ -203,7 +211,7 @@ const Classe = () => {
                   />
                   <button
                     className="btn"
-                    onClick={() => supprimerClasse(classe.id_classe)}
+                    onClick={() => desactiverClasse(classe.id_classe)}
                   >
                     {SupprimerSVG()}
                   </button>
