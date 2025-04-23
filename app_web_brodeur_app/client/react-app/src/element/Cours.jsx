@@ -12,6 +12,7 @@ const Cours = () => {
     session_id_session: "",
   });
 
+
   const fetchCours = async () => {
     try {
       const response = await fetch("http://localhost:8080/cours", {
@@ -29,21 +30,24 @@ const Cours = () => {
   const creerCours = async (e) => {
     e.preventDefault();
     try {
+      const coursAvecEtatActif = {
+        ...form,
+        etat_cours: "Actif", 
+      };
       const response = await fetch("http://localhost:8080/cours", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(coursAvecEtatActif),
       });
       if (response.ok) {
         fetchCours();
         viderFormulaire();
-
       }
     } catch (error) {
-      console.error(error);
+      console.error("Erreur lors de la création du cours :", error);
     }
   };
-
+  
   const modifierCours = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/cours/${id}`, {
@@ -61,7 +65,8 @@ const Cours = () => {
     }
   };
   
-  const supprimerCours = async (id) => {
+  {/* 
+    const supprimerCours = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/cours/${id}`, {
         method: "DELETE",
@@ -74,7 +79,25 @@ const Cours = () => {
       console.error(error);
     }
   };
-
+  */}
+  
+  const desactiverCours = async (cours) => {
+    try {
+      await fetch(`http://localhost:8080/cours/${cours.id_cours}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...cours,
+          etat_cours: "Inactif", 
+        }),
+      });
+  
+      fetchCours();
+    } catch (error) {
+      console.error("Erreur de désactivation :", error);
+    }
+  };
+  
   const viderFormulaire = () => {
     setForm({
       code_cours: "",
@@ -83,7 +106,6 @@ const Cours = () => {
     });
   };
   
-
   useEffect(() => {
     fetchCours();
   }, []);
@@ -168,33 +190,32 @@ const Cours = () => {
             </tr>
           </thead>
           <tbody>
-            {cours.map((cours) => (
-              <tr key={cours.id_cours}>
-                <td>{cours.code_cours}</td>
-                <td>{cours.description_cours}</td>
-                <td>{cours.etat_cours}</td>
-                <td>{cours.session_id_session}</td>
-                <td>
-                  <button 
-                    className="btn btn-sn"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modifierCours"
-                    onClick={() => setForm(cours)}
-                  >
-                    {ModifierSVG()}
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sn ms-2"
-                    onClick={() => supprimerCours(cours.id_cours)}
-                  >
-                   {SupprimerSVG()}
-                  </button>
-                </td>
-              </tr>
+            {cours.filter(cours => cours.etat_cours === "Actif").map((cours) => (        // Aider par ChatGPT pour filtrer les cours actifs
+            <tr key={cours.id_cours}>
+            <td>{cours.code_cours}</td>
+            <td>{cours.description_cours}</td>
+            <td>{cours.session_id_session}</td>
+            <td>
+              <button 
+                className="btn btn-sn"
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#modifierCours"
+                onClick={() => setForm(cours)}
+              >
+                {ModifierSVG()}
+              </button>
+              <button
+                type="button"
+                className="btn btn-sn ms-2"
+                onClick={() => desactiverCours(cours)}
+              >
+                {SupprimerSVG()}
+              </button>
+            </td>
+            </tr>
             ))}
-          </tbody>
+          </tbody> 
         </table>
       </div>
       
