@@ -61,8 +61,9 @@ const Cours = () => {
   const supprimerCours = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/cours/${id}`, {
-        method: "DELETE",
+        method: "Delete",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({etat_cours: "Inactif"}),
       });
       if (response.ok) {
         fetchCours();
