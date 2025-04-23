@@ -11,36 +11,45 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     description: "",
     groupe: "1",
     professeur_id_professeur: "1",
-    cours_id_cours: "1",
-    etat_classe: "Active",
+    etat_classe: "Actif",
+    cours_id_cours: "",
     cours_session_id_session: "",
   });
-  const [sessions, setSessions] = useState([]);
-  const [sessionSelectionne, setSessionSelectionne] = useState(null);
+  const [cours, setCours] = useState([]);
   //fonction creation de classe
   const creerClasse = async () => {
     try {
+      console.log(JSON.stringify(nouvelleClasse))
       const response = await fetch("http://localhost:8080/classe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(nouvelleClasse),
       });
+      if (!response.ok) {
+        const erreur = await response.json();
+        console.error("Erreur de création :", erreur);
+      } else {
+        console.log("Classe créée avec succès");
+      }
     } catch (error) {
       console.error(error);
     }
   };
-  const fetchSessions = async () => {
+  const fetchCours = async () => {
     try {
-      const reponse = await fetch("http://localhost:8080/sessionCours", {
+      const reponse = await fetch("http://localhost:8080/cours", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       const donnees = await reponse.json();
-      const options = donnees.map((session) => ({
-        value: session.id_session,
-        label: session.code_session,
+      const options = donnees.map((cours) => ({
+        value: cours.id_cours,
+        label: cours.code_cours,
+        id_session: cours.session_id_session,
       }));
-      setSessions(options);
+      setCours(options);
     } catch (err) {
       console.error("Erreur au niveau du fetch des classes : ", err);
     }
@@ -60,7 +69,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     rafraichir();
   };
   useEffect(() => {
-    fetchSessions();
+    fetchCours();
   }, []);
   return (
     <>
@@ -93,11 +102,12 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
               />
               <Select
                 className="mt-2"
-                options={sessions}
+                options={cours}
                 onChange={(option) => {
                   setNouvelleClasse({
                     ...nouvelleClasse,
-                    cours_session_id_session: option.value,
+                    cours_id_cours: option.value,
+                    cours_session_id_session: option.id_session,
                   });
                   console.log("Nouvelle classe : ", nouvelleClasse);
                 }}

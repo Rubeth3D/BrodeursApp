@@ -19,8 +19,6 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-router.use(express.json());
-router.use(cors());
 
 //Get toutes les classes //exemple avec vérification de l'utilisateur
 router.get("/", async (req, res) => {
@@ -68,18 +66,20 @@ router.post("/", async (req, res) => {
       description,
       groupe,
       professeur_id_professeur,
-      cours_id_cours,
       etat_classe,
+      cours_id_cours,
+      cours_session_id_session,
     } = req.body;
     const resultat = await client.query(
-      "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,cours_id_cours,etat_classe) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
+      "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,etat_classe,cours_id_cours,cours_session_id_session) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
       [
-        code_cours,
-        description,
-        groupe,
-        professeur_id_professeur,
-        cours_id_cours,
-        etat_classe,
+      code_cours,
+      description,
+      groupe,
+      professeur_id_professeur,
+      etat_classe,
+      cours_id_cours,
+      cours_session_id_session,
       ]
     );
     logger.info("Insertion de la classe effectue avec succes!");
