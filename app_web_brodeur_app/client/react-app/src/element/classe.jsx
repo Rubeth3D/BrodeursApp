@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
-
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./ModalModifierClasse.jsx";
 import ModalCreerClasse from "./ModalCreerClasse.jsx";
+
 
 const Classe = () => {
   const [donneesModal, setDonnesModal] = useState(null);

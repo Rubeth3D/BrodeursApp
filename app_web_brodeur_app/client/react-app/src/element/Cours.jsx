@@ -4,6 +4,7 @@ import ModifierSVG from "../image/ModifierSVG.jsx";
 
 
 const Cours = () => {
+  const [filtreTousCours, setFiltreTousCours] = useState([]);
   const [cours, setCours] = useState([]);
   const [form, setForm] = useState({
     code_cours: "",
@@ -20,7 +21,7 @@ const Cours = () => {
       });
       const data = await response.json();
       setCours(data);
-      setToutCours(data);
+      setFiltreTousCours(data);
     } catch (error) {
       console.error(error);
     }
@@ -120,12 +121,13 @@ const Cours = () => {
                   placeholder="Rechercher un cours"
                   onChange={(e) => {
                     const searchTerm = e.target.value.toLowerCase();
-                    
-                    setCours((prevCours) =>
-                      prevCours.filter((cours) =>
+                    if (searchTerm === "") {
+                      setCours(filtreTousCours);
+                    } else{
+                      setCours(filtreTousCours.filter((cours) =>
                         cours.description_cours.toLowerCase().includes(searchTerm)
-                      )
-                    );
+                      ));
+                    }
                   }}
                 />
               </div>
