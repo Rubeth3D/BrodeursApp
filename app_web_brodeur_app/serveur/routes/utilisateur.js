@@ -60,41 +60,6 @@ router.get("/:nom_user", async (req, res) => {
   }
 });
 
-//autre
-router.get("/VerifierCookies", async (req, res) => {
-  try {
-    if (!req.cookies.UserData) {
-      logger.error("Acces refuse : cookie manquant !");
-      return res.status(401).json({ message: "Accès refusé, cookie manquant" });
-    }
-    logger.info("Connexion...");
-    var cookieData;
-    var resultat;
-    try {
-      cookieData = JSON.parse(req.cookies.UserData);
-      logger.info(cookieData.idSession);
-
-      //après vérifier que le idSession est bon dans la bd
-      resultat = await client.query(
-        "SELECT * FROM utilisateur WHERE id_user = $1",
-        [cookieData.idSession]
-      );
-    } catch (error) {
-      return res.status(400).json({ message: "Cookie invalide" });
-    }
-    if (resultat.rowCount == 0) {
-      logger.error(`Aucun user n'a le id de Session : ${cookieData.idSession}`);
-      return res.status(404).json({
-        message: `Aucun user n'a le id de Session :${cookieData.idSession}`,
-      });
-    }
-    res.status(200).json(resultat.rows[0]);
-    logger.info("Get du user effectue avec succes!");
-  } catch (err) {
-    logger.error(`Erreur lors du get du user : ${err}`);
-    res.status(500).json({ message: "Erreur lors du get du user" });
-  }
-});
 //Fonction de logout qui detruit le cookie du user
 router.get("/Deconnexion", async (req, res) => {
   logger.info("Deconnexion...");
