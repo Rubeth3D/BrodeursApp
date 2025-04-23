@@ -104,7 +104,7 @@ router.post("/", async (req, res) => {
 //Update d'une classe
 router.put("/:id", async (req, res) => {
   try {
-    const { id } = req.params; // ✅ Fix ici
+    const { id } = req.params; 
     const {
       code_cours,
       description,
@@ -120,7 +120,7 @@ router.put("/:id", async (req, res) => {
            professeur_id_professeur = $4, cours_id_cours = $5, 
            etat_classe = $6 
        WHERE id_classe = $7 
-       RETURNING *`,
+       RETURNING id_classe`,
       [
         code_cours,
         description,

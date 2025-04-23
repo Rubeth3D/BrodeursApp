@@ -5,6 +5,7 @@ import winston from "winston";
 import cours from "../routes/cours.js";
 import classe from "../routes/classe.js"
 import utilisateur from "../routes/utilisateur.js";
+import etudiant from "../routes/etudiant.js";
 import sessionDeCours from "../routes/sessionCours.js";
 import logSessions from "../routes/logSessions.js";
 import passport from "passport";
@@ -54,6 +55,7 @@ app.use("/utilisateur", utilisateur);
 app.use("/sessionCours", sessionDeCours);
 app.use("/logSessions", logSessions);
 app.use("/classe",classe);
+app.use("/etudiant", etudiant);
 app.use(passport.initialize());
 app.use(passport.session());
 
