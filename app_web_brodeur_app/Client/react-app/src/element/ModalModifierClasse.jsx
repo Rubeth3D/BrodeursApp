@@ -10,7 +10,6 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   const [classeAModifier, setclasseAModifier] = useState({
     code_cours: classe.code_cours,
     description: classe.description,
-    session: classe.session,
     groupe: classe.groupe,
     professeur_id_professeur: classe.professeur_id_professeur,
     etat_classe: classe.etat_classe,
@@ -25,8 +24,8 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   };
   const modifierClasse = async (id) => {
     try {
-      console.log("CLasse a modifier : ", classeAModifier);
-      const reponse = await fetch(`http://localhost:8080/classe/${id}`, {
+      console.log("Classe a modifier : ", classeAModifier);
+      const reponse = await fetch(`http://localhost:8080/classe/ModifierClasse/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(classeAModifier),

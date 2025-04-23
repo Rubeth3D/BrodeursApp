@@ -102,7 +102,7 @@ router.post("/", async (req, res) => {
 });
 
 //Update d'une classe
-router.put("/:id", async (req, res) => {
+router.put("/ModifierClasse/:id", async (req, res) => {
   try {
     const id = req.params;
     const {
@@ -165,6 +165,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+//désactiver la classe comme si on la supprimais
 router.put("/desactiverClasse/:id", verifierSessionUtilisateur, async (req, res) => {
   try {
     if(req.sessionData.authentification){
