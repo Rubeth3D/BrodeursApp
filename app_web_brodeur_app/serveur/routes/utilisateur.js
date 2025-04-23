@@ -211,6 +211,24 @@ router.post("/", async (req, res) => {
       ]
     );
 
+    if(type_utilisateur === "E"){
+      const resultat = await client.query(
+        "INSERT INTO etudiant(nom_complet,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11)",
+        [
+          nom,
+          prenom,
+          nom_utilisateur,
+          courriel,
+          mot_de_passe_hash,
+          numero_da,
+          etat_utilisateur,
+          type_utilisateur,
+          professeur_id_professeur,
+          etudiant_id_etudiant,
+          date_creation,
+        ]
+      );
+    }
     // Afficher le résultat de l'insertion pour le debug
     logger.info(resultat.rows[0]); // Affiche la première ligne insérée
 
