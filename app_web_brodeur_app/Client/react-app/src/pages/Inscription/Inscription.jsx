@@ -2,56 +2,77 @@
 import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Inscription() {
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [nom_user, setNomUtilisateur] = useState("");
-  const [email, setEmail] = useState("");
-  const [type_utilisateur, setType_utilisateur] = useState("p");
-  const [mot_de_passe, setMotDePasse] = useState("");
+  const [bodyEtudiant, setBodyEtudiant] = useState();
+  const [bodyUtilisateur, setBodyUtilisateur] = useState({
+    nom: "",
+    prenom: "",
+    nom_utilisateur: "",
+    courriel: "",
+    mot_passe: "",
+    numero_da: "",
+    etat_utilisateur: "A",
+    type_utilisateur: "",
+    professeur_id_professeur: null,
+    etudiant_id_etudiant: null,
+  });
+
   const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
-  const etat_utilisateur = "A";
-  const id_professeur = null;
-  const id_etudiant = null;
+  const [typeUtilisateur, setTypeUtilisateur] = useState(""); // 'e' ou 'p'
+
   const navigate = useNavigate();
 
-  const changerTypeUtilisateur = (e) => {
-    setType_utilisateur(e.target.value);
+  const changerTypeUtilisateur = (nom, valeur) => {
+    setBodyUtilisateur((bodyUtilisateur) => ({
+      ...bodyUtilisateur,
+      [nom]: valeur,
+    }));
   };
-
+  function CreerNomUtilisateur() {
+    const nomUtilisateur = `${bodyUtilisateur.prenom} ${bodyUtilisateur.nom}`;
+    console.log(nomUtilisateur);
+    setBodyUtilisateur((bodyUtilisateur) => ({
+      ...bodyUtilisateur,
+      nom_utilisateur: nomUtilisateur,
+    }));
+  }
   const creationUtilisateur = async (e) => {
     e.preventDefault();
     try {
-      const body = {
-        nom_user,
-        mot_de_passe,
-        email,
-        type_utilisateur,
-        id_professeur,
-        id_etudiant,
-        etat_utilisateur,
-      };
-      if (nom == "" || prenom == "" || nom_user == "" || email == "") {
-        console.log("Il manque des informations aux formulaire");
+      console.log(
+        "Informations du formulaire : ",
+        bodyUtilisateur.nom,
+        bodyUtilisateur.prenom,
+        bodyUtilisateur.nom_utilisateur,
+        bodyUtilisateur.courriel
+      );
+      if (
+        bodyUtilisateur.nom === "" ||
+        bodyUtilisateur.prenom === "" ||
+        bodyUtilisateur.courriel === ""
+      ) {
+        console.log("Il manque des informations au formulaire");
         return;
       }
-      if (mot_de_passe !== mot_de_passe_confirmation) {
-        console.log("Les deux mot de passe ne sont pas identique");
+
+      if (bodyUtilisateur.mot_passe !== mot_de_passe_confirmation) {
+        console.log("Les deux mots de passe ne sont pas identiques");
         return;
       }
+
+      console.log("Body utilisateur : ", bodyUtilisateur);
       const response = await fetch(`http://localhost:8080/utilisateur`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify(bodyUtilisateur),
       });
-      console.log(response);
+
       if (response.ok) {
         navigate("/DashBoard", {
-          state: { username: `${body.nom_user}` },
+          state: { username: `${bodyUtilisateur.nom_utilisateur}` },
         });
-        //pop-up pour montrer que l'utilisateur est connecté
       }
     } catch (err) {
       console.log(err.message);
@@ -60,10 +81,9 @@ function Inscription() {
 
   return (
     <>
-      <h2 className=" mb-5"></h2>
-      <form className="container" onSubmit={(e) => creationUtilisateur(e)}>
+      <form className="container" onSubmit={creationUtilisateur}>
         <Link to={"/Connexion"}>
-          <button className="btn btn-primary m-5">
+          <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -82,137 +102,149 @@ function Inscription() {
             </h2>
           </button>
         </Link>
+
         <h2 className="text-center display-3 fw-normal mb-5">Inscription</h2>
+
         <div className="row justify-content-center">
           <div className="col-4 mb-5">
-            <div className="form-group">
-              <label className="fw-bold fs-4">Nom</label>
-              <input
-                type="text"
-                className="form-control fs-5"
-                value={nom}
-                onChange={(e) => setNom(e.target.value)}
-                required
-              />
-            </div>
+            <label className="fw-bold fs-4">Nom</label>
+            <input
+              type="text"
+              className="form-control fs-5"
+              name="nom"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
           </div>
           <div className="col-4 mb-5">
-            <div className="form-group">
-              <label className="fw-bold fs-4">Prénom</label>
-              <input
-                type="text"
-                className="form-control fs-5"
-                value={prenom}
-                onChange={(e) => setPrenom(e.target.value)}
-                required
-              />
-            </div>
+            <label className="fw-bold fs-4">Prénom</label>
+            <input
+              type="text"
+              className="form-control fs-5"
+              name="prenom"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-8 mb-5">
+            <label className="fw-bold fs-4">Courriel</label>
+            <input
+              type="email"
+              className="form-control fs-5"
+              name="courriel"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
           </div>
         </div>
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
-            <div className="form-group">
-              <label className="fw-bold fs-4" htmlFor="email">
-                Courriel
+            <label className="fw-bold fs-4">Numero demande d'admission</label>
+            <input
+              type="text"
+              className="form-control fs-5"
+              name="numero_da"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-8 mb-5">
+            <label className="fw-bold fs-4">Mot de passe</label>
+            <input
+              type="password"
+              className="form-control fs-5"
+              name="mot_passe"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-8 mb-5">
+            <label className="fw-bold fs-4">Confirmation du mot de passe</label>
+            <input
+              type="password"
+              className="form-control fs-5"
+              value={mot_de_passe_confirmation}
+              onChange={(e) => setMotDePasseConfirmation(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row justify-content-center mt-4">
+          <div className="col-3">
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="type_utilisateur"
+                id="etudiant"
+                value="E"
+                checked={typeUtilisateur === "E"}
+                onChange={(e) => {
+                  setTypeUtilisateur(e.target.value);
+                  changerTypeUtilisateur("type_utilisateur", e.target.value);
+                }}
+                required
+              />
+              <label className="form-check-label" htmlFor="etudiant">
+                Étudiant
               </label>
-              <input
-                type="email"
-                className="form-control fs-5"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
             </div>
           </div>
-        </div>
-        <div className="row justify-content-center">
-          <div className="col-8 mb-5">
-            <div className="form-group">
-              <label className="fw-bold fs-4">Nom d'utilisateur</label>
+          <div className="col-1">
+            <div className="form-check">
               <input
-                type="text"
-                className="form-control fs-5"
-                value={nom_user}
-                onChange={(e) => setNomUtilisateur(e.target.value)}
+                className="form-check-input"
+                type="radio"
+                name="type_utilisateur"
+                id="professeur"
+                value="P"
+                checked={typeUtilisateur === "P"}
+                onChange={(e) => {
+                  setTypeUtilisateur(e.target.value);
+                  changerTypeUtilisateur("type_utilisateur", e.target.value);
+                }}
                 required
               />
-            </div>
-          </div>
-        </div>
-        <div className="row justify-content-center">
-          <div className="col-8 mb-5">
-            <div className="form-group">
-              <label className="fw-bold fs-4">Mot de passe</label>
-              <input
-                type="password"
-                className="form-control fs-5"
-                value={mot_de_passe}
-                onChange={(e) => setMotDePasse(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row justify-content-center">
-          <div className="col-8">
-            <div className="form-group">
-              <label className="fw-bold fs-4">
-                Confirmation du mot de passe
+              <label className="form-check-label" htmlFor="professeur">
+                Professeur
               </label>
-              <input
-                type="password"
-                className="form-control fs-5"
-                value={mot_de_passe_confirmation}
-                onChange={(e) => setMotDePasseConfirmation(e.target.value)}
-                required
-              />
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center align-items-center mt-2">
-          <div className="row justify-content-center mt-4">
-            <div className="col-6">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadio"
-                  id="flexRadioDefault1"
-                  value="e"
-                  checked={type_utilisateur === "e"}
-                  onChange={changerTypeUtilisateur}
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  Étudiant
-                </label>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="flexRadio"
-                  id="flexRadioDefault2"
-                  value="p"
-                  checked={type_utilisateur === "p"}
-                  onChange={changerTypeUtilisateur}
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  Professeur
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="d-flex justify-content-center align-items-center mt-2">
-          <button className="btn btn-primary mt-5 mb-5">
+
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <button
+            type="submit"
+            className="btn btn-primary mt-5 mb-5"
+            onClick={() => {
+              CreerNomUtilisateur();
+            }}
+          >
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
         </div>
-        <h2 className="mb-5"></h2>
       </form>
     </>
   );
 }
+
 export default Inscription;

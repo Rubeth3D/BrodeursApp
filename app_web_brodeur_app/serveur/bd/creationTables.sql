@@ -46,7 +46,6 @@ CREATE TABLE etudiant (
     id_etudiant SERIAL PRIMARY KEY,
     nom_complet VARCHAR(200),
     utilisateur_id_utilisateur INTEGER,
-    professeur_id_professeur INTEGER,
     etat_etudiant VARCHAR(20),
     UNIQUE (utilisateur_id_utilisateur)
 );
@@ -176,8 +175,6 @@ ALTER TABLE etudiant_equipe
 ADD CONSTRAINT etudiant_equipe_equipe_fk FOREIGN KEY (equipe_id_equipe) REFERENCES equipe (id_equipe);
 ALTER TABLE etudiant_equipe
 ADD CONSTRAINT etudiant_equipe_etudiant_fk FOREIGN KEY (etudiant_id_etudiant) REFERENCES etudiant (id_etudiant);
-ALTER TABLE etudiant
-ADD CONSTRAINT etudiant_professeur_fk FOREIGN KEY (professeur_id_professeur) REFERENCES professeur (id_professeur);
 ALTER TABLE evaluation
 ADD CONSTRAINT evaluation_classe_fk FOREIGN KEY (classe_id_classe) REFERENCES classe (id_classe);
 ALTER TABLE evaluation
