@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 import ActiviteSVG from "../../image/ActiviteSVG";
 import ClassesSVG from "../../image/ClassesSVG";
 import CoursSVG from "../../image/CoursSVG";
-import DashBoardSVG from "../../image/DashboardSVG";
 import EquipeSVG from "../../image/EquipesSVG";
 import ResultatsSVG from "../../image/ResultatsSVG";
 import AdminSVG from "../../image/AdminSVG";
@@ -106,14 +105,6 @@ function DashBoard() {
         <div className="row">
           <div className="col-2 bg-light" style={{ height: "100vh" }}>
             <div className="justify-content-start mt-5">
-              <HoverDiv
-                text={"Dashboard"}
-                svgImage={<DashBoardSVG />}
-                isCliquer={etatBoutton[0].isActiver}
-                onclick={() => {
-                  Cliquer("Dashboard");
-                }}
-              ></HoverDiv>
 
               <HoverDiv
                 text={"Cours"}

@@ -4,14 +4,13 @@ import cors from "cors";
 import winston from "winston";
 import cours from "../routes/cours.js";
 import utilisateur from "../routes/utilisateur.js";
-import sessionDeCours from "../routes/session.js";
+import sessionDeCours from "../routes/sessionCours.js";
 import logSessions from "../routes/logSessions.js";
+import classe from "../routes/classe.js";
 import passport from "passport";
 import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import { encrypt, decrypt } from '../utils/crypto.js';
-const secret = 'BrodeurApps';
-const ivLength = 16;
 
 const app = express();
 const logger = winston.createLogger({
@@ -52,6 +51,7 @@ app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/session", sessionDeCours);
 app.use("/logSessions", logSessions);
+app.use("/classe", classe)
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -82,4 +82,3 @@ app.post('/login', (req, res, next) => {
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
-
