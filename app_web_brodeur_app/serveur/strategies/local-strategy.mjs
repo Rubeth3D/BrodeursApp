@@ -21,12 +21,13 @@ async function generateUniqueSessionId(client) {
 }
 
 export default passport.use(
-  new LocalStrategy(async (username, password, done) => {  
-    const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1;";
-    const parametre = [username];
+  new LocalStrategy({usernameField: 'nom_utilisateur', passwordField: 'mot_de_passe_Utilisateur'},async ( mot_de_passe_Utilisateur,nom_utilisateur, done) => {  
+    const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1";
+    const parametre = [nom_utilisateur];
 
     try {
-      
+      console.log(nom_utilisateur);
+      console.log(mot_de_passe_Utilisateur);
       const result = await client.query(requete, parametre);
 
       if (result.rows.length === 0) {
@@ -38,8 +39,8 @@ export default passport.use(
 
       const utilisateur = result.rows[0]; 
       console.log(`Le mot de passe est bon : ${utilisateur.mot_de_passe}`)
-      console.log(`Le mot de passe est bon : ${password}`) 
-      const mot_de_passe_Verifier = await bcrypt.compare(password, utilisateur.mot_de_passe);
+      console.log(`Le mot de passe est bon : ${mot_de_passe_Utilisateur}`) 
+      const mot_de_passe_Verifier = await bcrypt.compare(mot_de_passe_Utilisateur, utilisateur.mot_de_passe);
       
       console.log(`Le mot de passe est bon : ${mot_de_passe_Verifier}`)
 

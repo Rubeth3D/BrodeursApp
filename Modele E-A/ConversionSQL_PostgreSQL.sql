@@ -133,8 +133,8 @@ CREATE TABLE session (
 
 CREATE TABLE session_utilisateur (
     id_session_utilisateur     SERIAL PRIMARY KEY,
-    date_connexion             DATE,
-    date_jeton_expiration      DATE,
+    date_connexion             TIMESTAMPTZ,
+    date_jeton_expiration      TIMESTAMPTZ,
     tentatives_echoues         INTEGER,
     date_derniere_tentative    DATE,
     ip_derniere_connexion      INTEGER,

@@ -67,12 +67,22 @@ function Inscription() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyUtilisateur),
+        credentials: "include",
       });
 
       if (response.ok) {
-        navigate("/DashBoard", {
-          state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+        const responseConnexion = await fetch(`http://localhost:8080/login`,{
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.mot_de_passe,
+             mot_de_passe_Utilisateur: bodyUtilisateur.nom_utilisateur}),
         });
+        if(responseConnexion.ok){
+          navigate("/DashBoard", {
+            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+          });
+        }
       }
     } catch (err) {
       console.log(err.message);

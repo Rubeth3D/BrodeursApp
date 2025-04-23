@@ -26,7 +26,7 @@ function Connexion() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: nomUtilisateur, password: motDePasse }),
+        body: JSON.stringify({ nom_utilisateur: nomUtilisateur, mot_de_passe_Utilisateur: motDePasse }),
       });
   
       const dataJson = await response.json();
@@ -36,7 +36,7 @@ function Connexion() {
         console.log(dataJson.nom_user);
         navigate("/DashBoard", {
           //passe un objet avec les informations de la personnes pour la prochaine pages
-          state: { username: `${dataJson.nom_user}` },
+          state: { nom_utilisateur: `${dataJson.nom_user}` },
         });
         console.log(document.cookie);
       } else if (response.status === 404) {
@@ -73,7 +73,7 @@ function Connexion() {
                   id="inputNumeroIdentification"
                   value={nomUtilisateur}
                   onChange={(e) => setNomUtilisateur(e.target.value)}
-                  name="username"
+                  name="nom_utilisateur"
                   required
                 />
               </div>
@@ -89,7 +89,7 @@ function Connexion() {
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
                 required
-                name="password"
+                name="mot_de_passe_Utilisateur"
               />
             </div>
           </div>
