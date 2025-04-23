@@ -3,6 +3,8 @@ import cors from "cors";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
+import { verifierSessionUtilisateur } from "../strategies/authentification.js";
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -21,17 +23,33 @@ const router = express.Router();
 
 router.use(express.json());
 
-//get pour les utilisateurs
-// router.get("/", async (req, res) => {
-//   try {
-//     const resultat = await client.query("SELECT * FROM utilisateur");
-//     res.status(200).json(resultat.rows);
-//     logger.info("Get des user effectue avec succes!");
-//   } catch (err) {
-//     logger.error(`Erreur lors du fetch des user : ${err}`);
-//     res.status(500).json({ message: "Erreur lors du fetch des user!" });
-//   }
-// });
+//get pour avoir des informations sur le user connecter
+//Pas d'information sensible
+router.get("/", verifierSessionUtilisateur, async (req, res) => {
+  try {
+    if(req.sessionData.authentification){
+      logger.info("Session validée, récupération des cours");
+      
+      const parametre = req.sessionData.utilisateurId;
+      const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
+      const resultat = await client.query(requete, [parametre]);
+
+      // Vérifie ici si tu récupères bien eu un utilisateur
+      if (resultat.rows.length > 0) {
+        logger.info("Get de l'utilisateur effectué avec succès");
+        return res.status(200).json(resultat.rows);  // Renvoie les cours ici
+      } else {
+        logger.info("Aucun cours trouvé dans la base de données");
+        return res.status(404).json({ message: "Aucun cours trouvé" });
+      }
+    }else{
+      return res.status(401).json({ message: "Session Non Valide" });
+    }
+  } catch (error) {
+    logger.error("Erreur lors de la récupération des cours : " + error.message);
+    return res.status(500).json({ message: "Il y a eu une erreur de type 500" });
+  }
+});
 
 //get pour un utilisateur
 router.get("/:nom_user", async (req, res) => {

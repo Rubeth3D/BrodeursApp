@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, } from "react";
 //image SVG
 import ActiviteSVG from "../../image/ActiviteSVG";
 import ClassesSVG from "../../image/ClassesSVG";
@@ -17,6 +17,14 @@ import Cours from "../../element/Cours";
 import TravauxSVG from "../../image/TravauxSVG";
 
 function DashBoard() {
+  const [prenom, setPrenom] = useState("");
+  const [nom, setNom] = useState("");
+  const [nomUtilisateur, setNomUtilisateur] = useState("");
+  const [courriel, setCourriel] = useState("");
+  const [nummeroDa, setNumeroDa] = useState("");
+  const [typeUtilisateur, setTypeUtilisateur] = useState("");
+  const [insitutionEnseignement, setInsitutionEnseignement] = useState("College de Bois de boulogne");
+
   const [etatBoutton, setEtatBoutton] = useState([
     { id: "Dashboard", isActiver: false },
     { id: "Cours", isActiver: false },
@@ -27,6 +35,34 @@ function DashBoard() {
     { id: "Resultats", isActiver: false },
     { id: "Admin", isActiver: false },
   ]);
+  
+  const fetchUtilisateur = async () => {
+    try{
+      const response = await fetch("http://localhost:8080/utilisateur", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Erreur de récupération :", data);
+      } else {
+        console.log("l'utilisateur as bien récupéré");
+        setNom(data[0].nom);
+        setPrenom(data[0].prenom);
+        setNomUtilisateur(data[0].nom_utilisateur);
+        setCourriel(data[0].courriel);
+        const types = {
+          E: "Étudiant",
+          P: "Professeur",
+          A: "Admin",
+        };
+        setTypeUtilisateur(types[data[0].type_utilisateur] || "Inconnu");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const Cliquer = (id) => {
     const updatedState = etatBoutton.map((button) => {
@@ -39,6 +75,10 @@ function DashBoard() {
     setEtatBoutton(updatedState);
   };
 
+  useEffect(() => {
+    fetchUtilisateur();
+  }, []);
+
   return (
     <>
       <div className="navbar navbar-dark bg-primary sticky-top text-bg-primary p-2">
@@ -48,7 +88,7 @@ function DashBoard() {
           </Link>
           <div className="nav-item d-flex align-items-center">
             <h2 className="me-5 mb-0 fs-4 fw-light align-content-center">
-              Sébastien Céleste
+            {nomUtilisateur}
             </h2>
             <div className="me-5 fw-light btn align-content-center border-0 ">
               <ul className="navbar-nav">
@@ -74,18 +114,18 @@ function DashBoard() {
                     <div className="card" style={{ width: "18rem" }}>
                       <div className="card-body">
                         <h2 className="card-title fs-5 fw-normal">
-                          Sébastien Céleste
+                          {prenom} {nom}
                         </h2>
                         <h2 className="card-subtitle fs-5 mb-2 text-muted fw-light">
-                          étudiant
+                          {typeUtilisateur}
                         </h2>
                         <div className="align-content-end mt-1">
                           <p className="card-text m-0 fs-6">
-                            2244552@bdeb.qc.ca
+                            {courriel}
                           </p>
-                          <p className="card-text m-0 fs-6">2244552</p>
+                          <p className="card-text m-0 fs-6">{nummeroDa}</p>
                           <p className="card-text m-0 fs-6">
-                            College de Bois-de-boulogne
+                            {insitutionEnseignement} 
                           </p>
                         </div>
                       </div>

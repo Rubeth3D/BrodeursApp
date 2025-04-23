@@ -53,7 +53,7 @@ app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/sessionCours", sessionDeCours);
 app.use("/logSessions", logSessions);
-app.use("/classe",classe)
+app.use("/classe",classe);
 app.use(passport.initialize());
 app.use(passport.session());
 

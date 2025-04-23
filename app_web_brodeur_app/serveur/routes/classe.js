@@ -27,7 +27,7 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
     if(req.sessionData.authentification){
       logger.info("Session validée, récupération des cours");
       const parametre = req.sessionData.utilisateurId;
-      const requeteQuery = `Select * from classe where etat_classe = 'Actif' AND  `
+      const requeteQuery = `Select * from classe where etat_classe = 'Actif' AND  `;
       const resultat = await client.query("SELECT * FROM classe");
       res.json(resultat.rows);
       logger.info("Get des classes effectue avec succes!");

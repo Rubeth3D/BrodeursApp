@@ -185,7 +185,6 @@ const Classe = () => {
               <th className="text-center">Description</th>
               <th className="text-center">Groupe</th>
               <th className="text-center">Cours</th>
-              <th className="text-center">Professeur</th>
               <th className="text-center">État</th>
               <th className="text-center">Actions</th>
             </tr>
@@ -197,7 +196,6 @@ const Classe = () => {
               <td className="text-center align-middle py-3">{classe.description}</td>
               <td className="text-center align-middle py-3">{classe.groupe}</td>
               <td className="text-center align-middle py-3">{classe.cours_id_cours}</td>
-              <td className="text-center align-middle py-3">{classe.professeur_id_professeur}</td>
               <td className="text-center align-middle py-3">{classe.etat_classe}</td>
               <td className="text-center align-middle py-3">
                 <div className="d-flex justify-content-center gap-2">

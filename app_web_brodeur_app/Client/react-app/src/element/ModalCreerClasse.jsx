@@ -9,7 +9,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
   const [nouvelleClasse, setNouvelleClasse] = useState({
     code_cours: "",
     description: "",
-    groupe: "1",
+    groupe: "",
     professeur_id_professeur: "1",
     etat_classe: "Actif",
     cours_id_cours: "",
@@ -69,7 +69,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     estFermee(false);
     rafraichir();
   };
-  
+
   useEffect(() => {
     fetchCours();
   }, []);
@@ -100,6 +100,13 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
                 className="form-control mt-2"
                 placeholder="Nouvelle description"
                 name="description"
+                onChange={GererChangement}
+              />
+              <input
+                type="text"
+                className="form-control mt-2"
+                placeholder="Numéro du groupe"
+                name="groupe"
                 onChange={GererChangement}
               />
               <Select
