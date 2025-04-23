@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./navbar";
-import Footer from "./footer";
-import { Link } from "react-router-dom";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
+
 
 const Cours = () => {
   const [cours, setCours] = useState([]);
@@ -22,6 +20,7 @@ const Cours = () => {
       });
       const data = await response.json();
       setCours(data);
+      setToutCours(data);
     } catch (error) {
       console.error(error);
     }
@@ -121,6 +120,7 @@ const Cours = () => {
                   placeholder="Rechercher un cours"
                   onChange={(e) => {
                     const searchTerm = e.target.value.toLowerCase();
+                    
                     setCours((prevCours) =>
                       prevCours.filter((cours) =>
                         cours.description_cours.toLowerCase().includes(searchTerm)
@@ -173,7 +173,7 @@ const Cours = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-danger"
+                    className="btn btn-danger ms-2"
                     onClick={() => supprimerCours(cours.id_cours)}
                   >
                    {SupprimerSVG()}
