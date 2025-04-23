@@ -51,17 +51,22 @@ const Classe = () => {
     }
   };
 
+  //Fais la function delete un cours pour l'utilisateur, mais pas pour un admin
+  //admin peut encore voir la classes
   const desactiverClasse = async (id) => {
     try {
       console.log("Classe a modifier : ", EtatDesactiverClasse);
+      console.log(id);
       const response = await fetch(
         `http://localhost:8080/classe/desactiverClasse/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ etat_classe: EtatDesactiverClasse }),
         }
       );
+      
       const data = await response.json();
       console.log(data);
       if (response.ok) {
