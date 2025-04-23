@@ -245,11 +245,11 @@ router.post("/", async (req, res) => {
       logger.info(etudiant);
     } else {
       const resultat = await client.query(
-        "INSERT INTO professeur(nom_complet,utilisateur_id_utilisateur,etat_professeur) VALUES($1, $2, $3, $4) RETURNING id_professeur",
+        "INSERT INTO professeur(nom_complet,utilisateur_id_utilisateur,etat_professeur) VALUES($1, $2, $3) RETURNING id_professeur",
         [nom_utilisateur, utilisateur.id_utilisateur, "A"]
       );
       const professeur = resultat.rows[0];
-      logger.log(professeur);
+      logger.info(professeur);
       await client.query(
         "UPDATE utilisateur SET professeur_id_professeur = $1 WHERE id_utilisateur = $2",
         [professeur.id_professeur, utilisateur.id_utilisateur]
