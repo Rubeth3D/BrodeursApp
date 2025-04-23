@@ -2,22 +2,21 @@
 import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Inscription() {
-  const[bodyEtudiant,setBodyEtudiant] = useState()
+  const [bodyEtudiant, setBodyEtudiant] = useState();
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
     nom: "",
     prenom: "",
     nom_utilisateur: "",
     courriel: "",
     mot_passe: "",
-    numero_da: "",
+    numero_da: 2267339,
     etat_utilisateur: "A",
     type_utilisateur: "",
-    professeur_id_professeur: "",
-    etudiant_id_etudiant: "",
-    date_creation: "",
+    professeur_id_professeur: null,
+    etudiant_id_etudiant: null,
   });
 
   const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
@@ -26,12 +25,19 @@ function Inscription() {
   const navigate = useNavigate();
 
   const changerTypeUtilisateur = (nom, valeur) => {
-    setBodyUtilisateur((prev) => ({
-      ...prev,
+    setBodyUtilisateur((bodyUtilisateur) => ({
+      ...bodyUtilisateur,
       [nom]: valeur,
     }));
   };
-
+  function CreerNomUtilisateur() {
+    const nomUtilisateur = `${bodyUtilisateur.prenom} ${bodyUtilisateur.nom}`;
+    console.log(nomUtilisateur);
+    setBodyUtilisateur((bodyUtilisateur) => ({
+      ...bodyUtilisateur,
+      nom_utilisateur: nomUtilisateur,
+    }));
+  }
   const creationUtilisateur = async (e) => {
     e.preventDefault();
     try {
@@ -42,7 +48,11 @@ function Inscription() {
         bodyUtilisateur.nom_utilisateur,
         bodyUtilisateur.courriel
       );
-      if (bodyUtilisateur.nom === "" || bodyUtilisateur.prenom === "" || bodyUtilisateur.courriel === "") {
+      if (
+        bodyUtilisateur.nom === "" ||
+        bodyUtilisateur.prenom === "" ||
+        bodyUtilisateur.courriel === ""
+      ) {
         console.log("Il manque des informations au formulaire");
         return;
       }
@@ -52,8 +62,7 @@ function Inscription() {
         return;
       }
 
-      changerTypeUtilisateur("nom_utilisateur", bodyUtilisateur.prenom + " " + bodyUtilisateur.nom);
-
+      console.log("Body utilisateur : ", bodyUtilisateur);
       const response = await fetch(`http://localhost:8080/utilisateur`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -174,8 +183,8 @@ function Inscription() {
                 type="radio"
                 name="type_utilisateur"
                 id="etudiant"
-                value="e"
-                checked={typeUtilisateur === "e"}
+                value="E"
+                checked={typeUtilisateur === "E"}
                 onChange={(e) => {
                   setTypeUtilisateur(e.target.value);
                   changerTypeUtilisateur("type_utilisateur", e.target.value);
@@ -194,8 +203,8 @@ function Inscription() {
                 type="radio"
                 name="type_utilisateur"
                 id="professeur"
-                value="p"
-                checked={typeUtilisateur === "p"}
+                value="P"
+                checked={typeUtilisateur === "P"}
                 onChange={(e) => {
                   setTypeUtilisateur(e.target.value);
                   changerTypeUtilisateur("type_utilisateur", e.target.value);
@@ -210,7 +219,13 @@ function Inscription() {
         </div>
 
         <div className="d-flex justify-content-center align-items-center mt-4">
-          <button type="submit" className="btn btn-primary mt-5 mb-5">
+          <button
+            type="submit"
+            className="btn btn-primary mt-5 mb-5"
+            onClick={() => {
+              CreerNomUtilisateur();
+            }}
+          >
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
         </div>

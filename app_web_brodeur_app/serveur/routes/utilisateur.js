@@ -165,6 +165,8 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
 //post pour un utilisateur
 router.post("/", async (req, res) => {
   try {
+    const body = JSON.stringify(req.body);
+    logger.info(body);
     const {
       nom,
       prenom,
@@ -176,11 +178,12 @@ router.post("/", async (req, res) => {
       type_utilisateur,
       professeur_id_professeur,
       etudiant_id_etudiant,
-      date_creation,
     } = req.body;
+    const date_creation = new Date(Date.now()).toISOString();
     const salt = bcrypt.genSaltSync(10);
     const mot_de_passe_hash = await bcrypt.hash(mot_passe, salt);
     logger.info(
+      "utilisateur :",
       nom,
       prenom,
       nom_utilisateur,
@@ -195,7 +198,7 @@ router.post("/", async (req, res) => {
     );
     // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
-      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11)",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11) RETURNING id_utilisateur",
       [
         nom,
         prenom,
@@ -210,29 +213,33 @@ router.post("/", async (req, res) => {
         date_creation,
       ]
     );
-
-    if(type_utilisateur === "E"){
+    const utilisateur = resultat.rows[0];
+    console.log(utilisateur);
+    if (type_utilisateur === "E") {
       const resultat = await client.query(
-        "INSERT INTO etudiant(nom_complet,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11)",
-        [
-          nom,
-          prenom,
-          nom_utilisateur,
-          courriel,
-          mot_de_passe_hash,
-          numero_da,
-          etat_utilisateur,
-          type_utilisateur,
-          professeur_id_professeur,
-          etudiant_id_etudiant,
-          date_creation,
-        ]
+        "INSERT INTO etudiant(nom_complet,utilisateur_id_utilisateur,etat_etudiant) VALUES($1, $2, $3) RETURNING id_etudiant",
+        [nom_utilisateur, utilisateur.id_utilisateur, "A"]
+      );
+      const etudiant = resultat.rows[0];
+      console.log(etudiant);
+      await client.query(
+        "UPDATE utilisateur SET etudiant_id_etudiant = $1 WHERE id_utilisateur = $2",
+        [etudiant.id_etudiant, utilisateur.id_utilisateur]
+      );
+      logger.info(etudiant);
+    } else {
+      const resultat = await client.query(
+        "INSERT INTO professeur(nom_complet,utilisateur_id_utilisateur,etat_professeur) VALUES($1, $2, $3, $4) RETURNING id_professeur",
+        [nom_utilisateur, utilisateur.id_utilisateur, "A"]
+      );
+      const professeur = resultat.rows[0];
+      logger.log(professeur);
+      await client.query(
+        "UPDATE utilisateur SET professeur_id_professeur = $1 WHERE id_utilisateur = $2",
+        [professeur.id_professeur, utilisateur.id_utilisateur]
       );
     }
-    // Afficher le résultat de l'insertion pour le debug
-    logger.info(resultat.rows[0]); // Affiche la première ligne insérée
-
-    res.status(200).json({ message: "Inscription faite avec succès" });
+    return res.status(200).json({ message: "succes" });
     logger.info("Insertion de l'utilisateur effectuée avec succès");
   } catch (err) {
     logger.error(`Erreur lors de l'insertion : ${err}`);

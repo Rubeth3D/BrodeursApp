@@ -57,6 +57,7 @@ app.use(passport.session());
 
 // Route de connexion
 app.post("/login", (req, res, next) => {
+  logger.info("Authentification de l'utilisateur");
   passport.authenticate("local", (err, user, info) => {
     const sessionId = String(user.session_id);
     const encryptedSessionId = encrypt(sessionId);
