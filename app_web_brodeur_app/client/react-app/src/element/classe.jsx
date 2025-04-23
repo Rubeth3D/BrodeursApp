@@ -23,7 +23,7 @@ const Classe = () => {
       return [];
     }
     if (!requete) {
-      console.log("Pas de requête");
+      //console.log("Pas de requête");
       return classes;
     }
     return classes.filter((classe) =>
@@ -71,7 +71,7 @@ const Classe = () => {
     let inactives = 0;
 
     liste.forEach((classe) => {
-      if (classe.etat_classe === "Active") {
+      if (classe.etat_classe === "Actif") {
         actives++;
       } else {
         inactives++;
