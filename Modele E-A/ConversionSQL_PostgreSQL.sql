@@ -26,8 +26,8 @@ CREATE TABLE classe (
 );
 
 CREATE TABLE cours (
-    id_cours           INTEGER GENERATED ALWAYS AS IDENTITY,
-    code_cours         INTEGER,
+    id_cours           SERIAL,
+    code_cours         VARCHAR(200),
     description_cours  VARCHAR(4000),
     etat_cours         VARCHAR(20),
     session_id_session INTEGER NOT NULL,
