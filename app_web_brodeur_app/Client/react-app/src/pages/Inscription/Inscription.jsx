@@ -12,7 +12,7 @@ function Inscription() {
     nom_utilisateur: "",
     courriel: "",
     mot_passe: "",
-    numero_da: 2267339,
+    numero_da: "",
     etat_utilisateur: "A",
     type_utilisateur: "",
     professeur_id_professeur: null,
@@ -146,7 +146,20 @@ function Inscription() {
             />
           </div>
         </div>
-
+        <div className="row justify-content-center">
+          <div className="col-8 mb-5">
+            <label className="fw-bold fs-4">Numero demande d'admission</label>
+            <input
+              type="text"
+              className="form-control fs-5"
+              name="numero_da"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
+          </div>
+        </div>
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
             <label className="fw-bold fs-4">Mot de passe</label>
