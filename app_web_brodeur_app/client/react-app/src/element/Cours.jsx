@@ -166,7 +166,6 @@ const Cours = () => {
                 <td>
                   <button
                     type="button"
-                    className="btn btn-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#modifierCours"
                     onClick={() => setForm(cours)}
@@ -175,7 +174,7 @@ const Cours = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-danger ms-2"
+                    className="ms-2"
                     onClick={() => supprimerCours(cours.id_cours)}
                   >
                    {SupprimerSVG()}
