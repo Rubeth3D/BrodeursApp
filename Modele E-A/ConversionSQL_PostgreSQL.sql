@@ -26,8 +26,8 @@ CREATE TABLE classe (
 );
 
 CREATE TABLE cours (
-    id_cours           INTEGER GENERATED ALWAYS AS IDENTITY,
-    code_cours         INTEGER,
+    id_cours           SERIAL,
+    code_cours         VARCHAR(200),
     description_cours  VARCHAR(4000),
     etat_cours         VARCHAR(20),
     session_id_session INTEGER NOT NULL,
@@ -133,8 +133,8 @@ CREATE TABLE session (
 
 CREATE TABLE session_utilisateur (
     id_session_utilisateur     SERIAL PRIMARY KEY,
-    date_connexion             DATE,
-    date_jeton_expiration      DATE,
+    date_connexion             TIMESTAMPTZ,
+    date_jeton_expiration      TIMESTAMPTZ,
     tentatives_echoues         INTEGER,
     date_derniere_tentative    DATE,
     ip_derniere_connexion      INTEGER,
@@ -157,17 +157,18 @@ CREATE TABLE travail (
 );
 
 CREATE TABLE utilisateur (
-    id_utilisateur           SERIAL PRIMARY KEY,
-    nom                      VARCHAR(200) NOT NULL,
-    prenom                   VARCHAR(200),
-    nom_utilisateur          VARCHAR(200),
-    courriel                 VARCHAR(250),
-    mot_passe                VARCHAR(2000),
-    etat_utilisateur         VARCHAR(20),
-    type_utilisateur         CHAR(1) NOT NULL,
+    id_utilisateur SERIAL PRIMARY KEY,
+    nom VARCHAR(200) NOT NULL,
+    prenom VARCHAR(200),
+    nom_utilisateur VARCHAR(200),
+    courriel VARCHAR(250),
+    mot_de_passe VARCHAR(2000),
+    numero_da INTEGER,
+    etat_utilisateur VARCHAR(20),
+    type_utilisateur CHAR(1) NOT NULL,
     professeur_id_professeur INTEGER,
-    etudiant_id_etudiant     INTEGER,
-    date_creation            DATE,
+    etudiant_id_etudiant INTEGER,
+    date_creation DATE,
     UNIQUE (etudiant_id_etudiant),
     UNIQUE (professeur_id_professeur)
 );

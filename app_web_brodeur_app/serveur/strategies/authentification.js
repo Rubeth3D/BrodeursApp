@@ -45,7 +45,7 @@ export const verifierSessionUtilisateur = async (req, res, next) => {
       );
   
       const session = result.rows[0];
-  
+      console.log(session);
       if (!session) {
         logger.warn(`Session introuvable : ID ${sessionId}`);
         return res.status(401).json({ authenticated: false, reason: "Session inconnue" });
@@ -59,7 +59,7 @@ export const verifierSessionUtilisateur = async (req, res, next) => {
         const UpdateEtatSessionsQuery = `
             UPDATE session_utilisateur
             SET 
-              etat_session_utilisateur = 'N'
+              etat_session_utilisateur = 'I'
             WHERE id_session_utilisateur = $1
           `;
 

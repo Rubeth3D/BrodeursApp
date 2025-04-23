@@ -11,7 +11,7 @@ function Inscription() {
     prenom: "",
     nom_utilisateur: "",
     courriel: "",
-    mot_passe: "",
+    mot_de_passe: "",
     numero_da: "",
     etat_utilisateur: "A",
     type_utilisateur: "",
@@ -57,7 +57,7 @@ function Inscription() {
         return;
       }
 
-      if (bodyUtilisateur.mot_passe !== mot_de_passe_confirmation) {
+      if (bodyUtilisateur.mot_de_passe !== mot_de_passe_confirmation) {
         console.log("Les deux mots de passe ne sont pas identiques");
         return;
       }
@@ -67,12 +67,22 @@ function Inscription() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyUtilisateur),
+        credentials: "include",
       });
 
       if (response.ok) {
-        navigate("/DashBoard", {
-          state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+        const responseConnexion = await fetch(`http://localhost:8080/login`,{
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.mot_de_passe,
+             mot_de_passe_Utilisateur: bodyUtilisateur.nom_utilisateur}),
         });
+        if(responseConnexion.ok){
+          navigate("/DashBoard", {
+            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+          });
+        }
       }
     } catch (err) {
       console.log(err.message);
@@ -166,7 +176,7 @@ function Inscription() {
             <input
               type="password"
               className="form-control fs-5"
-              name="mot_passe"
+              name="mot_de_passe"
               onChange={(e) =>
                 changerTypeUtilisateur(e.target.name, e.target.value)
               }
