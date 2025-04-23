@@ -18,7 +18,6 @@ CREATE TABLE classe (
     id_classe                SERIAL PRIMARY KEY,
     code_cours               VARCHAR(200),
     description              VARCHAR(2000),
-    "session"                VARCHAR(20),
     groupe                   INTEGER,
     professeur_id_professeur INTEGER NOT NULL,
     etat_classe              VARCHAR(20),
@@ -66,7 +65,7 @@ CREATE TABLE etudiant (
 CREATE TABLE etudiant_classe (
     etudiant_id_etudiant INTEGER NOT NULL,
     classe_id_classe     INTEGER NOT NULL,
-    PRIMARY KEY (etudiant_id_etudiant, classe_id_classe);
+    PRIMARY KEY (etudiant_id_etudiant, classe_id_classe)
 );
 
 CREATE TABLE etudiant_equipe (
@@ -125,7 +124,7 @@ CREATE TABLE reponse (
     commentaire              VARCHAR(2000)
 );
 
-CREATE TABLE "Session" (
+CREATE TABLE session (
     id_session   SERIAL PRIMARY KEY,
     code_session VARCHAR(200),
     date_session DATE,
