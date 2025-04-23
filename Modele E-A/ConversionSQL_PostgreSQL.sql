@@ -18,7 +18,6 @@ CREATE TABLE classe (
     id_classe                SERIAL PRIMARY KEY,
     code_cours               VARCHAR(200),
     description              VARCHAR(2000),
-    "session"                VARCHAR(20),
     groupe                   INTEGER,
     professeur_id_professeur INTEGER NOT NULL,
     etat_classe              VARCHAR(20),
@@ -125,7 +124,7 @@ CREATE TABLE reponse (
     commentaire              VARCHAR(2000)
 );
 
-CREATE TABLE "Session" (
+CREATE TABLE session (
     id_session   SERIAL PRIMARY KEY,
     code_session VARCHAR(200),
     date_session DATE,

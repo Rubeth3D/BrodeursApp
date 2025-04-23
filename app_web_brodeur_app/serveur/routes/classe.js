@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
+import { verifierSessionUtilisateur } from "../strategies/authentification.js";
 
 
 const logger = winston.createLogger({
@@ -21,12 +22,19 @@ const logger = winston.createLogger({
 const router = express.Router();
 
 //Get toutes les classes //exemple avec vérification de l'utilisateur
-router.get("/", async (req, res) => {
+router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    const resultat = await client.query("SELECT * FROM classe");
-    res.json(resultat.rows);
-    logger.info("Get des classes effectue avec succes!");
-    res.status(200)
+    if(req.sessionData.authentification){
+      logger.info("Session validée, récupération des cours");
+      const parametre = req.sessionData.utilisateurId;
+      const requeteQuery = `Select * from classe where etat_classe = 'Actif' `;
+      const resultat = await client.query(requeteQuery);
+      res.json(resultat.rows);
+      logger.info("Get des classes effectue avec succes!");
+      res.status(200)
+    }else{
+      return res.status(401).json({ message: "Session Non Valide" });
+    }
   } catch (err) {
     logger.error(`Erreur lors du get des classes ${err}`);
     res.status(500).json({ message: "Erreur lors du fetch des classes" });
@@ -154,6 +162,32 @@ router.delete("/:id", async (req, res) => {
     res.json({
       message: "Erreur supprimer de la classe",
     });
+  }
+});
+
+router.put("/desactiverClasse/:id", verifierSessionUtilisateur, async (req, res) => {
+  try {
+    if(req.sessionData.authentification){
+      logger.info("Session validée, Modification de la classes");
+      const { id } = req.params;
+      const requeteQuery = `
+        UPDATE classe
+        SET etat_classe = 'Non-Actif'
+        WHERE etat_classe = 'Actif' AND id_classe = $1
+        RETURNING *
+      `;
+      const resultat = await client.query(requeteQuery, [id]);
+      res.json(resultat.rows);
+      if (resultat.rows > 0){
+        logger.info("Get des classes effectue avec succes!");
+        res.status(200)
+      }
+    }else{
+      return res.status(401).json({ message: "Session Non Valide" });
+    }
+  } catch (err) {
+    logger.error(`Erreur lors du get des classes ${err}`);
+    res.status(500).json({ message: "Erreur lors du fetch des classes" });
   }
 });
 

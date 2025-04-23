@@ -30,16 +30,16 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
     if(req.sessionData.authentification){
       logger.info("Session validée, récupération des cours");
 
-    const result = await client.query("SELECT * FROM cours");
+      const result = await client.query("SELECT * FROM cours");
 
-    // Vérifie ici si tu récupères bien les cours
-    if (result.rows.length > 0) {
-      logger.info("Get des cours effectué avec succès");
-      return res.status(200).json(result.rows);  // Renvoie les cours ici
-    } else {
-      logger.info("Aucun cours trouvé dans la base de données");
-      return res.status(404).json({ message: "Aucun cours trouvé" });
-    }
+      // Vérifie ici si tu récupères bien les cours
+      if (result.rows.length > 0) {
+        logger.info("Get des cours effectué avec succès");
+        return res.status(200).json(result.rows);  // Renvoie les cours ici
+      } else {
+        logger.info("Aucun cours trouvé dans la base de données");
+        return res.status(404).json({ message: "Aucun cours trouvé" });
+      }
     }else{
       return res.status(401).json({ message: "Session Non Valide" });
     }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./ModalModifierClasse.jsx";
 import ModalCreerClasse from "./ModalCreerClasse.jsx";
 
-
 const Classe = () => {
+  const navigate = useNavigate();
   const [donneesModal, setDonnesModal] = useState(null);
   const EtatDesactiverClasse = "Inactive";
   const [requete, setRequete] = useState(null);
@@ -23,7 +24,7 @@ const Classe = () => {
       return [];
     }
     if (!requete) {
-      console.log("Pas de requête");
+      //console.log("Pas de requête");
       return classes;
     }
     return classes.filter((classe) =>
@@ -35,25 +36,37 @@ const Classe = () => {
       const response = await fetch("http://localhost:8080/classe", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       const data = await response.json();
-      setClasses(data);
+      if(response.status == 200){
+        setClasses(data);
+      }else if (response.status == 401){
+        console.error(data.message)
+        navigate("/*");
+      }
+      
     } catch (err) {
       console.error("Erreur au niveau du fetch des classes : ", err);
     }
   };
 
+  //Fais la function delete un cours pour l'utilisateur, mais pas pour un admin
+  //admin peut encore voir la classes
   const desactiverClasse = async (id) => {
     try {
       console.log("Classe a modifier : ", EtatDesactiverClasse);
+      console.log(id);
       const response = await fetch(
         `http://localhost:8080/classe/desactiverClasse/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ etat_classe: EtatDesactiverClasse }),
         }
       );
+      
       const data = await response.json();
       console.log(data);
       if (response.ok) {
@@ -70,7 +83,7 @@ const Classe = () => {
     let inactives = 0;
 
     liste.forEach((classe) => {
-      if (classe.etat_classe === "Active") {
+      if (classe.etat_classe === "Actif") {
         actives++;
       } else {
         inactives++;
@@ -83,7 +96,6 @@ const Classe = () => {
   }
 
   useEffect(() => {
-    console.log("Fetch de la classe");
     fetchClasses();
   }, []);
 
@@ -98,7 +110,7 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classes total:</h2>
+                <h2 className="card-title fs-5"> Nombre de classes totaux:</h2>
                 <p className="card-text fs-4 text-primary mt-4">
                   {compteurClasse}
                 </p>
@@ -108,7 +120,7 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classes active:</h2>
+                <h2 className="card-title fs-5"> Nombre de classes actives:</h2>
                 <p className="card-text fs-4 text-success mt-4">
                   {compteurClasseActive}
                 </p>
@@ -118,7 +130,7 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5">Nombre de classes inactive:</h2>
+                <h2 className="card-title fs-5">Nombre de classes inactives:</h2>
                 <p className="card-text fs-4 text-danger mt-4">
                   {compteurClasseInactive}
                 </p>
@@ -171,34 +183,32 @@ const Classe = () => {
           </div>
         </div>
 
-        <table className="table table-hover mt-5">
+        <table className="table table-hover mt-5 text-center">
           <thead>
             <tr>
-              <th>Code</th>
-              <th>Description</th>
-              <th>Groupe</th>
-              <th>Cours</th>
-              <th>Professeur</th>
-              <th>Etat</th>
-              <th>Actions</th>
+              <th className="text-center">Code</th>
+              <th className="text-center">Description</th>
+              <th className="text-center">Groupe</th>
+              <th className="text-center">Cours</th>
+              <th className="text-center">État</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {classesFiltrees.map((classe) => (
               <tr key={classe.id_classe}>
-                <td>{classe.code_cours}</td>
-                <td>{classe.description}</td>
-                <td>{classe.groupe}</td>
-                <td>{classe.cours_id_cours}</td>
-                <td>{classe.professeur_id_professeur}</td>
-                <td>{classe.etat_classe}</td>
-                <td>
+              <td className="text-center align-middle py-3">{classe.code_cours}</td>
+              <td className="text-center align-middle py-3">{classe.description}</td>
+              <td className="text-center align-middle py-3">{classe.groupe}</td>
+              <td className="text-center align-middle py-3">{classe.cours_id_cours}</td>
+              <td className="text-center align-middle py-3">{classe.etat_classe}</td>
+              <td className="text-center align-middle py-3">
+                <div className="d-flex justify-content-center gap-2">
                   <button
-                    className="btn"
+                    className="btn btn-sm"
                     onClick={() => {
                       setModalModifierEstOuvert(true);
                       setDonnesModal(classe);
-                      console.log(donneesModal);
                     }}
                   >
                     {ModifierSVG()}
@@ -210,13 +220,14 @@ const Classe = () => {
                     rafraichir={fetchClasses}
                   />
                   <button
-                    className="btn"
+                    className="btn btn-sm"
                     onClick={() => desactiverClasse(classe.id_classe)}
                   >
                     {SupprimerSVG()}
                   </button>
-                </td>
-              </tr>
+                </div>
+              </td>
+            </tr>
             ))}
           </tbody>
         </table>
