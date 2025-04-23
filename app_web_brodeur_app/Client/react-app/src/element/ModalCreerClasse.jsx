@@ -16,6 +16,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     cours_session_id_session: "",
   });
   const [cours, setCours] = useState([]);
+
   //fonction creation de classe
   const creerClasse = async () => {
     try {
