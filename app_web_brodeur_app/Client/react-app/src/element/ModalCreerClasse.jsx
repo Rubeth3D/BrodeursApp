@@ -69,6 +69,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     estFermee(false);
     rafraichir();
   };
+  
   useEffect(() => {
     fetchCours();
   }, []);

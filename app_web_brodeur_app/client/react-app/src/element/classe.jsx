@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./ModalModifierClasse.jsx";
 import ModalCreerClasse from "./ModalCreerClasse.jsx";
 
 const Classe = () => {
+  const navigate = useNavigate();
   const [donneesModal, setDonnesModal] = useState(null);
   const EtatDesactiverClasse = "Inactive";
   const [requete, setRequete] = useState(null);
@@ -38,7 +39,13 @@ const Classe = () => {
         credentials: "include",
       });
       const data = await response.json();
-      setClasses(data);
+      if(response.status == 200){
+        setClasses(data);
+      }else if (response.status == 401){
+        console.error(data.message)
+        navigate("/*");
+      }
+      
     } catch (err) {
       console.error("Erreur au niveau du fetch des classes : ", err);
     }
@@ -84,7 +91,6 @@ const Classe = () => {
   }
 
   useEffect(() => {
-    console.log("Fetch de la classe");
     fetchClasses();
   }, []);
 
@@ -172,34 +178,34 @@ const Classe = () => {
           </div>
         </div>
 
-        <table className="table table-hover mt-5">
+        <table className="table table-hover mt-5 text-center">
           <thead>
             <tr>
-              <th>Code</th>
-              <th>Description</th>
-              <th>Groupe</th>
-              <th>Cours</th>
-              <th>Professeur</th>
-              <th>Etat</th>
-              <th>Actions</th>
+              <th className="text-center">Code</th>
+              <th className="text-center">Description</th>
+              <th className="text-center">Groupe</th>
+              <th className="text-center">Cours</th>
+              <th className="text-center">Professeur</th>
+              <th className="text-center">État</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {classesFiltrees.map((classe) => (
               <tr key={classe.id_classe}>
-                <td>{classe.code_cours}</td>
-                <td>{classe.description}</td>
-                <td>{classe.groupe}</td>
-                <td>{classe.cours_id_cours}</td>
-                <td>{classe.professeur_id_professeur}</td>
-                <td>{classe.etat_classe}</td>
-                <td>
+              <td className="text-center align-middle py-3">{classe.code_cours}</td>
+              <td className="text-center align-middle py-3">{classe.description}</td>
+              <td className="text-center align-middle py-3">{classe.groupe}</td>
+              <td className="text-center align-middle py-3">{classe.cours_id_cours}</td>
+              <td className="text-center align-middle py-3">{classe.professeur_id_professeur}</td>
+              <td className="text-center align-middle py-3">{classe.etat_classe}</td>
+              <td className="text-center align-middle py-3">
+                <div className="d-flex justify-content-center gap-2">
                   <button
-                    className="btn"
+                    className="btn btn-sm"
                     onClick={() => {
                       setModalModifierEstOuvert(true);
                       setDonnesModal(classe);
-                      console.log(donneesModal);
                     }}
                   >
                     {ModifierSVG()}
@@ -211,13 +217,14 @@ const Classe = () => {
                     rafraichir={fetchClasses}
                   />
                   <button
-                    className="btn"
+                    className="btn btn-sm"
                     onClick={() => desactiverClasse(classe.id_classe)}
                   >
                     {SupprimerSVG()}
                   </button>
-                </td>
-              </tr>
+                </div>
+              </td>
+            </tr>
             ))}
           </tbody>
         </table>
