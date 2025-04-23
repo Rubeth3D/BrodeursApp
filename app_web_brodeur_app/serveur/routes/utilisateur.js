@@ -27,9 +27,9 @@ router.use(express.json());
 //Pas d'information sensible
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    if(req.sessionData.authentification){
+    if (req.sessionData.authentification) {
       logger.info("Session validée, récupération des cours");
-      
+
       const parametre = req.sessionData.utilisateurId;
       const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
       const resultat = await client.query(requete, [parametre]);
@@ -37,17 +37,19 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
       // Vérifie ici si tu récupères bien eu un utilisateur
       if (resultat.rows.length > 0) {
         logger.info("Get de l'utilisateur effectué avec succès");
-        return res.status(200).json(resultat.rows);  // Renvoie les cours ici
+        return res.status(200).json(resultat.rows); // Renvoie les cours ici
       } else {
         logger.info("Aucun cours trouvé dans la base de données");
         return res.status(404).json({ message: "Aucun cours trouvé" });
       }
-    }else{
+    } else {
       return res.status(401).json({ message: "Session Non Valide" });
     }
   } catch (error) {
     logger.error("Erreur lors de la récupération des cours : " + error.message);
-    return res.status(500).json({ message: "Il y a eu une erreur de type 500" });
+    return res
+      .status(500)
+      .json({ message: "Il y a eu une erreur de type 500" });
   }
 });
 
@@ -191,7 +193,6 @@ router.post("/", async (req, res) => {
       nom_utilisateur,
       courriel,
       mot_passe,
-      numero_da,
       etat_utilisateur,
       type_utilisateur,
       professeur_id_professeur,
@@ -207,7 +208,6 @@ router.post("/", async (req, res) => {
       nom_utilisateur,
       courriel,
       mot_passe,
-      numero_da,
       etat_utilisateur,
       type_utilisateur,
       professeur_id_professeur,
@@ -216,14 +216,13 @@ router.post("/", async (req, res) => {
     );
     // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
-      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11) RETURNING id_utilisateur",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10) RETURNING id_utilisateur",
       [
         nom,
         prenom,
         nom_utilisateur,
         courriel,
         mot_de_passe_hash,
-        numero_da,
         etat_utilisateur,
         type_utilisateur,
         professeur_id_professeur,
@@ -232,7 +231,7 @@ router.post("/", async (req, res) => {
       ]
     );
     const utilisateur = resultat.rows[0];
-    console.log(utilisateur);
+    console.log("Utilisateur :", utilisateur);
     if (type_utilisateur === "E") {
       const resultat = await client.query(
         "INSERT INTO etudiant(nom_complet,utilisateur_id_utilisateur,etat_etudiant) VALUES($1, $2, $3) RETURNING id_etudiant",
@@ -257,8 +256,8 @@ router.post("/", async (req, res) => {
         [professeur.id_professeur, utilisateur.id_utilisateur]
       );
     }
-    return res.status(200).json({ message: "succes" });
     logger.info("Insertion de l'utilisateur effectuée avec succès");
+    return res.status(200).json({ message: "succes" });
   } catch (err) {
     logger.error(`Erreur lors de l'insertion : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insertion" });

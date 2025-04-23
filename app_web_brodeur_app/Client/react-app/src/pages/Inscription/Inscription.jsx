@@ -12,7 +12,6 @@ function Inscription() {
     nom_utilisateur: "",
     courriel: "",
     mot_passe: "",
-    numero_da: "",
     etat_utilisateur: "A",
     type_utilisateur: "",
     professeur_id_professeur: null,
@@ -82,7 +81,7 @@ function Inscription() {
   return (
     <>
       <form className="container" onSubmit={creationUtilisateur}>
-        <Link to={"/Connexion"}>
+        <Link to={".."}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
               <svg
@@ -98,7 +97,7 @@ function Inscription() {
                   d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
                 />
               </svg>{" "}
-              Retour
+              Accueil
             </h2>
           </button>
         </Link>
@@ -139,20 +138,6 @@ function Inscription() {
               type="email"
               className="form-control fs-5"
               name="courriel"
-              onChange={(e) =>
-                changerTypeUtilisateur(e.target.name, e.target.value)
-              }
-              required
-            />
-          </div>
-        </div>
-        <div className="row justify-content-center">
-          <div className="col-8 mb-5">
-            <label className="fw-bold fs-4">Numero demande d'admission</label>
-            <input
-              type="text"
-              className="form-control fs-5"
-              name="numero_da"
               onChange={(e) =>
                 changerTypeUtilisateur(e.target.name, e.target.value)
               }
@@ -230,17 +215,18 @@ function Inscription() {
             </div>
           </div>
         </div>
-
-        <div className="d-flex justify-content-center align-items-center mt-4">
-          <button
-            type="submit"
-            className="btn btn-primary mt-5 mb-5"
-            onClick={() => {
-              CreerNomUtilisateur();
-            }}
-          >
-            <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
+        <div className="text-center mt-5">
+          <button type="submit" className="btn btn-primary fs-3 mb-1">
+            S'inscrire
           </button>
+          <p>
+            <Link
+              to={"/Connexion"}
+              className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
+            >
+              Connexion
+            </Link>
+          </p>
         </div>
       </form>
     </>
