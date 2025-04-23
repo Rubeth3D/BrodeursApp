@@ -11,7 +11,7 @@ function Inscription() {
     prenom: "",
     nom_utilisateur: "",
     courriel: "",
-    mot_passe: "",
+    mot_de_passe: "",
     numero_da: "",
     etat_utilisateur: "A",
     type_utilisateur: "",
@@ -57,7 +57,7 @@ function Inscription() {
         return;
       }
 
-      if (bodyUtilisateur.mot_passe !== mot_de_passe_confirmation) {
+      if (bodyUtilisateur.mot_de_passe !== mot_de_passe_confirmation) {
         console.log("Les deux mots de passe ne sont pas identiques");
         return;
       }
@@ -166,7 +166,7 @@ function Inscription() {
             <input
               type="password"
               className="form-control fs-5"
-              name="mot_passe"
+              name="mot_de_passe"
               onChange={(e) =>
                 changerTypeUtilisateur(e.target.name, e.target.value)
               }

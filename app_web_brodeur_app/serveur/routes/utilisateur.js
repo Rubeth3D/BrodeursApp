@@ -21,8 +21,6 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-router.use(express.json());
-
 //get pour avoir des informations sur le user connecter
 //Pas d'information sensible
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
@@ -190,7 +188,7 @@ router.post("/", async (req, res) => {
       prenom,
       nom_utilisateur,
       courriel,
-      mot_passe,
+      mot_de_passe,
       numero_da,
       etat_utilisateur,
       type_utilisateur,
@@ -199,14 +197,14 @@ router.post("/", async (req, res) => {
     } = req.body;
     const date_creation = new Date(Date.now()).toISOString();
     const salt = bcrypt.genSaltSync(10);
-    const mot_de_passe_hash = await bcrypt.hash(mot_passe, salt);
+    const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
     logger.info(
       "utilisateur :",
       nom,
       prenom,
       nom_utilisateur,
       courriel,
-      mot_passe,
+      mot_de_passe,
       numero_da,
       etat_utilisateur,
       type_utilisateur,
@@ -216,7 +214,7 @@ router.post("/", async (req, res) => {
     );
     // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
-      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11) RETURNING id_utilisateur",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_de_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11) RETURNING id_utilisateur",
       [
         nom,
         prenom,

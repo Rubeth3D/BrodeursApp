@@ -157,17 +157,18 @@ CREATE TABLE travail (
 );
 
 CREATE TABLE utilisateur (
-    id_utilisateur           SERIAL PRIMARY KEY,
-    nom                      VARCHAR(200) NOT NULL,
-    prenom                   VARCHAR(200),
-    nom_utilisateur          VARCHAR(200),
-    courriel                 VARCHAR(250),
-    mot_passe                VARCHAR(2000),
-    etat_utilisateur         VARCHAR(20),
-    type_utilisateur         CHAR(1) NOT NULL,
+    id_utilisateur SERIAL PRIMARY KEY,
+    nom VARCHAR(200) NOT NULL,
+    prenom VARCHAR(200),
+    nom_utilisateur VARCHAR(200),
+    courriel VARCHAR(250),
+    mot_de_passe VARCHAR(2000),
+    numero_da INTEGER,
+    etat_utilisateur VARCHAR(20),
+    type_utilisateur CHAR(1) NOT NULL,
     professeur_id_professeur INTEGER,
-    etudiant_id_etudiant     INTEGER,
-    date_creation            DATE,
+    etudiant_id_etudiant INTEGER,
+    date_creation DATE,
     UNIQUE (etudiant_id_etudiant),
     UNIQUE (professeur_id_professeur)
 );

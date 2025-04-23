@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import client from "../bd/postgresBD/Connexion.js";
+import bcrypt from "bcrypt";
 
 async function generateUniqueSessionId(client) {
   let id;
@@ -35,10 +36,14 @@ export default passport.use(
         });
       }
 
-      const utilisateur = result.rows[0];  
-
+      const utilisateur = result.rows[0]; 
+      console.log(`Le mot de passe est bon : ${utilisateur.mot_de_passe}`)
+      console.log(`Le mot de passe est bon : ${password}`) 
+      const mot_de_passe_Verifier = await bcrypt.compare(password, utilisateur.mot_de_passe);
       
-      if (username === utilisateur.nom_utilisateur && password === utilisateur.mot_passe) {
+      console.log(`Le mot de passe est bon : ${mot_de_passe_Verifier}`)
+
+      if (mot_de_passe_Verifier) {
         console.log("Mot de passe et Nom d'utilisateur Valide");
 
        
