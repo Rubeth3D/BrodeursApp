@@ -9,7 +9,7 @@ function Connexion() {
 
   const connexionUser = async (e) => {
     e.preventDefault(); // Empêche l'envoi par défaut du formulaire
-  
+
     // Vérification des champs
     if (!nomUtilisateur) {
       console.error("Nom d'utilisateur requis");
@@ -18,7 +18,7 @@ function Connexion() {
       console.error("Mot de passe requis");
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:8080/login", {
         method: "POST",
@@ -26,11 +26,14 @@ function Connexion() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: nomUtilisateur, password: motDePasse }),
+        body: JSON.stringify({
+          username: nomUtilisateur,
+          password: motDePasse,
+        }),
       });
-  
+
       const dataJson = await response.json();
-  
+
       if (response.status === 200) {
         //console.log(dataJson); // Affiche la réponse dans la console
         console.log(dataJson.nom_user);
@@ -54,12 +57,10 @@ function Connexion() {
 
   return (
     <>
+    <button></button>
       <div className=" mb-5"></div>
 
-      <form
-        className="container"
-        onSubmit={connexionUser}
-      >
+      <form className="container" onSubmit={connexionUser}>
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
           <div className="col-4">
