@@ -195,7 +195,7 @@ ALTER TABLE classe
 
 ALTER TABLE cours
     ADD CONSTRAINT cours_session_fk FOREIGN KEY (session_id_session)
-        REFERENCES "Session" (id_session);
+        REFERENCES session (id_session);
 
 ALTER TABLE critere
     ADD CONSTRAINT critere_instrument_fk FOREIGN KEY (instrument_id_instrument)
