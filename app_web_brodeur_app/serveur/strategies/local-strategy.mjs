@@ -21,7 +21,7 @@ async function generateUniqueSessionId(client) {
 }
 
 export default passport.use(
-  new LocalStrategy({usernameField: 'nom_utilisateur', passwordField: 'mot_de_passe_Utilisateur'},async ( mot_de_passe_Utilisateur,nom_utilisateur, done) => {  
+  new LocalStrategy({usernameField: 'nom_utilisateur', passwordField: 'mot_de_passe_Utilisateur'},async (nom_utilisateur,mot_de_passe_Utilisateur, done) => {  
     const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1";
     const parametre = [nom_utilisateur];
 
@@ -38,13 +38,12 @@ export default passport.use(
       }
 
       const utilisateur = result.rows[0]; 
-      console.log(`Le mot de passe est bon : ${utilisateur.mot_de_passe}`)
-      console.log(`Le mot de passe est bon : ${mot_de_passe_Utilisateur}`) 
-      const mot_de_passe_Verifier = await bcrypt.compare(mot_de_passe_Utilisateur, utilisateur.mot_de_passe);
+      const mot_de_passe_Verifier = await bcrypt.compare(mot_de_passe_Utilisateur.trim(), utilisateur.mot_de_passe.trim());
       
-      console.log(`Le mot de passe est bon : ${mot_de_passe_Verifier}`)
+      console.log(`Le mot de passe est valide  : ${mot_de_passe_Verifier}`)
 
       if (mot_de_passe_Verifier) {
+
         console.log("Mot de passe et Nom d'utilisateur Valide");
 
        
