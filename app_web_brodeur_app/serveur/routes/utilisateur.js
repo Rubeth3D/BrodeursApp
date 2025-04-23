@@ -166,36 +166,48 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const {
-      nom_user,
-      mot_de_passe,
-      email,
-      type_utilisateur,
-      id_professeur,
-      id_etudiant,
+      nom,
+      prenom,
+      nom_utilisateur,
+      courriel,
+      mot_passe,
+      numero_da,
       etat_utilisateur,
+      type_utilisateur,
+      professeur_id_professeur,
+      etudiant_id_etudiant,
+      date_creation,
     } = req.body;
     const salt = bcrypt.genSaltSync(10);
-    const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
+    const mot_de_passe_hash = await bcrypt.hash(mot_passe, salt);
     logger.info(
-      nom_user,
-      mot_de_passe_hash,
-      email,
+      nom,
+      prenom,
+      nom_utilisateur,
+      courriel,
+      mot_passe,
+      numero_da,
+      etat_utilisateur,
       type_utilisateur,
-      id_professeur,
-      id_etudiant,
-      etat_utilisateur
+      professeur_id_professeur,
+      etudiant_id_etudiant,
+      date_creation
     );
     // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
-      "INSERT INTO utilisateur(nom_user, mot_de_passe, email, type_utilisateur, id_professeur, id_etudiant, etat_utilisateur) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11)",
       [
-        nom_user,
+        nom,
+        prenom,
+        nom_utilisateur,
+        courriel,
         mot_de_passe_hash,
-        email,
-        type_utilisateur,
-        id_professeur,
-        id_etudiant,
+        numero_da,
         etat_utilisateur,
+        type_utilisateur,
+        professeur_id_professeur,
+        etudiant_id_etudiant,
+        date_creation,
       ]
     );
 

@@ -3,11 +3,16 @@ import Navbar from "../../element/Navbar.jsx";
 import Footer from "./../../element/footer.jsx";
 import React, { useState, useEffect } from "react";
 function Home() {
-  const [estConnecte, setEstConnecte] = useState;
-  function AuthentifierUtilisateur() {
-    
+  const [estConnecte, setEstConnecte] = useState(false);
+  function VerifierSiConnecte() {
+    if (!document.cookie) {
+      setEstConnecte(true);
+      console.log("Pas authentifie : ", estConnecte);
+    }
   }
-  useEffect(() => {}, []);
+  useEffect(() => {
+    VerifierSiConnecte();
+  }, []);
   return (
     <>
       <Navbar />
