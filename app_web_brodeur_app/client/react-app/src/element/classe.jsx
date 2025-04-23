@@ -99,7 +99,7 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classes total:</h2>
+                <h2 className="card-title fs-5"> Nombre de classes totaux:</h2>
                 <p className="card-text fs-4 text-primary mt-4">
                   {compteurClasse}
                 </p>
@@ -109,7 +109,7 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre de classes active:</h2>
+                <h2 className="card-title fs-5"> Nombre de classes actives:</h2>
                 <p className="card-text fs-4 text-success mt-4">
                   {compteurClasseActive}
                 </p>
@@ -119,7 +119,7 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5">Nombre de classes inactive:</h2>
+                <h2 className="card-title fs-5">Nombre de classes inactives:</h2>
                 <p className="card-text fs-4 text-danger mt-4">
                   {compteurClasseInactive}
                 </p>
