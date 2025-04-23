@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import { Link } from "react-router-dom";
+import SupprimerSVG from "../image/SupprimerSVG.jsx";
+import ModifierSVG from "../image/ModifierSVG.jsx";
 
 const Cours = () => {
   const [cours, setCours] = useState([]);
@@ -74,17 +76,8 @@ const Cours = () => {
     fetchCours();
   }, []);
 
-<<<<<<< Updated upstream
-  const coursActif = cours.filter((cours) => cours.etat_cours === "actif").length;
-  const coursInactif = cours.filter((cours) => cours.etat_cours === "inactif").length;
-=======
-  const coursActif = cours.filter(
-    (cours) => cours.etat_cours === "Actif"
-  ).length;
-  const coursInactif = cours.filter(
-    (cours) => cours.etat_cours === "Inactif"
-  ).length;
->>>>>>> Stashed changes
+  const coursActif = cours.filter((cours) => cours.etat_cours === "Actif").length;
+  const coursInactif = cours.filter((cours) => cours.etat_cours === "Inactif").length;
   const totalCours = cours.length;
 
   return (
@@ -176,14 +169,14 @@ const Cours = () => {
                     data-bs-target="#modifierCours"
                     onClick={() => setForm(cours)}
                   >
-                    Modifier
+                    {ModifierSVG()}
                   </button>
                   <button
                     type="button"
                     className="btn btn-danger"
                     onClick={() => supprimerCours(cours.id_cours)}
                   >
-                    Supprimer
+                   {SupprimerSVG()}
                   </button>
                 </td>
               </tr>
