@@ -104,7 +104,7 @@ router.post("/", async (req, res) => {
 //Update d'une classe
 router.put("/ModifierClasse/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const { id } = req.params; 
     const {
       code_cours,
       description,
@@ -113,8 +113,14 @@ router.put("/ModifierClasse/:id", async (req, res) => {
       cours_id_cours,
       etat_classe,
     } = req.body;
+
     const resultat = await client.query(
-      "UPDATE classe SET code_cours = $1, description = $2, groupe = $3, professeur_id_professeur = $4, cours_id_cours = $5, etat_classe = $6 WHERE id_classe = $7 RETURNING *",
+      `UPDATE classe 
+       SET code_cours = $1, description = $2, groupe = $3, 
+           professeur_id_professeur = $4, cours_id_cours = $5, 
+           etat_classe = $6 
+       WHERE id_classe = $7 
+       RETURNING id_classe`,
       [
         code_cours,
         description,
@@ -125,21 +131,23 @@ router.put("/ModifierClasse/:id", async (req, res) => {
         id,
       ]
     );
+
     if (resultat.rowCount === 0) {
       return res
         .status(404)
-        .json({ message: `Aucune classe ne correspond au id : ${id}!` });
+        .json({ message: `Aucune classe ne correspond à l'id : ${id} !` });
     }
-    logger.info("Update de la classe effectue avec succes!");
+
+    logger.info("Update de la classe effectué avec succès !");
     res.status(200).json(resultat.rows[0]);
   } catch (err) {
-    logger.error(`Erreur de l'update de la classe ${err}`);
-    res.status(500);
-    res.json({
+    logger.error(`Erreur lors de l'update de la classe : ${err}`);
+    res.status(500).json({
       message: "Erreur de l'update de la classe",
     });
   }
 });
+
 
 //Delete d'une classe
 router.delete("/:id", async (req, res) => {

@@ -71,12 +71,14 @@ function Inscription() {
       });
 
       if (response.ok) {
+        console.log(bodyUtilisateur.mot_de_passe)
+        console.log(bodyUtilisateur.nom_utilisateur)
         const responseConnexion = await fetch(`http://localhost:8080/login`,{
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.mot_de_passe,
-             mot_de_passe_Utilisateur: bodyUtilisateur.nom_utilisateur}),
+          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+             mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe}),
         });
         if(responseConnexion.ok){
           navigate("/DashBoard", {

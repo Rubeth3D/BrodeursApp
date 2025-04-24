@@ -21,16 +21,9 @@ async function generateUniqueSessionId(client) {
 }
 
 export default passport.use(
-<<<<<<< Updated upstream
-  new LocalStrategy({usernameField: 'nom_utilisateur', passwordField: 'mot_de_passe_Utilisateur'},async ( mot_de_passe_Utilisateur,nom_utilisateur, done) => {  
+  new LocalStrategy({usernameField: 'nom_utilisateur', passwordField: 'mot_de_passe_Utilisateur'},async (nom_utilisateur,mot_de_passe_Utilisateur, done) => {  
     const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1";
     const parametre = [nom_utilisateur];
-=======
-  new LocalStrategy(async (username, password, done) => {
-    const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1;";
-    console.log(username);
-    const parametre = [username];
->>>>>>> Stashed changes
 
     try {
       console.log(nom_utilisateur);
@@ -44,28 +37,17 @@ export default passport.use(
         });
       }
 
-<<<<<<< Updated upstream
       const utilisateur = result.rows[0]; 
-      console.log(`Le mot de passe est bon : ${utilisateur.mot_de_passe}`)
-      console.log(`Le mot de passe est bon : ${mot_de_passe_Utilisateur}`) 
-      const mot_de_passe_Verifier = await bcrypt.compare(mot_de_passe_Utilisateur, utilisateur.mot_de_passe);
+      const mot_de_passe_Verifier = await bcrypt.compare(mot_de_passe_Utilisateur.trim(), utilisateur.mot_de_passe.trim());
       
-      console.log(`Le mot de passe est bon : ${mot_de_passe_Verifier}`)
+      console.log(`Le mot de passe est valide  : ${mot_de_passe_Verifier}`)
 
       if (mot_de_passe_Verifier) {
+
         console.log("Mot de passe et Nom d'utilisateur Valide");
 
        
         const sessionId = await generateUniqueSessionId(client);  
-=======
-      const utilisateur = result.rows[0];
-      console.log(utilisateur);
-      if (
-        username === utilisateur.nom_utilisateur &&
-        password === utilisateur.mot_passe
-      ) {
-        const sessionId = await generateUniqueSessionId(client);
->>>>>>> Stashed changes
 
         const utilisateurId = utilisateur.id_utilisateur;
         const dateConnexion = new Date().toISOString(); 
@@ -124,7 +106,7 @@ export default passport.use(
           return done(null, utilisateur);  
         }
       } else {
-        console.log("Mot de passe et Nom d'utilisateur Valide");
+        console.log("BRUHHH so close");
         return done(null, false, {
           message: "Le nom d'utilisateur ou le mot de passe est mauvais",
         });
