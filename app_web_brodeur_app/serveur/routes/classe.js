@@ -4,7 +4,6 @@ import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
 import { verifierSessionUtilisateur } from "../strategies/authentification.js";
 
-
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -24,15 +23,16 @@ const router = express.Router();
 //Get toutes les classes //exemple avec vérification de l'utilisateur
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    if(req.sessionData.authentification){
+    console.log(req.sessionData.authentification);
+    if (req.sessionData.authentification) {
       logger.info("Session validée, récupération des cours");
       const parametre = req.sessionData.utilisateurId;
       const requeteQuery = `Select * from classe where etat_classe = 'Actif' `;
       const resultat = await client.query(requeteQuery);
       res.json(resultat.rows);
       logger.info("Get des classes effectue avec succes!");
-      res.status(200)
-    }else{
+      res.status(200);
+    } else {
       return res.status(401).json({ message: "Session Non Valide" });
     }
   } catch (err) {
@@ -81,13 +81,13 @@ router.post("/", async (req, res) => {
     const resultat = await client.query(
       "INSERT INTO classe (code_cours,description,groupe,professeur_id_professeur,etat_classe,cours_id_cours,cours_session_id_session) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *",
       [
-      code_cours,
-      description,
-      groupe,
-      professeur_id_professeur,
-      etat_classe,
-      cours_id_cours,
-      cours_session_id_session,
+        code_cours,
+        description,
+        groupe,
+        professeur_id_professeur,
+        etat_classe,
+        cours_id_cours,
+        cours_session_id_session,
       ]
     );
     logger.info("Insertion de la classe effectue avec succes!");
@@ -165,6 +165,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+<<<<<<< Updated upstream
 //désactiver la classe comme si on la supprimais
 router.put("/desactiverClasse/:id", verifierSessionUtilisateur, async (req, res) => {
   try {
@@ -172,24 +173,36 @@ router.put("/desactiverClasse/:id", verifierSessionUtilisateur, async (req, res)
       logger.info("Session validée, Modification de la classes");
       const { id } = req.params;
       const requeteQuery = `
+=======
+router.put(
+  "/desactiverClasse/:id",
+  verifierSessionUtilisateur,
+  async (req, res) => {
+    try {
+      if (req.sessionData.authentification) {
+        logger.info("Session validée, Modification de la classes");
+        const { id } = req.params;
+        const requeteQuery = `
+>>>>>>> Stashed changes
         UPDATE classe
         SET etat_classe = 'Non-Actif'
         WHERE etat_classe = 'Actif' AND id_classe = $1
         RETURNING *
       `;
-      const resultat = await client.query(requeteQuery, [id]);
-      res.json(resultat.rows);
-      if (resultat.rows > 0){
-        logger.info("Get des classes effectue avec succes!");
-        res.status(200)
+        const resultat = await client.query(requeteQuery, [id]);
+        res.json(resultat.rows);
+        if (resultat.rows > 0) {
+          logger.info("Get des classes effectue avec succes!");
+          res.status(200);
+        }
+      } else {
+        return res.status(401).json({ message: "Session Non Valide" });
       }
-    }else{
-      return res.status(401).json({ message: "Session Non Valide" });
+    } catch (err) {
+      logger.error(`Erreur lors du get des classes ${err}`);
+      res.status(500).json({ message: "Erreur lors du fetch des classes" });
     }
-  } catch (err) {
-    logger.error(`Erreur lors du get des classes ${err}`);
-    res.status(500).json({ message: "Erreur lors du fetch des classes" });
   }
-});
+);
 
 export default router;
