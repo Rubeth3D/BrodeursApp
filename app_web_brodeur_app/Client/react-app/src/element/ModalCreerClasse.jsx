@@ -20,7 +20,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
   //fonction creation de classe
   const creerClasse = async () => {
     try {
-      console.log(JSON.stringify(nouvelleClasse))
+      console.log(JSON.stringify(nouvelleClasse));
       const response = await fetch("http://localhost:8080/classe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,6 +112,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
               <Select
                 className="mt-2"
                 options={cours}
+                placeholder="choisir un cours..."
                 onChange={(option) => {
                   setNouvelleClasse({
                     ...nouvelleClasse,

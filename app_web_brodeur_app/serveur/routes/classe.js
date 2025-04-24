@@ -104,7 +104,7 @@ router.post("/", async (req, res) => {
 //Update d'une classe
 router.put("/ModifierClasse/:id", async (req, res) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const {
       code_cours,
       description,
@@ -148,7 +148,6 @@ router.put("/ModifierClasse/:id", async (req, res) => {
   }
 });
 
-
 //Delete d'une classe
 router.delete("/:id", async (req, res) => {
   try {
@@ -173,15 +172,6 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-<<<<<<< Updated upstream
-//désactiver la classe comme si on la supprimais
-router.put("/desactiverClasse/:id", verifierSessionUtilisateur, async (req, res) => {
-  try {
-    if(req.sessionData.authentification){
-      logger.info("Session validée, Modification de la classes");
-      const { id } = req.params;
-      const requeteQuery = `
-=======
 router.put(
   "/desactiverClasse/:id",
   verifierSessionUtilisateur,
@@ -191,7 +181,6 @@ router.put(
         logger.info("Session validée, Modification de la classes");
         const { id } = req.params;
         const requeteQuery = `
->>>>>>> Stashed changes
         UPDATE classe
         SET etat_classe = 'Non-Actif'
         WHERE etat_classe = 'Actif' AND id_classe = $1
