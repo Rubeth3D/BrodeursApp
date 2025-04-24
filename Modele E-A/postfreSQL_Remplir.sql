@@ -4,7 +4,7 @@
 -- Insertion des Utilisateur
 
 -- Insertion des Utilisateur/professeur
-INSERT INTO utilisateur (nom, prenom, nom_utilisateur, courriel, mot_passe, etat_utilisateur, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant)
+INSERT INTO utilisateur (nom, prenom, nom_utilisateur, courriel, mot_de_passe, etat_utilisateur, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant)
 VALUES
     ('Jean', 'Dupont', 'blueTiger_01', 'jean.dupont@example.com', 'JdP@ss123', 'Actif', 'E', NULL, 1),
     ('Alice', 'Durand', 'sunnyAlice_24', 'alice.durand@example.com', 'A@l1ceD123', 'Actif', 'E', NULL, 2),
@@ -33,7 +33,7 @@ VALUES
     ('Laurent', 'Dufresne', 'laurentStorm_99', 'laurent.dufresne@example.com', 'L@ur3ntD@fr3sn3', 'Actif', 'E', NULL, 25);
 
  -- Insertion des Utilisateur/étudiants
-INSERT INTO utilisateur (nom, prenom, nom_utilisateur, courriel, mot_passe, etat_utilisateur, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant)
+INSERT INTO utilisateur (nom, prenom, nom_utilisateur, courriel, mot_de_passe, etat_utilisateur, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant)
 VALUES
     ('Pierre', 'Dupuis', 'mightyPierre_34', 'pierre.dupuis@example.com', 'P!3rr3D@pu1s', 'Actif', 'P', 1, NULL),
     ('Monique', 'Guillaume', 'sunshineMonique_59', 'monique.guillaume@example.com', 'M0n!qu3G!u1ll@um3', 'Actif', 'P', 2, NULL),
@@ -63,7 +63,7 @@ VALUES
 
 
 --Insertion professeur
-INSERT INTO professeur (id_professeur, nom_complet, etat_professeur, utilisateur_id_user) 
+INSERT INTO professeur (nom_complet, etat_professeur, utilisateur_id_user) 
 VALUES
     ( 'Jean Dupont', 'A', 1),
     ( 'Marie Curie', 'A', 2),

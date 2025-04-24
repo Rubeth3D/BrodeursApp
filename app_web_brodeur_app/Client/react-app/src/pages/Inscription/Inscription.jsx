@@ -11,7 +11,8 @@ function Inscription() {
     prenom: "",
     nom_utilisateur: "",
     courriel: "",
-    mot_passe: "",
+    mot_de_passe: "",
+    numero_da: "",
     etat_utilisateur: "A",
     type_utilisateur: "",
     professeur_id_professeur: null,
@@ -56,7 +57,7 @@ function Inscription() {
         return;
       }
 
-      if (bodyUtilisateur.mot_passe !== mot_de_passe_confirmation) {
+      if (bodyUtilisateur.mot_de_passe !== mot_de_passe_confirmation) {
         console.log("Les deux mots de passe ne sont pas identiques");
         return;
       }
@@ -66,12 +67,24 @@ function Inscription() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyUtilisateur),
+        credentials: "include",
       });
 
       if (response.ok) {
-        navigate("/DashBoard", {
-          state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+        console.log(bodyUtilisateur.mot_de_passe)
+        console.log(bodyUtilisateur.nom_utilisateur)
+        const responseConnexion = await fetch(`http://localhost:8080/login`,{
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+             mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe}),
         });
+        if(responseConnexion.ok){
+          navigate("/DashBoard", {
+            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+          });
+        }
       }
     } catch (err) {
       console.log(err.message);
@@ -81,7 +94,7 @@ function Inscription() {
   return (
     <>
       <form className="container" onSubmit={creationUtilisateur}>
-        <Link to={".."}>
+        <Link to={"/Connexion"}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
               <svg
@@ -97,7 +110,7 @@ function Inscription() {
                   d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
                 />
               </svg>{" "}
-              Accueil
+              Retour
             </h2>
           </button>
         </Link>
@@ -147,11 +160,25 @@ function Inscription() {
         </div>
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
+            <label className="fw-bold fs-4">Numero demande d'admission</label>
+            <input
+              type="text"
+              className="form-control fs-5"
+              name="numero_da"
+              onChange={(e) =>
+                changerTypeUtilisateur(e.target.name, e.target.value)
+              }
+              required
+            />
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-8 mb-5">
             <label className="fw-bold fs-4">Mot de passe</label>
             <input
               type="password"
               className="form-control fs-5"
-              name="mot_passe"
+              name="mot_de_passe"
               onChange={(e) =>
                 changerTypeUtilisateur(e.target.name, e.target.value)
               }
@@ -215,18 +242,17 @@ function Inscription() {
             </div>
           </div>
         </div>
-        <div className="text-center mt-5">
-          <button type="submit" className="btn btn-primary fs-3 mb-1">
-            S'inscrire
+
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <button
+            type="submit"
+            className="btn btn-primary mt-5 mb-5"
+            onClick={() => {
+              CreerNomUtilisateur();
+            }}
+          >
+            <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
-          <p>
-            <Link
-              to={"/Connexion"}
-              className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
-            >
-              Connexion
-            </Link>
-          </p>
         </div>
       </form>
     </>

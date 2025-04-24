@@ -21,15 +21,13 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-router.use(express.json());
-
 //get pour avoir des informations sur le user connecter
 //Pas d'information sensible
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    if (req.sessionData.authentification) {
+    if(req.sessionData.authentification){
       logger.info("Session validée, récupération des cours");
-
+      
       const parametre = req.sessionData.utilisateurId;
       const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
       const resultat = await client.query(requete, [parametre]);
@@ -37,19 +35,17 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
       // Vérifie ici si tu récupères bien eu un utilisateur
       if (resultat.rows.length > 0) {
         logger.info("Get de l'utilisateur effectué avec succès");
-        return res.status(200).json(resultat.rows); // Renvoie les cours ici
+        return res.status(200).json(resultat.rows);  // Renvoie les cours ici
       } else {
         logger.info("Aucun cours trouvé dans la base de données");
         return res.status(404).json({ message: "Aucun cours trouvé" });
       }
-    } else {
+    }else{
       return res.status(401).json({ message: "Session Non Valide" });
     }
   } catch (error) {
     logger.error("Erreur lors de la récupération des cours : " + error.message);
-    return res
-      .status(500)
-      .json({ message: "Il y a eu une erreur de type 500" });
+    return res.status(500).json({ message: "Il y a eu une erreur de type 500" });
   }
 });
 
@@ -192,7 +188,8 @@ router.post("/", async (req, res) => {
       prenom,
       nom_utilisateur,
       courriel,
-      mot_passe,
+      mot_de_passe,
+      numero_da,
       etat_utilisateur,
       type_utilisateur,
       professeur_id_professeur,
@@ -200,14 +197,15 @@ router.post("/", async (req, res) => {
     } = req.body;
     const date_creation = new Date(Date.now()).toISOString();
     const salt = bcrypt.genSaltSync(10);
-    const mot_de_passe_hash = await bcrypt.hash(mot_passe, salt);
+    const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
     logger.info(
       "utilisateur :",
       nom,
       prenom,
       nom_utilisateur,
       courriel,
-      mot_passe,
+      mot_de_passe,
+      numero_da,
       etat_utilisateur,
       type_utilisateur,
       professeur_id_professeur,
@@ -216,13 +214,14 @@ router.post("/", async (req, res) => {
     );
     // Correction de la syntaxe de la requête SQL
     const resultat = await client.query(
-      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_passe,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10) RETURNING id_utilisateur",
+      "INSERT INTO utilisateur(nom,prenom,nom_utilisateur,courriel,mot_de_passe,numero_da,etat_utilisateur,type_utilisateur,professeur_id_professeur,etudiant_id_etudiant,date_creation) VALUES($1, $2, $3, $4, $5, $6, $7,$8,$9,$10,$11) RETURNING id_utilisateur",
       [
         nom,
         prenom,
         nom_utilisateur,
         courriel,
         mot_de_passe_hash,
+        numero_da,
         etat_utilisateur,
         type_utilisateur,
         professeur_id_professeur,
@@ -231,7 +230,7 @@ router.post("/", async (req, res) => {
       ]
     );
     const utilisateur = resultat.rows[0];
-    console.log("Utilisateur :", utilisateur);
+    console.log(utilisateur);
     if (type_utilisateur === "E") {
       const resultat = await client.query(
         "INSERT INTO etudiant(nom_complet,utilisateur_id_utilisateur,etat_etudiant) VALUES($1, $2, $3) RETURNING id_etudiant",
@@ -246,18 +245,18 @@ router.post("/", async (req, res) => {
       logger.info(etudiant);
     } else {
       const resultat = await client.query(
-        "INSERT INTO professeur(nom_complet,utilisateur_id_utilisateur,etat_professeur) VALUES($1, $2, $3, $4) RETURNING id_professeur",
+        "INSERT INTO professeur(nom_complet,utilisateur_id_utilisateur,etat_professeur) VALUES($1, $2, $3) RETURNING id_professeur",
         [nom_utilisateur, utilisateur.id_utilisateur, "A"]
       );
       const professeur = resultat.rows[0];
-      logger.log(professeur);
+      logger.info(professeur);
       await client.query(
         "UPDATE utilisateur SET professeur_id_professeur = $1 WHERE id_utilisateur = $2",
         [professeur.id_professeur, utilisateur.id_utilisateur]
       );
     }
-    logger.info("Insertion de l'utilisateur effectuée avec succès");
     return res.status(200).json({ message: "succes" });
+    logger.info("Insertion de l'utilisateur effectuée avec succès");
   } catch (err) {
     logger.error(`Erreur lors de l'insertion : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insertion" });

@@ -9,7 +9,7 @@ function Connexion() {
 
   const connexionUser = async (e) => {
     e.preventDefault(); // Empêche l'envoi par défaut du formulaire
-
+  
     // Vérification des champs
     if (!nomUtilisateur) {
       console.error("Nom d'utilisateur requis");
@@ -18,7 +18,7 @@ function Connexion() {
       console.error("Mot de passe requis");
       return;
     }
-
+  
     try {
       const response = await fetch("http://localhost:8080/login", {
         method: "POST",
@@ -26,20 +26,17 @@ function Connexion() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: nomUtilisateur,
-          password: motDePasse,
-        }),
+        body: JSON.stringify({ nom_utilisateur: nomUtilisateur, mot_de_passe_Utilisateur: motDePasse }),
       });
-
+  
       const dataJson = await response.json();
-
+  
       if (response.status === 200) {
         //console.log(dataJson); // Affiche la réponse dans la console
         console.log(dataJson.nom_user);
         navigate("/DashBoard", {
           //passe un objet avec les informations de la personnes pour la prochaine pages
-          state: { username: `${dataJson.nom_user}` },
+          state: { nom_utilisateur: `${dataJson.nom_user}` },
         });
         console.log(document.cookie);
       } else if (response.status === 404) {
@@ -57,27 +54,12 @@ function Connexion() {
 
   return (
     <>
-      <form className="container" onSubmit={connexionUser}>
-        <Link to={".."}>
-          <button className="btn btn-primary m-5" type="button">
-            <h2 className="text-center fs-6 m-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-arrow-left"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-                />
-              </svg>{" "}
-              Accueil
-            </h2>
-          </button>
-        </Link>
+      <div className=" mb-5"></div>
+
+      <form
+        className="container"
+        onSubmit={connexionUser}
+      >
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
           <div className="col-4">
@@ -91,7 +73,7 @@ function Connexion() {
                   id="inputNumeroIdentification"
                   value={nomUtilisateur}
                   onChange={(e) => setNomUtilisateur(e.target.value)}
-                  name="username"
+                  name="nom_utilisateur"
                   required
                 />
               </div>
@@ -107,7 +89,7 @@ function Connexion() {
                 value={motDePasse}
                 onChange={(e) => setMotDePasse(e.target.value)}
                 required
-                name="password"
+                name="mot_de_passe_Utilisateur"
               />
             </div>
           </div>
