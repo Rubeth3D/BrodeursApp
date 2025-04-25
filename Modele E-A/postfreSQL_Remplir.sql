@@ -3,96 +3,90 @@
 
 -- Insertion des Utilisateur
 
--- Insertion des Utilisateur/professeur
-INSERT INTO utilisateur (nom, prenom, nom_utilisateur, courriel, mot_de_passe, etat_utilisateur, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant)
-VALUES
-    ('Jean', 'Dupont', 'blueTiger_01', 'jean.dupont@example.com', 'JdP@ss123', 'Actif', 'E', NULL, 1),
-    ('Alice', 'Durand', 'sunnyAlice_24', 'alice.durand@example.com', 'A@l1ceD123', 'Actif', 'E', NULL, 2),
-    ('Marc', 'Lemoine', 'marcoL@85', 'marc.lemoine@example.com', 'M@rcL1m01ne', 'Actif', 'E', NULL, 3),
-    ('Sophie', 'Bernard', 'purpleMoon_44', 'sophie.bernard@example.com', 'S0ph!eB3rn4rd', 'Actif', 'E', NULL, 4),
-    ('Luc', 'Martin', 'nightRider_08', 'luc.martin@example.com', 'L!cM@rt1n123', 'Actif', 'E', NULL, 5),
-    ('Julie', 'Robert', 'mystic_Jules12', 'julie.robert@example.com', 'Juli3_R0b!rt', 'Actif', 'E', NULL, 6),
-    ('David', 'Petit', 'bigD@ve_99', 'david.petit@example.com', 'D@v!dP3t1t', 'Actif', 'E', NULL, 7),
-    ('Clara', 'Roux', 'starryClara_56', 'clara.roux@example.com', 'Cl@ra_R0ux', 'Actif', 'E', NULL, 8),
-    ('Maxime', 'Leblanc', 'maxPower_93', 'maxime.leblanc@example.com', 'M@x1m3_L3bl@nc', 'Actif', 'E', NULL, 9),
-    ('Elise', 'Meunier', 'sweetElise_13', 'elise.meunier@example.com', 'E!l1s3M3un13r', 'Actif', 'E', NULL, 10),
-    ('Paul', 'Garnier', 'paul_theGreat_57', 'paul.garnier@example.com', 'P@ulG@rn13r', 'Actif', 'E', NULL, 11),
-    ('Emma', 'Lemoine', 'greenDream_02', 'emma.lemoine@example.com', '3mm@L3m01ne', 'Actif', 'E', NULL, 12),
-    ('Antoine', 'Chauvet', 'courageAntoine_21', 'antoine.chauvet@example.com', '4nt01n3_Ch@uv3t', 'Actif', 'E', NULL, 13),
-    ('Isabelle', 'Petit', 'luckyIsabelle_33', 'isabelle.petit@example.com', 'I$@b3ll3P3t1t', 'Actif', 'E', NULL, 14),
-    ('Nicolas', 'Gauthier', 'nicoFlash_09', 'nicolas.gauthier@example.com', 'N!c0l@sg@uth13r', 'Actif', 'E', NULL, 15),
-    ('Julie', 'Meunier', 'julesTheExplorer_16', 'julie.meunier2@example.com', 'J!ul13_Meun13r', 'Actif', 'E', NULL, 16),
-    ('Vincent', 'Granger', 'vinnyG_45', 'vincent.granger@example.com', 'V!nc3nt_Gr@ng3r', 'Actif', 'E', NULL, 17),
-    ('Charlotte', 'Vidal', 'violetSoul_11', 'charlotte.vidal@example.com', 'Ch@rl0tt3V!d@l', 'Actif', 'E', NULL, 18),
-    ('Julien', 'Robert', 'juliusR_29', 'julien.robert@example.com', 'Jul13n_R0b3rt', 'Actif', 'E', NULL, 19),
-    ('Celine', 'Sanchez', 'celinePower_88', 'celine.sanchez@example.com', 'C3l1n3S@nch3z', 'Actif', 'E', NULL, 20),
-    ('Florence', 'Dufresne', 'florenceFury_01', 'florence.dufresne@example.com', 'F10r3nc3D@fr3sn3', 'Actif', 'E', NULL, 21),
-    ('Thierry', 'Lemoine', 'sirThierry_47', 'thierry.lemoine@example.com', 'Th!3rry_L3m01n3', 'Actif', 'E', NULL, 22),
-    ('Valerie', 'Bernard', 'valerieTheWind_34', 'valerie.bernard@example.com', 'V@l3r13_B3rn4rd', 'Actif', 'E', NULL, 23),
-    ('Pauline', 'Lemoine', 'moonlightPauline_77', 'pauline.lemoine@example.com', 'P@ul!n3L3m01n3', 'Actif', 'E', NULL, 24),
-    ('Laurent', 'Dufresne', 'laurentStorm_99', 'laurent.dufresne@example.com', 'L@ur3ntD@fr3sn3', 'Actif', 'E', NULL, 25);
+INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur) VALUES
+-- Professeurs
+('jean.dupuis@gmail.com', 'Inactif', 'P'),
+('monique.guillaume@hotmail.com', 'Inactif', 'P'),
+('christian.muller@gmail.com', 'Inactif', 'P'),
+('michele.fournier@hotmail.com', 'Inactif', 'P'),
+('denis.dupuis@gmail.com', 'Inactif', 'P'),
+('marion.boucher@hotmail.com', 'Inactif', 'P'),
+('gerard.tanguy@gmail.com', 'Inactif', 'P'),
+('bernadette.dupont@hotmail.com', 'Inactif', 'P'),
+('thierry.lemoine@gmail.com', 'Inactif', 'P'),
+('helene.joubert@hotmail.com', 'Inactif', 'P'),
+('michel.prieur@gmail.com', 'Inactif', 'P'),
+('sylvie.gagnon@hotmail.com', 'Inactif', 'P'),
+('nathalie.renard@gmail.com', 'Inactif', 'P'),
+('brigitte.vachon@hotmail.com', 'Inactif', 'P'),
+('francois.valois@gmail.com', 'Inactif', 'P'),
 
- -- Insertion des Utilisateur/étudiants
-INSERT INTO utilisateur (nom, prenom, nom_utilisateur, courriel, mot_de_passe, etat_utilisateur, type_utilisateur, professeur_id_professeur, etudiant_id_etudiant)
-VALUES
-    ('Pierre', 'Dupuis', 'mightyPierre_34', 'pierre.dupuis@example.com', 'P!3rr3D@pu1s', 'Actif', 'P', 1, NULL),
-    ('Monique', 'Guillaume', 'sunshineMonique_59', 'monique.guillaume@example.com', 'M0n!qu3G!u1ll@um3', 'Actif', 'P', 2, NULL),
-    ('Christian', 'Muller', 'techChris_72', 'christian.muller@example.com', 'Chr!st!anMull3r', 'Actif', 'P', 3, NULL),
-    ('Michele', 'Fournier', 'michelle_fairy_99', 'michele.fournier@example.com', 'M!ch3l3F0urn!3r', 'Actif', 'P', 4, NULL),
-    ('Denis', 'Dupuis', 'denis_theWise_08', 'denis.dupuis@example.com', 'D3n!sD@pu!s', 'Actif', 'P', 5, NULL),
-    ('Marion', 'Boucher', 'bloomMarion_23', 'marion.boucher@example.com', 'M@r!0nB0uch3r', 'Actif', 'P', 6, NULL),
-    ('Gérard', 'Tanguy', 'gerard_mage_64', 'gerard.tanguy@example.com', 'G!r@rdT@ng!y', 'Actif', 'P', 7, NULL),
-    ('Bernadette', 'Dupont', 'burningBernadette_22', 'bernadette.dupont@example.com', 'B3rn@d3tt3Dup0nt', 'Actif', 'P', 8, NULL),
-    ('Thierry', 'Lemoine', 'thunderThierry_81', 'thierry.lemoine@example.com', 'Th!3rry_L3m01n3', 'Actif', 'P', 9, NULL),
-    ('Hélène', 'Joubert', 'hurricaneHelene_14', 'helene.joubert@example.com', 'H3l3n3J0ub3rt', 'Actif', 'P', 10, NULL),
-    ('Michel', 'Prieur', 'priestMichel_78', 'michel.prieur@example.com', 'M!ch3lPr13ur', 'Actif', 'P', 11, NULL),
-    ('Sylvie', 'Gagnon', 'gagaSylvie_44', 'sylvie.gagnon@example.com', 'S!lv13G@g4n0n', 'Actif', 'P', 12, NULL),
-    ('Nathalie', 'Renard', 'riskyNathalie_35', 'nathalie.renard@example.com', 'N@th@l13R3n@rd', 'Actif', 'P', 13, NULL),
-    ('Brigitte', 'Vachon', 'brigitteLion_29', 'brigitte.vachon@example.com', 'Br!gg!t3V@ch0n', 'Actif', 'P', 14, NULL),
-    ('François', 'Valois', 'valiantFrancois_56', 'francois.valois@example.com', 'Fr@nc01sV@l0!s', 'Actif', 'P', 15, NULL),
-    ('Claude', 'Lemoine', 'coolClaude_09', 'claude.lemoine@example.com', 'Cl@ud3_L3m01n3', 'Actif', 'P', 16, NULL),
-    ('Jacqueline', 'Morin', 'jacq_queen_13', 'jacqueline.morin@example.com', 'J@cqu3l!n3M0r1n', 'Actif', 'P', 17, NULL),
-    ('Patrick', 'Lemoine', 'patrickPower_21', 'patrick.lemoine@example.com', 'P@tr1ck_L3m01n3', 'Actif', 'P', 18, NULL),
-    ('Jacques', 'Robert', 'robertJ_64', 'jacques.robert@example.com', 'J@cq!s_R0b3rt', 'Actif', 'P', 19, NULL),
-    ('Éric', 'Boucher', 'epicEric_37', 'eric.boucher@example.com', '3r!cB0uch3r', 'Actif', 'P', 20, NULL),
-    ('Franck', 'Dufresne', 'dufresneForce_23', 'franck.dufresne@example.com', 'Fr@ncK_DuFr3sn3', 'Actif', 'P', 21, NULL),
-    ('Michel', 'Petit', 'petitPanda_05', 'michel.petit@example.com', 'M!ch3lP3t1t', 'Actif', 'P', 22, NULL),
-    ('Jean-Luc', 'Vidal', 'lucidJean_92', 'jeanluc.vidal@example.com', 'J3@nlucV!d@l', 'Actif', 'P', 23, NULL),
-    ('Lucie', 'Beaulieu', 'luckyLucie_66', 'lucie.beaulieu@example.com', 'L!c13B3@ul13u', 'Actif', 'P', 24, NULL),
-    ('Gilbert', 'Mallet', 'gilbertStar_47', 'gilbert.mallet@example.com', 'G!lb3rt_M@ll3t', 'Actif', 'P', 25, NULL);
-
+-- Étudiants
+('alice.durand@hotmail.com', 'Inactif', 'E'),
+('marc.lemoine@gmail.com', 'Inactif', 'E'),
+('sophie.bernard@hotmail.com', 'Inactif', 'E'),
+('luc.martin@gmail.com', 'Inactif', 'E'),
+('julie.robert@hotmail.com', 'Inactif', 'E'),
+('david.petit@gmail.com', 'Inactif', 'E'),
+('clara.roux@hotmail.com', 'Inactif', 'E'),
+('maxime.leblanc@gmail.com', 'Inactif', 'E'),
+('elise.meunier@hotmail.com', 'Inactif', 'E'),
+('paul.garnier@gmail.com', 'Inactif', 'E'),
+('emma.lemoine@hotmail.com', 'Inactif', 'E'),
+('antoine.chauvet@gmail.com', 'Inactif', 'E'),
+('isabelle.petit@hotmail.com', 'Inactif', 'E'),
+('nicolas.gauthier@gmail.com', 'Inactif', 'E'),
+('julie.meunier2@hotmail.com', 'Inactif', 'E');
 
 --Insertion professeur
-INSERT INTO professeur (nom_complet, etat_professeur, utilisateur_id_user) 
-VALUES
-    ( 'Jean Dupont', 'A', 1),
-    ( 'Marie Curie', 'A', 2),
-    ( 'Albert Einstein', 'A', 3),
-    ( 'Isaac Newton', 'A', 4),
-    ( 'Leonard Da Vinci', 'A', 5),
-    ( 'Nikola Tesla', 'A', 6),
-    ( 'Galileo Galilei', 'A', 7),
-    ( 'Ada Lovelace', 'A', 8),
-    ( 'Alan Turing', 'A', 9),
-    ( 'Richard Feynman', 'A', 10),
-    ( 'Carl Sagan', 'A', 11),
-    ( 'Stephen Hawking', 'A', 12),
-    ( 'Rosalind Franklin', 'A', 13),
-    ( 'Katherine Johnson', 'A', 14),
-    ( 'Dmitri Mendeleev', 'A', 15),
-    ( 'Niels Bohr', 'A', 16),
-    ( 'Max Planck', 'A', 17),
-    ( 'Emmy Noether', 'A', 18),
-    ( 'Barbara McClintock', 'A', 19),
-    ( 'Dorothy Hodgkin', 'A', 20),
-    ( 'Subrahmanyan Chandrasekhar', 'A', 21),
-    ( 'Michael Faraday', 'A', 22),
-    ( 'James Maxwell', 'A', 23),
-    ( 'Erwin Schrodinger', 'A', 24),
-    ( 'Richard Dawkins', 'A', 25);
+INSERT INTO professeur (nom_complet, utilisateur_id_utilisateur, etat_professeur) VALUES
+('Jean Dupuis', 1, 'Inactif'),
+('Monique Guillaume', 2, 'Inactif'),
+('Christian Muller', 3, 'Inactif'),
+('Michele Fournier', 4, 'Inactif'),
+('Denis Dupuis', 5, 'Inactif'),
+('Marion Boucher', 6, 'Inactif'),
+('Gérard Tanguy', 7, 'Inactif'),
+('Bernadette Dupont', 8, 'Inactif'),
+('Thierry Lemoine', 9, 'Inactif'),
+('Hélène Joubert', 10, 'Inactif'),
+('Michel Prieur', 11, 'Inactif'),
+('Sylvie Gagnon', 12, 'Inactif'),
+('Nathalie Renard', 13, 'Inactif'),
+('Brigitte Vachon', 14, 'Inactif'),
+('François Valois', 15, 'Inactif');
+
+--Insertion etudiant
+INSERT INTO etudiant (nom_complet, numero_da, utilisateur_id_utilisateur, professeur_id_professeur, etat_etudiant) VALUES
+('Pierre Dupuis', 1001, 16, 1, 'Inactif'),
+('Monique Guillaume', 1002, 17, 2, 'Inactif'),
+('Christian Muller', 1003, 18, 3, 'Inactif'),
+('Michele Fournier', 1004, 19, 4, 'Inactif'),
+('Denis Dupuis', 1005, 20, 5, 'Inactif'),
+('Marion Boucher', 1006, 21, 6, 'Inactif'),
+('Gérard Tanguy', 1007, 22, 7, 'Inactif'),
+('Bernadette Dupont', 1008, 23, 8, 'Inactif'),
+('Thierry Lemoine', 1009, 24, 9, 'Inactif'),
+('Hélène Joubert', 1010, 25, 10, 'Inactif'),
+('Michel Prieur', 1011, 26, 11, 'Inactif'),
+('Sylvie Gagnon', 1012, 27, 12, 'Inactif'),
+('Nathalie Renard', 1013, 28, 13, 'Inactif'),
+('Brigitte Vachon', 1014, 29, 14, 'Inactif'),
+('François Valois', 1015, 30, 15, 'Inactif');
+
+UPDATE utilisateur u
+SET professeur_id_professeur = p.id_professeur
+FROM professeur p
+WHERE u.type_utilisateur = 'P' AND u.id_utilisateur = p.utilisateur_id_utilisateur;
+
+UPDATE utilisateur u
+SET etudiant_id_etudiant = e.id_etudiant
+FROM etudiant e
+WHERE u.type_utilisateur = 'E' AND u.id_utilisateur = e.utilisateur_id_utilisateur;
+
 
 --Insertion Session
-INSERT INTO "Session" (code_session, date_session, etat_session)
+INSERT INTO session (code_session, date_session, etat_session)
 VALUES
     ( 'SESSION_HIVER_2024', '2024-01-15', 'Actif'),
     ( 'SESSION_PRINTEMPS_2024', '2024-04-10', 'Actif'),

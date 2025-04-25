@@ -56,6 +56,7 @@ CREATE TABLE equipe (
 CREATE TABLE etudiant (
     id_etudiant                SERIAL PRIMARY KEY,
     nom_complet                VARCHAR(200),
+    numero_da                  INTEGER,
     utilisateur_id_utilisateur INTEGER,
     professeur_id_professeur   INTEGER,
     etat_etudiant              VARCHAR(20),
@@ -163,7 +164,6 @@ CREATE TABLE utilisateur (
     nom_utilisateur VARCHAR(200),
     courriel VARCHAR(250),
     mot_de_passe VARCHAR(2000),
-    numero_da INTEGER,
     etat_utilisateur VARCHAR(20),
     type_utilisateur CHAR(1) NOT NULL,
     professeur_id_professeur INTEGER,
