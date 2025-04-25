@@ -159,7 +159,7 @@ CREATE TABLE travail (
 
 CREATE TABLE utilisateur (
     id_utilisateur SERIAL PRIMARY KEY,
-    nom VARCHAR(200) NOT NULL,
+    nom VARCHAR(200) ,
     prenom VARCHAR(200),
     nom_utilisateur VARCHAR(200),
     courriel VARCHAR(250),
@@ -170,7 +170,9 @@ CREATE TABLE utilisateur (
     etudiant_id_etudiant INTEGER,
     date_creation DATE,
     UNIQUE (etudiant_id_etudiant),
-    UNIQUE (professeur_id_professeur)
+    UNIQUE (professeur_id_professeur),
+     CONSTRAINT fk_professeur FOREIGN KEY (professeur_id_professeur) REFERENCES professeur(id_professeur),
+    CONSTRAINT fk_etudiant FOREIGN KEY (etudiant_id_etudiant) REFERENCES etudiant(id_etudiant)
 );
 
 COMMENT ON COLUMN utilisateur.etat_utilisateur IS 'Actif/Inactif';
@@ -277,26 +279,22 @@ ALTER TABLE travail
     ADD CONSTRAINT travail_instrument_fk FOREIGN KEY (instrument_id_instrument)
         REFERENCES instrument (id_instrument);
 
+DROP SEQUENCE IF EXISTS utilisateur_id_utilisateur_seq CASCADE;
 CREATE SEQUENCE utilisateur_id_utilisateur_seq START WITH 1;
-
+-- Create the sequence
 CREATE OR REPLACE FUNCTION utilisateur_id_utilisateur_trg()
 RETURNS TRIGGER AS $$
 BEGIN
+    -- Check if the id_utilisateur is NULL and assign a new value from the sequence
     IF NEW.id_utilisateur IS NULL THEN
         NEW.id_utilisateur := nextval('utilisateur_id_utilisateur_seq');
     END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.id_utilisateur IS NULL THEN
-        NEW.id_utilisateur := nextval('utilisateur_id_utilisateur_seq');
-    END IF;
+    -- Return the modified row
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+-- Create the trigger if not already created
 CREATE TRIGGER utilisateur_id_utilisateur_trg
 BEFORE INSERT ON utilisateur
 FOR EACH ROW
