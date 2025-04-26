@@ -64,6 +64,7 @@ const Cours = () => {
       console.error(error);
     }
   };
+
   
   {/* 
     const supprimerCours = async (id) => {
