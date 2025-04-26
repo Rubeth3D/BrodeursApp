@@ -51,7 +51,41 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
       .json({ message: "Il y a eu une erreur de type 500" });
   }
 });
+//Envoie le code que celui voulant s'inscrire doit entrer
+router.put("/envoyerCode", async (req, res) => {
+  try {
+    const { courriel } = req.body;
+    const jetonAcces = await oAuth2Client.getAccessToken();
+    console.log("Jeton d'acces : ", jetonAcces);
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "evaluationparlespairs@gmail.com",
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refresh_token: process.env.REFRESH_TOKEN,
+        accessToken: jetonAcces.token,
+      },
+    });
+    logger.info("Transport créé");
+    const codeVerification = Math.floor(1000 + Math.random() * 9000);
 
+    const mailOptions = {
+      from: "Brodeurs App",
+      to: courriel,
+      subject: "code de verification",
+      html: `Voici votre code de verification : ${codeVerification} </h1>`,
+    };
+    await transport.sendMail(mailOptions);
+    res.status(200).json({ message: "Courriel envoye avec succes" });
+  } catch (err) {
+    logger.error("Erreur lors de l'envoi du courriel : ", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+//verifie le code envoye a l'utilisateur
+router.get("verfierCode", (req, res) => {});
 //get pour un utilisateur
 router.get("/:nom_user", async (req, res) => {
   try {

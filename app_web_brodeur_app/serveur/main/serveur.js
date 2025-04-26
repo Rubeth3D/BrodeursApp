@@ -4,7 +4,7 @@ import cors from "cors";
 import winston from "winston";
 import cours from "../routes/cours.js";
 import classe from "../routes/classe.js";
-import utilisateur from "../routes/utilisateur.js";
+import inscription from "../routes/inscription.js";
 import etudiant from "../routes/etudiant.js";
 import sessionDeCours from "../routes/sessionCours.js";
 import logSessions from "../routes/logSessions.js";
@@ -52,7 +52,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/cours", cours);
-app.use("/utilisateur", utilisateur);
+app.use("/inscription", inscription);
 app.use("/sessionCours", sessionDeCours);
 app.use("/logSessions", logSessions);
 app.use("/classe", classe);
@@ -67,15 +67,19 @@ app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     const sessionId = String(user.session_id);
     const encryptedSessionId = encrypt(sessionId);
-    if (err) return res.status(500).send("Erreur serveur");
+    if (err) return res.status(500).json({ message: "Erreur serveur" });
     if (!user)
-      return res
-        .status(401)
-        .send(info.message || "Nom d’utilisateur ou mot de passe incorrect");
+      return res.status(401).json(
+        { message: info.message } || {
+          message: "Nom d’utilisateur ou mot de passe incorrect",
+        }
+      );
 
     req.login(user, (err) => {
       if (err)
-        return res.status(500).send("Erreur lors de la création de la session");
+        return res
+          .status(500)
+          .json({ message: "Erreur lors de la création de la session" });
 
       // Ajouter l'ID de session au cookie
       res.cookie("session_id", encryptedSessionId, {

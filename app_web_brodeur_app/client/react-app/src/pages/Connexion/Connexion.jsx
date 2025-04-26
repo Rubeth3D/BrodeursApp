@@ -1,15 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+//@ts-ignore
+import MessageErreurConnexion from "../../element/MessageConnexion.jsx";
 function Connexion() {
   const [nomUtilisateur, setNomUtilisateur] = useState("");
-  const [reponseStatus, setReponseStatus] = useState(null);
   const [motDePasse, setMotDePasse] = useState("");
+  const [codeReponseServeur, setCodeReponseServeur] = useState(null);
   const navigate = useNavigate();
 
   const connexionUser = async (e) => {
     e.preventDefault(); // Empêche l'envoi par défaut du formulaire
-  
+
     // Vérification des champs
     if (!nomUtilisateur) {
       console.error("Nom d'utilisateur requis");
@@ -18,7 +19,7 @@ function Connexion() {
       console.error("Mot de passe requis");
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:8080/login", {
         method: "POST",
@@ -26,40 +27,46 @@ function Connexion() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nom_utilisateur: nomUtilisateur, mot_de_passe_Utilisateur: motDePasse }),
+        body: JSON.stringify({
+          nom_utilisateur: nomUtilisateur,
+          mot_de_passe_Utilisateur: motDePasse,
+        }),
       });
-  
+      setCodeReponseServeur(response.status);
+      console.log(codeReponseServeur);
       const dataJson = await response.json();
-  
-      if (response.status === 200) {
-        //console.log(dataJson); // Affiche la réponse dans la console
-        console.log(dataJson.nom_user);
-        navigate("/DashBoard", {
-          //passe un objet avec les informations de la personnes pour la prochaine pages
-          state: { nom_utilisateur: `${dataJson.nom_user}` },
-        });
-        console.log(document.cookie);
-      } else if (response.status === 404) {
-        console.log(dataJson.message);
-        setReponseStatus("Utilisateur non trouvé");
-      } else if (response.status === 401) {
-        console.log(dataJson.message);
-        setReponseStatus("Nom d'utilisateur ou mot de passe incorrect");
-      }
     } catch (err) {
-      console.log(err.message);
-      setReponseStatus("Erreur serveur, veuillez réessayer plus tard");
+      console.log("Erreur de serveur : ", err.message);
+      setCodeReponseServeur(500);
     }
   };
 
   return (
     <>
-      <div className=" mb-5"></div>
-
-      <form
-        className="container"
-        onSubmit={connexionUser}
-      >
+      <form className="container" onSubmit={connexionUser}>
+        <Link to={"/"}>
+          <button className="btn btn-primary m-5" type="button">
+            <h2 className="text-center fs-6 m-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-arrow-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+                />
+              </svg>{" "}
+              Retour
+            </h2>
+          </button>
+        </Link>
+        <MessageErreurConnexion 
+          reponseCodeStatus={codeReponseServeur}
+        ></MessageErreurConnexion>
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
           <div className="col-4">

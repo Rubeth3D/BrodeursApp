@@ -2,14 +2,10 @@ process.removeAllListeners("warning");
 import { google } from "googleapis";
 import { config } from "dotenv";
 config();
-const SCOPES = ["https://www.googleapis.com/auth/gmail.send"];
-
-const jwtClient = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_EMAIL,
-  null,
-  process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-  SCOPES,
-  process.env.GMAIL_USER_AUTORISE
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REDIRECT_URL
 );
-jwtClient.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
-export default jwtClient;
+oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+export default oAuth2Client;

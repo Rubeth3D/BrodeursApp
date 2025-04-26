@@ -63,7 +63,7 @@ function Inscription() {
       }
 
       console.log("Body utilisateur : ", bodyUtilisateur);
-      const response = await fetch(`http://localhost:8080/utilisateur`, {
+      const response = await fetch(`http://localhost:8080/inscription`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyUtilisateur),
@@ -71,16 +71,18 @@ function Inscription() {
       });
 
       if (response.ok) {
-        console.log(bodyUtilisateur.mot_de_passe)
-        console.log(bodyUtilisateur.nom_utilisateur)
-        const responseConnexion = await fetch(`http://localhost:8080/login`,{
+        console.log(bodyUtilisateur.mot_de_passe);
+        console.log(bodyUtilisateur.nom_utilisateur);
+        const responseConnexion = await fetch(`http://localhost:8080/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-             mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe}),
+          body: JSON.stringify({
+            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
+          }),
         });
-        if(responseConnexion.ok){
+        if (responseConnexion.ok) {
           navigate("/DashBoard", {
             state: { username: `${bodyUtilisateur.nom_utilisateur}` },
           });
@@ -90,11 +92,18 @@ function Inscription() {
       console.log(err.message);
     }
   };
-
+  const envoyerCourriel = async () => {
+    const response = await fetch(`http://localhost:8080/inscription`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyUtilisateur.courriel),
+      credentials: "include",
+    });
+  };
   return (
     <>
-      <form className="container" onSubmit={creationUtilisateur}>
-        <Link to={"/Connexion"}>
+      <form className="container" onSubmit={envoyerCourriel()}>
+        <Link to={"/"}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
               <svg
@@ -243,16 +252,24 @@ function Inscription() {
           </div>
         </div>
 
-        <div className="d-flex justify-content-center align-items-center mt-4">
+        <div className="text-center mt-1">
           <button
             type="submit"
-            className="btn btn-primary mt-5 mb-5"
+            className="btn btn-primary "
             onClick={() => {
               CreerNomUtilisateur();
             }}
           >
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
+          <p>
+            <Link
+              to={"/Connexion"}
+              className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
+            >
+              Connexion
+            </Link>
+          </p>
         </div>
       </form>
     </>
