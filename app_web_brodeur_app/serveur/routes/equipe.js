@@ -23,6 +23,9 @@ router.use(express.json());
 //get pour les equipes
 router.get("/", async (req, res) => {
   try {
+    if (!req.user.session) {
+      return res.status(401).json({ message: "Session invalide" });
+    }
     const resultat = await client.query("SELECT * FROM equipe");
     res.status(200).json(resultat.rows);
     logger.info("Get des equipes effectue avec succes!");
