@@ -1,6 +1,6 @@
 //@ts-ignore
 import Navbar from "../../element/Navbar";
-import Footer from "../../element/footer";
+import Footer from "../../element/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
