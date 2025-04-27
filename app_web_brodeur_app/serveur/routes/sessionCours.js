@@ -23,14 +23,28 @@ const router = express.Router();
 router.use(express.json());
 
 //get pour les sessions
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const resultat = await connexionPostgres.query("SELECT * FROM session");
+    const { id } = req.params; 
+    const resultat = await connexionPostgres.query(
+      "SELECT * FROM session_cours WHERE cours_id = $1", [id]
+    );
     res.status(200).json(resultat.rows);
-    logger.info("Get des sessions effectuer avec succes!");
+    logger.info("Get des sessions effectué avec succès!");
   } catch (err) {
     logger.error(`Erreur lors du fetch des sessions : ${err}`);
     res.status(500).json({ message: "Erreur lors du fetch des sessions!" });
   }
+});
+
+
+router.post("/", async (req, res) => {
+  try {
+    const { code_session, date_session, etat_professeur, utilisateur_id_user } =
+      req.body;
+    const resultat = await connexionPostgres.query(
+      "INSERT INTO session(code_session, date_session, etat_professeur, utilisateur_id_user) VALUE($1,$2,$3,$4) RETURNING *"
+    );
+  } catch (error) {}
 });
 export default router;
