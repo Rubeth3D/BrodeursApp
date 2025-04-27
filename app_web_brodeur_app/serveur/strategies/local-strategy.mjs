@@ -149,9 +149,13 @@ export default passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user.id_utilisateur);
+passport.serializeUser((utilisateur, done) => {
+  console.log("Serialize User avec session_id:", utilisateur.session_id);
+  done(null, utilisateur.session_id); 
 });
+/*passport.serializeUser((user, done) => {
+  done(null, user.id_utilisateur);
+});*/
 
 passport.deserializeUser((id, done) => {
   const requete = "SELECT * FROM utilisateur WHERE id_utilisateur = $1;";
