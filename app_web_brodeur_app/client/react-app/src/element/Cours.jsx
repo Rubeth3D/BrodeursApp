@@ -4,6 +4,7 @@ import ModifierSVG from "../image/ModifierSVG.jsx";
 
 
 const Cours = () => {
+  const [sessionCours, setSessionCours] = useState([]);
   const [filtreTousCours, setFiltreTousCours] = useState([]);
   const [cours, setCours] = useState([]);
   const [form, setForm] = useState({
@@ -65,23 +66,19 @@ const Cours = () => {
     }
   };
 
-  
-  {/* 
-    const supprimerCours = async (id) => {
+  const fetchSessionCours = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/cours/${id}`, {
-        method: "DELETE",
+      const response = await fetch(`http://localhost:8080/sessionCours/${id}`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.ok) {
-        fetchCours();
-      }
+      const data = await response.json();
+      setSessionCours(data);
     } catch (error) {
       console.error(error);
     }
-  };
-  */}
-  
+  }
+
   const desactiverCours = async (cours) => {
     try {
       await fetch(`http://localhost:8080/cours/${cours.id_cours}`, {
@@ -107,9 +104,11 @@ const Cours = () => {
     });
   };
   
+  
   useEffect(() => {
     fetchCours();
   }, []);
+  
 
   const coursActif = cours.filter((cours) => cours.etat_cours === "Actif").length;
   const coursInactif = cours.filter((cours) => cours.etat_cours === "Inactif").length;
@@ -293,14 +292,20 @@ const Cours = () => {
 
                 <div className='col-mb-4'>
                   <label htmlFor="validationCustom04" className="form-label">Session</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom04" 
-                    value={form.session_id_session} 
+                  <select
+                    className="form-select"
+                    id="validationCustom04"
+                    value={form.session_id_session}
                     onChange={(e) => setForm({ ...form, session_id_session: e.target.value })}
                     required
-                  />
+                  >
+                    <option value="">Sélectionner une session</option>
+                    {sessionCours.map((session) => (
+                      <option key={session.id_session} value={session.id_session}>
+                        {session.code_session}
+                      </option>
+                    ))}
+                  </select>
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Session requise</div>
                 </div>

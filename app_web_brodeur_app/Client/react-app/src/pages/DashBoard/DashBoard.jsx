@@ -15,6 +15,7 @@ import HoverDiv from "../../element/HoverDiv";
 import HoverText from "../../element/HoverText";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
+import Equipe from "../../element/Equipe";
 import TravauxSVG from "../../image/TravauxSVG";
 
 function DashBoard() {
@@ -181,6 +182,7 @@ function DashBoard() {
           <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
+            {etatBoutton[3].isActiver && <Equipe />}
           </div>
         </div>
       </div>
