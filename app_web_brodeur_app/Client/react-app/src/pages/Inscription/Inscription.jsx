@@ -3,7 +3,7 @@ import Navbar from "../../element/Navbar";
 import Footer from "../../element/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-
+import MessageUtilisateur from "../../element/MessageUtilisateur";
 function Inscription() {
   const [bodyEtudiant, setBodyEtudiant] = useState();
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
@@ -38,9 +38,23 @@ function Inscription() {
       nom_utilisateur: nomUtilisateur,
     }));
   }
-
+  const verifierUtilisateur = () => {
+    if (bodyUtilisateur.type_utilisateur === "E") {
+      regarderSiExistant("etudiantExiste");
+    } else {
+      regarderSiExistant("professeurExiste");
+    }
+  };
   const envoyerCourriel = async () => {
-    const response = await fetch(`http://localhost:8080/inscription`, {
+    const response = await fetch(`http://localhost:8080/utilisateur`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyUtilisateur.courriel),
+      credentials: "include",
+    });
+  };
+  const regarderSiExistant = async (typeUtilisateur) => {
+    const response = await fetch(`http://localhost:8080/${typeUtilisateur}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bodyUtilisateur.courriel),
@@ -49,7 +63,12 @@ function Inscription() {
   };
   return (
     <>
-      <form className="container" onSubmit={envoyerCourriel()}>
+      <form
+        className="container"
+        onSubmit={() => {
+          verifierUtilisateur();
+        }}
+      >
         <Link to={"/"}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
@@ -70,7 +89,7 @@ function Inscription() {
             </h2>
           </button>
         </Link>
-
+        <MessageUtilisateur />
         <h2 className="text-center display-3 fw-normal mb-5">Inscription</h2>
 
         <div className="row justify-content-center">
@@ -222,5 +241,4 @@ function Inscription() {
     </>
   );
 }
-
 export default Inscription;

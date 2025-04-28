@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ErreurSVG from "../image/ErreurSVG.jsx";
 import SuccesSVG from "../image/SuccesSVG.jsx";
-const messageErreurConnexion = (reponseCodeStatus) => {
+const messageErreurConnexion = (reponseCodeStatus, reponseJson) => {
   console.log("Status Code : ", reponseCodeStatus);
   const styleMessageErreurBackground = {
     backgroundColor: "rgba(220, 53, 69, 0.4)",

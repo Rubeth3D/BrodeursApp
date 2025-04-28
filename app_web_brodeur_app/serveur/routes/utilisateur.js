@@ -363,4 +363,31 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/etudiantExiste/:nom_complet", async (req, res) => {
+  const nom_complet = req.params;
+  const resultat = await client.query(
+    "SELECT FROM etudiant WHERE nom_complet = $1 AND etat_etudiant = I",
+    [nom_complet]
+  );
+
+  if (resultat.rowCount === 0) {
+    return res
+      .status(404)
+      .json({ message: "Vous n'existez pas en tant qu'étudiant" });
+  }
+});
+router.get("/professeurExiste/:nom_complet", async (req, res) => {
+  const nom_complet = req.params;
+  const resultat = await client.query(
+    "SELECT FROM professeur WHERE nom_complet = $1 AND etat_professeur = I",
+    [nom_complet]
+  );
+
+  if (resultat.rowCount === 0) {
+    return res
+      .status(404)
+      .json({ message: "Vous n'existez pas en tant que professeur" });
+  }
+});
+
 export default router;
