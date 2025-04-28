@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 // GET une seule équipe par id
 router.get("/:id", async (req, res) => {
   try {
-    const { idEquipe } = req.params;
+    const { id } = req.params;
     const resultat = await client.query(
       "SELECT * FROM equipe WHERE id_equipe = $1",
       [id]
