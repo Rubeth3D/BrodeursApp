@@ -16,7 +16,7 @@ const Equipe = () => {
 
   const fetchEquipes = async () => {
     try {
-      const response = await fetch("http://localhost:8080/equipes", {
+      const response = await fetch("http://localhost:8080/equipe", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -31,7 +31,7 @@ const Equipe = () => {
   const creerEquipe = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/equipes", {
+      const response = await fetch("http://localhost:8080/equipe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -47,7 +47,7 @@ const Equipe = () => {
 
   const modifierEquipe = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/equipes/${id}`, {
+      const response = await fetch(`http://localhost:8080/equipe/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -64,7 +64,7 @@ const Equipe = () => {
 
   const desactiverEquipe = async (equipe) => {
     try {
-      await fetch(`http://localhost:8080/equipes/${equipe.id_equipe}`, {
+      await fetch(`http://localhost:8080/equipe/${equipe.id_equipe}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
