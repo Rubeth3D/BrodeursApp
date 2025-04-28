@@ -7,21 +7,6 @@ function Navbar() {
   const [estConnecte, setEstConnecte] = useState(false);
   const [dashBoard, setDashboard] = useState(false);
   const urlUtilisateur = "http://localhost:8080/utilisateur";
-  // const VerifierCookies = async () => {
-  //   try {
-  //     const reponse = await fetch(`${urlUtilisateur}/VerifierCookies`, {
-  //       credentials: "include",
-  //     });
-  //     const jsonData = await reponse.json();
-  //     if (reponse.ok) {
-  //       setEstConnecte(true);
-  //       setUsername(jsonData.nom_user);
-  //       console.log(username);
-  //     }
-  //   } catch (err) {
-  //     console.log(`Erreur lors du fetch du user : ${err}`);
-  //   }
-  // };
   const Deconnexion = async () => {
     try {
       const reponse = await fetch(`${urlUtilisateur}/Deconnexion`, {
@@ -38,19 +23,15 @@ function Navbar() {
   function GererConnexion() {
     if (estConnecte) {
       return (
-        <li>
-          <Link to={"/DashBoard"} className="dropdown-item">
-            {username}
-          </Link>
-        </li>
+        <Link to={"/DashBoard"} className="dropdown-item">
+          {username}
+        </Link>
       );
     } else {
       return (
-        <li>
-          <Link to={"/Connexion"} className="dropdown-item">
-            Connexion
-          </Link>
-        </li>
+        <Link to={"/Connexion"} className="dropdown-item">
+          Connexion
+        </Link>
       );
     }
   }
@@ -101,7 +82,10 @@ function Navbar() {
               />
             </svg>
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <ul
+            className="dropdown-menu text-center"
+            aria-labelledby="dropdownMenuButton"
+          >
             <li>{GererConnexion()}</li>
             <li>{GererInscription()}</li>
           </ul>
