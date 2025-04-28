@@ -9,7 +9,7 @@ const Equipe = () => {
     code_equipe: "",
     nom: "",
     classe_id_classe: "",
-    etat_equipe: "Actif",  // Valeur par défaut
+    etat_equipe: "Actif", 
     id_cours: "",
     id_session: "",
   });
@@ -84,7 +84,7 @@ const Equipe = () => {
       code_equipe: "",
       nom: "",
       classe_id_classe: "",
-      etat_equipe: "Actif", // Reset avec valeur par défaut
+      etat_equipe: "Actif", 
       id_cours: "",
       id_session: "",
     });

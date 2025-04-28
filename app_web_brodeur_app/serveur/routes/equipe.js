@@ -24,8 +24,8 @@ router.use(express.json());
 router.get("/", async (req, res) => {
   try {
     const resultat = await client.query("SELECT * FROM equipe");
-    res.status(200).json(resultat.rows);
     logger.info("Get des équipes effectué avec succès!");
+    res.status(200).json(resultat.rows);
   } catch (err) {
     logger.error(`Erreur lors du fetch des équipes : ${err}`);
     res.status(500).json({ message: "Erreur lors du fetch des équipes!" });
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 // GET une seule équipe par id
 router.get("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { idEquipe } = req.params;
     const resultat = await client.query(
       "SELECT * FROM equipe WHERE id_equipe = $1",
       [id]

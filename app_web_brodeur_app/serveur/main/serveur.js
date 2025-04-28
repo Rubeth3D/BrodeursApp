@@ -12,6 +12,7 @@ import { config } from "dotenv";
 import initialize from "../strategies/local-strategie.js";
 import client from "../bd/postgresBD/Connexion.js";
 import classe from "../routes/classe.js";
+import equipe from "../routes/equipe.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -32,6 +33,9 @@ const corsConfig = {
 };
 config();
 const app = express();
+
+app.use(express.json());
+
 //initialisation du passport
 app.use(cors(corsConfig));
 app.use(cookieParser());
@@ -40,6 +44,7 @@ app.use("/utilisateur", utilisateur);
 app.use("/sessionCours", session);
 app.use("/logSessions", logSessions);
 app.use("/classe", classe);
+app.use("/equipe", equipe);
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
