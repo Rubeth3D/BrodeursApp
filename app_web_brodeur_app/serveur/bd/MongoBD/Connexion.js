@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 import { config } from "dotenv";
 import winston from "winston";
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -16,22 +17,20 @@ const logger = winston.createLogger({
 });
 config();
 const url = process.env.MONGO_URL;
-var mongoClient;
-try {
-  mongoClient = new MongoClient(url);
-  logger.info("Connexion à la BD Mongo...");
-  await mongoClient.connect();
-  logger.info("Connecté à la BD Mongo!");
-} catch (err) {
-  if (err instanceof AggregateError) {
-    console.error("Plusieurs erreurs de bd Mongo détectées :");
-    for (const error of err.errors) {
-      console.error(`- Erreur: ${error.message}`);
-    }
-  } else {
-    console.error(`Erreur unique : ${err}`);
+console.log(url);
+let mongoClient;
+async function connectToMongoDB() {
+  try {
+    mongoClient = new MongoClient(url);
+    logger.info("Connexion à la BD Mongo...");
+    await mongoClient.connect();
+    logger.info("Connecté à la BD Mongo!");
+  } catch (err) {
+    console.error("Erreur lors de la connexion à MongoDB: ", err.message);
+    process.exit(1); // Quitter le programme si la connexion échoue
   }
-  process.exit(1);
 }
+
+connectToMongoDB();
 
 export default mongoClient;

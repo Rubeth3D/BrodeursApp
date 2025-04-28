@@ -4,7 +4,7 @@
 
 const database = "mongoBrodeurApps";
 const collectionCommentaire = "Commentaire";
-const collectionSession = "Historique_Des_Session";
+const collectionSession = "Historique_Des_Sessions";
 
 // Create a new database.
 use(database);
@@ -67,7 +67,7 @@ const commentaire = [
 const HistoriqueSession = [
   {
     id_utilisateur: "1",
-    id_Session: "2jjf29jg203ui9g92u923u53",
+    id_session: "2jjf29jg203ui9g92u923u53",
     numeroDa: "",
     nom_utilisateur: "Jean Dupuis",
     courriel: "jean.dupuis@gmail.com",
@@ -79,7 +79,7 @@ const HistoriqueSession = [
   },
   {
     id_utilisateur: "1",
-    id_Session: "2jjf29jg203ui9g92u923u53",
+    id_session: "2jjf29jg203ui9g92u923u53",
     numeroDa: "",
     nom_utilisateur: "Jean Dupuis",
     courriel: "jean.dupuis@gmail.com",
@@ -91,7 +91,7 @@ const HistoriqueSession = [
   },
   {
     id_utilisateur: "5",
-    id_Session: "g93g029i301tg2ij4024g",
+    id_session: "g93g029i301tg2ij4024g",
     numeroDa: "",
     nom_utilisateur: "Denis Dupuis",
     courriel: "denis.dupuis@gmail.com",
@@ -103,7 +103,7 @@ const HistoriqueSession = [
   },
   {
     id_utilisateur: "5",
-    id_Session: "g93g029i301tg2ij4024g",
+    id_session: "g93g029i301tg2ij4024g",
     numeroDa: "",
     nom_utilisateur: "Denis Dupuis",
     courriel: "denis.dupuis@gmail.com",
@@ -115,7 +115,7 @@ const HistoriqueSession = [
   },
   {
     id_utilisateur: "5",
-    id_Session: "g93g029i301tg2ij4024g",
+    id_session: "g93g029i301tg2ij4024g",
     numeroDa: "",
     nom_utilisateur: "Denis Dupuis",
     courriel: "denis.dupuis@gmail.com",
@@ -127,7 +127,7 @@ const HistoriqueSession = [
   },
   {
     id_utilisateur: "5",
-    id_Session: "g93g029i301tg2ij4024g",
+    id_session: "g93g029i301tg2ij4024g",
     numeroDa: "",
     nom_utilisateur: "Denis Dupuis",
     courriel: "denis.dupuis@gmail.com",
@@ -139,7 +139,7 @@ const HistoriqueSession = [
   },
   {
     id_utilisateur: "5",
-    id_Session: "g93g029i301tg2ij4024g",
+    id_session: "g93g029i301tg2ij4024g",
     numeroDa: "",
     nom_utilisateur: "Denis Dupuis",
     courriel: "denis.dupuis@gmail.com",
@@ -152,6 +152,5 @@ const HistoriqueSession = [
 ];
 
 db.Commentaire.insertMany(commentaire);
-db.Commentaire.find();
-db.Historique_Des_Session.insertMany(HistoriqueSession);
-db.Historique_Des_Session.find();
+
+db.Historique_Des_Sessions.insertMany(HistoriqueSession);
