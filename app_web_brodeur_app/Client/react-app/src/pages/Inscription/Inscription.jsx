@@ -38,60 +38,7 @@ function Inscription() {
       nom_utilisateur: nomUtilisateur,
     }));
   }
-  const creationUtilisateur = async (e) => {
-    e.preventDefault();
-    try {
-      console.log(
-        "Informations du formulaire : ",
-        bodyUtilisateur.nom,
-        bodyUtilisateur.prenom,
-        bodyUtilisateur.nom_utilisateur,
-        bodyUtilisateur.courriel
-      );
-      if (
-        bodyUtilisateur.nom === "" ||
-        bodyUtilisateur.prenom === "" ||
-        bodyUtilisateur.courriel === ""
-      ) {
-        console.log("Il manque des informations au formulaire");
-        return;
-      }
 
-      if (bodyUtilisateur.mot_de_passe !== mot_de_passe_confirmation) {
-        console.log("Les deux mots de passe ne sont pas identiques");
-        return;
-      }
-
-      console.log("Body utilisateur : ", bodyUtilisateur);
-      const response = await fetch(`http://localhost:8080/inscription`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyUtilisateur),
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        console.log(bodyUtilisateur.mot_de_passe);
-        console.log(bodyUtilisateur.nom_utilisateur);
-        const responseConnexion = await fetch(`http://localhost:8080/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
-          }),
-        });
-        if (responseConnexion.ok) {
-          navigate("/DashBoard", {
-            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
-          });
-        }
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
   const envoyerCourriel = async () => {
     const response = await fetch(`http://localhost:8080/inscription`, {
       method: "POST",
