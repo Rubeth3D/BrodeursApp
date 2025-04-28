@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
       description_action: req.description_action,
       date_action: req.date_action,
     };
-
+    console.log(nouveauHistoriqueDeSession);
     const commentaire = await collection.insertOne(nouveauHistoriqueDeSession);
     logger.info(`Historique des sessios effectué`);
     res.status(200).json(commentaire);

@@ -50,13 +50,14 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const collection = await initCollection();
+    //const { id_utilisateur, nom_utilisateur, type_utilisateur, commentaire } = req.body;
     const nouveauCommentaire = {
       id_utilisateur: req.id_utilisateur,
       nom_utilisateur: req.nom_utilisateur,
       type_utilisateur: req.type_utilisateur,
       commentaire: req.commentaire,
     };
-
+    console.log(nouveauCommentaire);
     const commentaire = await collection.insertOne(nouveauCommentaire);
     logger.info(`Commentaire effectué`);
     res.status(200).json(commentaire);
