@@ -51,16 +51,16 @@ router.post("/", async (req, res) => {
   try {
     const collection = await initCollection();
     const nouveauHistoriqueDeSession = {
-      id_utilisateur: req.id_utilisateur,
-      id_session: req.id_session,
-      numeroDa: req.numeroDa,
-      nom_utilisateur: req.nom_utilisateur,
-      courriel: req.courriel,
-      type_utilisateur: req.type_utilisateur,
-      page: req.page,
-      type_action: req.type_action,
-      description_action: req.description_action,
-      date_action: req.date_action,
+      id_utilisateur: req.body.id_utilisateur,
+      id_session: req.body.id_session,
+      numeroDa: req.body.numeroDa,
+      nom_utilisateur: req.body.nom_utilisateur,
+      courriel: req.body.courriel,
+      type_utilisateur: req.body.type_utilisateur,
+      page: req.body.page,
+      type_action: req.body.type_action,
+      description_action: req.body.description_action,
+      date_action: req.body.date_action,
     };
     console.log(nouveauHistoriqueDeSession);
     const commentaire = await collection.insertOne(nouveauHistoriqueDeSession);

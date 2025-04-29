@@ -50,19 +50,63 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const collection = await initCollection();
-    //const { id_utilisateur, nom_utilisateur, type_utilisateur, commentaire } = req.body;
     const nouveauCommentaire = {
-      id_utilisateur: req.id_utilisateur,
-      nom_utilisateur: req.nom_utilisateur,
-      type_utilisateur: req.type_utilisateur,
-      commentaire: req.commentaire,
+      id_utilisateur: req.body.id_utilisateur,
+      nom_utilisateur: req.body.nom_utilisateur,
+      type_utilisateur: req.body.type_utilisateur,
+      commentaire: req.body.commentaire,
     };
     console.log(nouveauCommentaire);
     const commentaire = await collection.insertOne(nouveauCommentaire);
     logger.info(`Commentaire effectué`);
     res.status(200).json(commentaire);
   } catch (err) {
-    logger.error("Erreur lors de la récupération des documents: ", err);
+    logger.error("Erreur lors de la création des documents: ", err);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
+//peut etre faire de modification
+router.put("/:id", async (req, res) => {
+  try {
+    const collection = await initCollection();
+    const id = req.params.id;
+    const commentaire = req.body; 
+
+    const resultat = await collection.updateOne(
+      { _id: new ObjectId(id) }, 
+      { $set: { commentaire } } 
+    );
+
+    if (resultat.matchedCount === 0) {
+      logger.warn(`Aucun commentaire trouvé avec l'id ${id}`);
+      return res.status(404).json({ message: "Commentaire non trouvé" });
+    }
+
+    logger.info(`Commentaire avec id ${id} mis à jour`);
+    res.status(200).json({ message: "Commentaire mis à jour avec succès" });
+  } catch (err) {
+    logger.error("Erreur lors de la mise à jour du commentaire :", err);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const collection = await initCollection();
+    const id = req.params.id;
+
+    console.log(id);
+    const resultat = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    if (resultat.deletedCount === 0) {
+      logger.warn(`Aucun document trouvé avec l'id ${id}`);
+      return res.status(404).json({ message: "Document non trouvé" });
+    }
+    logger.info(`Document avec id ${id} supprimé`);
+    res.status(200).json({ message: "Document supprimé avec succès" });
+  } catch (err) {
+    logger.error("Erreur lors de la suppression du document :", err);
     res.status(500).json({ message: "Erreur du serveur" });
   }
 });
