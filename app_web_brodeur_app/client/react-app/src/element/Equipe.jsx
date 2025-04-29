@@ -119,12 +119,90 @@ const Equipe = () => {
                 <p className="card-text fs-4 text-danger mt-4">{equipeInactif.length}</p>
               </div>
             </div>
-        </div>
-        
+          </div>
+          <br />
+          <h1 className="text-center mb-5">Liste des équipes</h1>
+          <div className="container my-4">
+            <div className="row">
+              <div className="col-10">
+                <div className="d-flex m-0">
+                  <input
+                    type="text"
+                    className="form-control rounded-2"
+                    placeholder="Rechercher une équipe"
+                    onChange={(e) => {
+                      const searchTerm = e.target.value.toLowerCase();
+                      if(searchTerm === ""){
+                        setEquipe(filtreTousEquipes);
+                      } else{
+                        setEquipe(filtreTousEquipes.filter((equipe) =>
+                          equipe.nom.toLowerCase().includes(searchTerm)
+                        ));
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="d-flex m-0">
+                  <button
+                    type="button"
+                    className="btn btn-outline-success btn-rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#creerEquipe"
+                  >
+                    + Ajouter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table className="table table-striped table-hover mt-5">
+            <thead>
+              <tr>
+                <th>Code équipe</th>
+                <th>Nom</th>
+                <th>Etat</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {equipe.filter(equipe => equipe.etat_equipe === "Actif").map((equipe) => (
+                <tr key={equipe.id_equipe}>
+                  <td>{equipe.code_equipe}</td>
+                  <td>{equipe.nom}</td>
+                  <td>{equipe.id_cours}</td>
+                  <td>{equipe.id_session}</td>
+                  <td>{equipe.classe_id_classe}</td>
+
+                  <td>
+                    <button
+                      className="btn btn-sn"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modifierEquipe"
+                      onClick={() => setForm(equipe)}
+                    >
+                      <ModifierSVG />
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-sn ms-2"
+                      onClick={() => desactiverEquipe(equipe)}
+                    >
+                      <SupprimerSVG />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>
   );
+
 
 
 
