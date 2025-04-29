@@ -52,9 +52,9 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
   }
 });
 //Envoie le code que celui voulant s'inscrire doit entrer
-router.put("/envoyerCode", async (req, res) => {
+router.put("/envoyerCode/:courriel", async (req, res) => {
   try {
-    const { courriel } = req.body;
+    const { courriel } = req.params;
     const jetonAcces = await oAuth2Client.getAccessToken();
     console.log("Jeton d'acces : ", jetonAcces);
     const transport = nodemailer.createTransport({
@@ -85,7 +85,7 @@ router.put("/envoyerCode", async (req, res) => {
   }
 });
 //verifie le code envoye a l'utilisateur
-router.get("verfierCode", (req, res) => {});
+router.get("verifierCode", (req, res) => {});
 //get pour un utilisateur
 router.get("/:nom_user", async (req, res) => {
   try {

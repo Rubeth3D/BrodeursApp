@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 //@ts-ignore
-import MessageErreurConnexion from "../../element/MessageConnexion.jsx";
+import MessageUtilisateur from "../../element/MessageUtilisateur.jsx";
 function Connexion() {
   const [nomUtilisateur, setNomUtilisateur] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
@@ -64,9 +64,9 @@ function Connexion() {
             </h2>
           </button>
         </Link>
-        <MessageErreurConnexion 
+        <MessageUtilisateur 
           reponseCodeStatus={codeReponseServeur}
-        ></MessageErreurConnexion>
+        ></MessageUtilisateur>
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">
           <div className="col-4">

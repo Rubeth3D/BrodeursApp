@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import MessageUtilisateur from "../../element/MessageUtilisateur";
 function Inscription() {
-  const [bodyEtudiant, setBodyEtudiant] = useState();
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
     nom: "",
     prenom: "",
@@ -21,7 +20,8 @@ function Inscription() {
 
   const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
   const [typeUtilisateur, setTypeUtilisateur] = useState(""); // 'e' ou 'p'
-
+  const [reponseCodeStatus, setReponseCodeStatus] = useState({});
+  const [reponseMessage, setReponseMessage] = useState({});
   const navigate = useNavigate();
 
   const changerTypeUtilisateur = (nom, valeur) => {
@@ -46,20 +46,31 @@ function Inscription() {
     }
   };
   const envoyerCourriel = async () => {
-    const response = await fetch(`http://localhost:8080/utilisateur`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bodyUtilisateur.courriel),
-      credentials: "include",
-    });
+    const reponse = await fetch(
+      `http://localhost:8080/utilisateur/envoyerCode/${bodyUtilisateur.courriel}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
+    setReponseCodeStatus(reponse.status);
+    setReponseMessage(reponse.json);
+    if (reponse.ok) {
+      navigate("/targetpath", { bodyUtilisateur });
+    }
   };
   const regarderSiExistant = async (typeUtilisateur) => {
-    const response = await fetch(`http://localhost:8080/${typeUtilisateur}`, {
-      method: "POST",
+    const reponse = await fetch(`http://localhost:8080/${typeUtilisateur}`, {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bodyUtilisateur.courriel),
       credentials: "include",
     });
+    setReponseCodeStatus(reponse.status);
+    setReponseMessage(reponse.json);
+    if (reponse.ok) {
+      envoyerCourriel();
+    }
   };
   return (
     <>
@@ -89,7 +100,10 @@ function Inscription() {
             </h2>
           </button>
         </Link>
-        <MessageUtilisateur />
+        <MessageUtilisateur
+          reponseCodeStatus={reponseCodeStatus}
+          reponseMessage={reponseMessage}
+        />
         <h2 className="text-center display-3 fw-normal mb-5">Inscription</h2>
 
         <div className="row justify-content-center">

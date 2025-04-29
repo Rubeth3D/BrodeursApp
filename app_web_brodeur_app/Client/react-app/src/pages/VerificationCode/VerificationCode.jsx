@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 //@ts-ignore
-import MessageErreurConnexion from "../../element/MessageConnexion.jsx";
+import MessageUtilisateur from "../../element/MessageUtilisateur.jsx";
 import Navbar from "../../element/Navbar.jsx";
 import Footer from "../../element/Footer.jsx";
 function VerificationCode() {

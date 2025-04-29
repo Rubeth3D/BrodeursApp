@@ -3,6 +3,7 @@ import ErreurSVG from "../image/ErreurSVG.jsx";
 import SuccesSVG from "../image/SuccesSVG.jsx";
 const messageErreurConnexion = (reponseCodeStatus, reponseJson) => {
   console.log("Status Code : ", reponseCodeStatus);
+  console.log("Reponse json : ", reponseJson);
   const styleMessageErreurBackground = {
     backgroundColor: "rgba(220, 53, 69, 0.4)",
     padding: "10px",
