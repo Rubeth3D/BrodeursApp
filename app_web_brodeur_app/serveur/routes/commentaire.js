@@ -58,7 +58,6 @@ router.post("/", async (req, res) => {
       type_utilisateur: req.body.type_utilisateur,
       commentaire: req.body.commentaire,
     };
-    console.log(nouveauCommentaire);
     const commentaire = await collection.insertOne(nouveauCommentaire);
     logger.info(`Commentaire effectué`);
     res.status(200).json(commentaire);

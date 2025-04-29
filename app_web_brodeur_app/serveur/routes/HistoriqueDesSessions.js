@@ -21,7 +21,7 @@ const router = express.Router();
 router.use(express.json());
 
 // Fonction pour se connecter à la collection MongoDB
-async function initCollection() {
+async function ConnexionCollection() {
   try {
     const collection = await mongoClient
       .db("mongoBrodeurApps")
@@ -35,7 +35,7 @@ async function initCollection() {
 
 router.get("/", async (req, res) => {
   try {
-    const collection = await initCollection();
+    const collection = await ConnexionCollection();
 
     // Récupérer les documents
     const historiqueDesSessions = await collection.find({}).toArray();
@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const collection = await initCollection();
+    const collection = await ConnexionCollection();
     const nouveauHistoriqueDeSession = {
       id_utilisateur: req.body.id_utilisateur,
       id_session: req.body.id_session,
@@ -72,4 +72,61 @@ router.post("/", async (req, res) => {
   }
 });
 
+//MODIFICATION
+router.put("/:id", async (req, res) => {
+  try {
+    const collection = await ConnexionCollection();
+    const id = req.params.id;
+    const updatedHistoriqueDeSession = {
+      id_utilisateur: req.body.id_utilisateur,
+      id_session: req.body.id_session,
+      numeroDa: req.body.numeroDa,
+      nom_utilisateur: req.body.nom_utilisateur,
+      courriel: req.body.courriel,
+      type_utilisateur: req.body.type_utilisateur,
+      page: req.body.page,
+      type_action: req.body.type_action,
+      description_action: req.body.description_action,
+      date_action: req.body.date_action,
+    };
+
+    const resultat = await collection.updateOne(
+      { _id: new ObjectId(id) }, 
+      { $set: updatedHistoriqueDeSession }  
+    );
+
+    if (resultat.matchedCount === 0) {
+      logger.warn(`Aucun document trouvé avec l'id ${id}`);
+      return res.status(404).json({ message: "Document non trouvé" });
+    }
+
+    logger.info(`Historique de session avec id ${id} mis à jour`);
+    res.status(200).json({ message: "Mise à jour réussie" });
+  } catch (err) {
+    logger.error("Erreur lors de la mise à jour du commentaire :", err);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
+
+//DELETE
+router.delete("/:id", async (req, res) => {
+  try {
+    const collection = await ConnexionCollection();
+    const id = req.params.id;
+
+    console.log(id);
+    const resultat = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    if (resultat.deletedCount === 0) {
+      logger.warn(`Aucun document trouvé avec l'id ${id}`);
+      return res.status(404).json({ message: "Document non trouvé" });
+    }
+    logger.info(`Document avec id ${id} supprimé`);
+    res.status(200).json({ message: "Document supprimé avec succès" });
+  } catch (err) {
+    logger.error("Erreur lors de la suppression du document :", err);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
 export default router;
