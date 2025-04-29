@@ -29,7 +29,7 @@ const Equipe = () => {
     try{
       const equipeActif = {
         ...form,
-        etat_equipe: "Actif",
+        etat_equipe: "active",
       };
       const response = await fetch("http://localhost:8080/equipe", {
         method: "POST",
@@ -64,7 +64,7 @@ const Equipe = () => {
       await fetch(`http://localhost:8080/equipe/${equipe.code_equipe}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({...equipe, etat_equipe: "Inactif" }),
+        body: JSON.stringify({...equipe, etat_equipe: "Inactive" }),
       });
 
       fetchEquipes();
@@ -85,8 +85,8 @@ const Equipe = () => {
   }, []);
 
 
-  const equipeActif = equipe.filter((equipe) => equipe.etat_equipe === "Actif");
-  const equipeInactif = equipe.filter((equipe) => equipe.etat_equipe === "Inactif");
+  const equipeActif = equipe.filter((equipe) => equipe.etat_equipe === "active");
+  const equipeInactif = equipe.filter((equipe) => equipe.etat_equipe === "inactive");
   const totalEquipe = equipe.length;
 
   return (
@@ -162,17 +162,15 @@ const Equipe = () => {
               <tr>
                 <th>Code équipe</th>
                 <th>Nom</th>
-                <th>Etat</th>
+                <th>Id Classe</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {equipe.filter(equipe => equipe.etat_equipe === "Actif").map((equipe) => (
+              {equipe.filter(equipe => equipe.etat_equipe === "active").map((equipe) => (
                 <tr key={equipe.id_equipe}>
                   <td>{equipe.code_equipe}</td>
                   <td>{equipe.nom}</td>
-                  <td>{equipe.id_cours}</td>
-                  <td>{equipe.id_session}</td>
                   <td>{equipe.classe_id_classe}</td>
 
                   <td>
@@ -183,7 +181,7 @@ const Equipe = () => {
                       data-bs-target="#modifierEquipe"
                       onClick={() => setForm(equipe)}
                     >
-                      <ModifierSVG />
+                      {ModifierSVG()}
                     </button>
 
                     <button
@@ -191,13 +189,75 @@ const Equipe = () => {
                       className="btn btn-sn ms-2"
                       onClick={() => desactiverEquipe(equipe)}
                     >
-                      <SupprimerSVG />
+                      {SupprimerSVG()}
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div 
+          className="modal fade"
+          id="creerEquipe"
+          tabIndex="-1"
+          aria-labelledby="creerEquipeLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title"
+                  id="creerEquipeLabel"
+                  >Ajouter une équipe
+                </h5>
+                <button
+                  type ="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                />
+              </div>
+              <div className="modal-body">
+                <form className="row g-3 needs-validation" noValidate onSubmit={creerEquipe}>
+                  
+                  <div className='col-mb-4'>
+                    <label htmlFor="validationCustom01" className="form-label">Code d'équipe</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="validationCustom01" 
+                      value={form.code_equipe} 
+                      onChange={(e) => setForm({ ...form, code_equipe: e.target.value })}
+                      required
+                    />
+                    <div className="valid-feedback">Bien</div>
+                    <div className="invalid-feedback">Code d'équipe requis</div>
+                  </div>
+
+                  <div className='col-mb-4'>
+                    <label htmlFor="validationCustom02" className="form-label">Nom d'équipe</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="validationCustom02" 
+                      value={form.nom} 
+                      onChange={(e) => setForm({ ...form, nom: e.target.value })}
+                      required
+                    />
+                    <div className="valid-feedback">Bien</div>
+                    <div className="invalid-feedback">Nom d'équipe requis</div>
+                  </div>
+
+                  <button type="submit" className="btn btn-primary">
+                    <span className="visually-hidden">Ajouter une équipe</span>
+                    Ajouter
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
