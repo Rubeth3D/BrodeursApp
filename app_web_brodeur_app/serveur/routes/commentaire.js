@@ -21,7 +21,7 @@ const router = express.Router();
 router.use(express.json());
 
 // Fonction pour se connecter à la collection MongoDB
-async function initCollection() {
+async function ConnexionCollection() {
   try {
     const collection = await mongoClient
       .db("mongoBrodeurApps")
@@ -33,9 +33,10 @@ async function initCollection() {
   }
 }
 
+//GET
 router.get("/", async (req, res) => {
   try {
-    const collection = await initCollection();
+    const collection = await ConnexionCollection();
 
     // Récupérer les documents
     const commentaire = await collection.find({}).toArray();
@@ -47,9 +48,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+//POST
 router.post("/", async (req, res) => {
   try {
-    const collection = await initCollection();
+    const collection = await ConnexionCollection();
     const nouveauCommentaire = {
       id_utilisateur: req.body.id_utilisateur,
       nom_utilisateur: req.body.nom_utilisateur,
@@ -66,10 +68,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-//peut etre faire de modification
+//MODIFICATION
 router.put("/:id", async (req, res) => {
   try {
-    const collection = await initCollection();
+    const collection = await ConnexionCollection();
     const id = req.params.id;
     const commentaire = req.body; 
 
@@ -91,9 +93,10 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+//DELETE
 router.delete("/:id", async (req, res) => {
   try {
-    const collection = await initCollection();
+    const collection = await ConnexionCollection();
     const id = req.params.id;
 
     console.log(id);
