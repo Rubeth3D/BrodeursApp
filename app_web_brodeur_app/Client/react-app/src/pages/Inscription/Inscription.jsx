@@ -71,16 +71,18 @@ function Inscription() {
       });
 
       if (response.ok) {
-        console.log(bodyUtilisateur.mot_de_passe)
-        console.log(bodyUtilisateur.nom_utilisateur)
-        const responseConnexion = await fetch(`http://localhost:8080/login`,{
+        console.log(bodyUtilisateur.mot_de_passe);
+        console.log(bodyUtilisateur.nom_utilisateur);
+        const responseConnexion = await fetch(`http://localhost:8080/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-             mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe}),
+          body: JSON.stringify({
+            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
+          }),
         });
-        if(responseConnexion.ok){
+        if (responseConnexion.ok) {
           navigate("/DashBoard", {
             state: { username: `${bodyUtilisateur.nom_utilisateur}` },
           });
@@ -158,20 +160,22 @@ function Inscription() {
             />
           </div>
         </div>
-        <div className="row justify-content-center">
-          <div className="col-8 mb-5">
-            <label className="fw-bold fs-4">Numero demande d'admission</label>
-            <input
-              type="text"
-              className="form-control fs-5"
-              name="numero_da"
-              onChange={(e) =>
-                changerTypeUtilisateur(e.target.name, e.target.value)
-              }
-              required
-            />
+        {typeUtilisateur === "E" && (
+          <div className="row justify-content-center">
+            <div className="col-8 mb-5">
+              <label className="fw-bold fs-4">Numero demande d'admission</label>
+              <input
+                type="text"
+                className="form-control fs-5"
+                name="numero_da"
+                onChange={(e) =>
+                  changerTypeUtilisateur(e.target.name, e.target.value)
+                }
+                required
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
             <label className="fw-bold fs-4">Mot de passe</label>
