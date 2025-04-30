@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 
-
 const Cours = () => {
-  const [sessionCours, setSessionCours] = useState([]);
   const [filtreTousCours, setFiltreTousCours] = useState([]);
   const [cours, setCours] = useState([]);
   const [form, setForm] = useState({
@@ -13,14 +11,15 @@ const Cours = () => {
     session_id_session: "",
   });
 
-
   const fetchCours = async () => {
     try {
       const response = await fetch("http://localhost:8080/cours", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       const data = await response.json();
+      console.log(data);
       setCours(data);
       setFiltreTousCours(data);
     } catch (error) {
@@ -33,7 +32,7 @@ const Cours = () => {
     try {
       const coursAvecEtatActif = {
         ...form,
-        etat_cours: "Actif", 
+        etat_cours: "Actif",
       };
       const response = await fetch("http://localhost:8080/cours", {
         method: "POST",
@@ -48,7 +47,7 @@ const Cours = () => {
       console.error("Erreur lors de la création du cours :", error);
     }
   };
-  
+
   const modifierCours = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/cours/${id}`, {
@@ -66,19 +65,23 @@ const Cours = () => {
     }
   };
 
-  const fetchSessions = async () => {
+  {
+    /* 
+    const supprimerCours = async (id) => {
     try {
-      const response = await fetch("http://localhost:8080/sessionCours", {
-        method: "GET",
+      const response = await fetch(`http://localhost:8080/cours/${id}`, {
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      const data = await response.json();
-      setSessionCours(data);
+      if (response.ok) {
+        fetchCours();
+      }
     } catch (error) {
-      console.error("Erreur lors de la récupération des sessions :", error);
+      console.error(error);
     }
   };
-  
+  */
+  }
 
   const desactiverCours = async (cours) => {
     try {
@@ -87,16 +90,16 @@ const Cours = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...cours,
-          etat_cours: "Inactif", 
+          etat_cours: "Inactif",
         }),
       });
-  
+
       fetchCours();
     } catch (error) {
       console.error("Erreur de désactivation :", error);
     }
   };
-  
+
   const viderFormulaire = () => {
     setForm({
       code_cours: "",
@@ -104,16 +107,17 @@ const Cours = () => {
       session_id_session: "",
     });
   };
-  
-  
+
   useEffect(() => {
     fetchCours();
-    fetchSessions();
   }, []);
-  
 
-  const coursActif = cours.filter((cours) => cours.etat_cours === "Actif").length;
-  const coursInactif = cours.filter((cours) => cours.etat_cours === "Inactif").length;
+  const coursActif = cours.filter(
+    (cours) => cours.etat_cours === "Actif"
+  ).length;
+  const coursInactif = cours.filter(
+    (cours) => cours.etat_cours === "Inactif"
+  ).length;
   const totalCours = cours.length;
 
   return (
@@ -140,7 +144,9 @@ const Cours = () => {
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre de cours inactif:</h2>
-                <p className="card-text fs-4 text-danger mt-4">{coursInactif}</p>
+                <p className="card-text fs-4 text-danger mt-4">
+                  {coursInactif}
+                </p>
               </div>
             </div>
           </div>
@@ -159,10 +165,14 @@ const Cours = () => {
                     const searchTerm = e.target.value.toLowerCase();
                     if (searchTerm === "") {
                       setCours(filtreTousCours);
-                    } else{
-                      setCours(filtreTousCours.filter((cours) =>
-                        cours.description_cours.toLowerCase().includes(searchTerm)
-                      ));
+                    } else {
+                      setCours(
+                        filtreTousCours.filter((cours) =>
+                          cours.description_cours
+                            .toLowerCase()
+                            .includes(searchTerm)
+                        )
+                      );
                     }
                   }}
                 />
@@ -192,35 +202,41 @@ const Cours = () => {
             </tr>
           </thead>
           <tbody>
-            {cours.filter(cours => cours.etat_cours === "Actif").map((cours) => (        // Aider par ChatGPT pour filtrer les cours actifs
-            <tr key={cours.id_cours}>
-            <td>{cours.code_cours}</td>
-            <td>{cours.description_cours}</td>
-            <td>{cours.session_id_session}</td>
-            <td>
-              <button 
-                className="btn btn-sn"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#modifierCours"
-                onClick={() => setForm(cours)}
-              >
-                {ModifierSVG()}
-              </button>
-              <button
-                type="button"
-                className="btn btn-sn ms-2"
-                onClick={() => desactiverCours(cours)}
-              >
-                {SupprimerSVG()}
-              </button>
-            </td>
-            </tr>
-            ))}
-          </tbody> 
+            {cours
+              .filter((cours) => cours.etat_cours === "Actif")
+              .map(
+                (
+                  cours // Aider par ChatGPT pour filtrer les cours actifs
+                ) => (
+                  <tr key={cours.id_cours}>
+                    <td>{cours.code_cours}</td>
+                    <td>{cours.description_cours}</td>
+                    <td>{cours.code_session}</td>
+                    <td>
+                      <button
+                        className="btn btn-sn"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modifierCours"
+                        onClick={() => setForm(cours)}
+                      >
+                        {ModifierSVG()}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sn ms-2"
+                        onClick={() => desactiverCours(cours)}
+                      >
+                        {SupprimerSVG()}
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
+          </tbody>
         </table>
       </div>
-      
+
       {/* Modal pour ajouter un cours */}
       <div
         className="modal fade"
@@ -245,30 +261,41 @@ const Cours = () => {
 
             {/* Source : https://getbootstrap.com/docs/5.0/forms/validation/ */}
             <div className="modal-body">
-              <form className="row g-3 needs-validation" noValidate onSubmit={creerCours}>
-                
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom01" className="form-label">Code du cours</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom01" 
-                    value={form.code_cours} 
-                    onChange={(e) => setForm({ ...form, code_cours: e.target.value })}
+              <form
+                className="row g-3 needs-validation"
+                noValidate
+                onSubmit={creerCours}
+              >
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom01" className="form-label">
+                    Code du cours
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="validationCustom01"
+                    value={form.code_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, code_cours: e.target.value })
+                    }
                     required
                   />
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Code du cours requis</div>
                 </div>
 
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom02" className="form-label">Nom du cours</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom02" 
-                    value={form.description_cours} 
-                    onChange={(e) => setForm({ ...form, description_cours: e.target.value })}
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom02" className="form-label">
+                    Nom du cours
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="validationCustom02"
+                    value={form.description_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, description_cours: e.target.value })
+                    }
                     required
                   />
                   <div className="valid-feedback">Bien</div>
@@ -290,24 +317,21 @@ const Cours = () => {
                   <div className="invalid-feedback">État du cours requis</div>
                 </div>
                 */}
-                
 
-                <div className='col-mb-4'>
-                  <label htmlFor="validationCustom04" className="form-label">Session</label>
-                  <select
-                    className="form-select"
+                <div className="col-mb-4">
+                  <label htmlFor="validationCustom04" className="form-label">
+                    Session
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
                     id="validationCustom04"
                     value={form.session_id_session}
-                    onChange={(e) => setForm({ ...form, session_id_session: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, session_id_session: e.target.value })
+                    }
                     required
-                  >
-                    <option value="">Sélectionner une session</option>
-                    {sessionCours.map((session) => (
-                      <option key={session.id_session} value={session.id_session}>
-                        {session.code_session}
-                      </option>
-                    ))}
-                  </select>
+                  />
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Session requise</div>
                 </div>
@@ -322,66 +346,65 @@ const Cours = () => {
         </div>
       </div>
 
-
       {/* Modal pour modifier un cours */}
-    <div
-      className="modal fade"
-      id="modifierCours"
-      tabIndex="-1"
-      aria-labelledby="modifierCoursLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="modifierCoursLabel">
-              Modifier un cours
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-            <form
-              className="row g-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                modifierCours(form.id_cours);
-                const modal = bootstrap.Modal.getInstance(
-                  document.getElementById("modifierCours")
-                );
-                modal.hide();
-              }}
-            >
-              <div className="mb-3">
-                <label className="form-label">Code du cours</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={form.code_cours}
-                  onChange={(e) =>
-                    setForm({ ...form, code_cours: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={form.description_cours}
-                  onChange={(e) =>
-                    setForm({ ...form, description_cours: e.target.value })
-                  }
-                  required
-                />
-              </div>
+      <div
+        className="modal fade"
+        id="modifierCours"
+        tabIndex="-1"
+        aria-labelledby="modifierCoursLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="modifierCoursLabel">
+                Modifier un cours
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form
+                className="row g-3"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  modifierCours(form.id_cours);
+                  const modal = bootstrap.Modal.getInstance(
+                    document.getElementById("modifierCours")
+                  );
+                  modal.hide();
+                }}
+              >
+                <div className="mb-3">
+                  <label className="form-label">Code du cours</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={form.code_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, code_cours: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={form.description_cours}
+                    onChange={(e) =>
+                      setForm({ ...form, description_cours: e.target.value })
+                    }
+                    required
+                  />
+                </div>
 
-              {/*}
+                {/*}
               <div className="mb-3">
                 <label className="form-label">État</label>
                 <input
@@ -396,47 +419,54 @@ const Cours = () => {
               </div>
               */}
 
-              <div className="mb-3">
-                <label className="form-label">Session</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={form.session_id_session}
-                  onChange={(e) =>
-                    setForm({ ...form, session_id_session: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Enregistrer les modifications
-              </button>
-            </form>
+                <div className="mb-3">
+                  <label className="form-label">Session</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={form.session_id_session}
+                    onChange={(e) =>
+                      setForm({ ...form, session_id_session: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <button
+                  aria-label="Close"
+                  type="submit"
+                  className="btn btn-primary"
+                >
+                  Enregistrer les modifications
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
-}
+};
 
 // Validation de formulaire
 (function () {
-  'use strict'
+  "use strict";
 
-  var forms = document.querySelectorAll('.needs-validation')
+  var forms = document.querySelectorAll(".needs-validation");
 
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
         if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
+          event.preventDefault();
+          event.stopPropagation();
         }
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();
 
 export default Cours;
