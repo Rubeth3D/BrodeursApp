@@ -20,7 +20,7 @@ function Inscription() {
   });
 
   const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
-  const [typeUtilisateur, setTypeUtilisateur] = useState(""); // 'e' ou 'p'
+  const [typeUtilisateur, setTypeUtilisateur] = useState("E"); // 'e' ou 'p'
 
   const navigate = useNavigate();
 
@@ -48,29 +48,19 @@ function Inscription() {
         bodyUtilisateur.nom_utilisateur,
         bodyUtilisateur.courriel
       );
-      if (
-        bodyUtilisateur.nom === "" ||
-        bodyUtilisateur.prenom === "" ||
-        bodyUtilisateur.courriel === ""
-      ) {
-        console.log("Il manque des informations au formulaire");
-        return;
-      }
-
-      if (bodyUtilisateur.mot_de_passe !== mot_de_passe_confirmation) {
-        console.log("Les deux mots de passe ne sont pas identiques");
-        return;
-      }
 
       console.log("Body utilisateur : ", bodyUtilisateur);
-      const response = await fetch(`http://localhost:8080/utilisateur`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyUtilisateur),
-        credentials: "include",
-      });
+      const responseUtilisateur = await fetch(
+        `http://localhost:8080/utilisateur/connexion`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyUtilisateur),
+          credentials: "include",
+        }
+      );
 
-      if (response.ok) {
+      if (responseUtilisateur.ok) {
         console.log(bodyUtilisateur.mot_de_passe);
         console.log(bodyUtilisateur.nom_utilisateur);
         const responseConnexion = await fetch(`http://localhost:8080/login`, {
