@@ -51,15 +51,15 @@ function Inscription() {
 
       console.log("Body utilisateur : ", bodyUtilisateur);
       const responseUtilisateur = await fetch(
-        `http://localhost:8080/utilisateur/connexion`,
+        `http://localhost:8080/utilisateur/inscription`,
         {
-          method: "GET",
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(bodyUtilisateur),
           credentials: "include",
         }
       );
-
+      console.log(responseUtilisateur);
       if (responseUtilisateur.ok) {
         console.log(bodyUtilisateur.mot_de_passe);
         console.log(bodyUtilisateur.nom_utilisateur);

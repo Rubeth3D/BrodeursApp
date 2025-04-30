@@ -52,7 +52,7 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
   }
 });
 
-router.get("/inscription", async (req, res) => {
+router.post("/inscription", async (req, res) => {
   try {
     logger.info("Recherche de l'utilisateur");
 
@@ -341,7 +341,6 @@ router.put("/:id", async (req, res) => {
 });
 
 //delete pour un utilisateur
-
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params;
