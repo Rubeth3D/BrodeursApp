@@ -59,20 +59,16 @@ function Inscription() {
           credentials: "include",
         }
       );
-      console.log(responseUtilisateur);
       if (responseUtilisateur.ok) {
-        const responseConnexion = await fetch(
-          `http://localhost:8080/activerUtilisateur`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({
-              nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-              mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
-            }),
-          }
-        );
+        const responseConnexion = await fetch(`http://localhost:8080/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
+          }),
+        });
         if (responseConnexion.ok) {
           navigate("/DashBoard", {
             state: { username: `${bodyUtilisateur.nom_utilisateur}` },
