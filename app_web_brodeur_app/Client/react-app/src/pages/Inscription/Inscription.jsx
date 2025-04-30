@@ -59,7 +59,7 @@ function Inscription() {
     setReponseCodeStatus(reponse.status);
     setReponseMessage(data.message);
     if (reponse.ok) {
-      navigate("/targetpath", { bodyUtilisateur });
+      navigate("/VerificationCode", { bodyUtilisateur });
     }
   };
   const regarderSiExistant = async (typeUtilisateur) => {
