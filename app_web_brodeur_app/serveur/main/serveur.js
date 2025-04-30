@@ -7,6 +7,7 @@ import classe from "../routes/classe.js";
 import utilisateur from "../routes/utilisateur.js";
 import etudiant from "../routes/etudiant.js";
 import sessionDeCours from "../routes/sessionCours.js";
+import inscription from "../routes/inscription.js";
 import passport from "passport";
 import session from "express-session";
 import "./../strategies/local-strategy.mjs";
@@ -56,6 +57,7 @@ app.use("/classe", classe);
 app.use("/etudiant", etudiant);
 app.use("/HistoriqueDesSessions", HistoriqueSession);
 app.use("/Commentaire", Commentaire);
+app.use("/inscription", inscription);
 app.use(passport.initialize());
 app.use(passport.session());
 
