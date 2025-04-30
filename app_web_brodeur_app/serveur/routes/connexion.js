@@ -44,18 +44,36 @@ router.post("/activerUtilisateur", async (req, res) => {
         logger.info("Le compte est deja activé");
         return res.status(401).json({ message: "Le compte est deja activé" });
       } else {
-        console.log(utilisateur.id_utilisateur);
-        logger.info("Get de l'utilisateur effectué avec succès");
+        logger.info("Activation de l'utilisateur");
+        const date = new Date();
+        const saltRounds = 10;
+        const motDePasseCrypter = await bcrypt.hash(
+          req.body.mot_de_passe,
+          saltRounds
+        );
         const requetPost = `UPDATE utilisateur
-        SET etat_utilisateur = $1
-        WHERE id_utilisateur = $2`;
+        SET etat_utilisateur = $1,
+        nom = $2,
+        prenom = $3,
+        nom_utilisateur = $4,
+        mot_de_passe = $5,
+        date_creation = $6
+        WHERE id_utilisateur = $7`;
         const resulatPost = await client.query(requetPost, [
           "Actif",
+          req.body.nom,
+          req.body.prenom,
+          req.body.nom_utilisateur,
+          motDePasseCrypter,
+          date,
           utilisateur.id_utilisateur,
         ]);
-        if (resulatPost.rows.length > 0) {
+        console.log(resulatPost);
+        if (resulatPost.rowCount > 0) {
           logger.info("Le compte est maintenant actif");
-          return res.status(200);
+          return res.status(200).json({ message: "Activation réussis" });
+        } else {
+          return res.status(406).json({ message: "Activation rater" });
         }
       }
     } else {
