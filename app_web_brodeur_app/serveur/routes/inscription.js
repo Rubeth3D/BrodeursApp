@@ -90,9 +90,10 @@ router.put("/envoyerCode/:courriel", async (req, res) => {
         accessToken: jetonAcces.token,
       },
     });
-    logger.info("Transport créé");
-    const codeVerification = Math.floor(1000 + Math.random() * 9000);
 
+    logger.info("Transport créé");
+
+    const codeVerification = Math.floor(1000 + Math.random() * 9000);
     const mailOptions = {
       from: "Brodeurs App",
       to: courriel,
