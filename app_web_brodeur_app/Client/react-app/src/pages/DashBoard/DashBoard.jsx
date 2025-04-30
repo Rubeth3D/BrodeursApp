@@ -13,7 +13,6 @@ import TravauxSVG from "../../image/TravauxSVG";
 
 //element
 import HoverDiv from "../../element/HoverDiv";
-import HoverText from "../../element/HoverText";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
 import Admin from "../../element/admin";
@@ -190,7 +189,6 @@ function DashBoard() {
                   Cliquer("Travaux");
                 }}
               ></HoverDiv>
-
               <HoverDiv
                 text={"Résultats"}
                 svgImage={<ResultatsSVG />}
@@ -199,7 +197,6 @@ function DashBoard() {
                   Cliquer("Resultats");
                 }}
               ></HoverDiv>
-
               <HoverDiv
                 text={"Admin"}
                 svgImage={<AdminSVG />}
