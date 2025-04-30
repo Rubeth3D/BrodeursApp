@@ -55,6 +55,7 @@ function Inscription() {
         credentials: "include",
       }
     );
+
     const data = await reponse.json();
     setReponseCodeStatus(reponse.status);
     setReponseMessage(data.message);

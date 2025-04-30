@@ -46,16 +46,7 @@ function VerificationCode() {
     setTimer(`${minutesString} : ${secondesString}`);
     console.log("Timer : ", timer);
   };
-  const envoyerCode = async () => {
-    const resultat = await fetch(
-      "http://localhost:8080/inscription/envoyerCode",
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(""),
-      }
-    );
-  };
+
   const creationUtilisateur = async (e) => {
     e.preventDefault();
     try {
@@ -153,7 +144,6 @@ function VerificationCode() {
   }
 
   useEffect(() => {
-    envoyerCode();
     const intervaleCompteur = setInterval(compteurCode, 1000);
     return () => clearInterval(intervaleCompteur);
   }, []);
