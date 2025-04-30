@@ -155,16 +155,18 @@ passport.serializeUser((utilisateur, done) => {
   done(null, utilisateur.session_id);
 });
 
-/*passport.serializeUser((user, done) => {
-  done(null, user.id_utilisateur);
-});*/
+passport.deserializeUser(async (id, done) => {
+  try {
+    const requete =
+      "SELECT * FROM session_utilisateur WHERE id_session_utilisateur = $1;";
+    const result = await client.query(requete, [id]);
 
-passport.deserializeUser((id, done) => {
-  const requete = "SELECT * FROM utilisateur WHERE id_utilisateur = $1;";
+    if (result.rows.length === 0) {
+      return done(null, false);
+    }
 
-  client.query(requete, [id], async (err, result) => {
-    if (err) return done(err);
-    if (result.rows.length === 0) return done(null, false);
     return done(null, result.rows[0]);
-  });
+  } catch (err) {
+    return done(err);
+  }
 });

@@ -11,7 +11,6 @@ import connexion from "../routes/connexion.js";
 import passport from "passport";
 import session from "express-session";
 import "./../strategies/local-strategy.mjs";
-import { encrypt, decrypt } from "../utils/crypto.js";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
 
@@ -46,6 +45,8 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use(express.json());
@@ -58,15 +59,11 @@ app.use("/etudiant", etudiant);
 app.use("/historiqueDesSessions", HistoriqueSession);
 app.use("/commentaire", Commentaire);
 app.use("/connexion", connexion);
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Route de connexion
 app.post("/login", (req, res, next) => {
   logger.info("Authentification de l'utilisateur");
   passport.authenticate("local", (err, user, info) => {
-    const sessionId = String(user.session_id);
-    const encryptedSessionId = encrypt(sessionId);
     if (err) return res.status(500).send("Erreur serveur");
     if (!user)
       return res
@@ -76,13 +73,6 @@ app.post("/login", (req, res, next) => {
     req.login(user, (err) => {
       if (err)
         return res.status(500).send("Erreur lors de la création de la session");
-
-      // Ajouter l'ID de session au cookie
-      res.cookie("session_id", encryptedSessionId, {
-        maxAge: 1000 * 60 * 60, // 1 heure
-        httpOnly: true,
-        sameSite: "Strict",
-      });
 
       res.json({ message: "Connexion réussie", user: user.nom_utilisateur });
       logger.info("Connexion réussie");
