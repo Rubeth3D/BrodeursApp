@@ -39,13 +39,12 @@ const Classe = () => {
         credentials: "include",
       });
       const data = await response.json();
-      if(response.status == 200){
+      if (response.status == 200) {
         setClasses(data);
-      }else if (response.status == 401){
-        console.error(data.message)
+      } else if (response.status == 401) {
+        console.error(data.message);
         navigate("/*");
       }
-      
     } catch (err) {
       console.error("Erreur au niveau du fetch des classes : ", err);
     }
@@ -66,7 +65,7 @@ const Classe = () => {
           body: JSON.stringify({ etat_classe: EtatDesactiverClasse }),
         }
       );
-      
+
       const data = await response.json();
       console.log(data);
       if (response.ok) {
@@ -130,7 +129,9 @@ const Classe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5">Nombre de classes inactives:</h2>
+                <h2 className="card-title fs-5">
+                  Nombre de classes inactives:
+                </h2>
                 <p className="card-text fs-4 text-danger mt-4">
                   {compteurClasseInactive}
                 </p>
@@ -138,9 +139,9 @@ const Classe = () => {
             </div>
           </div>
         </div>
-
-        <h1 className="text-center mb-5">Tableau des classes</h1>
-        <div className="container my-3">
+        <br />
+        <h1 className="text-center mb-5 mt-2">Tableau des classes</h1>
+        <div className="container my-4">
           <div className="row">
             <div className=" col-xxl-10 col-lg-8 col-sm-6">
               <div className="d-flex m-0">
@@ -197,37 +198,47 @@ const Classe = () => {
           <tbody>
             {classesFiltrees.map((classe) => (
               <tr key={classe.id_classe}>
-              <td className="text-center align-middle py-3">{classe.code_cours}</td>
-              <td className="text-center align-middle py-3">{classe.description}</td>
-              <td className="text-center align-middle py-3">{classe.groupe}</td>
-              <td className="text-center align-middle py-3">{classe.cours_id_cours}</td>
-              <td className="text-center align-middle py-3">{classe.etat_classe}</td>
-              <td className="text-center align-middle py-3">
-                <div className="d-flex justify-content-center gap-2">
-                  <button
-                    className="btn btn-sm"
-                    onClick={() => {
-                      setModalModifierEstOuvert(true);
-                      setDonnesModal(classe);
-                    }}
-                  >
-                    {ModifierSVG()}
-                  </button>
-                  <ModalModifierClasse
-                    open={modalModifierEstOuvert}
-                    classe={donneesModal}
-                    estFermee={() => setModalModifierEstOuvert(false)}
-                    rafraichir={fetchClasses}
-                  />
-                  <button
-                    className="btn btn-sm"
-                    onClick={() => desactiverClasse(classe.id_classe)}
-                  >
-                    {SupprimerSVG()}
-                  </button>
-                </div>
-              </td>
-            </tr>
+                <td className="text-center align-middle py-3">
+                  {classe.code_cours}
+                </td>
+                <td className="text-center align-middle py-3">
+                  {classe.description}
+                </td>
+                <td className="text-center align-middle py-3">
+                  {classe.groupe}
+                </td>
+                <td className="text-center align-middle py-3">
+                  {classe.cours_id_cours}
+                </td>
+                <td className="text-center align-middle py-3">
+                  {classe.etat_classe}
+                </td>
+                <td className="text-center align-middle py-3">
+                  <div className="d-flex justify-content-center gap-2">
+                    <button
+                      className="btn btn-sm"
+                      onClick={() => {
+                        setModalModifierEstOuvert(true);
+                        setDonnesModal(classe);
+                      }}
+                    >
+                      {ModifierSVG()}
+                    </button>
+                    <ModalModifierClasse
+                      open={modalModifierEstOuvert}
+                      classe={donneesModal}
+                      estFermee={() => setModalModifierEstOuvert(false)}
+                      rafraichir={fetchClasses}
+                    />
+                    <button
+                      className="btn btn-sm"
+                      onClick={() => desactiverClasse(classe.id_classe)}
+                    >
+                      {SupprimerSVG()}
+                    </button>
+                  </div>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>

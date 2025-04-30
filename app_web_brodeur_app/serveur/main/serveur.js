@@ -7,15 +7,12 @@ import classe from "../routes/classe.js";
 import utilisateur from "../routes/utilisateur.js";
 import etudiant from "../routes/etudiant.js";
 import sessionDeCours from "../routes/sessionCours.js";
-import logSessions from "../routes/logSessions.js";
-import gmail from "../routes/gmail.js";
 import passport from "passport";
 import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import { encrypt, decrypt } from "../utils/crypto.js";
-import inscription from "../routes/inscription.js";
-const secret = "BrodeurApps";
-const ivLength = 16;
+import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
+import Commentaire from "../routes/commentaire.js";
 
 const app = express();
 const logger = winston.createLogger({
@@ -55,11 +52,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/sessionCours", sessionDeCours);
-app.use("/logSessions", logSessions);
 app.use("/classe", classe);
 app.use("/etudiant", etudiant);
-app.use("/gmail", gmail);
-app.use("/inscription", inscription);
+app.use("/HistoriqueDesSessions", HistoriqueSession);
+app.use("/Commentaire", Commentaire);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -69,19 +65,15 @@ app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     const sessionId = String(user.session_id);
     const encryptedSessionId = encrypt(sessionId);
-    if (err) return res.status(500).json({ message: "Erreur serveur" });
+    if (err) return res.status(500).send("Erreur serveur");
     if (!user)
-      return res.status(401).json(
-        { message: info.message } || {
-          message: "Nom d’utilisateur ou mot de passe incorrect",
-        }
-      );
+      return res
+        .status(401)
+        .send(info.message || "Nom d’utilisateur ou mot de passe incorrect");
 
     req.login(user, (err) => {
       if (err)
-        return res
-          .status(500)
-          .json({ message: "Erreur lors de la création de la session" });
+        return res.status(500).send("Erreur lors de la création de la session");
 
       // Ajouter l'ID de session au cookie
       res.cookie("session_id", encryptedSessionId, {
