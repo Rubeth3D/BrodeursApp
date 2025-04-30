@@ -8,6 +8,9 @@ const Equipe = () => {
   const [form, setForm] = useState({
     code_equipe: "",
     nom: "",
+    classe_id_classe: "",
+    id_cours: "",
+    id_session: "",
   });
 
   const fetchEquipes = async () => {

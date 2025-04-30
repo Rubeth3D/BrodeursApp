@@ -66,18 +66,19 @@ const Cours = () => {
     }
   };
 
-  const fetchSessionCours = async (id) => {
+  const fetchSessions = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/sessionCours/${id}`, {
+      const response = await fetch("http://localhost:8080/sessionCours", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
       const data = await response.json();
       setSessionCours(data);
     } catch (error) {
-      console.error(error);
+      console.error("Erreur lors de la récupération des sessions :", error);
     }
-  }
+  };
+  
 
   const desactiverCours = async (cours) => {
     try {
@@ -107,6 +108,7 @@ const Cours = () => {
   
   useEffect(() => {
     fetchCours();
+    fetchSessions();
   }, []);
   
 
