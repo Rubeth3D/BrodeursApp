@@ -52,55 +52,25 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
   }
 });
 //Envoie le code que celui voulant s'inscrire doit entrer
-router.put("/envoyerCode/:courriel", async (req, res) => {
-  try {
-    const { courriel } = req.params;
-    const jetonAcces = await oAuth2Client.getAccessToken();
-    console.log("Jeton d'acces : ", jetonAcces);
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: "evaluationparlespairs@gmail.com",
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refresh_token: process.env.REFRESH_TOKEN,
-        accessToken: jetonAcces.token,
-      },
-    });
-    logger.info("Transport créé");
-    const codeVerification = Math.floor(1000 + Math.random() * 9000);
 
-    const mailOptions = {
-      from: "Brodeurs App",
-      to: courriel,
-      subject: "code de verification",
-      html: `Voici votre code de verification : ${codeVerification} </h1>`,
-    };
-    await transport.sendMail(mailOptions);
-    res.status(200).json({ message: "Courriel envoye avec succes" });
-  } catch (err) {
-    logger.error("Erreur lors de l'envoi du courriel : ", err);
-    res.status(500).json({ message: err.message });
-  }
-});
 //verifie le code envoye a l'utilisateur
 router.get("verifierCode", (req, res) => {});
 //get pour un utilisateur
-router.get("/:nom_user", async (req, res) => {
+router.get("/:nom_utilisateur", async (req, res) => {
   try {
-    const { nom_user, motDePasse } = req.params;
-
+    logger.info("/:nom_utilisateur");
+    const { nom_utilisateur, motDePasse } = req.params;
+    console.log("Nom utilisateur : ", nom_utilisateur);
     const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE nom_user = $1",
-      [nom_user]
+      "SELECT * FROM utilisateur WHERE nom_utilisateur = $1",
+      [nom_utilisateur]
     );
 
     if (resultat.rowCount == 0) {
       logger.error(`Aucun utilisateur ne correspond`);
-      return res
-        .status(404)
-        .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
+      return res.status(404).json({
+        message: `Aucun user n'a le nom_utilisateur :${nom_utilisateur}`,
+      });
     }
     logger.info("Connexion de l'utilisateur effectuer avec succes!");
     return res.status(200).json([{ message: "Connexion réussie!" }]);
@@ -160,20 +130,21 @@ router.get("/Deconnexion", async (req, res) => {
   return res.status(200).json({ message: "Deconnexion reussi !" });
 });
 //vérifier la connexion d'un utilisateur
-router.get("/:nom_user/:motDePasse", async (req, res) => {
+router.get("/:nom_utilisateur/:motDePasse", async (req, res) => {
   try {
-    const { nom_user, motDePasse } = req.params;
+    logger.info("/:nom_utilisateur/:motDePasse");
+    const { nom_utilisateur, motDePasse } = req.params;
 
     const resultat = await client.query(
-      "SELECT * FROM utilisateur WHERE nom_user = $1",
-      [nom_user]
+      "SELECT * FROM utilisateur WHERE nom_utilisateur = $1",
+      [nom_utilisateur]
     );
 
     if (resultat.rowCount == 0) {
       logger.error(`Aucun utilisateur ne correspond`);
-      return res
-        .status(404)
-        .json({ message: `Aucun user n'a le nom_user :${nom_user}` });
+      return res.status(404).json({
+        message: `Aucun user n'a le nom_utilisateur :${nom_utilisateur}`,
+      });
     }
     const utilisateur = resultat.rows[0];
     const isMatch = await bcrypt.compare(
@@ -211,7 +182,7 @@ router.get("/:nom_user/:motDePasse", async (req, res) => {
     res
       .status(500)
       .json({ message: "Erreur lors de la connexion de l'utilisateur" });
-    logger.error(`Erreur lors de la: ${err}`);
+    logger.error(`Erreur lors de la connexion de l'utilisateur : ${err}`);
   }
 });
 
@@ -292,8 +263,8 @@ router.post("/", async (req, res) => {
         [professeur.id_professeur, utilisateur.id_utilisateur]
       );
     }
-    return res.status(200).json({ message: "succes" });
     logger.info("Insertion de l'utilisateur effectuée avec succès");
+    return res.status(200).json({ message: "succes" });
   } catch (err) {
     logger.error(`Erreur lors de l'insertion : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insertion" });
@@ -315,7 +286,7 @@ router.put("/:id", async (req, res) => {
     } = req.body;
 
     const resultat = await client.query(
-      "UPDATE ON utilisateur SET nom_user = $1, mot_de_passe = $2, email = $3, type_utilisateur = $4, id_professeur = $5, id_etudiant = $6, etat_utilisateur = $7 WHERE id_user = $8 RETURNING *"[
+      "UPDATE ON utilisateur SET nom_utilisateur = $1, mot_de_passe = $2, email = $3, type_utilisateur = $4, id_professeur = $5, id_etudiant = $6, etat_utilisateur = $7 WHERE id_user = $8 RETURNING *"[
         (nomUser,
         motDePasse,
         email,
@@ -362,32 +333,6 @@ router.delete("/:id", async (req, res) => {
     logger.error(`Erreur lors du delete du cours ${err}`);
   }
 });
-
-router.get("/etudiantExiste/:nom_complet", async (req, res) => {
-  const nom_complet = req.params;
-  const resultat = await client.query(
-    "SELECT FROM etudiant WHERE nom_complet = $1 AND etat_etudiant = I",
-    [nom_complet]
-  );
-
-  if (resultat.rowCount === 0) {
-    return res
-      .status(404)
-      .json({ message: "Vous n'existez pas en tant qu'étudiant" });
-  }
-});
-router.get("/professeurExiste/:nom_complet", async (req, res) => {
-  const nom_complet = req.params;
-  const resultat = await client.query(
-    "SELECT FROM professeur WHERE nom_complet = $1 AND etat_professeur = I",
-    [nom_complet]
-  );
-
-  if (resultat.rowCount === 0) {
-    return res
-      .status(404)
-      .json({ message: "Vous n'existez pas en tant que professeur" });
-  }
-});
+//verifier si etudiant existe
 
 export default router;

@@ -13,6 +13,7 @@ import passport from "passport";
 import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import { encrypt, decrypt } from "../utils/crypto.js";
+import inscription from "../routes/inscription.js";
 const secret = "BrodeurApps";
 const ivLength = 16;
 
@@ -58,6 +59,7 @@ app.use("/logSessions", logSessions);
 app.use("/classe", classe);
 app.use("/etudiant", etudiant);
 app.use("/gmail", gmail);
+app.use("/inscription", inscription);
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -21,7 +21,7 @@ function Inscription() {
   const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
   const [typeUtilisateur, setTypeUtilisateur] = useState(""); // 'e' ou 'p'
   const [reponseCodeStatus, setReponseCodeStatus] = useState({});
-  const [reponseMessage, setReponseMessage] = useState({});
+  const [reponseMessage, setReponseMessage] = useState("");
   const navigate = useNavigate();
 
   const changerTypeUtilisateur = (nom, valeur) => {
@@ -38,46 +38,57 @@ function Inscription() {
       nom_utilisateur: nomUtilisateur,
     }));
   }
-  const verifierUtilisateur = () => {
+  function verifierUtilisateur(e) {
+    e.preventDefault();
     if (bodyUtilisateur.type_utilisateur === "E") {
       regarderSiExistant("etudiantExiste");
     } else {
       regarderSiExistant("professeurExiste");
     }
-  };
+  }
   const envoyerCourriel = async () => {
     const reponse = await fetch(
-      `http://localhost:8080/utilisateur/envoyerCode/${bodyUtilisateur.courriel}`,
+      `http://localhost:8080/inscription/envoyerCode/${bodyUtilisateur.courriel}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       }
     );
+    const data = await reponse.json();
     setReponseCodeStatus(reponse.status);
-    setReponseMessage(reponse.json);
+    setReponseMessage(data.message);
     if (reponse.ok) {
       navigate("/targetpath", { bodyUtilisateur });
     }
   };
   const regarderSiExistant = async (typeUtilisateur) => {
-    const reponse = await fetch(`http://localhost:8080/${typeUtilisateur}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+    console.log("regarderSiExistant");
+    const reponse = await fetch(
+      `http://localhost:8080/inscription/${typeUtilisateur}/${bodyUtilisateur.nom_utilisateur}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
+    console.log("Reponse status : ", reponse.status);
     setReponseCodeStatus(reponse.status);
-    setReponseMessage(reponse.json);
-    if (reponse.ok) {
-      envoyerCourriel();
+    const data = await reponse.json();
+    console.log("Reponse data : ", data.message);
+    setReponseMessage(data.message);
+
+    if (!reponse.ok) {
+      return;
     }
+    envoyerCourriel();
   };
   return (
     <>
       <form
         className="container"
-        onSubmit={() => {
-          verifierUtilisateur();
+        onSubmit={(e) => {
+          verifierUtilisateur(e);
         }}
       >
         <Link to={"/"}>

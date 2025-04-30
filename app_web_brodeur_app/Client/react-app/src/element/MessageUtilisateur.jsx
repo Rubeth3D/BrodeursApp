@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ErreurSVG from "../image/ErreurSVG.jsx";
 import SuccesSVG from "../image/SuccesSVG.jsx";
-const messageErreurConnexion = (reponseCodeStatus, reponseJson) => {
-  console.log("Status Code : ", reponseCodeStatus);
-  console.log("Reponse json : ", reponseJson);
+const messageUtilisateur = (reponse) => {
+  console.log("Status Code : ", reponse);
   const styleMessageErreurBackground = {
     backgroundColor: "rgba(220, 53, 69, 0.4)",
     padding: "10px",
@@ -22,45 +21,43 @@ const messageErreurConnexion = (reponseCodeStatus, reponseJson) => {
     alignItems: "center",
     gap: "10px",
   };
-  if (!reponseCodeStatus) {
+  if (!reponse) {
     return null;
   }
-  if (reponseCodeStatus.reponseCodeStatus === 200) {
+  if (reponse.reponseCodeStatus === 200) {
     return (
       <div style={styleMessageSuccesBackground}>
         {SuccesSVG()}
-        Connexion réussi!
+        {reponse.reponseMessage}
       </div>
     );
-  } else if (reponseCodeStatus.reponseCodeStatus === 404) {
+  } else if (reponse.reponseCodeStatus === 404) {
     return (
       <>
         <div style={styleMessageErreurBackground}>
           {ErreurSVG()}
-          Votre compte est inexistant, veuillez vous creer un compte afin de
-          pouvoir vous connecter.
+          {reponse.reponseMessage}
         </div>
       </>
     );
-  } else if (reponseCodeStatus.reponseCodeStatus === 401) {
+  } else if (reponse.reponseCodeStatus === 401) {
     return (
       <>
         <div style={styleMessageErreurBackground}>
           {ErreurSVG()}
-          Mot de passe ou nom d'utilisateur incorrecte.
+          {reponse.reponseMessage}
         </div>
       </>
     );
-  } else if (reponseCodeStatus.reponseCodeStatus === 500) {
+  } else if (reponse.reponseCodeStatus === 500) {
     return (
       <>
         <div style={styleMessageErreurBackground}>
           {ErreurSVG()}
-          Erreur serveur, veuillez contactez l'equipe de developpement a
-          l'adresse : arnaudkomodo@gmail.com
+          {reponse.reponseMessage}
         </div>
       </>
     );
   }
 };
-export default messageErreurConnexion;
+export default messageUtilisateur;

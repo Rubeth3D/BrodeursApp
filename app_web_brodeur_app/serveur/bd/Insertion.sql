@@ -971,9 +971,9 @@ VALUES (
     );
 -- Insérer des étudiants
 INSERT INTO etudiant (nom_complet, etat_etudiant)
-VALUES ('Alice Martin', 'Actif'),
-    ('Bob Dubois', 'Actif'),
-    ('Charlie Lemieux', 'Actif');
+VALUES ('Alice Martin', 'Inactif'),
+    ('Bob Dubois', 'Inactif'),
+    ('Charlie Lemieux', 'Inactif');
 -- Assigner des étudiants à des classes
 INSERT INTO etudiant_classe (etudiant_id_etudiant, classe_id_classe)
 VALUES (1, 1),
