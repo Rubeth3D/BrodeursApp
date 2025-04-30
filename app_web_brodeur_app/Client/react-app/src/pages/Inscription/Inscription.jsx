@@ -163,7 +163,7 @@ function Inscription() {
         {typeUtilisateur === "E" && (
           <div className="row justify-content-center">
             <div className="col-8 mb-5">
-              <label className="fw-bold fs-4">Numero demande d'admission</label>
+              <label className="fw-bold fs-4">Numero d'admission</label>
               <input
                 type="text"
                 className="form-control fs-5"
