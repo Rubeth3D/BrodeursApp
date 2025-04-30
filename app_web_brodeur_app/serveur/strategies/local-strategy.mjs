@@ -27,7 +27,8 @@ export default passport.use(
       passwordField: "mot_de_passe_Utilisateur",
     },
     async (nom_utilisateur, mot_de_passe_Utilisateur, done) => {
-      const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1";
+      const requete =
+        "SELECT * FROM utilisateur WHERE nom_utilisateur = $1 AND etat_utilisateur = 'Actif'";
       const parametre = [nom_utilisateur];
 
       try {
@@ -151,7 +152,7 @@ export default passport.use(
 
 passport.serializeUser((utilisateur, done) => {
   console.log("Serialize User avec session_id:", utilisateur.session_id);
-  done(null, utilisateur.session_id); 
+  done(null, utilisateur.session_id);
 });
 
 /*passport.serializeUser((user, done) => {
