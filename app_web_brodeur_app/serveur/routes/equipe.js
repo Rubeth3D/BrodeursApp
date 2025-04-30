@@ -18,8 +18,6 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-router.use(express.json());
-
 // GET toutes les équipes
 router.get("/", async (req, res) => {
   try {
@@ -58,6 +56,7 @@ router.get("/:id", async (req, res) => {
 
 // POST créer une équipe
 router.post("/", async (req, res) => {
+  console.log("allo");
   try {
     const { code_equipe, nom, classe_id_classe, etat_equipe, id_cours, id_session } = req.body;
     await client.query(

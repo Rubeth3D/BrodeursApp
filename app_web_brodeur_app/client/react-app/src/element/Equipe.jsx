@@ -3,11 +3,13 @@ import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 
 const Equipe = () => {
+  const [etudiants, setEtudiants] = useState([]);
   const [filtreTousEquipes, setFiltreTousEquipes] = useState([]);
   const [equipe, setEquipe] = useState([]);
   const [form, setForm] = useState({
     code_equipe: "",
     nom: "",
+    etudiant: "",
     classe_id_classe: "",
     id_cours: "",
     id_session: "",
@@ -56,6 +58,7 @@ const Equipe = () => {
       });
       if(response.ok){
         fetchEquipes();
+        viderForm();
       }
     } catch (error) {
       console.error(error);
@@ -64,10 +67,10 @@ const Equipe = () => {
 
   const desactiverEquipe = async (equipe) => {
     try{
-      await fetch(`http://localhost:8080/equipe/${equipe.code_equipe}`, {
+      await fetch(`http://localhost:8080/equipe/${equipe.id_equipe}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({...equipe, etat_equipe: "Inactive" }),
+        body: JSON.stringify({...equipe, etat_equipe: "inactive" }),
       });
 
       fetchEquipes();
@@ -75,6 +78,20 @@ const Equipe = () => {
       console.error("Erreur lors de la désactivation de l'équipe:", error);
     }
   }
+
+  const fetchEtudiants = async () => {
+      try{
+        const response = await fetch("http://localhost:8080/etudiant", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        setEtudiants(data);
+      }
+      catch (error) {
+        console.error("Erreur lors de la récupération des étudiants :", error);
+      }
+    };
 
   const viderForm = () => {
     setForm({
@@ -85,6 +102,7 @@ const Equipe = () => {
 
   useEffect(() => {
     fetchEquipes();
+    fetchEtudiants();
   }, []);
 
 
@@ -175,7 +193,6 @@ const Equipe = () => {
                   <td>{equipe.code_equipe}</td>
                   <td>{equipe.nom}</td>
                   <td>{equipe.classe_id_classe}</td>
-
                   <td>
                     <button
                       className="btn btn-sn"
@@ -253,6 +270,72 @@ const Equipe = () => {
                     <div className="invalid-feedback">Nom d'équipe requis</div>
                   </div>
 
+                  <div className="col-mb-4">
+                  <label htmlFor="etudiants">Sélectionner des étudiants</label>
+                  <div id="etudiants">
+                    {etudiants.map((etudiant) => (
+                      <div key={etudiant.id_etudiant} className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id={`etudiant-${etudiant.id_etudiant}`}
+                          value={etudiant.id_etudiant}
+                          onChange={(e) => handleCheckboxChange(e, etudiant.id_etudiant)}
+                        />
+                        <label className="form-check-label" htmlFor={`etudiant-${etudiant.id_etudiant}`}>
+                          {etudiant.nom_complet}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                <div className="valid-feedback">Bien</div>
+                <div className="invalid-feedback">Sélectionner au moins un étudiant requis</div>
+              </div>
+
+
+                  <div className='col-mb-4'>
+                    <label htmlFor="validationCustom03" className="form-label">Id Classe</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="validationCustom03" 
+                      value={form.classe_id_classe} 
+                      onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
+                      required
+                    />
+                    <div className="valid-feedback">Bien</div>
+                    <div className="invalid-feedback">Id Classe requis</div>
+                  </div>
+
+                  <div className='col-mb-4'>
+                    <label htmlFor="validationCustom04" className="form-label">Id Cours</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="validationCustom04" 
+                      value={form.id_cours} 
+                      onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
+                      required
+                    />
+                    <div className="valid-feedback">Bien</div>
+                    <div className="invalid-feedback">Id Cours requis</div>
+                  </div>
+
+                  <div className='col-mb-4'>
+                    <label htmlFor="validationCustom05" className="form-label">Id Session</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="validationCustom05" 
+                      value={form.id_session} 
+                      onChange={(e) => setForm({ ...form, id_session: e.target.value })}
+                      required
+                    />
+                    <div className="valid-feedback">Bien</div>
+                    <div className="invalid-feedback">Id Session requis</div>
+                  </div>
+
+                 
                   <button type="submit" className="btn btn-primary">
                     <span className="visually-hidden">Ajouter une équipe</span>
                     Ajouter
@@ -262,19 +345,128 @@ const Equipe = () => {
             </div>
           </div>
         </div>
+        <div 
+          className="modal fade"
+          id="modifierEquipe"
+          tabIndex="-1"
+          aria-labelledby="modifierEquipeLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title"
+                  id= "modifierEquipeLabel">
+                  Modifier une équipe
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div className="modal-body">
+                <form className="row g-3"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    modifierEquipe(form.id_equipe);
+                    const modal = bootstrap.Modal.getInstance
+                      (document.getElementById("modifierEquipe")
+                    );
+                    modal.hide();
+                  }}
+                >
+                  <div className="mb-3">
+                    <label className="form-label">Code d'équipe</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={form.code_equipe}
+                      onChange={(e) => setForm({ ...form, code_equipe: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Nom d'équipe</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={form.nom}
+                      onChange={(e) => setForm({ ...form, nom: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <select
+                      className="form-select"
+                      value={form.etudiant}
+                      onChange={(e) => setForm({ ...form, etudiant: e.target.value })}
+                      required
+                    >
+                      <option value="">Sélectionner un étudiant</option>
+                      {etudiants.map((etudiant) => (
+                        <option key={etudiant.id_etudiant} value={etudiant.id_etudiant}>
+                          {etudiant.nom} {etudiant.prenom}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label">Id Classe</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={form.classe_id_classe}
+                      onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label">Id Cours</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={form.id_cours}
+                      onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary">
+                    <span className="visually-hidden">Modifier une équipe</span>
+                    Modifier
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
-
-
-
-
-
-
-
-
-
-
 }
+
+// Validation de formulaire
+(function () {
+  'use strict'
+
+  var forms = document.querySelectorAll('.needs-validation')
+
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
 
 export default Equipe;

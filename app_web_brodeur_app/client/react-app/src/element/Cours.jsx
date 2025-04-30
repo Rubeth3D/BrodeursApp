@@ -105,7 +105,6 @@ const Cours = () => {
     });
   };
   
-  
   useEffect(() => {
     fetchCours();
     fetchSessions();
