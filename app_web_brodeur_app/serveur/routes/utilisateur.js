@@ -27,6 +27,7 @@ const router = express.Router();
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
     const parametre = req.sessionData.utilisateurId;
+    console.log(parametre)
     const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
     const resultat = await client.query(requete, [parametre]);
 

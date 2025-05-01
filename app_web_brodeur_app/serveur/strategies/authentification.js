@@ -24,7 +24,7 @@ router.use(cors());
 //Te reconnais seulement si le serveur n'a pas redémarer
 export const verifierSessionUtilisateur = async (req, res, next) => {
   if (!req.isAuthenticated() || !req.user) {
-    logger.warn("Utilisateur non authentifié (passport)");E
+    logger.warn("Utilisateur non authentifié (passport)");
     return res
       .status(401)
       .json({ authenticated: false, reason: "Non authentifié" });
@@ -79,9 +79,9 @@ export const verifierSessionUtilisateur = async (req, res, next) => {
     );
 
     req.sessionData = {
-      authentification: true,
-      type: req.user.type_utilisateur,
-    };
+    authentification: true,
+    utilisateurId: session.utilisateur_id_utilisateur,
+};
 
     return next();
   } catch (err) {
