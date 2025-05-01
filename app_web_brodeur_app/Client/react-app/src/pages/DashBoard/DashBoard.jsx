@@ -10,7 +10,7 @@ import AdminSVG from "../../image/AdminSVG";
 import DeconnexionSVG from "../../image/DeconnexionSVG";
 import CompteSVG from "../../image/CompteSVG";
 import TravauxSVG from "../../image/TravauxSVG";
-
+import CommentaireSVG from "../../image/CommentaireSVG"
 //element
 import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
@@ -36,6 +36,7 @@ function DashBoard() {
     { id: "Critère", isActiver: false },
     { id: "Travaux", isActiver: false },
     { id: "Resultats", isActiver: false },
+    { id: "Commentaire", isActiver: false },
     { id: "Admin", isActiver: false },
   ]);
 
@@ -198,9 +199,17 @@ function DashBoard() {
                 }}
               ></HoverDiv>
               <HoverDiv
+                text={"Commentaire"}
+                svgImage={<CommentaireSVG />}
+                isCliquer={etatBoutton[7].isActiver}
+                onclick={() => {
+                  Cliquer("Commentaire");
+                }}
+              ></HoverDiv>
+              <HoverDiv
                 text={"Admin"}
                 svgImage={<AdminSVG />}
-                isCliquer={etatBoutton[7].isActiver}
+                isCliquer={etatBoutton[8].isActiver}
                 onclick={() => {
                   Cliquer("Admin");
                 }}
@@ -210,7 +219,7 @@ function DashBoard() {
           <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
-            {etatBoutton[7].isActiver && <Admin />}
+            {etatBoutton[8].isActiver && <Admin />}
           </div>
         </div>
       </div>
