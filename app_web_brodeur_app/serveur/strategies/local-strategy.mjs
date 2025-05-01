@@ -157,6 +157,7 @@ passport.serializeUser((utilisateur, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
+    console.log(id)
     const requete =
       "SELECT * FROM session_utilisateur WHERE id_session_utilisateur = $1;";
     const result = await client.query(requete, [id]);
@@ -164,7 +165,8 @@ passport.deserializeUser(async (id, done) => {
     if (result.rows.length === 0) {
       return done(null, false);
     }
-
+    console.log(id)
+    console.log(result.rows[0])
     return done(null, result.rows[0]);
   } catch (err) {
     return done(err);

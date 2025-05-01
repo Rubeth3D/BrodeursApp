@@ -21,10 +21,10 @@ const router = express.Router();
 router.use(express.json());
 router.use(cors());
 
+//Te reconnais seulement si le serveur n'a pas redémarer
 export const verifierSessionUtilisateur = async (req, res, next) => {
   if (!req.isAuthenticated() || !req.user) {
-    logger.warn("Utilisateur non authentifié (passport)");
-    //console.log(req);
+    logger.warn("Utilisateur non authentifié (passport)");E
     return res
       .status(401)
       .json({ authenticated: false, reason: "Non authentifié" });
