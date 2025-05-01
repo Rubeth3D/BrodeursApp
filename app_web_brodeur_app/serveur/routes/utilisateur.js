@@ -26,23 +26,18 @@ const router = express.Router();
 //Pas d'information sensible
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    if (req.sessionData.authentification) {
-      logger.info("Session validée, récupération des cours");
+    const parametre = req.sessionData.utilisateurId;
+    console.log(parametre)
+    const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
+    const resultat = await client.query(requete, [parametre]);
 
-      const parametre = req.sessionData.utilisateurId;
-      const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
-      const resultat = await client.query(requete, [parametre]);
-
-      // Vérifie ici si tu récupères bien eu un utilisateur
-      if (resultat.rows.length > 0) {
-        logger.info("Get de l'utilisateur effectué avec succès");
-        return res.status(200).json(resultat.rows); // Renvoie les cours ici
-      } else {
-        logger.info("Aucun cours trouvé dans la base de données");
-        return res.status(404).json({ message: "Aucun cours trouvé" });
-      }
+    // Vérifie ici si tu récupères bien eu un utilisateur
+    if (resultat.rows.length > 0) {
+      logger.info("Get de l'utilisateur effectué avec succès");
+      return res.status(200).json(resultat.rows); // Renvoie les cours ici
     } else {
-      return res.status(401).json({ message: "Session Non Valide" });
+      logger.info("Aucun cours trouvé dans la base de données");
+      return res.status(404).json({ message: "Aucun cours trouvé" });
     }
   } catch (error) {
     logger.error("Erreur lors de la récupération des cours : " + error.message);
@@ -312,7 +307,6 @@ router.put("/:id", async (req, res) => {
 });
 
 //delete pour un utilisateur
-
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params;

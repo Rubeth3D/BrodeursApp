@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
-import { decrypt } from "../utils/crypto.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -22,76 +21,71 @@ const router = express.Router();
 router.use(express.json());
 router.use(cors());
 
+//Te reconnais seulement si le serveur n'a pas redémarer
 export const verifierSessionUtilisateur = async (req, res, next) => {
-  console.log("Cookie de l'utilisateur : ", req.cookies);
-  const encryptedSessionId = req.cookies?.session_id;
-  if (!encryptedSessionId) {
-    logger.warn("Session absente dans le cookie.");
+  if (!req.isAuthenticated() || !req.user) {
+    logger.warn("Utilisateur non authentifié (passport)");
     return res
       .status(401)
-      .json({ authenticated: false, reason: "Session absente" });
+      .json({ authenticated: false, reason: "Non authentifié" });
   }
-
-  let sessionId;
-  try {
-    sessionId = decrypt(encryptedSessionId);
-  } catch (err) {
-    logger.error("Erreur de déchiffrement de session : " + err.message);
-    return res
-      .status(401)
-      .json({ authenticated: false, reason: "Session invalide" });
-  }
+  const sessionId = req.user.id_session_utilisateur;
 
   try {
     const result = await client.query(
       `SELECT * FROM session_utilisateur 
-        WHERE id_session_utilisateur = $1 AND etat_session_utilisateur = 'A'`,
+       WHERE id_session_utilisateur = $1 
+       AND etat_session_utilisateur = 'A' 
+       ORDER BY date_jeton_expiration DESC 
+       LIMIT 1`,
       [sessionId]
     );
 
     const session = result.rows[0];
-    console.log(session);
+
     if (!session) {
-      logger.warn(`Session introuvable : ID ${sessionId}`);
+      logger.warn("Aucune session active trouvée en BD");
       return res
         .status(401)
-        .json({ authenticated: false, reason: "Session inconnue" });
+        .json({ authenticated: false, reason: "Session non trouvée" });
     }
 
-    const date = new Date();
+    const maintenant = new Date();
     const expiration = new Date(session.date_jeton_expiration);
 
-    if (date > expiration) {
-      logger.info(`Session expirée : ID ${sessionId}`);
-      const UpdateEtatSessionsQuery = `
-            UPDATE session_utilisateur
-            SET 
-              etat_session_utilisateur = 'I'
-            WHERE id_session_utilisateur = $1
-          `;
+    if (maintenant > expiration) {
+      logger.info(
+        `Session expirée pour l'utilisateur ${req.user.utilisateur_id_utilisateur}`
+      );
 
-      client.query(UpdateEtatSessionsQuery, [sessionId]);
+      await client.query(
+        `UPDATE session_utilisateur SET etat_session_utilisateur = 'I' WHERE id_session_utilisateur = $1`,
+        [session.id_session_utilisateur]
+      );
+
+      req.logout((err) => {
+        if (err) {
+          logger.error("Erreur lors du logout :", err);
+        }
+      });
+
       return res
         .status(401)
         .json({ authenticated: false, reason: "Session expirée" });
     }
 
-    logger.info(`La session ${sessionId} est valide`);
-    req.sessionData = {
-      authentification: true,
-      utilisateurId: session.utilisateur_id_utilisateur,
-      type: session.type_utilisateur,
-    };
-    /*return res.status(200).json({
-        authentification: true,
-        utilisateurId: session.utilisateur_id_utilisateur,
-        type: session.type_utilisateur,
-      });*/
-    next();
-  } catch (err) {
-    logger.error(
-      "Erreur serveur lors de la vérification de session : " + err.message
+    logger.info(
+      `Session valide pour l'utilisateur ${req.user.utilisateur_id_utilisateur}`
     );
+
+    req.sessionData = {
+    authentification: true,
+    utilisateurId: session.utilisateur_id_utilisateur,
+};
+
+    return next();
+  } catch (err) {
+    logger.error("Erreur lors de la vérification de session : " + err.message);
     return res
       .status(500)
       .json({ authenticated: false, reason: "Erreur serveur" });

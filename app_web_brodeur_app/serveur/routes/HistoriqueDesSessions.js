@@ -1,4 +1,4 @@
-import mongoClient from "../bd/MongoBD/Connexion.js"; // Assure-toi que la connexion MongoDB est bien exportée depuis ce fichier
+import mongoClient from "../bd/MongoBD/Connexion.js";
 import winston from "winston";
 import express from "express";
 import { ObjectId } from "mongodb";
@@ -91,8 +91,8 @@ router.put("/:id", async (req, res) => {
     };
 
     const resultat = await collection.updateOne(
-      { _id: new ObjectId(id) }, 
-      { $set: updatedHistoriqueDeSession }  
+      { _id: new ObjectId(id) },
+      { $set: updatedHistoriqueDeSession }
     );
 
     if (resultat.matchedCount === 0) {
@@ -107,7 +107,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: "Erreur du serveur" });
   }
 });
-
 
 //DELETE
 router.delete("/:id", async (req, res) => {

@@ -23,18 +23,12 @@ const router = express.Router();
 //Get toutes les classes //exemple avec vérification de l'utilisateur
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    console.log(req.sessionData.authentification);
-    if (req.sessionData.authentification) {
-      logger.info("Session validée, récupération des cours");
-      const parametre = req.sessionData.utilisateurId;
-      const requeteQuery = `Select * from classe where etat_classe = 'Actif' `;
-      const resultat = await client.query(requeteQuery);
-      res.json(resultat.rows);
-      logger.info("Get des classes effectue avec succes!");
-      res.status(200);
-    } else {
-      return res.status(401).json({ message: "Session Non Valide" });
-    }
+    logger.info("Session validée, récupération des cours");
+    const requeteQuery = `Select * from classe where etat_classe = 'Actif' `;
+    const resultat = await client.query(requeteQuery);
+    res.json(resultat.rows);
+    logger.info("Get des classes effectue avec succes!");
+    res.status(200);
   } catch (err) {
     logger.error(`Erreur lors du get des classes ${err}`);
     res.status(500).json({ message: "Erreur lors du fetch des classes" });

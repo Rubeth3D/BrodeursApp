@@ -1,10 +1,11 @@
 //@ts-ignore
 import Navbar from "../../element/Navbar";
-import Footer from "../../element/Footer";
+import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import MessageUtilisateur from "../../element/MessageUtilisateur";
+
 function Inscription() {
+  const [bodyEtudiant, setBodyEtudiant] = useState();
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
     nom: "",
     prenom: "",
@@ -19,9 +20,8 @@ function Inscription() {
   });
 
   const [mot_de_passe_confirmation, setMotDePasseConfirmation] = useState("");
-  const [typeUtilisateur, setTypeUtilisateur] = useState(""); // 'e' ou 'p'
-  const [reponseCodeStatus, setReponseCodeStatus] = useState({});
-  const [reponseMessage, setReponseMessage] = useState("");
+  const [typeUtilisateur, setTypeUtilisateur] = useState("E"); // 'e' ou 'p'
+
   const navigate = useNavigate();
 
   const changerTypeUtilisateur = (nom, valeur) => {
@@ -38,61 +38,52 @@ function Inscription() {
       nom_utilisateur: nomUtilisateur,
     }));
   }
-  function verifierUtilisateur(e) {
+  const creationUtilisateur = async (e) => {
     e.preventDefault();
-    if (bodyUtilisateur.type_utilisateur === "E") {
-      regarderSiExistant("etudiantExiste");
-    } else {
-      regarderSiExistant("professeurExiste");
-    }
-  }
-  const envoyerCourriel = async () => {
-    const reponse = await fetch(
-      `http://localhost:8080/inscription/envoyerCode/${bodyUtilisateur.courriel}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    try {
+      console.log(
+        "Informations du formulaire : ",
+        bodyUtilisateur.nom,
+        bodyUtilisateur.prenom,
+        bodyUtilisateur.nom_utilisateur,
+        bodyUtilisateur.courriel
+      );
 
-    const data = await reponse.json();
-    setReponseCodeStatus(reponse.status);
-    setReponseMessage(data.message);
-    if (reponse.ok) {
-      navigate("/VerificationCode", { bodyUtilisateur });
+      console.log("Body utilisateur : ", bodyUtilisateur);
+      const responseUtilisateur = await fetch(
+        `http://localhost:8080/connexion/activerUtilisateur`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyUtilisateur),
+          credentials: "include",
+        }
+      );
+      if (responseUtilisateur.ok) {
+        const responseConnexion = await fetch(`http://localhost:8080/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
+          }),
+        });
+        if (responseConnexion.ok) {
+          navigate("/DashBoard", {
+            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+          });
+        }
+      }
+    } catch (err) {
+      console.log(err.message);
     }
   };
-  const regarderSiExistant = async (typeUtilisateur) => {
-    console.log("regarderSiExistant");
-    const reponse = await fetch(
-      `http://localhost:8080/inscription/${typeUtilisateur}/${bodyUtilisateur.nom_utilisateur}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
-    console.log("Reponse status : ", reponse.status);
-    setReponseCodeStatus(reponse.status);
-    const data = await reponse.json();
-    console.log("Reponse data : ", data.message);
-    setReponseMessage(data.message);
 
-    if (!reponse.ok) {
-      return;
-    }
-    envoyerCourriel();
-  };
   return (
     <>
-      <form
-        className="container"
-        onSubmit={(e) => {
-          verifierUtilisateur(e);
-        }}
-      >
-        <Link to={"/"}>
+      <form className="container" onSubmit={creationUtilisateur}>
+        <Link to={"/Connexion"}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
               <svg
@@ -112,10 +103,7 @@ function Inscription() {
             </h2>
           </button>
         </Link>
-        <MessageUtilisateur
-          reponseCodeStatus={reponseCodeStatus}
-          reponseMessage={reponseMessage}
-        />
+
         <h2 className="text-center display-3 fw-normal mb-5">Inscription</h2>
 
         <div className="row justify-content-center">
@@ -159,20 +147,22 @@ function Inscription() {
             />
           </div>
         </div>
-        <div className="row justify-content-center">
-          <div className="col-8 mb-5">
-            <label className="fw-bold fs-4">Numero demande d'admission</label>
-            <input
-              type="text"
-              className="form-control fs-5"
-              name="numero_da"
-              onChange={(e) =>
-                changerTypeUtilisateur(e.target.name, e.target.value)
-              }
-              required
-            />
+        {typeUtilisateur === "E" && (
+          <div className="row justify-content-center">
+            <div className="col-8 mb-5">
+              <label className="fw-bold fs-4">Numero d'admission</label>
+              <input
+                type="text"
+                className="form-control fs-5"
+                name="numero_da"
+                onChange={(e) =>
+                  changerTypeUtilisateur(e.target.name, e.target.value)
+                }
+                required
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="row justify-content-center">
           <div className="col-8 mb-5">
             <label className="fw-bold fs-4">Mot de passe</label>
@@ -244,27 +234,20 @@ function Inscription() {
           </div>
         </div>
 
-        <div className="text-center mt-1">
+        <div className="d-flex justify-content-center align-items-center mt-4">
           <button
             type="submit"
-            className="btn btn-primary "
+            className="btn btn-primary mt-5 mb-5"
             onClick={() => {
               CreerNomUtilisateur();
             }}
           >
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
-          <p>
-            <Link
-              to={"/Connexion"}
-              className="link-dark link-opacity-75-hover link-underline-light link-underline-opacity-0-hover fs-5"
-            >
-              Connexion
-            </Link>
-          </p>
         </div>
       </form>
     </>
   );
 }
+
 export default Inscription;

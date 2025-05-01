@@ -1,7 +1,7 @@
 
 -- Debut Insertion pour le Prototype --
 
--- Insertion des Utilisateur
+-- Insertion des Utilisateur 
 
 INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur) VALUES
 -- Professeurs

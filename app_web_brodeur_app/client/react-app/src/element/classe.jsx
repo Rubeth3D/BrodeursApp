@@ -30,6 +30,7 @@ const Classe = () => {
     return classes.filter((classe) =>
       classe.code_cours.toLowerCase().includes(requete.toLowerCase())
     );
+    3;
   }, [requete, classes]);
   const fetchClasses = async () => {
     try {

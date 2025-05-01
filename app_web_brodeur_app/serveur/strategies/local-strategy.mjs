@@ -27,7 +27,8 @@ export default passport.use(
       passwordField: "mot_de_passe_Utilisateur",
     },
     async (nom_utilisateur, mot_de_passe_Utilisateur, done) => {
-      const requete = "SELECT * FROM utilisateur WHERE nom_utilisateur = $1";
+      const requete =
+        "SELECT * FROM utilisateur WHERE nom_utilisateur = $1 AND etat_utilisateur = 'Actif'";
       const parametre = [nom_utilisateur];
 
       try {
@@ -151,19 +152,20 @@ export default passport.use(
 
 passport.serializeUser((utilisateur, done) => {
   console.log("Serialize User avec session_id:", utilisateur.session_id);
-  done(null, utilisateur.session_id); 
+  done(null, utilisateur.session_id);
 });
 
-/*passport.serializeUser((user, done) => {
-  done(null, user.id_utilisateur);
-});*/
+passport.deserializeUser(async (id, done) => {
+  try {
+    const requete =
+      "SELECT * FROM session_utilisateur WHERE id_session_utilisateur = $1;";
+    const result = await client.query(requete, [id]);
 
-passport.deserializeUser((id, done) => {
-  const requete = "SELECT * FROM utilisateur WHERE id_utilisateur = $1;";
-
-  client.query(requete, [id], async (err, result) => {
-    if (err) return done(err);
-    if (result.rows.length === 0) return done(null, false);
+    if (result.rows.length === 0) {
+      return done(null, false);
+    }
     return done(null, result.rows[0]);
-  });
+  } catch (err) {
+    return done(err);
+  }
 });
