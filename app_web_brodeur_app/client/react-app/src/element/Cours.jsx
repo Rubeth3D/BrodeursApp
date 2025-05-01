@@ -192,7 +192,7 @@ const Cours = () => {
             </div>
           </div>
         </div>
-        <table className="table table-striped table-hover mt-5">
+        <table className="table table-hover mt-5 text-center">
           <thead>
             <tr>
               <th>Code</th>
@@ -209,10 +209,10 @@ const Cours = () => {
                   cours // Aider par ChatGPT pour filtrer les cours actifs
                 ) => (
                   <tr key={cours.id_cours}>
-                    <td>{cours.code_cours}</td>
-                    <td>{cours.description_cours}</td>
-                    <td>{cours.code_session}</td>
-                    <td>
+                    <td className="text-center align-middle py-3">{cours.code_cours}</td>
+                    <td className="text-center align-middle py-3">{cours.description_cours}</td>
+                    <td className="text-center align-middle py-3">{cours.code_session}</td>
+                    <td className="text-center align-middle py-3">
                       <button
                         className="btn btn-sn"
                         type="button"
