@@ -63,13 +63,13 @@ function Inscription() {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({
-            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
+            nom_utilisateur: utilisateurAEnvoyer.utilisateur.nom_utilisateur,
+            mot_de_passe_Utilisateur: utilisateurAEnvoyer.utilisateur.mot_de_passe,
           }),
         });
         if (responseConnexion.ok) {
           navigate("/DashBoard", {
-            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+            state: { username: `${utilisateurAEnvoyer.utilisateur.nom_utilisateur}` },
           });
         }
       }
