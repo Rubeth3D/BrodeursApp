@@ -24,7 +24,7 @@ router.use(cors());
 export const verifierSessionUtilisateur = async (req, res, next) => {
   if (!req.isAuthenticated() || !req.user) {
     logger.warn("Utilisateur non authentifié (passport)");
-    console.log(req);
+    //console.log(req);
     return res
       .status(401)
       .json({ authenticated: false, reason: "Non authentifié" });
