@@ -26,10 +26,10 @@ const router = express.Router();
 router.post("/activerUtilisateur", async (req, res) => {
   try {
     logger.info("Recherche de l'utilisateur");
-
-    const courriel = req.body.courriel;
-    const type_utilisateur = req.body.type_utilisateur;
-    console.log(req.body);
+    const utilisateur = req.body.utilisateur;
+    const courriel = utilisateur.courriel;
+    const type_utilisateur = utilisateur.type_utilisateur;
+    console.log(utilisateur);
     const requeteGet = `SELECT * from utilisateur WHERE courriel = $1 
       AND type_utilisateur = $2`;
     const resultatGet = await client.query(requeteGet, [
