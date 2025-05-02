@@ -168,7 +168,7 @@ const Classe = () => {
                       setModalCreerClasseEstOuvert(true);
                     }}
                   >
-                    + Ajouter une classe
+                    + Ajouter
                   </button>
                 </div>
               </div>
@@ -188,11 +188,9 @@ const Classe = () => {
         <table className="table table-hover mt-5 text-center">
           <thead>
             <tr>
-              <th className="text-center">Code</th>
+              <th className="text-center">Cours</th>
               <th className="text-center">Description</th>
               <th className="text-center">Groupe</th>
-              <th className="text-center">Cours</th>
-              <th className="text-center">État</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -207,12 +205,6 @@ const Classe = () => {
                 </td>
                 <td className="text-center align-middle py-3">
                   {classe.groupe}
-                </td>
-                <td className="text-center align-middle py-3">
-                  {classe.cours_id_cours}
-                </td>
-                <td className="text-center align-middle py-3">
-                  {classe.etat_classe}
                 </td>
                 <td className="text-center align-middle py-3">
                   <div className="d-flex justify-content-center gap-2">

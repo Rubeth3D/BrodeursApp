@@ -26,10 +26,10 @@ const router = express.Router();
 router.post("/activerUtilisateur", async (req, res) => {
   try {
     logger.info("Recherche de l'utilisateur");
-
-    const courriel = req.body.courriel;
-    const type_utilisateur = req.body.type_utilisateur;
-    console.log(req.body);
+    const utilisateurReq = req.body.utilisateur;
+    const courriel = utilisateurReq.courriel;
+    const type_utilisateur = utilisateurReq.type_utilisateur;
+    console.log(utilisateurReq);
     const requeteGet = `SELECT * from utilisateur WHERE courriel = $1 
       AND type_utilisateur = $2`;
     const resultatGet = await client.query(requeteGet, [
@@ -48,7 +48,7 @@ router.post("/activerUtilisateur", async (req, res) => {
         const date = new Date();
         const saltRounds = 10;
         const motDePasseCrypter = await bcrypt.hash(
-          req.body.mot_de_passe,
+          utilisateurReq.mot_de_passe,
           saltRounds
         );
         const requetPost = `UPDATE utilisateur
@@ -61,9 +61,9 @@ router.post("/activerUtilisateur", async (req, res) => {
         WHERE id_utilisateur = $7`;
         const resulatPost = await client.query(requetPost, [
           "Actif",
-          req.body.nom,
-          req.body.prenom,
-          req.body.nom_utilisateur,
+          utilisateurReq.nom,
+          utilisateurReq.prenom,
+          utilisateurReq.nom_utilisateur,
           motDePasseCrypter,
           date,
           utilisateur.id_utilisateur,
