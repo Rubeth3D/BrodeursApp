@@ -60,26 +60,16 @@ router.get("/:id", async (req, res) => {
 //post pour un etudiant
 router.post("/", async (req, res) => {
   try {
-    const etudiant = req.body;
-    console.log(etudiant);
-
-    const nomComplet = etudiant.nom_complet;
-    const numeroDa = etudiant.numero_da;
-    const id_utilisateur = etudiant.utilisateur_id_utilisateur;
-    const id_professeur = etudiant.professeur_id_professeur;
-    const etat = "Actif";
-
+    const { equipeIdEquipe, idEtudiant, nomComplet, etatEtudiant } = req.body;
     const resultat = await client.query(
-      `INSERT INTO etudiant 
-      (nom_complet, numero_da, utilisateur_id_utilisateur, professeur_id_professeur, etat_etudiant) 
-      VALUES ($1, $2, $3, $4, $5)`,
-      [nomComplet, numeroDa, id_utilisateur, id_professeur, etat]
+      "INSERT ON etudiant(equipe_id_equipe,id_etudiant,nom_complet,etat_etudiant) VALUES($1,$2,$3,$4)"[
+        (equipeIdEquipe, idEtudiant, nomComplet, etatEtudiant)
+      ]
     );
-
-    res.status(200).json({ message: "Inscription faite avec succès" });
-    logger.info("Insert de l'étudiant fait avec succès");
+    res.status(200).json({ message: "Inscription fait avec succes" });
+    logger.info("Insert du etudiant fait avec succes");
   } catch (err) {
-    logger.error(`Erreur lors du insert : ${err.message}`);
+    logger.error(`Erreur lors du insert ${err}`);
     res.status(500).json({ message: "Erreur lors du insert" });
   }
 });

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 function Inscription() {
+  const [bodyEtudiant, setBodyEtudiant] = useState();
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
     nom: "",
     prenom: "",
@@ -40,20 +41,21 @@ function Inscription() {
   const creationUtilisateur = async (e) => {
     e.preventDefault();
     try {
-      const utilisateurAEnvoyer = {
-        utilisateur: {
-          ...bodyUtilisateur,
-          type_utilisateur: typeUtilisateur,
-        },
-      };
-      console.log("Body utilisateur : ", utilisateurAEnvoyer);
-      
+      console.log(
+        "Informations du formulaire : ",
+        bodyUtilisateur.nom,
+        bodyUtilisateur.prenom,
+        bodyUtilisateur.nom_utilisateur,
+        bodyUtilisateur.courriel
+      );
+
+      console.log("Body utilisateur : ", bodyUtilisateur);
       const responseUtilisateur = await fetch(
         `http://localhost:8080/connexion/activerUtilisateur`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(utilisateurAEnvoyer),
+          body: JSON.stringify(bodyUtilisateur),
           credentials: "include",
         }
       );
@@ -63,13 +65,13 @@ function Inscription() {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({
-            nom_utilisateur: utilisateurAEnvoyer.utilisateur.nom_utilisateur,
-            mot_de_passe_Utilisateur: utilisateurAEnvoyer.utilisateur.mot_de_passe,
+            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
+            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
           }),
         });
         if (responseConnexion.ok) {
           navigate("/DashBoard", {
-            state: { username: `${utilisateurAEnvoyer.utilisateur.nom_utilisateur}` },
+            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
           });
         }
       }
