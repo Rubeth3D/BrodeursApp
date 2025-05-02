@@ -7,3 +7,4 @@ const affichageDonnees = (Donnees) => {
     </>
   );
 };
+export default affichageDonnees;
