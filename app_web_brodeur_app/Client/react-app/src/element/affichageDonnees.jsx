@@ -1,10 +1,10 @@
 import React from "react";
 
-const affichageDonnees = (Donnees) => {
+const AffichageDonnees = (Donnees) => {
   return (
     <>
       <h1></h1>
     </>
   );
 };
-export default affichageDonnees;
+export default AffichageDonnees;

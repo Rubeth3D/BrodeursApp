@@ -8,6 +8,7 @@ import NotfoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import Inscription from "./pages/Inscription/Inscription.jsx";
 import DashBoard from "./pages/DashBoard/DashBoard.jsx";
 import VerificationCode from "./pages/VerificationCode/VerificationCode.jsx";
+import Admin from "../src/element/Admin.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "/Connexion", element: <Connexion /> },
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
   { path: "/DashBoard", element: <DashBoard /> },
   { path: "*", element: <NotfoundPage /> },
   { path: "/VerificationCode", element: <VerificationCode /> },
+  { path: "/Admin", element: <Admin /> },
 ]);
 function App() {
   useEffect(() => {

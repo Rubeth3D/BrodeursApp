@@ -10,12 +10,12 @@ import AdminSVG from "../../image/AdminSVG";
 import DeconnexionSVG from "../../image/DeconnexionSVG";
 import CompteSVG from "../../image/CompteSVG";
 import TravauxSVG from "../../image/TravauxSVG";
-import CommentaireSVG from "../../image/CommentaireSVG"
+import CommentaireSVG from "../../image/CommentaireSVG";
 //element
 import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
-import Admin from "../../element/admin";
+import Admin from "../../element/Admin";
 
 function DashBoard() {
   const [prenom, setPrenom] = useState("");

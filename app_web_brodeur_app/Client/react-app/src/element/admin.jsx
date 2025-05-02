@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import affichageDonnees from "./affichageDonnees";
+import AffichageDonnees from "./AffichageDonnees.jsx";
 import MessageUtilisateur from "./MessageUtilisateur.jsx";
 const Admin = () => {
   const [bodyLogSessions, setLogSessions] = useState({});
@@ -9,12 +9,14 @@ const Admin = () => {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
+    console.log("Resultat : ", resultat);
   };
+  useEffect(() => {
+    getSession();
+  }, []);
   return (
     <>
-      <MessageUtilisateur
-      />
-      <affichageDonnees />
+      <AffichageDonnees />
     </>
   );
 };

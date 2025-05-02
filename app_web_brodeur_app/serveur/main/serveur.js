@@ -12,7 +12,8 @@ import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
-
+import { config } from "dotenv";
+import classe from "../routes/classe.js";
 const app = express();
 
 const logger = winston.createLogger({
@@ -43,8 +44,7 @@ app.use(cors(corsConfig));
 app.use(cookieParser());
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
-app.use("/sessionCours", session);
-app.use("/logSessions", logSessions);
+app.use("/sessionCours", sessionDeCours);
 app.use("/classe", classe);
 app.use("/etudiant", etudiant);
 app.use("/historiqueDesSessions", HistoriqueSession);
