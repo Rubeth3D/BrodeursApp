@@ -18,20 +18,28 @@ const Classe = () => {
   const [modalCreerClasseEstOuvert, setModalCreerClasseEstOuvert] =
     useState(false);
 
-  const classesFiltrees = useMemo(() => {
-    if (!classes) {
-      console.log("Pas de classe");
-      return [];
-    }
-    if (!requete) {
-      //console.log("Pas de requête");
-      return classes;
-    }
-    return classes.filter((classe) =>
-      classe.code_cours.toLowerCase().includes(requete.toLowerCase())
-    );
-    3;
-  }, [requete, classes]);
+    const classesFiltrees = useMemo(() => {
+      if (!classes) {
+        console.log("Pas de classe");
+        return [];
+      }
+    
+      // Filtrage de base : classes actives
+      const classesActives = classes.filter(
+        (classe) => classe.etat_classe === "Actif"
+      );
+    
+      // Si pas de requête, retourner toutes les classes actives
+      if (!requete) {
+        return classesActives;
+      }
+    
+      // Si requête, filtrer en plus sur le code du cours
+      return classesActives.filter((classe) =>
+        classe.code_cours.toLowerCase().includes(requete.toLowerCase())
+      );
+    }, [requete, classes]);
+    
   const fetchClasses = async () => {
     try {
       const response = await fetch("http://localhost:8080/classe", {
