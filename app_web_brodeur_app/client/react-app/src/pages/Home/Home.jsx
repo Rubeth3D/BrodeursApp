@@ -1,6 +1,6 @@
 //@ts-ignore
 import Navbar from "../../element/Navbar.jsx";
-import Footer from "./../../element/footer.jsx";
+import Footer from "../../element/Footer.jsx";
 import React, { useState, useEffect } from "react";
 function Home() {
   const [estConnecte, setEstConnecte] = useState(false);

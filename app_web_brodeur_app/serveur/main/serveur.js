@@ -1,9 +1,8 @@
-import express, { request, response } from "express";
+import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import winston from "winston";
 import cours from "../routes/cours.js";
-import classe from "../routes/classe.js";
 import utilisateur from "../routes/utilisateur.js";
 import etudiant from "../routes/etudiant.js";
 import sessionDeCours from "../routes/sessionCours.js";
@@ -13,7 +12,8 @@ import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
-
+import { config } from "dotenv";
+import classe from "../routes/classe.js";
 const app = express();
 
 const logger = winston.createLogger({
@@ -33,25 +33,15 @@ const corsConfig = {
   credentials: true,
   origin: true,
 };
+config();
 
-app.use(
-  session({
-    secret: "BrodeurApps",
-    saveUninitialized: false,
-    resave: false,
-    cookie: {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 24,
-    },
-  })
-);
+app.use(express.json());
 
 app.use(passport.initialize());
 app.use(passport.session());
+//initialisation du passport
 app.use(cors(corsConfig));
 app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use("/cours", cours);
 app.use("/utilisateur", utilisateur);
 app.use("/sessionCours", sessionDeCours);

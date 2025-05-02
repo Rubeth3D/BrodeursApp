@@ -10,13 +10,12 @@ import AdminSVG from "../../image/AdminSVG";
 import DeconnexionSVG from "../../image/DeconnexionSVG";
 import CompteSVG from "../../image/CompteSVG";
 import TravauxSVG from "../../image/TravauxSVG";
-import CommentaireSVG from "../../image/CommentaireSVG"
+import CommentaireSVG from "../../image/CommentaireSVG";
 //element
 import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
-import Admin from "../../element/admin";
-import Commentaire from "../../element/Commentaire"
+import Admin from "../../element/Admin";
 
 function DashBoard() {
   const [prenom, setPrenom] = useState("");
@@ -175,24 +174,22 @@ function DashBoard() {
                 }}
               ></HoverDiv>
 
-              {(typeUtilisateur == "Professeur" || typeUtilisateur == "Admin") && (<HoverDiv
+              <HoverDiv
                 text={"Critère"}
                 svgImage={<ActiviteSVG />}
                 isCliquer={etatBoutton[4].isActiver}
                 onclick={() => {
                   Cliquer("Critère");
                 }}
-              ></HoverDiv>)}
-
-              {(typeUtilisateur == "Professeur" || typeUtilisateur == "Admin") && (<HoverDiv
+              ></HoverDiv>
+              <HoverDiv
                 text={"Travaux"}
                 svgImage={<TravauxSVG />}
                 isCliquer={etatBoutton[5].isActiver}
                 onclick={() => {
                   Cliquer("Travaux");
                 }}
-              ></HoverDiv>)}
-
+              ></HoverDiv>
               <HoverDiv
                 text={"Résultats"}
                 svgImage={<ResultatsSVG />}
@@ -201,7 +198,6 @@ function DashBoard() {
                   Cliquer("Resultats");
                 }}
               ></HoverDiv>
-              
               <HoverDiv
                 text={"Commentaire"}
                 svgImage={<CommentaireSVG />}
@@ -210,22 +206,19 @@ function DashBoard() {
                   Cliquer("Commentaire");
                 }}
               ></HoverDiv>
-
-              {(typeUtilisateur == "Admin") && (<HoverDiv
+              <HoverDiv
                 text={"Admin"}
                 svgImage={<AdminSVG />}
                 isCliquer={etatBoutton[8].isActiver}
                 onclick={() => {
                   Cliquer("Admin");
                 }}
-              ></HoverDiv>)}
-
+              ></HoverDiv>
             </div>
           </div>
           <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
-            {etatBoutton[7].isActiver && <Commentaire />}
             {etatBoutton[8].isActiver && <Admin />}
           </div>
         </div>

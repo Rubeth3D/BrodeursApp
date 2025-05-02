@@ -18,7 +18,6 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-router.use(express.json());
 
 // Fonction pour se connecter à la collection MongoDB
 async function ConnexionCollection() {
