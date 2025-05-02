@@ -152,7 +152,7 @@ const Cours = () => {
           </div>
         </div>
         <br />
-        <h1 className="text-center mb-5">Liste des cours</h1>
+        <h1 className="text-center mb-5">Tableau des cours</h1>
         <div className="container my-4">
           <div className="row">
             <div className="col-10">
