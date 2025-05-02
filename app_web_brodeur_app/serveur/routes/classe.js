@@ -21,10 +21,25 @@ const logger = winston.createLogger({
 const router = express.Router();
 
 //Get toutes les classes //exemple avec vérification de l'utilisateur
-router.get("/", verifierSessionUtilisateur, async (req, res) => {
+router.get("/actif", verifierSessionUtilisateur, async (req, res) => {
   try {
     logger.info("Session validée, récupération des cours");
     const requeteQuery = `Select * from classe where etat_classe = 'Actif' `;
+    const resultat = await client.query(requeteQuery);
+    res.json(resultat.rows);
+    logger.info("Get des classes effectue avec succes!");
+    res.status(200);
+  } catch (err) {
+    logger.error(`Erreur lors du get des classes ${err}`);
+    res.status(500).json({ message: "Erreur lors du fetch des classes" });
+  }
+});
+
+//Get toutes les classes actif et Inactif
+router.get("/", verifierSessionUtilisateur, async (req, res) => {
+  try {
+    logger.info("Session validée, récupération des cours");
+    const requeteQuery = `Select * from classe `;
     const resultat = await client.query(requeteQuery);
     res.json(resultat.rows);
     logger.info("Get des classes effectue avec succes!");
@@ -176,7 +191,7 @@ router.put(
         const { id } = req.params;
         const requeteQuery = `
         UPDATE classe
-        SET etat_classe = 'Non-Actif'
+        SET etat_classe = 'Inactif'
         WHERE etat_classe = 'Actif' AND id_classe = $1
         RETURNING *
       `;
