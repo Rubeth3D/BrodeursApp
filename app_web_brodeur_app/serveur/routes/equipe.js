@@ -56,20 +56,23 @@ router.get("/:id", async (req, res) => {
 
 // POST créer une équipe
 router.post("/", async (req, res) => {
-  console.log("allo");
   try {
     const { code_equipe, nom, classe_id_classe, etat_equipe, id_cours, id_session } = req.body;
-    await client.query(
-      "INSERT INTO equipe (code_equipe, nom, classe_id_classe, etat_equipe, id_cours, id_session) VALUES ($1, $2, $3, $4, $5, $6)",
+    const resultat = await client.query(
+      "INSERT INTO equipe (code_equipe, nom, classe_id_classe, etat_equipe, id_cours, id_session) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [code_equipe, nom, classe_id_classe, etat_equipe, id_cours, id_session]
     );
-    res.status(201).json({ message: "Équipe créée avec succès" });
+
+    const nouvelleEquipe = resultat.rows[0];
+
+    res.status(201).json(nouvelleEquipe); 
     logger.info("Insert de l'équipe fait avec succès");
   } catch (err) {
     logger.error(`Erreur lors de l'insert de l'équipe : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insert de l'équipe" });
   }
 });
+
 
 // PUT modifier une équipe
 router.put("/:id", async (req, res) => {

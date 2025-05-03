@@ -9,11 +9,12 @@ const Equipe = () => {
   const [form, setForm] = useState({
     code_equipe: "",
     nom: "",
-    etudiant: "",
+    etudiant: [], 
     classe_id_classe: "",
     id_cours: "",
     id_session: "",
   });
+  
 
   const fetchEquipes = async () => {
     try {
@@ -31,39 +32,73 @@ const Equipe = () => {
 
   const creerEquipe = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const equipeActif = {
         ...form,
         etat_equipe: "active",
       };
+  
       const response = await fetch("http://localhost:8080/equipe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(equipeActif),
       });
-      if(response.ok){
+  
+      if (response.ok) {
+        const nouvelleEquipe = await response.json();
+        
+        // Associer les étudiants à l'équipe : Aider par ChatGPT
+        for (const idEtudiant of form.etudiant) {
+          await fetch("http://localhost:8080/etudiantEquipe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              equipe_id_equipe: nouvelleEquipe.id_equipe,
+              etudiant_id_etudiant: idEtudiant,
+            }),
+          });
+        }        
+  
         fetchEquipes();
       }
-    }catch (error) {
+    } catch (error) {
       console.error("Erreur lors de la création de l'équipe:", error);
     }
   };
+  
 
-  const modifierEquipe = async(id) => {
-    try{
+  const modifierEquipe = async (id) => {
+    try {
       const response = await fetch(`http://localhost:8080/equipe/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if(response.ok){
+  
+      if (response.ok) {
+        await fetch(`http://localhost:8080/etudiantEquipe/equipe/${id}`, {
+          method: "DELETE",
+        });
+  
+        for (const idEtudiant of form.etudiant) {
+          await fetch("http://localhost:8080/etudiantEquipe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              equipe_id_equipe: id,
+              etudiant_id_etudiant: idEtudiant,
+            }),
+          });
+        }
+  
         fetchEquipes();
         viderForm();
       }
     } catch (error) {
-      console.error(error);
+      console.error("Erreur lors de la modification de l'équipe:", error);
     }
   };
+  
 
   const desactiverEquipe = async (equipe) => {
     try{
@@ -93,12 +128,34 @@ const Equipe = () => {
       }
     };
 
-  const viderForm = () => {
-    setForm({
-      code_equipe: "",
-      nom: "",
-    });
-  };
+    // Fonction pour gérer le changement de l'état des cases à cocher : Aider par ChatGPT
+    const handleCheckboxChange = (e, id_etudiant) => {           
+      const { checked } = e.target;
+      if (checked) {
+        setForm((prevForm) => ({
+          ...prevForm,
+          etudiant: [...(prevForm.etudiant || []), id_etudiant],
+        }));
+      } else {
+        setForm((prevForm) => ({
+          ...prevForm,
+          etudiant: (prevForm.etudiant || []).filter((id) => id !== id_etudiant),
+        }));
+      }
+    };
+    
+
+    const viderForm = () => {
+      setForm({
+        code_equipe: "",
+        nom: "",
+        etudiant: [],
+        classe_id_classe: "",
+        id_cours: "",
+        id_session: "",
+      });
+    };
+    
 
   useEffect(() => {
     fetchEquipes();
@@ -399,19 +456,23 @@ const Equipe = () => {
                     />
                   </div>
                   <div className="mb-3">
-                    <select
-                      className="form-select"
-                      value={form.etudiant}
-                      onChange={(e) => setForm({ ...form, etudiant: e.target.value })}
-                      required
-                    >
-                      <option value="">Sélectionner un étudiant</option>
-                      {etudiants.map((etudiant) => (
-                        <option key={etudiant.id_etudiant} value={etudiant.id_etudiant}>
-                          {etudiant.nom} {etudiant.prenom}
-                        </option>
-                      ))}
-                    </select>
+                  <label htmlFor="etudiants">Sélectionner des étudiants</label>
+                  <div id="etudiants">
+                    {etudiants.map((etudiant) => (
+                      <div key={etudiant.id_etudiant} className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id={`etudiant-${etudiant.id_etudiant}`}
+                          value={etudiant.id_etudiant}
+                          onChange={(e) => handleCheckboxChange(e, etudiant.id_etudiant)}
+                        />
+                        <label className="form-check-label" htmlFor={`etudiant-${etudiant.id_etudiant}`}>
+                          {etudiant.nom_complet}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                   </div>
 
                   <div className="mb-3">

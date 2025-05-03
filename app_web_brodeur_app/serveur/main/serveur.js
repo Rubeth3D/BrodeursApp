@@ -14,6 +14,7 @@ import client from "../bd/postgresBD/Connexion.js";
 import classe from "../routes/classe.js";
 import equipe from "../routes/equipe.js";
 import etudiant from "../routes/etudiant.js";
+import etudiantEquipe from "../routes/etudiantEquipe.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -48,6 +49,7 @@ app.use("/classe", classe);
 app.use("/equipe", equipe);
 app.use("/session", session);
 app.use("/etudiant", etudiant);
+app.use("/etudiantEquipe", etudiantEquipe);
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
