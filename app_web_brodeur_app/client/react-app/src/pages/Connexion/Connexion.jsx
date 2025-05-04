@@ -6,6 +6,7 @@ function Connexion() {
   const [nomUtilisateur, setNomUtilisateur] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [codeReponseServeur, setCodeReponseServeur] = useState(null);
+  const [reponseMessage, setReponseMessage] = useState(null);
   const navigate = useNavigate();
 
   const connexionUser = async (e) => {
@@ -33,8 +34,9 @@ function Connexion() {
         }),
       });
       setCodeReponseServeur(response.status);
-      console.log(codeReponseServeur);
       const dataJson = await response.json();
+      setReponseMessage(dataJson.message);
+      console.log(dataJson);
     } catch (err) {
       console.log("Erreur de serveur : ", err.message);
       setCodeReponseServeur(500);
@@ -64,8 +66,9 @@ function Connexion() {
             </h2>
           </button>
         </Link>
-        <MessageUtilisateur 
+        <MessageUtilisateur
           reponseCodeStatus={codeReponseServeur}
+          reponseMessage={reponseMessage}
         ></MessageUtilisateur>
         <h2 className="text-center display-3 fw-normal">Connexion</h2>
         <div className="row justify-content-center mt-5">

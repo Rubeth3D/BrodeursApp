@@ -27,7 +27,7 @@ const router = express.Router();
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
     const parametre = req.sessionData.utilisateurId;
-    console.log(parametre)
+    console.log(parametre);
     const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
     const resultat = await client.query(requete, [parametre]);
 
@@ -184,13 +184,10 @@ router.get("/:nom_utilisateur/:motDePasse", async (req, res) => {
 //post pour un utilisateur
 router.post("/", async (req, res) => {
   try {
-    const body = JSON.stringify(req.body);
-    logger.info(body);
     const {
       nom,
       prenom,
       nom_utilisateur,
-      courriel,
       mot_de_passe,
       numero_da,
       etat_utilisateur,
@@ -267,44 +264,6 @@ router.post("/", async (req, res) => {
 });
 
 //put pour un utilisateur
-router.put("/:id", async (req, res) => {
-  try {
-    const id = req.params;
-    const {
-      nomUser,
-      motDePasse,
-      email,
-      typeUtilisateur,
-      idProfesseur,
-      idEtudiant,
-      etatUtilisateur,
-    } = req.body;
-
-    const resultat = await client.query(
-      "UPDATE ON utilisateur SET nom_utilisateur = $1, mot_de_passe = $2, email = $3, type_utilisateur = $4, id_professeur = $5, id_etudiant = $6, etat_utilisateur = $7 WHERE id_user = $8 RETURNING *"[
-        (nomUser,
-        motDePasse,
-        email,
-        typeUtilisateur,
-        idProfesseur,
-        idEtudiant,
-        etatUtilisateur,
-        id)
-      ]
-    );
-    if (resultat.rows.length === 0) {
-      logger.error("Aucun utilisateur ne correspond a ce id");
-      return res
-        .status(404)
-        .json({ message: "Aucun utilisateur ne correspond a ce id" });
-    }
-    res.status(200).json({ message: "Update fait avec succes!" });
-    logger.info("Update fait avec succes!");
-  } catch (err) {
-    res.status(500).json({ message: "Erreur lors du update" });
-    logger.error(`Erreur lors du update ${err}`);
-  }
-});
 
 //delete pour un utilisateur
 router.delete("/:id", async (req, res) => {

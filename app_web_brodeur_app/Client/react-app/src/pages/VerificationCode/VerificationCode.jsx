@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 //@ts-ignore
 import MessageUtilisateur from "../../element/MessageUtilisateur.jsx";
 import Navbar from "../../element/Navbar.jsx";
+//@ts-ignore
 import Footer from "../../element/Footer.jsx";
 function VerificationCode() {
   const classNamesZoneCode = "border m-2 p-1 rounded mt-3";
@@ -30,6 +31,7 @@ function VerificationCode() {
   const classNameBorderZoneCode =
     "border position-absolute top-50 start-50 translate-middle p-5 rounded m-2";
   const classNameEntrerCode = "p-5";
+  const classNameConfirmer = "btn btn-primary mt-4";
   const compteurCode = () => {
     const minutes = Math.floor(compteurTemps.current / 60);
     let secondes = compteurTemps.current % 60;
@@ -48,50 +50,29 @@ function VerificationCode() {
   };
 
   const creationUtilisateur = async (e) => {
-    e.preventDefault();
     try {
-      console.log(
-        "Informations du formulaire : ",
-        bodyUtilisateur.nom,
-        bodyUtilisateur.prenom,
-        bodyUtilisateur.nom_utilisateur,
-        bodyUtilisateur.courriel
-      );
-      if (
-        bodyUtilisateur.nom === "" ||
-        bodyUtilisateur.prenom === "" ||
-        bodyUtilisateur.courriel === ""
-      ) {
-        console.log("Il manque des informations au formulaire");
-        return;
-      }
-
-      if (bodyUtilisateur.mot_de_passe !== mot_de_passe_confirmation) {
-        console.log("Les deux mots de passe ne sont pas identiques");
-        return;
-      }
-
-      console.log("Body utilisateur : ", bodyUtilisateur);
-      const response = await fetch(`http://localhost:8080/inscription`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyUtilisateur),
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        console.log(bodyUtilisateur.mot_de_passe);
-        console.log(bodyUtilisateur.nom_utilisateur);
-        const responseConnexion = await fetch(`http://localhost:8080/login`, {
+      e.preventDefault();
+      console.log("Body utilisateur : ");
+      const reponseCourriel = await fetch(
+        `http://localhost:8080/inscription/VerifierCode/${location.state.courriel}`,
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          body: inputCode,
           credentials: "include",
-          body: JSON.stringify({
-            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
-          }),
-        });
-        if (responseConnexion.ok) {
+        }
+      );
+      if (reponseCourriel.ok) {
+        const reponseCreationCompte = await fetch(
+          `http://localhost:8080/inscription/creationCompte/${location.state.courriel}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: location.state,
+          }
+        );
+        if (reponseCreationCompte.ok) {
           navigate("/DashBoard", {
             state: { username: `${bodyUtilisateur.nom_utilisateur}` },
           });
@@ -219,6 +200,15 @@ function VerificationCode() {
               gererInputIndex(e);
             }}
           />
+          <br />
+          <button
+            className={classNameConfirmer}
+            onClick={(e) => {
+              creationUtilisateur(e);
+            }}
+          >
+            Confirmer
+          </button>
         </div>
       </div>
       <Footer />

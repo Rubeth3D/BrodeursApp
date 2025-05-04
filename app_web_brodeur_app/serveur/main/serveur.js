@@ -14,6 +14,7 @@ import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
 import { config } from "dotenv";
 import classe from "../routes/classe.js";
+import inscription from "../routes/inscription.js";
 const app = express();
 
 const logger = winston.createLogger({
@@ -34,7 +35,17 @@ const corsConfig = {
   origin: true,
 };
 config();
-
+app.use(
+  session({
+    secret: "BrodeurApps",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 24,
+    },
+  })
+);
 app.use(express.json());
 
 app.use(passport.initialize());
@@ -50,7 +61,7 @@ app.use("/etudiant", etudiant);
 app.use("/historiqueDesSessions", HistoriqueSession);
 app.use("/commentaire", Commentaire);
 app.use("/connexion", connexion);
-
+app.use("/inscription", inscription);
 // Route de connexion
 app.post("/login", (req, res, next) => {
   logger.info("Authentification de l'utilisateur");

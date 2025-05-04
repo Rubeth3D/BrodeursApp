@@ -54,7 +54,8 @@ const messageUtilisateur = (reponse) => {
       <>
         <div style={styleMessageErreurBackground}>
           {ErreurSVG()}
-          {reponse.reponseMessage}
+          Erreur de serveur, veuillez contacter l'equipe de developpement au
+          arnaudkomodo@gmail.com
         </div>
       </>
     );

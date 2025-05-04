@@ -1,5 +1,6 @@
 //@ts-ignore
 import Navbar from "../../element/Navbar";
+//@ts-ignore
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
@@ -23,7 +24,22 @@ function Inscription() {
   const [typeUtilisateur, setTypeUtilisateur] = useState("E"); // 'e' ou 'p'
 
   const navigate = useNavigate();
-
+  async function envoyerCourriel(e) {
+    e.preventDefault();
+    try {
+      const reponse = await fetch(
+        `http://localhost:8080/inscription/envoyerCode/${bodyUtilisateur.courriel}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      if (reponse.ok) {
+        navigate("/VerificationCode", { state: bodyUtilisateur });
+      }
+    } catch (error) {}
+  }
   const changerTypeUtilisateur = (nom, valeur) => {
     setBodyUtilisateur((bodyUtilisateur) => ({
       ...bodyUtilisateur,
@@ -38,51 +54,15 @@ function Inscription() {
       nom_utilisateur: nomUtilisateur,
     }));
   }
-  const creationUtilisateur = async (e) => {
-    e.preventDefault();
-    try {
-      console.log(
-        "Informations du formulaire : ",
-        bodyUtilisateur.nom,
-        bodyUtilisateur.prenom,
-        bodyUtilisateur.nom_utilisateur,
-        bodyUtilisateur.courriel
-      );
-
-      console.log("Body utilisateur : ", bodyUtilisateur);
-      const responseUtilisateur = await fetch(
-        `http://localhost:8080/connexion/activerUtilisateur`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bodyUtilisateur),
-          credentials: "include",
-        }
-      );
-      if (responseUtilisateur.ok) {
-        const responseConnexion = await fetch(`http://localhost:8080/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            nom_utilisateur: bodyUtilisateur.nom_utilisateur,
-            mot_de_passe_Utilisateur: bodyUtilisateur.mot_de_passe,
-          }),
-        });
-        if (responseConnexion.ok) {
-          navigate("/DashBoard", {
-            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
-          });
-        }
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
 
   return (
     <>
-      <form className="container" onSubmit={creationUtilisateur}>
+      <form
+        className="container"
+        onSubmit={(e) => {
+          envoyerCourriel(e);
+        }}
+      >
         <Link to={"/Connexion"}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
