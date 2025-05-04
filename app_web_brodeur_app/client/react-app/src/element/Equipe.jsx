@@ -3,6 +3,8 @@ import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 
 const Equipe = () => {
+  const [classes, setClasses] = useState([]);
+  const [cours, setCours] = useState([]);
   const [etudiants, setEtudiants] = useState([]);
   const [filtreTousEquipes, setFiltreTousEquipes] = useState([]);
   const [equipe, setEquipe] = useState([]);
@@ -12,7 +14,6 @@ const Equipe = () => {
     etudiant: [], 
     classe_id_classe: "",
     id_cours: "",
-    id_session: "",
   });
   
 
@@ -128,6 +129,19 @@ const Equipe = () => {
       }
     };
 
+    const fetchCours = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/cours", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        setCours(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des cours :", error);
+      }
+    };
+
     // Fonction pour gérer le changement de l'état des cases à cocher : Aider par ChatGPT
     const handleCheckboxChange = (e, id_etudiant) => {           
       const { checked } = e.target;
@@ -145,6 +159,19 @@ const Equipe = () => {
     };
     
 
+    const fetchClasses = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/classe", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        setClasses(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des classes :", error);
+      }
+    };
+
     const viderForm = () => {
       setForm({
         code_equipe: "",
@@ -160,6 +187,8 @@ const Equipe = () => {
   useEffect(() => {
     fetchEquipes();
     fetchEtudiants();
+    fetchCours();
+    fetchClasses();
   }, []);
 
 
@@ -175,7 +204,7 @@ const Equipe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title"> Nombre d'équipes total:</h2>
+                <h2 className="card-title fs-5"> Nombre d'équipes total:</h2>
                 <p className="card-text fs-4 text-primary mt-4">{totalEquipe}</p>
               </div>
             </div>
@@ -184,7 +213,7 @@ const Equipe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title"> Nombre d'équipes Actif:</h2>
+                <h2 className="card-title fs-5"> Nombre d'équipes Actif:</h2>
                 <p className="card-text fs-4 text-success mt-4">{equipeActif.length}</p>
               </div>
             </div>
@@ -193,7 +222,7 @@ const Equipe = () => {
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title"> Nombre d'équipes Inactif:</h2>
+                <h2 className="card-title fs-5"> Nombre d'équipes Inactif:</h2>
                 <p className="card-text fs-4 text-danger mt-4">{equipeInactif.length}</p>
               </div>
             </div>
@@ -351,48 +380,46 @@ const Equipe = () => {
 
 
                   <div className='col-mb-4'>
-                    <label htmlFor="validationCustom03" className="form-label">Id Classe</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom03" 
-                      value={form.classe_id_classe} 
+                    <label htmlFor="validationCustom03" className="form-label">Nom classe</label>
+                    <select
+                      className="form-select"
+                      id="validationCustom03"
+                      value={form.classe_id_classe}
                       onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
                       required
-                    />
+                    >
+                      <option value="">Sélectionner une classe</option>
+                      {classes.map((classe) => (
+                        <option key={classe.id_classe} value={classe.id_classe}>
+                          {classe.description}
+                        </option>
+                      ))}
+                    </select>
                     <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Id Classe requis</div>
+                    <div className="invalid-feedback">Nom classe requis</div>
                   </div>
 
                   <div className='col-mb-4'>
-                    <label htmlFor="validationCustom04" className="form-label">Id Cours</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom04" 
-                      value={form.id_cours} 
+                    <label htmlFor="validationCustom04" className="form-label">Nom cours</label>
+                    <select
+                      className="form-select"
+                      id="validationCustom04"
+                      value={form.id_cours}
                       onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
                       required
-                    />
+                    >
+                      <option value="">Sélectionner un cours</option>
+                      {cours.map((cours) => (
+                        <option key={cours.id_cours} value={cours.id_cours}>
+                          {cours.description_cours}
+                        </option>
+                      ))}
+                    </select>
                     <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Id Cours requis</div>
+                    <div className="invalid-feedback">Nom cours requis</div>
                   </div>
 
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom05" className="form-label">Id Session</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom05" 
-                      value={form.id_session} 
-                      onChange={(e) => setForm({ ...form, id_session: e.target.value })}
-                      required
-                    />
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Id Session requis</div>
-                  </div>
-
-                 
+                  
                   <button type="submit" className="btn btn-primary">
                     <span className="visually-hidden">Ajouter une équipe</span>
                     Ajouter
@@ -476,25 +503,37 @@ const Equipe = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Id Classe</label>
-                    <input
-                      type="text"
-                      className="form-control"
+                    <label className="form-label">Nom Classe</label>
+                    <select
+                      className="form-select"
                       value={form.classe_id_classe}
                       onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
                       required
-                    />
+                    >
+                      <option value="">Sélectionner une classe</option>
+                      {classes.map((classe) => (
+                        <option key={classe.id_classe} value={classe.id_classe}>
+                          {classe.description}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Id Cours</label>
-                    <input
-                      type="text"
-                      className="form-control"
+                    <label className="form-label">Cours</label>
+                    <select
+                      className="form-select"
                       value={form.id_cours}
                       onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
                       required
-                    />
+                    >
+                      <option value="">Sélectionner un cours</option>
+                      {cours.map((cours) => (
+                        <option key={cours.id_cours} value={cours.id_cours}>
+                          {cours.description_cours}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <button type="submit" className="btn btn-primary">

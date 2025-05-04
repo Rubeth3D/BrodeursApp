@@ -274,23 +274,6 @@ const Cours = () => {
                   <div className="invalid-feedback">Nom du cours requis</div>
                 </div>
 
-                {/*   
-                  <div className='col-mb-4'>
-                  <label htmlFor="validationCustom03" className="form-label">État du cours</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="validationCustom03" 
-                    value={form.etat_cours} 
-                    onChange={(e) => setForm({ ...form, etat_cours: e.target.value })}
-                    required
-                  />
-                  <div className="valid-feedback">Bien</div>
-                  <div className="invalid-feedback">État du cours requis</div>
-                </div>
-                */}
-                
-
                 <div className='col-mb-4'>
                   <label htmlFor="validationCustom04" className="form-label">Session</label>
                   <select
@@ -380,32 +363,23 @@ const Cours = () => {
                 />
               </div>
 
-              {/*}
-              <div className="mb-3">
-                <label className="form-label">État</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={form.etat_cours}
-                  onChange={(e) =>
-                    setForm({ ...form, etat_cours: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              */}
-
               <div className="mb-3">
                 <label className="form-label">Session</label>
-                <input
-                  type="text"
-                  className="form-control"
+                <select
+                  className="form-select"
                   value={form.session_id_session}
                   onChange={(e) =>
                     setForm({ ...form, session_id_session: e.target.value })
                   }
                   required
-                />
+                >
+                  <option value="">Sélectionner une session</option>
+                  {sessionCours.map((session) => (
+                    <option key={session.id_session} value={session.id_session}>
+                      {session.code_session}
+                    </option>
+                  ))}
+                </select>
               </div>
               <button type="submit" className="btn btn-primary">
                 Enregistrer les modifications
