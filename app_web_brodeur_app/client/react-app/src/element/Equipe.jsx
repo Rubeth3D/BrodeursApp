@@ -9,7 +9,7 @@ const Equipe = () => {
     code_equipe: "",
     nom: "",
     classe_id_classe: "",
-    etat_equipe: "Actif",  // Valeur par défaut
+    etat_equipe: "Actif", // Valeur par défaut
     id_cours: "",
     id_session: "",
   });
@@ -94,8 +94,12 @@ const Equipe = () => {
     fetchEquipes();
   }, []);
 
-  const equipesActives = equipes.filter((equipe) => equipe.etat_equipe === "Actif").length;
-  const equipesInactives = equipes.filter((equipe) => equipe.etat_equipe === "Inactif").length;
+  const equipesActives = equipes.filter(
+    (equipe) => equipe.etat_equipe === "Actif"
+  ).length;
+  const equipesInactives = equipes.filter(
+    (equipe) => equipe.etat_equipe === "Inactif"
+  ).length;
   const totalEquipes = equipes.length;
 
   return (
@@ -106,7 +110,9 @@ const Equipe = () => {
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre d'équipes total:</h2>
-                <p className="card-text fs-4 text-primary mt-4">{totalEquipes}</p>
+                <p className="card-text fs-4 text-primary mt-4">
+                  {totalEquipes}
+                </p>
               </div>
             </div>
           </div>
@@ -114,21 +120,28 @@ const Equipe = () => {
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
                 <h2 className="card-title fs-5"> Nombre d'équipes actives:</h2>
-                <p className="card-text fs-4 text-success mt-4">{equipesActives}</p>
+                <p className="card-text fs-4 text-success mt-4">
+                  {equipesActives}
+                </p>
               </div>
             </div>
           </div>
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
-                <h2 className="card-title fs-5"> Nombre d'équipes inactives:</h2>
-                <p className="card-text fs-4 text-danger mt-4">{equipesInactives}</p>
+                <h2 className="card-title fs-5">
+                  {" "}
+                  Nombre d'équipes inactives:
+                </h2>
+                <p className="card-text fs-4 text-danger mt-4">
+                  {equipesInactives}
+                </p>
               </div>
             </div>
           </div>
         </div>
         <br />
-        <h1 className="text-center mb-5">Liste des équipes</h1>
+        <h1 className="text-center mb-5">Tableaux des équipes</h1>
         <div className="container my-4">
           <div className="row">
             <div className="col-10">
