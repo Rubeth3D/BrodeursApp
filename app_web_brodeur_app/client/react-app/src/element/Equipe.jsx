@@ -36,7 +36,7 @@ const Equipe = () => {
     try {
       const equipeActif = {
         ...form,
-        etat_equipe: "active",
+        etat_equipe: "Active",
       };
   
       const response = await fetch("http://localhost:8080/equipe", {
@@ -106,7 +106,7 @@ const Equipe = () => {
       await fetch(`http://localhost:8080/equipe/${equipe.id_equipe}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({...equipe, etat_equipe: "inactive" }),
+        body: JSON.stringify({...equipe, etat_equipe: "Inactive" }),
       });
 
       fetchEquipes();
@@ -192,8 +192,8 @@ const Equipe = () => {
   }, []);
 
 
-  const equipeActif = equipe.filter((equipe) => equipe.etat_equipe === "active");
-  const equipeInactif = equipe.filter((equipe) => equipe.etat_equipe === "inactive");
+  const equipeActif = equipe.filter((equipe) => equipe.etat_equipe === "Active");
+  const equipeInactif = equipe.filter((equipe) => equipe.etat_equipe === "Inactive");
   const totalEquipe = equipe.length;
 
   return (
@@ -274,7 +274,7 @@ const Equipe = () => {
               </tr>
             </thead>
             <tbody>
-              {equipe.filter(equipe => equipe.etat_equipe === "active").map((equipe) => (
+              {equipe.filter(equipe => equipe.etat_equipe === "Active").map((equipe) => (
                 <tr key={equipe.id_equipe}>
                   <td>{equipe.code_equipe}</td>
                   <td>{equipe.nom}</td>
