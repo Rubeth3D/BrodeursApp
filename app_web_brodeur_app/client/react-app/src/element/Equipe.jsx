@@ -228,7 +228,7 @@ const Equipe = () => {
             </div>
           </div>
           <br />
-          <h1 className="text-center mb-5">Liste des équipes</h1>
+          <h1 className="text-center mb-4 mt-5">Liste des équipes</h1>
           <div className="container my-4">
             <div className="row">
               <div className="col-10">
@@ -267,9 +267,9 @@ const Equipe = () => {
           <table className="table table-striped table-hover mt-5">
             <thead>
               <tr>
-                <th>Code équipe</th>
+                <th>Code d'équipe</th>
                 <th>Nom</th>
-                <th>Id Classe</th>
+                <th>Nom classe</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -503,7 +503,7 @@ const Equipe = () => {
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label">Nom Classe</label>
+                    <label className="form-label">Nom classe</label>
                     <select
                       className="form-select"
                       value={form.classe_id_classe}
