@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 //@ts-ignore
 import MessageUtilisateur from "../../element/MessageUtilisateur.jsx";
@@ -6,12 +6,16 @@ import Navbar from "../../element/Navbar.jsx";
 //@ts-ignore
 import Footer from "../../element/Footer.jsx";
 function VerificationCode() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const utilisateur = location.state;
   const classNamesZoneCode = "border m-2 p-1 rounded mt-3";
   const [inputIndex0, setInputIndex0] = useState("");
   const [inputIndex1, setInputIndex1] = useState("");
   const [inputIndex2, setInputIndex2] = useState("");
   const [inputIndex3, setInputIndex3] = useState("");
   const inputCode = inputIndex0 + inputIndex1 + inputIndex2 + inputIndex3;
+  const codePourServeur = { code: inputCode };
   const focusIndex0 = useRef(null);
   const focusIndex1 = useRef(null);
   const focusIndex2 = useRef(null);
@@ -54,27 +58,27 @@ function VerificationCode() {
       e.preventDefault();
       console.log("Body utilisateur : ");
       const reponseCourriel = await fetch(
-        `http://localhost:8080/inscription/VerifierCode/${location.state.courriel}`,
+        `http://localhost:8080/inscription/VerifierCode/${utilisateur.courriel}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: inputCode,
+          body: JSON.stringify(codePourServeur),
           credentials: "include",
         }
       );
       if (reponseCourriel.ok) {
         const reponseCreationCompte = await fetch(
-          `http://localhost:8080/inscription/creationCompte/${location.state.courriel}`,
+          `http://localhost:8080/inscription/creationCompte/${utilisateur.courriel}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: location.state,
+            body: JSON.stringify(utilisateur),
           }
         );
         if (reponseCreationCompte.ok) {
           navigate("/DashBoard", {
-            state: { username: `${bodyUtilisateur.nom_utilisateur}` },
+            state: { username: `${utilisateur.nom_utilisateur}` },
           });
         }
       }

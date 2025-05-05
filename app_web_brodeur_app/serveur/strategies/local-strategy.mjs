@@ -2,23 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import client from "../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
-
-async function generateUniqueSessionId(client) {
-  let id;
-  let exists = true;
-
-  while (exists) {
-    id = Math.floor(100000 + Math.random() * 900000);
-    const result = await client.query(
-      "SELECT 1 FROM session_utilisateur WHERE id_session_utilisateur = $1",
-      [id]
-    );
-
-    exists = result.rowCount > 0;
-  }
-
-  return id;
-}
+import generateUniqueSessionId from "./creerId.js";
 
 export default passport.use(
   new LocalStrategy(

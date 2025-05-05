@@ -138,7 +138,8 @@ CREATE TABLE travail (
 );
 CREATE TABLE code_verification(
     id_code_verification SERIAL PRIMARY KEY,
-    code_verification NUMERIC
+    code NUMERIC,
+    courriel VARCHAR(255)
 );
 CREATE TABLE utilisateur (
     id_utilisateur SERIAL PRIMARY KEY,

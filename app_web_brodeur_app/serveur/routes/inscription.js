@@ -4,6 +4,7 @@ import client from "../bd/postgresBD/Connexion.js";
 import oAuth2Client from "../api/oAuth2Client.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
+import creerId from "../strategies/creerId.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -113,14 +114,13 @@ router.post("/envoyerCode/:courriel", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-router.get("/VerifierCode/:courriel", async (req, res) => {
+router.post("/VerifierCode/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
     const { code } = req.body;
     const reponse = await client.query(
       "SELECT code FROM code_verification WHERE courriel = $1 AND code = $2",
-      [courriel],
-      [code]
+      [courriel, code]
     );
     if (reponse.rowCount === 0) {
       return res.status(404).json({ message: "Votre code a expiré!" });
@@ -133,7 +133,7 @@ router.get("/VerifierCode/:courriel", async (req, res) => {
 });
 router.put("/CreationCompte/:courriel", async (req, res) => {
   try {
-    const courriel = req.params;
+    const { courriel } = req.params;
     const {
       nom,
       prenom,
@@ -146,9 +146,10 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
     } = req.body;
     const salt = bcrypt.genSaltSync(10);
     const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
-    await client.query(
-      "UPDATE ON utilisateur SET nom = $1, prenom = $2, nom_utilisateur = $3 ,mot_de_passe = $4, etat_utilisateur = $5, type_utilisateur = $6, professeur_id_professeur = $7, etudiant_id_etudiant = $8 WHERE courriel = $9 RETURNING etat_utilisateur"[
-        (nom,
+    const resultat = await client.query(
+      "UPDATE utilisateur SET nom = $1, prenom = $2, nom_utilisateur = $3 ,mot_de_passe = $4, etat_utilisateur = $5, type_utilisateur = $6, professeur_id_professeur = $7, etudiant_id_etudiant = $8 WHERE courriel = $9 RETURNING *",
+      [
+        nom,
         prenom,
         nom_utilisateur,
         mot_de_passe_hash,
@@ -156,12 +157,21 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
         type_utilisateur,
         professeur_id_professeur,
         etudiant_id_etudiant,
-        courriel)
+        courriel,
       ]
     );
+    const utilisateur = resultat.rows[0];
+    const idSession = await creerId(client);
+    utilisateur.session_id = idSession;
 
-    res.status(200).json({ message: "Inscription faite avec succès!" });
+    console.log("Utilisateur a etre loged : ", utilisateur);
+    req.logIn(utilisateur, function (err) {
+      if (err) {
+        return res.status(500).json({ message: err.message });
+      }
+    });
     logger.info("Update fait avec succes!");
+    res.status(200).json({ message: "Code validé avec succès!" });
   } catch (err) {
     res.status(500).json({ message: "Erreur lors du update" });
     logger.error(`Erreur lors du update ${err}`);

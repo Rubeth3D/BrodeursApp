@@ -36,6 +36,7 @@ function Inscription() {
         }
       );
       if (reponse.ok) {
+        console.log("Body utilisateur : ", bodyUtilisateur);
         navigate("/VerificationCode", { state: bodyUtilisateur });
       }
     } catch (error) {}
