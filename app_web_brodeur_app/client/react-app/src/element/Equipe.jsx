@@ -67,7 +67,7 @@ const Equipe = () => {
     }
   };
   
-
+  // Fonction pour modifier une équipe *** À CHANGER***
   const modifierEquipe = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/equipe/${id}`, {

@@ -13,6 +13,7 @@ import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
+import equipe from "../routes/equipe.js";
 
 const app = express();
 
@@ -60,6 +61,7 @@ app.use("/etudiant", etudiant);
 app.use("/historiqueDesSessions", HistoriqueSession);
 app.use("/commentaire", Commentaire);
 app.use("/connexion", connexion);
+app.use("/equipe", equipe);
 
 // Route de connexion
 app.post("/login", (req, res, next) => {
