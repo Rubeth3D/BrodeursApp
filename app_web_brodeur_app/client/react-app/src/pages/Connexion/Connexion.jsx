@@ -24,7 +24,7 @@ function Connexion() {
     try {
       const response = await fetch("http://localhost:8080/login", {
         method: "POST",
-        credentials: "include", // Permet d'envoyer les cookies pour la session
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,26 +34,26 @@ function Connexion() {
         }),
       });
 
-      const dataJson = await response.json();
+      setCodeReponseServeur(response.status);
 
-      if (response.status === 200) {
-        //console.log(dataJson); // Affiche la réponse dans la console
-        console.log(dataJson.nom_user);
-        navigate("/DashBoard", {
-          //passe un objet avec les informations de la personnes pour la prochaine pages
-          state: { nom_utilisateur: `${dataJson.nom_user}` },
-        });
-        console.log(document.cookie);
-      } else if (response.status === 404) {
-        console.log(dataJson.message);
-        setReponseStatus("Utilisateur non trouvé");
-      } else if (response.status === 401) {
-        console.log(dataJson.message);
-        setReponseStatus("Nom d'utilisateur ou mot de passe incorrect");
+      // Lire le corps UNE FOIS
+      const rawBody = await response.text();
+
+      let dataJson;
+      try {
+        dataJson = JSON.parse(rawBody); // Essaye de le parser
+      } catch (e) {
+        console.error("Réponse non-JSON du serveur :", rawBody);
+        setReponseMessage("Réponse serveur invalide");
+        return;
       }
+
+      setReponseMessage(dataJson.message || "Connexion réussie");
+      console.log(dataJson);
     } catch (err) {
-      console.log(err.message);
-      setReponseStatus("Erreur serveur, veuillez réessayer plus tard");
+      console.error("Erreur de serveur :", err.message);
+      setCodeReponseServeur(500);
+      setReponseMessage("Erreur de communication avec le serveur");
     }
   };
 

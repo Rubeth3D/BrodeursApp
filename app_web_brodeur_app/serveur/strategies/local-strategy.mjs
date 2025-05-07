@@ -87,6 +87,7 @@ export default passport.use(
 
             utilisateur.session_id =
               updatedSessionResult.rows[0].id_session_utilisateur;
+            console.log(utilisateur.session_id);
             return done(null, utilisateur);
           } else {
             console.log("Aucune session existante ou active");

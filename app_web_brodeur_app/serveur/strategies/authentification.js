@@ -18,7 +18,6 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-router.use(express.json());
 router.use(cors());
 
 //Te reconnais seulement si le serveur n'a pas redémarer
