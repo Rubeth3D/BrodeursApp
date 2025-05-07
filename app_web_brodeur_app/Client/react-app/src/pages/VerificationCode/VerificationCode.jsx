@@ -79,7 +79,7 @@ function VerificationCode() {
 
         if (reponseCreationCompte.ok) {
           try {
-            console.log(location);
+            console.log(location.state);
             const response = await fetch("http://localhost:8080/login", {
               method: "POST",
               credentials: "include",
@@ -92,8 +92,6 @@ function VerificationCode() {
               }),
             });
 
-            setCodeReponseServeur(response.status);
-
             const rawBody = await response.text();
 
             let dataJson;
@@ -105,9 +103,6 @@ function VerificationCode() {
               return;
             }
 
-            // Affiche le message dans tous les cas
-            setReponseMessage(dataJson.message || "Connexion réussie");
-
             // Redirection si succès
             if (response.status === 200) {
               navigate("/DashBoard", {
@@ -116,8 +111,6 @@ function VerificationCode() {
             }
           } catch (err) {
             console.error("Erreur de serveur :", err.message);
-            setCodeReponseServeur(500);
-            setReponseMessage("Erreur de communication avec le serveur");
           }
         }
       }
