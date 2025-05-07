@@ -5,6 +5,7 @@ import winston from "winston";
 import cours from "../routes/cours.js";
 import classe from "../routes/classe.js";
 import utilisateur from "../routes/utilisateur.js";
+import inscription from "../routes/inscription.js";
 import etudiant from "../routes/etudiant.js";
 import sessionDeCours from "../routes/sessionCours.js";
 import connexion from "../routes/connexion.js";
@@ -60,6 +61,7 @@ app.use("/etudiant", etudiant);
 app.use("/historiqueDesSessions", HistoriqueSession);
 app.use("/commentaire", Commentaire);
 app.use("/connexion", connexion);
+app.use("/inscription", inscription);
 
 // Route de connexion
 app.post("/login", (req, res, next) => {

@@ -78,9 +78,47 @@ function VerificationCode() {
         );
 
         if (reponseCreationCompte.ok) {
-          navigate("/DashBoard", {
-            state: { username: `${utilisateur.nom_utilisateur}` },
-          });
+          try {
+            console.log(location);
+            const response = await fetch("http://localhost:8080/login", {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                nom_utilisateur: utilisateur.courriel,
+                mot_de_passe_Utilisateur: location.state.mot_de_passe,
+              }),
+            });
+
+            setCodeReponseServeur(response.status);
+
+            const rawBody = await response.text();
+
+            let dataJson;
+            try {
+              dataJson = JSON.parse(rawBody);
+            } catch (e) {
+              console.error("Réponse non-JSON du serveur :", rawBody);
+              setReponseMessage("Réponse serveur invalide");
+              return;
+            }
+
+            // Affiche le message dans tous les cas
+            setReponseMessage(dataJson.message || "Connexion réussie");
+
+            // Redirection si succès
+            if (response.status === 200) {
+              navigate("/DashBoard", {
+                state: { nom_utilisateur: dataJson.nom_user },
+              });
+            }
+          } catch (err) {
+            console.error("Erreur de serveur :", err.message);
+            setCodeReponseServeur(500);
+            setReponseMessage("Erreur de communication avec le serveur");
+          }
         }
       }
     } catch (err) {

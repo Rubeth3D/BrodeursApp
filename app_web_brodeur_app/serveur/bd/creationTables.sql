@@ -1,6 +1,13 @@
 -- Converted to PostgreSQL
 -- predefined type, no DDL - MDSYS.SDO_GEOMETRY
 -- predefined type, no DDL - XMLTYPE
+
+CREATE TABLE code_verification(
+    id_code_verification SERIAL PRIMARY KEY,
+    code NUMERIC,
+    courriel VARCHAR(255)
+);
+
 CREATE TABLE affectation (id_affectation SERIAL PRIMARY KEY);
 CREATE TABLE assignation (
     travail_id_travail INTEGER NOT NULL,

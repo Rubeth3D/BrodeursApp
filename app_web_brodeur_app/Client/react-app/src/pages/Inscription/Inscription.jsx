@@ -14,7 +14,7 @@ function Inscription() {
     courriel: "",
     mot_de_passe: "",
     numero_da: "",
-    etat_utilisateur: "A",
+    etat_utilisateur: "Actif",
     type_utilisateur: "",
     professeur_id_professeur: null,
     etudiant_id_etudiant: null,

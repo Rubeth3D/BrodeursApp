@@ -48,6 +48,7 @@ router.get("/etudiantExiste/:nom_complet", async (req, res) => {
     });
   }
 });
+
 //verifier si professeur existe
 router.get("/professeurExiste/:nom_complet", async (req, res) => {
   try {
@@ -75,6 +76,7 @@ router.get("/professeurExiste/:nom_complet", async (req, res) => {
     });
   }
 });
+
 router.post("/envoyerCode/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
@@ -133,6 +135,7 @@ router.post("/VerifierCode/:courriel", async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 });
+
 router.put("/CreationCompte/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
