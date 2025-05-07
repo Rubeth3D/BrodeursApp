@@ -2,7 +2,23 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import client from "../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
-import generateUniqueSessionId from "./creerId.js";
+
+async function generateUniqueSessionId(client) {
+  let id;
+  let exists = true;
+
+  while (exists) {
+    id = Math.floor(100000 + Math.random() * 900000);
+    const result = await client.query(
+      "SELECT 1 FROM session_utilisateur WHERE id_session_utilisateur = $1",
+      [id]
+    );
+
+    exists = result.rowCount > 0;
+  }
+
+  return id;
+}
 
 export default passport.use(
   new LocalStrategy(
@@ -87,7 +103,6 @@ export default passport.use(
 
             utilisateur.session_id =
               updatedSessionResult.rows[0].id_session_utilisateur;
-            console.log(utilisateur.session_id);
             return done(null, utilisateur);
           } else {
             console.log("Aucune session existante ou active");
