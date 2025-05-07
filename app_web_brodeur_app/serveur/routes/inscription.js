@@ -78,6 +78,9 @@ router.get("/professeurExiste/:nom_complet", async (req, res) => {
 router.post("/envoyerCode/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
+    const typeCourriel = courriel.match(/@([^@]+)(?=\.)/);
+    logger.info(courriel);
+    console.log(typeCourriel);
     const jetonAcces = await oAuth2Client.getAccessToken();
     console.log("Jeton d'acces : ", jetonAcces);
     const transport = nodemailer.createTransport({
@@ -164,15 +167,10 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
     utilisateur.session_id = idSession;
 
     console.log("Utilisateur a etre loged : ", utilisateur);
-    req.logIn(utilisateur, function (err) {
-      if (err) {
-        return res.status(500).json({ message: err.message });
-      }
-    });
     logger.info("Update fait avec succes!");
     res.status(200).json({ message: "Code validé avec succès!" });
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors du update" });
+    res.status(500).json({ message: `Erreur lors du update ${err}` });
     logger.error(`Erreur lors du update ${err}`);
   }
 });
