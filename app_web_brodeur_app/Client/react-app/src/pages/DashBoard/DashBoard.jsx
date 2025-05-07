@@ -18,8 +18,10 @@ import Cours from "../../element/Cours";
 import Admin from "../../element/admin";
 import Equipe from "../../element/Equipe";
 import Commentaire from "../../element/Commentaire";
+import ModalDeconnexion from "../../element/modalDeconnexion";
 
 function DashBoard() {
+  const [modalDeconnexionOpen, setModalDeconnexionOpen] = useState(false);
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
   const [nomUtilisateur, setNomUtilisateur] = useState("");
@@ -43,11 +45,19 @@ function DashBoard() {
     { id: "Admin", isActiver: false },
   ]);
 
+  const handleModalOpen = () => {
+    setModalDeconnexionOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalDeconnexionOpen(false);
+  };
+
   const deconnexion = async () => {
     try {
-      const response = await fetch("http://localhost:8080/logout", {
+      const response = await fetch("http://localhost:8080/inscription/logout", {
         method: "POST",
-        credentials: "include", // envoie les cookies
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -159,12 +169,17 @@ function DashBoard() {
             </div>
             <button
               className="btn me-5 fw-light btn align-content-center border-0 text-light"
-              onClick={deconnexion}
+              onClick={handleModalOpen}
             >
               <DeconnexionSVG />
             </button>
           </div>
         </div>
+        <ModalDeconnexion
+          open={modalDeconnexionOpen}
+          estFermee={handleModalClose}
+          deconnexion={deconnexion}
+        />
       </div>
 
       <div className="container-fluid">

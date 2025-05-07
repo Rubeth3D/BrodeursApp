@@ -85,21 +85,6 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-app.post("/logout", (req, res) => {
-  req.logout(() => {
-    req.session.destroy((err) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Erreur lors de la déconnexion" });
-      }
-
-      res.clearCookie("connect.sid"); // ou le nom de ton cookie s'il est personnalisé
-      return res.status(200).json({ message: "Déconnexion réussie" });
-    });
-  });
-});
-
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });

@@ -1,25 +1,34 @@
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import ModalDeconnexion from "./modalDeconnexion";
 
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [username, setUsername] = useState(null);
   const [estConnecte, setEstConnecte] = useState(false);
   const [dashBoard, setDashboard] = useState(false);
-  const urlUtilisateur = "http://localhost:8080/utilisateur";
+
   const Deconnexion = async () => {
     try {
-      const reponse = await fetch(`${urlUtilisateur}/Deconnexion`, {
+      const response = await fetch("http://localhost:8080/inscription/logout", {
+        method: "POST",
         credentials: "include",
       });
-      setEstConnecte(false);
+
+      if (response.ok) {
+        console.log("Déconnecté avec succès");
+        setEstConnecte(false);
+        navigate("/");
+      } else {
+        console.error("Erreur de déconnexion");
+      }
     } catch (err) {
-      console.error(`Erreur lors de la deconnexion : ${err}`);
+      console.error("Erreur serveur :", err);
     }
   };
-  useEffect(() => {
-    // VerifierCookies();
-  }, []);
+
   function GererConnexion() {
     if (estConnecte) {
       return (
@@ -53,6 +62,32 @@ function Navbar() {
       );
     }
   }
+
+  const FetchUtilisateur = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/utilisateur", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Erreur de récupération :", data);
+        setEstConnecte(false);
+      } else {
+        console.log("l'utilisateur as bien récupéré");
+        setEstConnecte(true);
+        setUsername(data[0].nom_utilisateur);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    FetchUtilisateur();
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-primary sticky-top justify-content-between">
       <Link to={"/"} className="navbar-brand text-white mx-5">

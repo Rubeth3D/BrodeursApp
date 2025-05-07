@@ -178,4 +178,35 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
   }
 });
 
+router.post("/logout", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(400).json({ message: "Utilisateur non connecté" });
+  }
+  const sessionId = req.user.id_session_utilisateur;
+  await client.query(
+    `UPDATE session_utilisateur 
+     SET etat_session_utilisateur = 'I' 
+     WHERE id_session_utilisateur = $1 
+     AND etat_session_utilisateur = 'A'`,
+    [sessionId]
+  );
+  try {
+  } catch (err) {
+    console.log(err);
+    return res.status(401).json({ message: `${err}` });
+  }
+  req.logout(() => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "Erreur lors de la déconnexion" });
+      }
+
+      res.clearCookie("connect.sid"); // ou le nom de ton cookie s'il est personnalisé
+      return res.status(200).json({ message: "Déconnexion réussie" });
+    });
+  });
+});
+
 export default router;
