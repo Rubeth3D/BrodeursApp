@@ -33,13 +33,27 @@ function Connexion() {
           mot_de_passe_Utilisateur: motDePasse,
         }),
       });
-      setCodeReponseServeur(response.status);
+
       const dataJson = await response.json();
-      setReponseMessage(dataJson.message);
-      console.log(dataJson);
+
+      if (response.status === 200) {
+        //console.log(dataJson); // Affiche la réponse dans la console
+        console.log(dataJson.nom_user);
+        navigate("/DashBoard", {
+          //passe un objet avec les informations de la personnes pour la prochaine pages
+          state: { nom_utilisateur: `${dataJson.nom_user}` },
+        });
+        console.log(document.cookie);
+      } else if (response.status === 404) {
+        console.log(dataJson.message);
+        setReponseStatus("Utilisateur non trouvé");
+      } else if (response.status === 401) {
+        console.log(dataJson.message);
+        setReponseStatus("Nom d'utilisateur ou mot de passe incorrect");
+      }
     } catch (err) {
-      console.log("Erreur de serveur : ", err.message);
-      setCodeReponseServeur(500);
+      console.log(err.message);
+      setReponseStatus("Erreur serveur, veuillez réessayer plus tard");
     }
   };
 
