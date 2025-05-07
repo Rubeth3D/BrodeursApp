@@ -28,7 +28,7 @@ export default passport.use(
     },
     async (nom_utilisateur, mot_de_passe_Utilisateur, done) => {
       const requete =
-        "SELECT * FROM utilisateur WHERE nom_utilisateur = $1 AND etat_utilisateur = 'Actif'";
+        "SELECT * FROM utilisateur WHERE courriel = $1 AND etat_utilisateur = 'Actif'";
       const parametre = [nom_utilisateur];
 
       try {

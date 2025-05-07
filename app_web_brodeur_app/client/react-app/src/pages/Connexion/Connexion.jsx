@@ -93,7 +93,7 @@ function Connexion() {
         <div className="row justify-content-center mt-5">
           <div className="col-4">
             <div className="form-group mb-5">
-              <label className="fw-bold fs-4">Nom d'utilisateur</label>
+              <label className="fw-bold fs-4">Courriel</label>
               <div className="input-group">
                 <input
                   type="text"
