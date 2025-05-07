@@ -59,17 +59,17 @@ app.use("/sessionCours", sessionCours);
 app.post("/login", (req, res, next) => {
   logger.info("Authentification de l'utilisateur");
   passport.authenticate("local", (err, user, info) => {
-    if (err) return res.status(500).json("Erreur serveur");
+    if (err) return res.status(500).send("Erreur serveur");
     if (!user)
       return res
         .status(401)
-        .json(info.message || "Nom d’utilisateur ou mot de passe incorrect");
+        .send(info.message || "Nom d’utilisateur ou mot de passe incorrect");
 
     req.login(user, (err) => {
       if (err)
-        return res
-          .status(500)
-          .json({ message: "Erreur lors de la création de la session" });
+        return res.status(500).send("Erreur lors de la création de la session");
+
+      res.json({ message: "Connexion réussie", user: user.nom_utilisateur });
       logger.info("Connexion réussie");
     });
   })(req, res, next);
