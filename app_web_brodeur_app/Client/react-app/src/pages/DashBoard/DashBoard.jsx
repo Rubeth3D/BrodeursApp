@@ -29,6 +29,7 @@ function DashBoard() {
   const [insitutionEnseignement, setInsitutionEnseignement] = useState(
     "College de Bois de boulogne"
   );
+  const navigate = useNavigate();
 
   const [etatBoutton, setEtatBoutton] = useState([
     { id: "Dashboard", isActiver: false },

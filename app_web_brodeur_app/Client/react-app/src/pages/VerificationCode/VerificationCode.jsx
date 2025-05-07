@@ -76,6 +76,7 @@ function VerificationCode() {
             body: JSON.stringify(utilisateur),
           }
         );
+
         if (reponseCreationCompte.ok) {
           navigate("/DashBoard", {
             state: { username: `${utilisateur.nom_utilisateur}` },
