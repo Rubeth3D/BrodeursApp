@@ -54,6 +54,27 @@ app.use("/etudiant", etudiant);
 app.use("/etudiantEquipe", etudiantEquipe);
 app.use("/inscription", inscription);
 app.use("/sessionCours", sessionCours);
+
+// Route de connexion
+app.post("/login", (req, res, next) => {
+  logger.info("Authentification de l'utilisateur");
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return res.status(500).send("Erreur serveur");
+    if (!user)
+      return res
+        .status(401)
+        .send(info.message || "Nom d’utilisateur ou mot de passe incorrect");
+
+    req.login(user, (err) => {
+      if (err)
+        return res.status(500).send("Erreur lors de la création de la session");
+
+      res.json({ message: "Connexion réussie", user: user.nom_utilisateur });
+      logger.info("Connexion réussie");
+    });
+  })(req, res, next);
+});
+
 app.listen(8080, () => {
   logger.info("Le serveur roule sur le port 8080");
 });
