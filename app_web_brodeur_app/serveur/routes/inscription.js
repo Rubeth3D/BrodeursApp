@@ -22,98 +22,81 @@ const logger = winston.createLogger({
 const router = express.Router();
 
 router.use(express.json());
-router.get("/etudiantExiste/:nom_complet", async (req, res) => {
-  try {
-    const { nom_complet } = req.params;
-    console.log("Nom complet : ", nom_complet);
-    const resultat = await client.query(
-      "SELECT FROM etudiant WHERE nom_complet = $1 AND etat_etudiant = 'Inactif'",
-      [nom_complet]
-    );
-
-    if (resultat.rowCount === 0) {
-      logger.info("L'etudiant n'existe pas!");
-      return res
-        .status(404)
-        .json({ message: "Vous n'existez pas en tant qu'étudiant" });
+router.post(
+  "/VerifierUtilisateur/:courriel",
+  async (req, res, next) => {
+    try {
+      console.log(`abeille`);
+      const { courriel } = req.params;
+      const { type_utilisateur } = req.body;
+      const reponse = await client.query(
+        "SELECT type_utilisateur FROM utilisateur WHERE courriel = $1",
+        [courriel]
+      );
+      if (reponse.rowCount === 0) {
+        return res.status(404).json({
+          message:
+            "Votre courriel n'existe pas! Veuillez contacter votre administrateur ou enseignant pour vous inscrire.",
+        });
+      }
+      const jsonReponse = reponse.rows[0];
+      if (type_utilisateur != jsonReponse.type_utilisateur) {
+        logger.error(
+          `Mauvais role : ${type_utilisateur} != ${affichage_type_utilisateur_bd}`
+        );
+        return res.status(422).json({
+          message: "Veuillez vous inscrire au bon role!",
+        });
+      }
+      req.courriel = courriel;
+      next();
+    } catch (err) {
+      logger.error("Erreur lors de la verification des utilisateurs :", err);
+      return res.status(500);
     }
-    return res.status(200).json({ message: "Code de verification envoye!" });
-  } catch (err) {
-    logger.error(
-      "Erreur lors de la verification de l'existance de l'etudiant : ",
-      err
-    );
-    return res.status(500).json({
-      message:
-        " Erreur serveur, veuillez contactez l'equipe de developpement a l'adresse : arnaudkomodo@gmail.com",
-    });
-  }
-});
-//verifier si professeur existe
-router.get("/professeurExiste/:nom_complet", async (req, res) => {
-  try {
-    const { nom_complet } = req.params;
-    const resultat = await client.query(
-      "SELECT FROM professeur WHERE nom_complet = $1 AND etat_professeur = 'Inactif'",
-      [nom_complet]
-    );
+  },
+  async (req, res) => {
+    try {
+      const courriel = req.courriel;
+      const jetonAcces = await oAuth2Client.getAccessToken();
+      console.log("Jeton d'acces : ", jetonAcces);
+      const transport = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          type: "OAuth2",
+          user: "evaluationparlespairs@gmail.com",
+          clientId: process.env.CLIENT_ID,
+          clientSecret: process.env.CLIENT_SECRET,
+          refresh_token: process.env.REFRESH_TOKEN,
+          accessToken: jetonAcces.token,
+        },
+      });
 
-    if (resultat.rowCount === 0) {
-      logger.info("Le professeur n'existe pas!");
+      logger.info("Transport créé");
+
+      const codeVerification = Math.floor(1000 + Math.random() * 9000);
+      const mailOptions = {
+        from: "Brodeurs App",
+        to: courriel,
+        subject: "code de verification",
+        html: `Voici votre code de verification : ${codeVerification} </h1>`,
+      };
+      await transport.sendMail(mailOptions);
+      await client.query(
+        "INSERT INTO code_verification(code,courriel) VALUES ($1,$2)",
+        [codeVerification, courriel]
+      );
+
       return res
-        .status(404)
-        .json({ message: "Vous n'existez pas en tant que professeur" });
+        .status(200)
+        .json({ message: "Votre code de verification vous a été envoyé!" });
+    } catch (err) {
+      logger.error("Erreur lors de l'envoi du courriel : ", err);
+      res.status(500).json({ message: err.message });
     }
-    return res.status(200).json({ message: "Code de verification envoye!" });
-  } catch (err) {
-    logger.error(
-      "Erreur lors de la verification de l'existance du professeur : ",
-      err
-    );
-    return res.status(500).json({
-      message:
-        " Erreur serveur, veuillez contactez l'equipe de developpement a l'adresse : arnaudkomodo@gmail.com",
-    });
   }
-});
-router.post("/envoyerCode/:courriel", async (req, res) => {
-  try {
-    const { courriel } = req.params;
-    const jetonAcces = await oAuth2Client.getAccessToken();
-    console.log("Jeton d'acces : ", jetonAcces);
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: "evaluationparlespairs@gmail.com",
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refresh_token: process.env.REFRESH_TOKEN,
-        accessToken: jetonAcces.token,
-      },
-    });
+);
 
-    logger.info("Transport créé");
-
-    const codeVerification = Math.floor(1000 + Math.random() * 9000);
-    const mailOptions = {
-      from: "Brodeurs App",
-      to: courriel,
-      subject: "code de verification",
-      html: `Voici votre code de verification : ${codeVerification} </h1>`,
-    };
-    await transport.sendMail(mailOptions);
-    await client.query(
-      "INSERT INTO code_verification(code,courriel) VALUES ($1,$2)",
-      [codeVerification, courriel]
-    );
-
-    res.status(200).json({ message: "Courriel envoye avec succes" });
-  } catch (err) {
-    logger.error("Erreur lors de l'envoi du courriel : ", err);
-    res.status(500).json({ message: err.message });
-  }
-});
 router.post("/VerifierCode/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
@@ -165,11 +148,7 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
     utilisateur.session_id = idSession;
 
     console.log("Utilisateur a etre loged : ", utilisateur);
-    req.logIn(utilisateur, function (err) {
-      if (err) {
-        return res.status(500).json({ message: err.message });
-      }
-    });
+
     logger.info("Update fait avec succes!");
     res.status(200).json({ message: "Code validé avec succès!" });
   } catch (err) {

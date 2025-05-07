@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import ErreurSVG from "../image/ErreurSVG.jsx";
 import SuccesSVG from "../image/SuccesSVG.jsx";
 const messageUtilisateur = (reponse) => {
-  console.log("Status Code : ", reponse);
   const styleMessageErreurBackground = {
     backgroundColor: "rgba(220, 53, 69, 0.4)",
     padding: "10px",
@@ -24,14 +23,17 @@ const messageUtilisateur = (reponse) => {
   if (!reponse) {
     return null;
   }
-  if (reponse.reponseCodeStatus === 200) {
+  if (reponse.reponseCodeStatus >= 200 && reponse.reponseCodeStatus < 400) {
     return (
       <div style={styleMessageSuccesBackground}>
         {SuccesSVG()}
         {reponse.reponseMessage}
       </div>
     );
-  } else if (reponse.reponseCodeStatus === 404) {
+  } else if (
+    reponse.reponseCodeStatus >= 400 &&
+    reponse.reponseCodeStatus < 500
+  ) {
     return (
       <>
         <div style={styleMessageErreurBackground}>
@@ -40,16 +42,7 @@ const messageUtilisateur = (reponse) => {
         </div>
       </>
     );
-  } else if (reponse.reponseCodeStatus === 401) {
-    return (
-      <>
-        <div style={styleMessageErreurBackground}>
-          {ErreurSVG()}
-          {reponse.reponseMessage}
-        </div>
-      </>
-    );
-  } else if (reponse.reponseCodeStatus === 500) {
+  } else if (reponse.reponseCodeStatus >= 500) {
     return (
       <>
         <div style={styleMessageErreurBackground}>

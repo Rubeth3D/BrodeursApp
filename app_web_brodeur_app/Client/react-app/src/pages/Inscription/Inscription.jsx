@@ -4,9 +4,10 @@ import Navbar from "../../element/Navbar";
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-
+import MessageUtilisateur from "../../element/MessageUtilisateur.jsx";
 function Inscription() {
-  const [bodyEtudiant, setBodyEtudiant] = useState();
+  const [ReponseMessageUtilisateur, setMessageUtilisateur] = useState("");
+  const [reponseCodeStatus, setReponseCodeStatus] = useState(null);
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
     nom: "",
     prenom: "",
@@ -24,22 +25,33 @@ function Inscription() {
   const [typeUtilisateur, setTypeUtilisateur] = useState("E"); // 'e' ou 'p'
 
   const navigate = useNavigate();
-  async function envoyerCourriel(e) {
-    e.preventDefault();
+  async function envoyerCourriel() {
     try {
-      const reponse = await fetch(
-        `http://localhost:8080/inscription/envoyerCode/${bodyUtilisateur.courriel}`,
+      console.log("Allo");
+
+      const reponseUtilisateurExiste = await fetch(
+        `http://localhost:8080/inscription/VerifierUtilisateur/${bodyUtilisateur.courriel}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
+          body: JSON.stringify({
+            type_utilisateur: bodyUtilisateur.type_utilisateur,
+          }),
         }
       );
-      if (reponse.ok) {
+      console.log("Holla");
+      setReponseCodeStatus(reponseUtilisateurExiste.status);
+      const reponseJson = await reponseUtilisateurExiste.json();
+      setMessageUtilisateur(reponseJson.message);
+      if (reponseUtilisateurExiste.ok) {
         console.log("Body utilisateur : ", bodyUtilisateur);
         navigate("/VerificationCode", { state: bodyUtilisateur });
       }
-    } catch (error) {}
+    } catch (err) {
+      console.log("Erreur de fetch inscription : ", err);
+      setReponseCodeStatus(500);
+    }
   }
   const changerTypeUtilisateur = (nom, valeur) => {
     setBodyUtilisateur((bodyUtilisateur) => ({
@@ -61,7 +73,9 @@ function Inscription() {
       <form
         className="container"
         onSubmit={(e) => {
+          e.preventDefault();
           envoyerCourriel(e);
+          CreerNomUtilisateur();
         }}
       >
         <Link to={"/Connexion"}>
@@ -84,7 +98,10 @@ function Inscription() {
             </h2>
           </button>
         </Link>
-
+        <MessageUtilisateur
+          reponseCodeStatus={reponseCodeStatus}
+          reponseMessage={ReponseMessageUtilisateur}
+        />
         <h2 className="text-center display-3 fw-normal mb-5">Inscription</h2>
 
         <div className="row justify-content-center">
@@ -216,13 +233,7 @@ function Inscription() {
         </div>
 
         <div className="d-flex justify-content-center align-items-center mt-4">
-          <button
-            type="submit"
-            className="btn btn-primary mt-5 mb-5"
-            onClick={() => {
-              CreerNomUtilisateur();
-            }}
-          >
+          <button type="submit" className="btn btn-primary mt-5 mb-5">
             <h2 className="mx-5 fs-4 m-0">S'inscrire</h2>
           </button>
         </div>

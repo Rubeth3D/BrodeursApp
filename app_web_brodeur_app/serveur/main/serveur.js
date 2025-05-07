@@ -75,7 +75,6 @@ app.post("/login", (req, res, next) => {
     req.login(user, (err) => {
       if (err)
         return res.status(500).send("Erreur lors de la création de la session");
-
       res.json({ message: "Connexion réussie", user: user.nom_utilisateur });
       logger.info("Connexion réussie");
     });

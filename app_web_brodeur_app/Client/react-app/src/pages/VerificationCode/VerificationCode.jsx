@@ -15,7 +15,6 @@ function VerificationCode() {
   const [inputIndex2, setInputIndex2] = useState("");
   const [inputIndex3, setInputIndex3] = useState("");
   const inputCode = inputIndex0 + inputIndex1 + inputIndex2 + inputIndex3;
-  const codePourServeur = { code: inputCode };
   const focusIndex0 = useRef(null);
   const focusIndex1 = useRef(null);
   const focusIndex2 = useRef(null);
@@ -47,10 +46,8 @@ function VerificationCode() {
     if (secondes < 10) {
       secondesString = `0${secondes}`;
     }
-    console.log("Timer : ", minutesString, secondesString);
     compteurTemps.current--;
     setTimer(`${minutesString} : ${secondesString}`);
-    console.log("Timer : ", timer);
   };
 
   const creationUtilisateur = async (e) => {
@@ -62,7 +59,7 @@ function VerificationCode() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(codePourServeur),
+          body: JSON.stringify({ code: inputCode }),
           credentials: "include",
         }
       );
@@ -77,9 +74,26 @@ function VerificationCode() {
           }
         );
         if (reponseCreationCompte.ok) {
-          navigate("/DashBoard", {
-            state: { username: `${utilisateur.nom_utilisateur}` },
+          console.log("Utilisateur : ", utilisateur);
+          console.log(`abeille chocolat`);
+          const reponseLogin = await fetch("http://localhost:8080/login", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              nom_utilisateur: utilisateur.nom_utilisateur,
+              mot_de_passe_Utilisateur: utilisateur.mot_de_passe,
+            }),
           });
+          const reponseLoginJson = await reponseLogin.json();
+          console.log("Reponse login json : ", reponseLoginJson);
+          if (reponseLogin.ok) {
+            navigate("/DashBoard", {
+              state: { username: `${utilisateur.nom_utilisateur}` },
+            });
+          }
         }
       }
     } catch (err) {
