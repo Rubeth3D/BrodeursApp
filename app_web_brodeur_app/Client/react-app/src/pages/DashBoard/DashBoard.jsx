@@ -43,6 +43,24 @@ function DashBoard() {
     { id: "Admin", isActiver: false },
   ]);
 
+  const deconnexion = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/logout", {
+        method: "POST",
+        credentials: "include", // envoie les cookies
+      });
+
+      if (response.ok) {
+        console.log("Déconnecté avec succès");
+        navigate("/");
+      } else {
+        console.error("Erreur de déconnexion");
+      }
+    } catch (err) {
+      console.error("Erreur serveur :", err);
+    }
+  };
+
   const fetchUtilisateur = async () => {
     try {
       const response = await fetch("http://localhost:8080/utilisateur", {
@@ -139,9 +157,12 @@ function DashBoard() {
                 </li>
               </ul>
             </div>
-            <div className="me-5 fw-light btn align-content-center border-0 text-light">
+            <button
+              className="btn me-5 fw-light btn align-content-center border-0 text-light"
+              onClick={deconnexion}
+            >
               <DeconnexionSVG />
-            </div>
+            </button>
           </div>
         </div>
       </div>
