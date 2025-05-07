@@ -1,35 +1,74 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 //image SVG
 import ActiviteSVG from "../../image/ActiviteSVG";
 import ClassesSVG from "../../image/ClassesSVG";
 import CoursSVG from "../../image/CoursSVG";
-import DashBoardSVG from "../../image/DashboardSVG";
 import EquipeSVG from "../../image/EquipesSVG";
 import ResultatsSVG from "../../image/ResultatsSVG";
 import AdminSVG from "../../image/AdminSVG";
 import DeconnexionSVG from "../../image/DeconnexionSVG";
 import CompteSVG from "../../image/CompteSVG";
 import TravauxSVG from "../../image/TravauxSVG";
+import CommentaireSVG from "../../image/CommentaireSVG";
 //element
 import HoverDiv from "../../element/HoverDiv";
-import HoverText from "../../element/HoverText";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
+import Admin from "../../element/admin";
 import Equipe from "../../element/Equipe";
-
+import Commentaire from "../../element/Commentaire";
 
 function DashBoard() {
+  const [prenom, setPrenom] = useState("");
+  const [nom, setNom] = useState("");
+  const [nomUtilisateur, setNomUtilisateur] = useState("");
+  const [courriel, setCourriel] = useState("");
+  const [nummeroDa, setNumeroDa] = useState("");
+  const [typeUtilisateur, setTypeUtilisateur] = useState("");
+  const [insitutionEnseignement, setInsitutionEnseignement] = useState(
+    "College de Bois de boulogne"
+  );
+
   const [etatBoutton, setEtatBoutton] = useState([
     { id: "Dashboard", isActiver: false },
     { id: "Cours", isActiver: false },
-    { id: "Classes", isActiver: false },
+    { id: "Classes", isActiver: true },
     { id: "Equipes", isActiver: false },
     { id: "Critère", isActiver: false },
     { id: "Travaux", isActiver: false },
     { id: "Resultats", isActiver: false },
+    { id: "Commentaire", isActiver: false },
     { id: "Admin", isActiver: false },
   ]);
+
+  const fetchUtilisateur = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/utilisateur", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        console.error("Erreur de récupération :", data);
+      } else {
+        console.log("l'utilisateur as bien récupéré");
+        setNom(data[0].nom);
+        setPrenom(data[0].prenom);
+        setNomUtilisateur(data[0].nom_utilisateur);
+        setCourriel(data[0].courriel);
+        const types = {
+          E: "Étudiant",
+          P: "Professeur",
+          A: "Admin",
+        };
+        setTypeUtilisateur(types[data[0].type_utilisateur] || "Inconnu");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const Cliquer = (id) => {
     const updatedState = etatBoutton.map((button) => {
@@ -42,6 +81,10 @@ function DashBoard() {
     setEtatBoutton(updatedState);
   };
 
+  useEffect(() => {
+    fetchUtilisateur();
+  }, []);
+
   return (
     <>
       <div className="navbar navbar-dark bg-primary sticky-top text-bg-primary p-2">
@@ -51,7 +94,7 @@ function DashBoard() {
           </Link>
           <div className="nav-item d-flex align-items-center">
             <h2 className="me-5 mb-0 fs-4 fw-light align-content-center">
-              Sébastien Céleste
+              {nomUtilisateur}
             </h2>
             <div className="me-5 fw-light btn align-content-center border-0 ">
               <ul className="navbar-nav">
@@ -77,18 +120,16 @@ function DashBoard() {
                     <div className="card" style={{ width: "18rem" }}>
                       <div className="card-body">
                         <h2 className="card-title fs-5 fw-normal">
-                          Sébastien Céleste
+                          {prenom} {nom}
                         </h2>
                         <h2 className="card-subtitle fs-5 mb-2 text-muted fw-light">
-                          étudiant
+                          {typeUtilisateur}
                         </h2>
                         <div className="align-content-end mt-1">
+                          <p className="card-text m-0 fs-6">{courriel}</p>
+                          <p className="card-text m-0 fs-6">{nummeroDa}</p>
                           <p className="card-text m-0 fs-6">
-                            2244552@bdeb.qc.ca
-                          </p>
-                          <p className="card-text m-0 fs-6">2244552</p>
-                          <p className="card-text m-0 fs-6">
-                            College de Bois-de-boulogne
+                            {insitutionEnseignement}
                           </p>
                         </div>
                       </div>
@@ -108,15 +149,6 @@ function DashBoard() {
         <div className="row">
           <div className="col-2 bg-light" style={{ height: "100vh" }}>
             <div className="justify-content-start mt-5">
-              <HoverDiv
-                text={"Dashboard"}
-                svgImage={<DashBoardSVG />}
-                isCliquer={etatBoutton[0].isActiver}
-                onclick={() => {
-                  Cliquer("Dashboard");
-                }}
-              ></HoverDiv>
-
               <HoverDiv
                 text={"Cours"}
                 svgImage={<CoursSVG />}
@@ -144,22 +176,29 @@ function DashBoard() {
                 }}
               ></HoverDiv>
 
-              <HoverDiv
-                text={"Critère"}
-                svgImage={<ActiviteSVG />}
-                isCliquer={etatBoutton[4].isActiver}
-                onclick={() => {
-                  Cliquer("Critère");
-                }}
-              ></HoverDiv>
-              <HoverDiv
-                text={"Travaux"}
-                svgImage={<TravauxSVG />}
-                isCliquer={etatBoutton[5].isActiver}
-                onclick={() => {
-                  Cliquer("Travaux");
-                }}
-              ></HoverDiv>
+              {(typeUtilisateur == "Professeur" ||
+                typeUtilisateur == "Admin") && (
+                <HoverDiv
+                  text={"Critère"}
+                  svgImage={<ActiviteSVG />}
+                  isCliquer={etatBoutton[4].isActiver}
+                  onclick={() => {
+                    Cliquer("Critère");
+                  }}
+                ></HoverDiv>
+              )}
+
+              {(typeUtilisateur == "Professeur" ||
+                typeUtilisateur == "Admin") && (
+                <HoverDiv
+                  text={"Travaux"}
+                  svgImage={<TravauxSVG />}
+                  isCliquer={etatBoutton[5].isActiver}
+                  onclick={() => {
+                    Cliquer("Travaux");
+                  }}
+                ></HoverDiv>
+              )}
 
               <HoverDiv
                 text={"Résultats"}
@@ -171,19 +210,32 @@ function DashBoard() {
               ></HoverDiv>
 
               <HoverDiv
-                text={"Admin"}
-                svgImage={<AdminSVG />}
+                text={"Commentaire"}
+                svgImage={<CommentaireSVG />}
                 isCliquer={etatBoutton[7].isActiver}
                 onclick={() => {
-                  Cliquer("Admin");
+                  Cliquer("Commentaire");
                 }}
               ></HoverDiv>
+
+              {typeUtilisateur == "Admin" && (
+                <HoverDiv
+                  text={"Admin"}
+                  svgImage={<AdminSVG />}
+                  isCliquer={etatBoutton[8].isActiver}
+                  onclick={() => {
+                    Cliquer("Admin");
+                  }}
+                ></HoverDiv>
+              )}
             </div>
           </div>
           <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
             {etatBoutton[3].isActiver && <Equipe />}
+            {etatBoutton[7].isActiver && <Commentaire />}
+            {etatBoutton[8].isActiver && <Admin />}
           </div>
         </div>
       </div>
