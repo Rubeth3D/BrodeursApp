@@ -79,9 +79,9 @@ export const verifierSessionUtilisateur = async (req, res, next) => {
     );
 
     req.sessionData = {
-    authentification: true,
-    utilisateurId: session.utilisateur_id_utilisateur,
-};
+      authentification: true,
+      utilisateurId: session.utilisateur_id_utilisateur,
+    };
 
     return next();
   } catch (err) {

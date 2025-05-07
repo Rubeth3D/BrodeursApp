@@ -1,10 +1,12 @@
 //@ts-ignore
 import Navbar from "../../element/Navbar";
+//@ts-ignore
 import Footer from "../../element/footer";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 function Inscription() {
+  const [bodyEtudiant, setBodyEtudiant] = useState();
   const [bodyUtilisateur, setBodyUtilisateur] = useState({
     nom: "",
     prenom: "",
@@ -22,7 +24,23 @@ function Inscription() {
   const [typeUtilisateur, setTypeUtilisateur] = useState("E"); // 'e' ou 'p'
 
   const navigate = useNavigate();
-
+  async function envoyerCourriel(e) {
+    e.preventDefault();
+    try {
+      const reponse = await fetch(
+        `http://localhost:8080/inscription/envoyerCode/${bodyUtilisateur.courriel}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      if (reponse.ok) {
+        console.log("Body utilisateur : ", bodyUtilisateur);
+        navigate("/VerificationCode", { state: bodyUtilisateur });
+      }
+    } catch (error) {}
+  }
   const changerTypeUtilisateur = (nom, valeur) => {
     setBodyUtilisateur((bodyUtilisateur) => ({
       ...bodyUtilisateur,
@@ -37,50 +55,15 @@ function Inscription() {
       nom_utilisateur: nomUtilisateur,
     }));
   }
-  const creationUtilisateur = async (e) => {
-    e.preventDefault();
-    try {
-      const utilisateurAEnvoyer = {
-        utilisateur: {
-          ...bodyUtilisateur,
-          type_utilisateur: typeUtilisateur,
-        },
-      };
-      console.log("Body utilisateur : ", utilisateurAEnvoyer);
-      
-      const responseUtilisateur = await fetch(
-        `http://localhost:8080/connexion/activerUtilisateur`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(utilisateurAEnvoyer),
-          credentials: "include",
-        }
-      );
-      if (responseUtilisateur.ok) {
-        const responseConnexion = await fetch(`http://localhost:8080/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            nom_utilisateur: utilisateurAEnvoyer.utilisateur.nom_utilisateur,
-            mot_de_passe_Utilisateur: utilisateurAEnvoyer.utilisateur.mot_de_passe,
-          }),
-        });
-        if (responseConnexion.ok) {
-          navigate("/DashBoard", {
-            state: { username: `${utilisateurAEnvoyer.utilisateur.nom_utilisateur}` },
-          });
-        }
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
 
   return (
     <>
-      <form className="container" onSubmit={creationUtilisateur}>
+      <form
+        className="container"
+        onSubmit={(e) => {
+          envoyerCourriel(e);
+        }}
+      >
         <Link to={"/Connexion"}>
           <button className="btn btn-primary m-5" type="button">
             <h2 className="text-center fs-6 m-0">
