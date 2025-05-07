@@ -2,7 +2,7 @@
   "type": "module",
   "name": "serveur",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "serveur.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

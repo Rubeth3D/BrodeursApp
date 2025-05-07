@@ -16,7 +16,6 @@ const Equipe = () => {
     id_cours: "",
   });
   
-
   const fetchEquipes = async () => {
     try {
       const response = await fetch("http://localhost:8080/equipe", {
@@ -184,11 +183,11 @@ const Equipe = () => {
     };
     
 
-  useEffect(() => {
-    fetchEquipes();
-    fetchEtudiants();
-    fetchCours();
-    fetchClasses();
+    useEffect(() => {
+      fetchEquipes();
+      fetchEtudiants();
+      fetchCours();
+      fetchClasses();
   }, []);
 
 
@@ -357,53 +356,32 @@ const Equipe = () => {
                   </div>
 
                   <div className="col-mb-4">
-                  <label htmlFor="etudiants">Sélectionner des étudiants</label>
-                  <div id="etudiants">
-                    {etudiants.map((etudiant) => (
-                      <div key={etudiant.id_etudiant} className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          id={`etudiant-${etudiant.id_etudiant}`}
-                          value={etudiant.id_etudiant}
-                          onChange={(e) => handleCheckboxChange(e, etudiant.id_etudiant)}
-                        />
-                        <label className="form-check-label" htmlFor={`etudiant-${etudiant.id_etudiant}`}>
-                          {etudiant.nom_complet}
-                        </label>
+                      <label htmlFor="etudiants">Sélectionner des étudiants</label>
+                      <div id="etudiants">
+                        {etudiants.map((etudiant) => (
+                          <div key={etudiant.id_etudiant} className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id={`etudiant-${etudiant.id_etudiant}`}
+                              value={etudiant.id_etudiant}
+                              onChange={(e) => handleCheckboxChange(e, etudiant.id_etudiant)}
+                            />
+                            <label className="form-check-label" htmlFor={`etudiant-${etudiant.id_etudiant}`}>
+                              {etudiant.nom_complet}
+                            </label>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    <div className="valid-feedback">Bien</div>
+                    <div className="invalid-feedback">Sélectionner au moins un étudiant requis</div>
                   </div>
-                <div className="valid-feedback">Bien</div>
-                <div className="invalid-feedback">Sélectionner au moins un étudiant requis</div>
-              </div>
 
-
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom03" className="form-label">Nom classe</label>
+                  <div className="col-mb-4">
+                    <label htmlFor="validationCustom03" className="form-label">Sélectionner un cours</label>
                     <select
                       className="form-select"
                       id="validationCustom03"
-                      value={form.classe_id_classe}
-                      onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
-                      required
-                    >
-                      <option value="">Sélectionner une classe</option>
-                      {classes.map((classe) => (
-                        <option key={classe.id_classe} value={classe.id_classe}>
-                          {classe.description}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Nom classe requis</div>
-                  </div>
-
-                  <div className='col-mb-4'>
-                    <label htmlFor="validationCustom04" className="form-label">Nom cours</label>
-                    <select
-                      className="form-select"
-                      id="validationCustom04"
                       value={form.id_cours}
                       onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
                       required
@@ -411,15 +389,14 @@ const Equipe = () => {
                       <option value="">Sélectionner un cours</option>
                       {cours.map((cours) => (
                         <option key={cours.id_cours} value={cours.id_cours}>
-                          {cours.description_cours}
+                          {cours.nom}
                         </option>
                       ))}
                     </select>
                     <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Nom cours requis</div>
+                    <div className="invalid-feedback">Sélectionner un cours requis</div>
                   </div>
 
-                  
                   <button type="submit" className="btn btn-primary">
                     <span className="visually-hidden">Ajouter une équipe</span>
                     Ajouter
@@ -502,40 +479,7 @@ const Equipe = () => {
                   </div>
                   </div>
 
-                  <div className="mb-3">
-                    <label className="form-label">Nom classe</label>
-                    <select
-                      className="form-select"
-                      value={form.classe_id_classe}
-                      onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
-                      required
-                    >
-                      <option value="">Sélectionner une classe</option>
-                      {classes.map((classe) => (
-                        <option key={classe.id_classe} value={classe.id_classe}>
-                          {classe.description}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="form-label">Cours</label>
-                    <select
-                      className="form-select"
-                      value={form.id_cours}
-                      onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
-                      required
-                    >
-                      <option value="">Sélectionner un cours</option>
-                      {cours.map((cours) => (
-                        <option key={cours.id_cours} value={cours.id_cours}>
-                          {cours.description_cours}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
+                 
                   <button type="submit" className="btn btn-primary">
                     <span className="visually-hidden">Modifier une équipe</span>
                     Modifier
