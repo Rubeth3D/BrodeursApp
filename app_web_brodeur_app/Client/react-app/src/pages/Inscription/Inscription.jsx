@@ -39,7 +39,9 @@ function Inscription() {
         console.log("Body utilisateur : ", bodyUtilisateur);
         navigate("/VerificationCode", { state: bodyUtilisateur });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
   const changerTypeUtilisateur = (nom, valeur) => {
     setBodyUtilisateur((bodyUtilisateur) => ({

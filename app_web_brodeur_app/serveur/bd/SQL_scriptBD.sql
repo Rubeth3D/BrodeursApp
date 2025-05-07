@@ -9,6 +9,12 @@
 
 -- predefined type, no DDL - XMLTYPE
 
+CREATE TABLE code_verification(
+    id_code_verification SERIAL PRIMARY KEY,
+    code NUMERIC,
+    courriel VARCHAR(255)
+);
+
 CREATE TABLE affectation (
     id_affectation NUMBER NOT NULL
 );

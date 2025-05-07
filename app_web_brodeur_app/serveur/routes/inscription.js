@@ -21,7 +21,6 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-router.use(express.json());
 router.get("/etudiantExiste/:nom_complet", async (req, res) => {
   try {
     const { nom_complet } = req.params;

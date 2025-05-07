@@ -3,7 +3,7 @@
 INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur)
 VALUES -- Professeurs
     ('arnaudkomodo@gmail.com', 'Inactif', 'P'),
-    ('monique.guillaume@hotmail.com', 'Inactif', 'P'),
+    ('cedrykleblanc@hotmail.com', 'Inactif', 'P'),
     ('christian.muller@gmail.com', 'Inactif', 'P'),
     ('michele.fournier@hotmail.com', 'Inactif', 'P'),
     ('denis.dupuis@gmail.com', 'Inactif', 'P'),
