@@ -17,8 +17,8 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-
 router.use(express.json());
+
 
 //get pour les equipes
 router.get("/", async (req, res) => {

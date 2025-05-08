@@ -33,8 +33,8 @@ function DashBoard() {
   const [etatBoutton, setEtatBoutton] = useState([
     { id: "Dashboard", isActiver: false },
     { id: "Cours", isActiver: false },
-    { id: "Classes", isActiver: true },
-    { id: "Equipes", isActiver: false },
+    { id: "Classes", isActiver: false },
+    { id: "Equipes", isActiver: true },
     { id: "Critère", isActiver: false },
     { id: "Travaux", isActiver: false },
     { id: "Resultats", isActiver: false },

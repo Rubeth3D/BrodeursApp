@@ -4,18 +4,15 @@ import ModifierSVG from "../image/ModifierSVG.jsx";
 
 const Equipe = () => {
   const [classes, setClasses] = useState([]);
-  const [cours, setCours] = useState([]);
   const [etudiants, setEtudiants] = useState([]);
   const [filtreTousEquipes, setFiltreTousEquipes] = useState([]);
   const [equipe, setEquipe] = useState([]);
   const [form, setForm] = useState({
-    code_equipe: "",
     nom: "",
     etudiant: [], 
     classe_id_classe: "",
-    id_cours: "",
   });
-  
+
   const fetchEquipes = async () => {
     try {
       const response = await fetch("http://localhost:8080/equipe", {
@@ -37,68 +34,52 @@ const Equipe = () => {
         ...form,
         etat_equipe: "Active",
       };
-  
-      const response = await fetch("http://localhost:8080/equipe", {
+      const reponse = await fetch("http://localhost:8080/equipe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(equipeActif),
       });
   
-      if (response.ok) {
-        const nouvelleEquipe = await response.json();
-        
-        // Associer les étudiants à l'équipe : Aider par ChatGPT
-        for (const idEtudiant of form.etudiant) {
-          await fetch("http://localhost:8080/etudiantEquipe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              equipe_id_equipe: nouvelleEquipe.id_equipe,
-              etudiant_id_etudiant: idEtudiant,
-            }),
-          });
-        }        
-  
-        fetchEquipes();
+      if (reponse.ok) {
+        fetchEquipes(); 
+        viderForm(); 
       }
     } catch (error) {
-      console.error("Erreur lors de la création de l'équipe:", error);
+      console.error("Erreur lors de la création d'équipe : ", error);
     }
   };
   
-  // Fonction pour modifier une équipe *** À CHANGER***
-  const modifierEquipe = async (id) => {
+  
+  const modifierEquipe = async (id_equipe) => {
     try {
-      const response = await fetch(`http://localhost:8080/equipe/${id}`, {
+      await fetch(`http://localhost:8080/equipe/${id_equipe}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          etat_equipe: "Active",
+        }),
       });
-  
-      if (response.ok) {
-        await fetch(`http://localhost:8080/etudiantEquipe/equipe/${id}`, {
-          method: "DELETE",
+      await fetch(`http://localhost:8080/etudiantEquipe/${id_equipe}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      for (const idEtudiant of form.etudiant) {
+        await fetch("http://localhost:8080/etudiantEquipe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            equipe_id_equipe: id_equipe,
+            etudiant_id_etudiant: idEtudiant,
+          }),
         });
-  
-        for (const idEtudiant of form.etudiant) {
-          await fetch("http://localhost:8080/etudiantEquipe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              equipe_id_equipe: id,
-              etudiant_id_etudiant: idEtudiant,
-            }),
-          });
-        }
-  
-        fetchEquipes();
-        viderForm();
       }
+      fetchEquipes();
+      viderForm();
     } catch (error) {
       console.error("Erreur lors de la modification de l'équipe:", error);
     }
   };
-  
 
   const desactiverEquipe = async (equipe) => {
     try{
@@ -128,18 +109,6 @@ const Equipe = () => {
       }
     };
 
-    const fetchCours = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/cours", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        const data = await response.json();
-        setCours(data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des cours :", error);
-      }
-    };
 
     // Fonction pour gérer le changement de l'état des cases à cocher : Aider par ChatGPT
     const handleCheckboxChange = (e, id_etudiant) => {           
@@ -157,28 +126,30 @@ const Equipe = () => {
       }
     };
     
-
     const fetchClasses = async () => {
       try {
-        const response = await fetch("http://localhost:8080/classe", {
+        const reponse = await fetch("http://localhost:8080/classe", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
-        const data = await response.json();
-        setClasses(data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des classes :", error);
+        const donnees = await reponse.json();
+        const options = donnees.map((classe) => ({
+          value: classe.id_classe,
+          label: classe.description,
+        }));
+        setClasses(options);
+      } catch (err) {
+        console.error("Erreur au niveau du fetch des classes : ", err);
       }
     };
 
+    
     const viderForm = () => {
       setForm({
-        code_equipe: "",
         nom: "",
         etudiant: [],
         classe_id_classe: "",
-        id_cours: "",
-        id_session: "",
       });
     };
     
@@ -186,7 +157,6 @@ const Equipe = () => {
     useEffect(() => {
       fetchEquipes();
       fetchEtudiants();
-      fetchCours();
       fetchClasses();
   }, []);
 
@@ -227,7 +197,7 @@ const Equipe = () => {
             </div>
           </div>
           <br />
-          <h1 className="text-center mb-4 mt-5">Liste des équipes</h1>
+          <h1 className="text-center mb-4 mt-5">Tableau des équipes</h1>
           <div className="container my-4">
             <div className="row">
               <div className="col-10">
@@ -266,7 +236,6 @@ const Equipe = () => {
           <table className="table table-striped table-hover mt-5">
             <thead>
               <tr>
-                <th>Code d'équipe</th>
                 <th>Nom</th>
                 <th>Nom classe</th>
                 <th>Actions</th>
@@ -275,7 +244,6 @@ const Equipe = () => {
             <tbody>
               {equipe.filter(equipe => equipe.etat_equipe === "Active").map((equipe) => (
                 <tr key={equipe.id_equipe}>
-                  <td>{equipe.code_equipe}</td>
                   <td>{equipe.nom}</td>
                   <td>{equipe.classe_id_classe}</td>
                   <td>
@@ -328,20 +296,6 @@ const Equipe = () => {
                 <form className="row g-3 needs-validation" noValidate onSubmit={creerEquipe}>
                   
                   <div className='col-mb-4'>
-                    <label htmlFor="validationCustom01" className="form-label">Code d'équipe</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="validationCustom01" 
-                      value={form.code_equipe} 
-                      onChange={(e) => setForm({ ...form, code_equipe: e.target.value })}
-                      required
-                    />
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Code d'équipe requis</div>
-                  </div>
-
-                  <div className='col-mb-4'>
                     <label htmlFor="validationCustom02" className="form-label">Nom d'équipe</label>
                     <input 
                       type="text" 
@@ -378,23 +332,23 @@ const Equipe = () => {
                   </div>
 
                   <div className="col-mb-4">
-                    <label htmlFor="validationCustom03" className="form-label">Sélectionner un cours</label>
+                    <label htmlFor="validationCustom04" className="form-label">Sélectionner une classe</label>
                     <select
                       className="form-select"
-                      id="validationCustom03"
-                      value={form.id_cours}
-                      onChange={(e) => setForm({ ...form, id_cours: e.target.value })}
+                      id="validationCustom04"
+                      value={form.classe_id_classe}
+                      onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
                       required
                     >
-                      <option value="">Sélectionner un cours</option>
-                      {cours.map((cours) => (
-                        <option key={cours.id_cours} value={cours.id_cours}>
-                          {cours.nom}
+                      <option value="">Sélectionner une classe</option>
+                      {classes.map((classe) => (
+                        <option key={classe.value} value={classe.value}>
+                          {classe.label}
                         </option>
                       ))}
                     </select>
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Sélectionner un cours requis</div>
+                    <div className="valid-feedback">Bien</div>  
+                    <div className="invalid-feedback">Sélectionner une classe requis</div>
                   </div>
 
                   <button type="submit" className="btn btn-primary">
@@ -440,16 +394,6 @@ const Equipe = () => {
                   }}
                 >
                   <div className="mb-3">
-                    <label className="form-label">Code d'équipe</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={form.code_equipe}
-                      onChange={(e) => setForm({ ...form, code_equipe: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
                     <label className="form-label">Nom d'équipe</label>
                     <input
                       type="text"
@@ -479,7 +423,26 @@ const Equipe = () => {
                   </div>
                   </div>
 
-                 
+                  <div className="mb-3">
+                    <label htmlFor="validationCustom04" className="form-label">Sélectionner une classe</label>
+                    <select
+                      className="form-select"
+                      id="validationCustom04"
+                      value={form.classe_id_classe}
+                      onChange={(e) => setForm({ ...form, classe_id_classe: e.target.value })}
+                      required
+                    >
+                      <option value="">Sélectionner une classe</option>
+                      {classes.map((classe) => (
+                        <option key={classe.value} value={classe.value}>
+                          {classe.label}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="valid-feedback">Bien</div>  
+                    <div className="invalid-feedback">Sélectionner une classe requis</div>
+                  </div>
+
                   <button type="submit" className="btn btn-primary">
                     <span className="visually-hidden">Modifier une équipe</span>
                     Modifier
