@@ -4,7 +4,6 @@ import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
 import bcrypt from "bcrypt";
 import { verifierSessionUtilisateur } from "../strategies/authentification.js";
-import passport from "passport";
 
 const logger = winston.createLogger({
   level: "info",
@@ -28,19 +27,19 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
     const parametre = req.sessionData.utilisateurId;
     console.log(parametre);
-    const requete = `SELECT nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
+    const requete = `SELECT id_utilisateur, nom, prenom, nom_utilisateur, courriel, type_utilisateur from utilisateur WHERE id_utilisateur = $1`;
     const resultat = await client.query(requete, [parametre]);
 
     // Vérifie ici si tu récupères bien eu un utilisateur
     if (resultat.rows.length > 0) {
       logger.info("Get de l'utilisateur effectué avec succès");
-      return res.status(200).json(resultat.rows); // Renvoie les cours ici
+      return res.status(200).json(resultat.rows); 
     } else {
-      logger.info("Aucun cours trouvé dans la base de données");
-      return res.status(404).json({ message: "Aucun cours trouvé" });
+      logger.info("Aucun utilisateur trouvé dans la base de données");
+      return res.status(404).json({ message: "Aucun utilisateur trouvé" });
     }
   } catch (error) {
-    logger.error("Erreur lors de la récupération des cours : " + error.message);
+    logger.error("Erreur lors de la récupération des utilisateur : " + error.message);
     return res
       .status(500)
       .json({ message: "Il y a eu une erreur de type 500" });

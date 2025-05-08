@@ -2,6 +2,7 @@ import mongoClient from "../bd/MongoBD/Connexion.js"; // Assure-toi que la conne
 import winston from "winston";
 import express from "express";
 import { ObjectId } from "mongodb";
+import { verifierSessionUtilisateur } from "../strategies/authentification.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -18,7 +19,6 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-router.use(express.json());
 
 // Fonction pour se connecter à la collection MongoDB
 async function ConnexionCollection() {
@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
 });
 
 //POST
-router.post("/", async (req, res) => {
+router.post("/",verifierSessionUtilisateur, async (req, res) => {
   try {
     const collection = await ConnexionCollection();
     const nouveauCommentaire = {

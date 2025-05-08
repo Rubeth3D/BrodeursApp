@@ -22,6 +22,7 @@ import ModalDeconnexion from "../../element/modalDeconnexion";
 
 function DashBoard() {
   const [modalDeconnexionOpen, setModalDeconnexionOpen] = useState(false);
+  const [id_utilisateur, setIdUtilisateur] = useState("")
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
   const [nomUtilisateur, setNomUtilisateur] = useState("");
@@ -87,6 +88,7 @@ function DashBoard() {
         setPrenom(data[0].prenom);
         setNomUtilisateur(data[0].nom_utilisateur);
         setCourriel(data[0].courriel);
+        setIdUtilisateur(data[0].id_utilisateur)
         const types = {
           E: "Étudiant",
           P: "Professeur",
@@ -271,7 +273,11 @@ function DashBoard() {
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
             {etatBoutton[3].isActiver && <Equipe />}
-            {etatBoutton[7].isActiver && <Commentaire />}
+            {etatBoutton[7].isActiver && <Commentaire 
+            id_utilisateur={id_utilisateur} 
+            nom_utilisateur={nomUtilisateur}
+            type_utilisateur={typeUtilisateur}
+            />}
             {etatBoutton[8].isActiver && <Admin />}
           </div>
         </div>

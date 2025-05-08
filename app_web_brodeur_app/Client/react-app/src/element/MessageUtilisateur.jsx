@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import ErreurSVG from "../image/ErreurSVG.jsx";
 import SuccesSVG from "../image/SuccesSVG.jsx";
-const messageUtilisateur = (reponse) => {
-  console.log("Status Code : ", reponse);
-  const styleMessageErreurBackground = {
+
+const MessageUtilisateur = ({ reponseCodeStatus, reponseMessage }) => {
+  const styleErreur = {
     backgroundColor: "rgba(220, 53, 69, 0.4)",
     padding: "10px",
     borderRadius: "8px",
@@ -12,7 +12,8 @@ const messageUtilisateur = (reponse) => {
     alignItems: "center",
     gap: "10px",
   };
-  const styleMessageSuccesBackground = {
+
+  const styleSucces = {
     backgroundColor: "rgba(0, 128, 0, 0.4)",
     padding: "10px",
     borderRadius: "8px",
@@ -21,44 +22,24 @@ const messageUtilisateur = (reponse) => {
     alignItems: "center",
     gap: "10px",
   };
-  if (!reponse) {
-    return null;
-  }
-  if (reponse.reponseCodeStatus === 200) {
+
+  if (!reponseCodeStatus || !reponseMessage) return null;
+
+  if (reponseCodeStatus === 200) {
     return (
-      <div style={styleMessageSuccesBackground}>
+      <div style={styleSucces}>
         {SuccesSVG()}
-        {reponse.reponseMessage}
+        <span>{reponseMessage}</span>
       </div>
     );
-  } else if (reponse.reponseCodeStatus === 404) {
+  } else {
     return (
-      <>
-        <div style={styleMessageErreurBackground}>
-          {ErreurSVG()}
-          {reponse.reponseMessage}
-        </div>
-      </>
-    );
-  } else if (reponse.reponseCodeStatus === 401) {
-    return (
-      <>
-        <div style={styleMessageErreurBackground}>
-          {ErreurSVG()}
-          {reponse.reponseMessage}
-        </div>
-      </>
-    );
-  } else if (reponse.reponseCodeStatus === 500) {
-    return (
-      <>
-        <div style={styleMessageErreurBackground}>
-          {ErreurSVG()}
-          Erreur de serveur, veuillez contacter l'equipe de developpement au
-          arnaudkomodo@gmail.com
-        </div>
-      </>
+      <div style={styleErreur}>
+        {ErreurSVG()}
+        <span>{reponseMessage}</span>
+      </div>
     );
   }
 };
-export default messageUtilisateur;
+
+export default MessageUtilisateur;
