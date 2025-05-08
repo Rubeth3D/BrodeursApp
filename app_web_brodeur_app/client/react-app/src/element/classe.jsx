@@ -52,7 +52,7 @@ const Classe = () => {
         setClasses(data);
       } else if (response.status === 401) {
         console.error(data.message);
-        navigate("/*");
+        navigate("/connexion");
       }
     } catch (err) {
       console.error("Erreur au niveau du fetch des classes : ", err);
