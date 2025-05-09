@@ -15,14 +15,14 @@ import CommentaireSVG from "../../image/CommentaireSVG";
 import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
 import Cours from "../../element/Cours";
-import Admin from "../../element/admin";
+import Admin from "../../element/admin/admin.jsx";
 import Equipe from "../../element/Equipe";
 import Commentaire from "../../element/Commentaire";
 import ModalDeconnexion from "../../element/modalDeconnexion";
 
 function DashBoard() {
   const [modalDeconnexionOpen, setModalDeconnexionOpen] = useState(false);
-  const [id_utilisateur, setIdUtilisateur] = useState("")
+  const [id_utilisateur, setIdUtilisateur] = useState("");
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
   const [nomUtilisateur, setNomUtilisateur] = useState("");
@@ -88,7 +88,7 @@ function DashBoard() {
         setPrenom(data[0].prenom);
         setNomUtilisateur(data[0].nom_utilisateur);
         setCourriel(data[0].courriel);
-        setIdUtilisateur(data[0].id_utilisateur)
+        setIdUtilisateur(data[0].id_utilisateur);
         const types = {
           E: "Étudiant",
           P: "Professeur",
@@ -257,7 +257,7 @@ function DashBoard() {
                 }}
               ></HoverDiv>
 
-              {typeUtilisateur == "Admin" && (
+              {typeUtilisateur == "Professeur" && (
                 <HoverDiv
                   text={"Admin"}
                   svgImage={<AdminSVG />}
@@ -273,11 +273,13 @@ function DashBoard() {
             {etatBoutton[1].isActiver && <Cours />}
             {etatBoutton[2].isActiver && <Classe />}
             {etatBoutton[3].isActiver && <Equipe />}
-            {etatBoutton[7].isActiver && <Commentaire 
-            id_utilisateur={id_utilisateur} 
-            nom_utilisateur={nomUtilisateur}
-            type_utilisateur={typeUtilisateur}
-            />}
+            {etatBoutton[7].isActiver && (
+              <Commentaire
+                id_utilisateur={id_utilisateur}
+                nom_utilisateur={nomUtilisateur}
+                type_utilisateur={typeUtilisateur}
+              />
+            )}
             {etatBoutton[8].isActiver && <Admin />}
           </div>
         </div>
