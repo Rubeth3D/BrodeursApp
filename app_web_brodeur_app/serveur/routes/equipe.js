@@ -17,8 +17,6 @@ const logger = winston.createLogger({
 });
 
 const router = express.Router();
-router.use(express.json());
-
 
 //get pour les equipes
 router.get("/", async (req, res) => {
@@ -35,7 +33,7 @@ router.get("/", async (req, res) => {
 //get pour un etudiant
 router.get("/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
     const resultat = await client.query(
       "SELECT * FROM equipe WHERE id_equipe = $1",
       [id]
@@ -59,26 +57,28 @@ router.get("/:id", async (req, res) => {
 //post pour un etudiant
 router.post("/", async (req, res) => {
   try {
-    const { code_equipe, nom, classe_id_classe, etat_equipe } = req.body;
+    const {nom, classe_id_classe, etat_equipe } = req.body;
+
     const resultat = await client.query(
-      "INSERT ON etudiant(code_equipe,nom,classe_id_classe,etat_equipe) VALUES($1,$2,$3,$4)",
-      [(code_equipe, nom, classe_id_classe, etat_equipe)]
+      "INSERT INTO equipe(nom, classe_id_classe, etat_equipe) VALUES($1, $2, $3)",
+      [nom, classe_id_classe, etat_equipe]
     );
-    res.status(200).json({ message: "Inscription fait avec succes" });
-    logger.info("Insert de l'equipe faite avec succes");
+
+    res.status(200).json({ message: "Inscription effectuée avec succès" });
+    logger.info("Insertion de l'équipe réussie");
   } catch (err) {
-    logger.error(`Erreur lors de l'insert de l'equipe ${err}`);
-    res.status(500).json({ message: "Erreur lors de l'insert de l'equipe" });
+    logger.error(`Erreur lors de l'insertion de l'équipe : ${err}`);
+    res.status(500).json({ message: "Erreur lors de l'insertion de l'équipe" });
   }
 });
 
 //put pour un etudiant
 router.put("/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
     const { code_equipe, nom, classe_id_classe, etat_equipe } = req.body;
     const resultat = await client.query(
-      "UPDATE ON etudiant SET code_equipe = $1, nom = $2, classe_id_classe = $3, etat_equipe = $4 WHERE id_etudiant = $5 RETURNING *",
+      "UPDATE equipe SET code_equipe = $1, nom = $2, classe_id_classe = $3, etat_equipe = $4 WHERE id_equipe = $5 RETURNING *",
       [code_equipe, nom, classe_id_classe, etat_equipe, id]
     );
     if (resultat.rows.length === 0) {
@@ -99,9 +99,9 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.params;
+   const id = req.params.id;
     const resultat = await client.query(
-      "DELETE FROM equipe WHERE id = $1 RETURNING *",
+      "DELETE FROM equipe WHERE id_equipe = $1 RETURNING *",
       [id]
     );
     if (resultat.rows.length === 0) {

@@ -46,11 +46,10 @@ CREATE TABLE equipe (
     id_equipe        SERIAL PRIMARY KEY,
     code_equipe      VARCHAR(200),
     nom              VARCHAR(2000),
-    classe_id_classe INTEGER NOT NULL,
+    classe_id_classe INTEGER,
     etat_equipe      VARCHAR(20),
-    id_cours         INTEGER NOT NULL,
-    id_session       INTEGER NOT NULL,
-    UNIQUE (classe_id_classe)
+    id_cours         INTEGER,
+    id_session       INTEGER
 );
 
 CREATE TABLE etudiant (
@@ -69,7 +68,7 @@ CREATE TABLE etudiant_classe (
     PRIMARY KEY (etudiant_id_etudiant, classe_id_classe)
 );
 
-CREATE TABLE etudiant_equipe (
+CREATE TABLE etudiantEquipe (
     equipe_id_equipe     INTEGER NOT NULL,
     etudiant_id_etudiant INTEGER NOT NULL,
     PRIMARY KEY (equipe_id_equipe, etudiant_id_etudiant)

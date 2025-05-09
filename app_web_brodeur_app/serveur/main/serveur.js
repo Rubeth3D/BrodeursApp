@@ -14,6 +14,7 @@ import "./../strategies/local-strategy.mjs";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
 import equipe from "../routes/equipe.js";
+import etudiantEquipe from "../routes/etudiantEquipe.js"
 
 const app = express();
 
@@ -233,6 +234,7 @@ app.use("/historiqueDesSessions", HistoriqueSession);
 app.use("/commentaire", Commentaire);
 app.use("/connexion", connexion);
 app.use("/equipe", equipe);
+app.use("/etudiantEquipe",etudiantEquipe);
 
 // Route de connexion
 app.post("/login", (req, res, next) => {

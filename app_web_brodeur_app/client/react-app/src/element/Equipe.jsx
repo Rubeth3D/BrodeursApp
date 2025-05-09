@@ -39,10 +39,23 @@ const Equipe = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(equipeActif),
       });
-  
+
+      const newEquipe = await reponse.json(); 
+      const id_equipe = newEquipe.id_equipe;
+
+      for (const id_Etudiant of form.etudiant) {
+        await fetch("http://localhost:8080/etudiantEquipe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            equipe_id_equipe: id_equipe,
+            etudiant_id_etudiant: id_Etudiant,
+          }),
+        });
+      }
       if (reponse.ok) {
         fetchEquipes(); 
-        viderForm(); 
+        viderForm();
       }
     } catch (error) {
       console.error("Erreur lors de la création d'équipe : ", error);
@@ -60,22 +73,18 @@ const Equipe = () => {
           etat_equipe: "Active",
         }),
       });
-      await fetch(`http://localhost:8080/etudiantEquipe/${id_equipe}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      for (const idEtudiant of form.etudiant) {
+      for (const id_Etudiant of form.etudiant) {
         await fetch("http://localhost:8080/etudiantEquipe", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             equipe_id_equipe: id_equipe,
-            etudiant_id_etudiant: idEtudiant,
+            etudiant_id_etudiant: id_Etudiant,
           }),
         });
       }
-      fetchEquipes();
-      viderForm();
+      viderForm(); 
+      fetchEquipes(); 
     } catch (error) {
       console.error("Erreur lors de la modification de l'équipe:", error);
     }
@@ -125,7 +134,7 @@ const Equipe = () => {
         }));
       }
     };
-    
+
     const fetchClasses = async () => {
       try {
         const reponse = await fetch("http://localhost:8080/classe", {
@@ -144,7 +153,6 @@ const Equipe = () => {
       }
     };
 
-    
     const viderForm = () => {
       setForm({
         nom: "",
