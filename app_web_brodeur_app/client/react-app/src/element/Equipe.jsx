@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
+import ListEtudiant from "./listeEtudiant.jsx";
 
 const Equipe = () => {
   const [classes, setClasses] = useState([]);
@@ -260,7 +261,10 @@ const Equipe = () => {
                       type="button"
                       data-bs-toggle="modal"
                       data-bs-target="#modifierEquipe"
-                      onClick={() => setForm(equipe)}
+                      onClick={() => setForm({
+                        ...equipe,
+                        etudiant: equipe.etudiant || [],
+                      })}
                     >
                       {ModifierSVG()}
                     </button>
@@ -316,27 +320,11 @@ const Equipe = () => {
                     <div className="valid-feedback">Bien</div>
                     <div className="invalid-feedback">Nom d'équipe requis</div>
                   </div>
-
                   <div className="col-mb-4">
-                      <label htmlFor="etudiants">Sélectionner des étudiants</label>
-                      <div id="etudiants">
-                        {etudiants.map((etudiant) => (
-                          <div key={etudiant.id_etudiant} className="form-check">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id={`etudiant-${etudiant.id_etudiant}`}
-                              value={etudiant.id_etudiant}
-                              onChange={(e) => handleCheckboxChange(e, etudiant.id_etudiant)}
-                            />
-                            <label className="form-check-label" htmlFor={`etudiant-${etudiant.id_etudiant}`}>
-                              {etudiant.nom_complet}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    <div className="valid-feedback">Bien</div>
-                    <div className="invalid-feedback">Sélectionner au moins un étudiant requis</div>
+                    <ListEtudiant
+                    etudiants={etudiants}   
+                    handleCheckboxChange={handleCheckboxChange}
+                    />
                   </div>
 
                   <div className="col-mb-4">
@@ -411,6 +399,9 @@ const Equipe = () => {
                       required
                     />
                   </div>
+                  <listeEtudiant>
+
+                  </listeEtudiant>
                   <div className="mb-3">
                   <label htmlFor="etudiants">Sélectionner des étudiants</label>
                   <div id="etudiants">
