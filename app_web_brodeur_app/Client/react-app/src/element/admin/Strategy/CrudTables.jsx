@@ -1,4 +1,4 @@
-class CrudAdmin {
+class CrudTables {
   constructor(strategie) {
     this.strategie = strategie;
   }
@@ -22,4 +22,4 @@ class CrudAdmin {
     return await this.strategie.DeleteDonnees(id);
   }
 }
-export default CrudAdmin;
+export default CrudTables;

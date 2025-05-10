@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import CrudAdmin from "./Strategy/CrudAdmin";
+import CrudTables from "./Strategy/CrudTables";
 import ModifierSVG from "../../image/ModifierSVG";
 import SupprimerSVG from "../../image/SupprimerSVG";
-function AffichageAdmin({
-  DonneesDemandes,
-  StrategyDemande: StrategieDemande,
-}) {
-  const crudAdmin = new CrudAdmin(StrategieDemande);
+function AffichageAdmin({ DonneesDemandes, StrategieDemande }) {
+  const crudTables = new CrudTables(StrategieDemande);
   const [bodyDonnees, setBodyDonnees] = useState([]);
   const [clesDonnees, setCleesDonnees] = useState([]);
 
@@ -23,13 +20,13 @@ function AffichageAdmin({
     zIndex: 2,
   };
   const fetchData = async () => {
-    const data = await crudAdmin.ReadDonnees();
+    const data = await crudTables.ReadDonnees();
     setBodyDonnees(data);
     console.log("data : ", data[0]);
     setCleesDonnees(Object.keys(data[0]));
   };
   useEffect(() => {
-    crudAdmin.changerStrategie(StrategieDemande);
+    crudTables.changerStrategie(StrategieDemande);
     fetchData();
   }, []);
   return (
@@ -66,7 +63,7 @@ function AffichageAdmin({
                     className="btn btn-sm border"
                     onClick={async () => {
                       const id = Object.values(Donnees)[0];
-                      await crudAdmin.DeleteDonnees(id);
+                      await crudTables.DeleteDonnees(id);
                       fetchData();
                     }}
                   >
