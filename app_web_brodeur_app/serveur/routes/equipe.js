@@ -56,42 +56,55 @@ router.get("/:id", async (req, res) => {
 
 //post pour un etudiant
 router.post("/", async (req, res) => {
-  try {
-    const {nom, classe_id_classe, etat_equipe } = req.body;
+  const { nom, classe_id_classe, etat_equipe } = req.body;
 
+  try {
     const resultat = await client.query(
-      "INSERT INTO equipe(nom, classe_id_classe, etat_equipe) VALUES($1, $2, $3)",
+      `INSERT INTO equipe (nom, classe_id_classe, etat_equipe, id_cours, id_session)
+       VALUES ($1, $2, $3,(SELECT cours_id_cours FROM classe WHERE id_classe = $2),
+         (SELECT cours_session_id_session FROM classe WHERE id_classe = $2)
+       )
+       RETURNING *`,
       [nom, classe_id_classe, etat_equipe]
     );
 
-    res.status(200).json({ message: "Inscription effectuée avec succès" });
-    logger.info("Insertion de l'équipe réussie");
+    res.status(201).json({
+      message: "Équipe créée avec succès",
+      data: resultat.rows[0]
+    });
+
+    logger.info(`Insertion de l'équipe réussie : ${nom}`);
   } catch (err) {
     logger.error(`Erreur lors de l'insertion de l'équipe : ${err}`);
     res.status(500).json({ message: "Erreur lors de l'insertion de l'équipe" });
   }
 });
 
+
 //put pour un etudiant
 router.put("/:id", async (req, res) => {
+  const { nom, classe_id_classe, etat_equipe } = req.body;
+  const id = req.params.id;
+
   try {
-    const id = req.params.id;
-    const { code_equipe, nom, classe_id_classe, etat_equipe } = req.body;
     const resultat = await client.query(
-      "UPDATE equipe SET code_equipe = $1, nom = $2, classe_id_classe = $3, etat_equipe = $4 WHERE id_equipe = $5 RETURNING *",
-      [code_equipe, nom, classe_id_classe, etat_equipe, id]
+      `UPDATE equipe
+       SET nom = $1, classe_id_classe = $2, etat_equipe = $3, id_cours = (SELECT cours_id_cours FROM classe WHERE id_classe = $2),
+           id_session = (SELECT cours_session_id_session FROM classe WHERE id_classe = $2)
+       WHERE id_equipe = $4
+       RETURNING *`,
+      [nom, classe_id_classe, etat_equipe, id]
     );
-    if (resultat.rows.length === 0) {
-      logger.error("Aucune equipe ne correspond a ce id");
-      return res
-        .status(404)
-        .json({ message: "Aucune equipe ne correspond a ce id" });
-    }
-    res.status(200).json({ message: "Update de l'equipe fait avec succes!" });
-    logger.info("Update de l'equipe fait avec succes!");
+
+    res.status(200).json({
+      message: "Équipe mise à jour avec succès",
+      data: resultat.rows[0]
+    });
+
+    logger.info(`Équipe mise à jour : ${nom} (ID ${id})`);
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors de l'update de l'equipe" });
-    logger.error(`Erreur lors de l'update de l'equipe : ${err}`);
+    logger.error(`Erreur lors de la mise à jour de l'équipe : ${err}`);
+    res.status(500).json({ message: "Erreur lors de la mise à jour de l'équipe" });
   }
 });
 

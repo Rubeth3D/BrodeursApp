@@ -25,28 +25,29 @@ const ListEtudiant = ({ etudiants, handleCheckboxChange }) => {
       </button>
 
       {isOpen && (
-        <div id="etudiants" className="mt-4 border p-4 rounded">
-          {etudiants.map((etudiant) => (
-            <div key={etudiant.id_etudiant} className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={`etudiant-${etudiant.id_etudiant}`}
-                value={etudiant.id_etudiant}
-                onChange={(e) =>
-                  handleCheckboxChange(e, etudiant.id_etudiant)
-                }
-              />
-              <label
-                className="form-check-label"
-                htmlFor={`etudiant-${etudiant.id_etudiant}`}
-              >
-                {etudiant.nom_complet}
-              </label>
-            </div>
-          ))}
-        </div>
-      )}
+  <fieldset id="etudiants" className="mt-4 border p-4 rounded">
+    <legend>Étudiants</legend>
+    {etudiants.map((etudiant) => (
+      <div key={etudiant.id_etudiant} className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          id={`etudiant-${etudiant.id_etudiant}`}
+          value={etudiant.id_etudiant}
+          onChange={(e) =>
+            handleCheckboxChange(e, etudiant.id_etudiant)
+          }
+        />
+        <label
+          className="form-check-label"
+          htmlFor={`etudiant-${etudiant.id_etudiant}`}
+        >
+          {etudiant.nom_complet}
+        </label>
+      </div>
+    ))}
+  </fieldset>
+)}
     </div>
   );
 };
