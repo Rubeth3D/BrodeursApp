@@ -76,7 +76,7 @@ const Equipe = () => {
       });
       for (const id_Etudiant of form.etudiant) {
         await fetch("http://localhost:8080/etudiantEquipe", {
-          method: "POST",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             equipe_id_equipe: id_equipe,
@@ -399,27 +399,12 @@ const Equipe = () => {
                       required
                     />
                   </div>
-                  <listeEtudiant>
-
-                  </listeEtudiant>
+                  
                   <div className="mb-3">
-                  <label htmlFor="etudiants">Sélectionner des étudiants</label>
-                  <div id="etudiants">
-                    {etudiants.map((etudiant) => (
-                      <div key={etudiant.id_etudiant} className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          id={`etudiant-${etudiant.id_etudiant}`}
-                          value={etudiant.id_etudiant}
-                          onChange={(e) => handleCheckboxChange(e, etudiant.id_etudiant)}
-                        />
-                        <label className="form-check-label" htmlFor={`etudiant-${etudiant.id_etudiant}`}>
-                          {etudiant.nom_complet}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
+                  <ListEtudiant
+                    etudiants={etudiants}   
+                    handleCheckboxChange={handleCheckboxChange}
+                    />
                   </div>
 
                   <div className="mb-3">
