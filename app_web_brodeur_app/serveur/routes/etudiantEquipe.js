@@ -2,7 +2,6 @@ import express from "express";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
 
-
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -19,7 +18,6 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-// Récupération de toutes les associations étudiant-équipe
 router.get("/", async (req, res) => {
   try {
     const resultat = await client.query("SELECT * FROM etudiantEquipe");
@@ -31,7 +29,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Récupération des équipes d'un étudiant
 router.get("/etudiant/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -51,7 +48,6 @@ router.get("/etudiant/:id", async (req, res) => {
   }
 });
 
-// Ajout d'une association étudiant-équipe
 router.post("/", async (req, res) => {
   const { equipe_id_equipe, etudiant_id_etudiant } = req.body;
   try {
@@ -67,7 +63,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Mise à jour d'une association étudiant-équipe
 router.put("/", async (req, res) => {
   const { equipe_id_equipe, etudiant_id_etudiant } = req.body;
   try {
@@ -76,7 +71,7 @@ router.put("/", async (req, res) => {
       [equipe_id_equipe, etudiant_id_etudiant]
     );
     if (resultat.rowCount === 0) {
-      logger.info(`Aucune association trouvée pour l'étudiant ${etudiant_id_etudiant}`);
+      logger.warn(`Aucune association trouvée pour l'étudiant ${etudiant_id_etudiant}`);
       return res.status(404).json({ message: "Association non trouvée" });
     }
     res.status(200).json({ message: "Association mise à jour avec succès", data: resultat.rows[0] });
@@ -86,9 +81,8 @@ router.put("/", async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la mise à jour de l'association" });
   }
 }
-);
+);  
 
-// Suppression d'une association étudiant-équipe
 router.delete("/", async (req, res) => {
   const { equipe_id_equipe, etudiant_id_etudiant } = req.body;
   try {
