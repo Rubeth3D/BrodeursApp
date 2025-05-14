@@ -14,6 +14,7 @@ import session from "express-session";
 import "./../strategies/local-strategy.mjs";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
+import InitAdmin from "../strategies/admin.js"
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(
   })
 );
 
+InitAdmin();
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsConfig));

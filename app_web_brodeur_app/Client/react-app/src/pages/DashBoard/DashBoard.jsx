@@ -257,7 +257,7 @@ function DashBoard() {
                 }}
               ></HoverDiv>
 
-              {typeUtilisateur == "Professeur" && (
+              {typeUtilisateur == "Admin" && (
                 <HoverDiv
                   text={"Admin"}
                   svgImage={<AdminSVG />}
