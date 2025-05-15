@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from "react";
 import CrudTables from "./Strategy/CrudTables.jsx";
 import MessageUtilisateur from "../MessageUtilisateur.jsx";
-function ModalModifier({
+function ModalTables({
   open,
-  donneesAModifier,
+  donneesAUtiliser,
   estFermee,
   rafraichir,
-  StrategieDemande,
+  ActionDemande,
+  ModalDemande,
 }) {
   if (!open) {
     return null;
   }
-  if (!donneesAModifier) {
+  if (!donneesAUtiliser) {
     return <div>Chargement...</div>;
   }
-  const crudTables = new CrudTables(StrategieDemande);
 
   const [messageUtilisateur, setMessageUtilisateur] = useState([]);
-  const [cleesTables, setCleesTables] = useState(Object.keys(donneesAModifier));
-  const [donnees, setDonnees] = useState(donneesAModifier);
-  const [contenu, setContenu] = useState(Object.values(donneesAModifier));
-  const modifier = async (id) => {
-    try {
-      const resultat = await crudTables.UpdateDonnees(id, donnees);
-      setMessageUtilisateur(resultat);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [cleesTables, setCleesTables] = useState(Object.keys(donneesAUtiliser));
+  const [donnees, setDonnees] = useState(donneesAUtiliser);
+  const [contenu, setContenu] = useState([]);
 
   const ModifierRow = (e) => {
     setDonnees({
@@ -37,8 +29,11 @@ function ModalModifier({
   };
   useEffect(() => {
     setCleesTables(Object.keys(donnees));
-    setContenu(Object.values(donnees));
+    if (ModalDemande == "Modifier") {
+      setContenu(Object.values(donnees));
+    }
     console.log("contenu", contenu[1]);
+    console.log("contenmodal demande ", ModalDemande);
   }, [donnees]);
 
   return (
@@ -55,7 +50,7 @@ function ModalModifier({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id={`modalLabel${contenu[0]}`}>
-                Modifier
+                {ModalDemande}
               </h5>
             </div>
             <div className="modal-body">
@@ -94,7 +89,13 @@ function ModalModifier({
                 type="button"
                 className="btn btn-primary"
                 onClick={async () => {
-                  await modifier(contenu[0]);
+                  if (ModalDemande === "Modifier") {
+                    await ActionDemande({ id: contenu[0], body: donnees });
+                    rafraichir();
+                    return;
+                  }
+                  const body = await JSON.stringify(donnees);
+                  await ActionDemande(body);
                   rafraichir();
                 }}
               >
@@ -108,4 +109,4 @@ function ModalModifier({
   );
 }
 
-export default ModalModifier;
+export default ModalTables;

@@ -10,8 +10,8 @@ class CrudTables {
     return await this.strategie.CreateDonnees(data);
   }
 
-  UpdateDonnees(data) {
-    return this.strategie.UpdateDonnees(data);
+  UpdateDonnees({ id, body }) {
+    return this.strategie.UpdateDonnees(id, body);
   }
 
   async DeleteDonnees(id) {

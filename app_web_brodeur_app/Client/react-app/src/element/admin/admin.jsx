@@ -6,7 +6,10 @@ import CrudHistoriqueSessions from "./Strategy/CrudHistoriqueSessions.jsx";
 const Admin = () => {
   return (
     <>
-      <AffichageTables StrategieDemande={new CrudHistoriqueSessions()} />
+      <AffichageTables
+        StrategieDemande={new CrudHistoriqueSessions()}
+        TableAjoutable={"Historique des sessions"}
+      />
     </>
   );
 };

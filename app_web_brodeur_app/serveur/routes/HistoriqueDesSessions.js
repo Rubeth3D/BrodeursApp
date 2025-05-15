@@ -88,7 +88,7 @@ router.put("/:id", async (req, res) => {
       description_action: req.body.description_action,
       date_action: req.body.date_action,
     };
-
+    console.log(updatedHistoriqueDeSession);
     const resultat = await collection.updateOne(
       { _id: new ObjectId(id) },
       { $set: updatedHistoriqueDeSession }
