@@ -61,8 +61,8 @@ router.post("/", async (req, res) => {
   try {
     const resultat = await client.query(
       `INSERT INTO equipe (nom, classe_id_classe, etat_equipe, id_cours, id_session)
-       VALUES ($1, $2, $3,(SELECT cours_id_cours FROM classe WHERE id_classe = $2),
-         (SELECT cours_session_id_session FROM classe WHERE id_classe = $2)
+       VALUES ($1, $2, $3,(SELECT cours_id_cours FROM classe JOIN cours ON classe.cours_id_cours = cours.id_cours), 
+       (SELECT cours_session_id_session FROM classe JOIN cours ON classe.cours_id_cours = cours.id_cours)
        )
        RETURNING *`,
       [nom, classe_id_classe, etat_equipe]
