@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import CrudTables from "./Strategy/CrudTables";
-import ModifierSVG from "../../image/ModifierSVG";
-import SupprimerSVG from "../../image/SupprimerSVG";
-function AffichageAdmin({ DonneesDemandes, StrategieDemande }) {
+import CrudTables from "./Strategy/CrudTables.jsx";
+import ModifierSVG from "../../image/ModifierSVG.jsx";
+import SupprimerSVG from "../../image/SupprimerSVG.jsx";
+import ModalModifier from "./ModalModifier.jsx";
+function AffichageTables({ StrategieDemande }) {
   const crudTables = new CrudTables(StrategieDemande);
   const [bodyDonnees, setBodyDonnees] = useState([]);
   const [clesDonnees, setCleesDonnees] = useState([]);
-
+  const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
+  const [donneesAModifier, setDonneesAModifier] = useState([]);
   const ClassNameTables = "table table-hover  text-center mb-0 ";
-  const classNameActions = "d-flex justify-content-center  border ";
+  const classNameActions = "d-flex";
+  const classNameBoutonsActions = "btn btn-sm border";
   const styleTable = {
     overflowY: "auto",
     height: "500px",
-    maxWidth: "100%",
+    maxWidth: "fit-size",
   };
   const styleHeader = {
     position: "sticky",
@@ -26,7 +29,6 @@ function AffichageAdmin({ DonneesDemandes, StrategieDemande }) {
     setCleesDonnees(Object.keys(data[0]));
   };
   useEffect(() => {
-    crudTables.changerStrategie(StrategieDemande);
     fetchData();
   }, []);
   return (
@@ -57,10 +59,19 @@ function AffichageAdmin({ DonneesDemandes, StrategieDemande }) {
                       {val}
                     </td>
                   ))}
-                <div className={classNameActions}>
-                  <button className="btn btn-sm border">{ModifierSVG()}</button>
+                <td className={classNameActions}>
                   <button
-                    className="btn btn-sm border"
+                    className={classNameBoutonsActions}
+                    onClick={() => {
+                      setModalModifierEstOuvert(true);
+                      setDonneesAModifier(Donnees);
+                    }}
+                  >
+                    {ModifierSVG()}
+                  </button>
+
+                  <button
+                    className={classNameBoutonsActions}
                     onClick={async () => {
                       const id = Object.values(Donnees)[0];
                       await crudTables.DeleteDonnees(id);
@@ -69,14 +80,25 @@ function AffichageAdmin({ DonneesDemandes, StrategieDemande }) {
                   >
                     {SupprimerSVG()}
                   </button>
-                </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <ModalModifier
+        open={modalModifierEstOuvert}
+        donneesAModifier={donneesAModifier}
+        estFermee={() => {
+          setModalModifierEstOuvert(false);
+        }}
+        rafraichir={() => {
+          fetchData();
+        }}
+        StrategieDemande={StrategieDemande}
+      />
     </>
   );
 }
 
-export default AffichageAdmin;
+export default AffichageTables;

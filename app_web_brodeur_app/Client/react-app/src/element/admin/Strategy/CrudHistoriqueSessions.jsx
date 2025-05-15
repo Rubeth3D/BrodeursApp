@@ -1,5 +1,5 @@
 class CrudHistoriqueSessions {
-  CreateDonnees(changement) {}
+  async CreateDonnees() {}
   async ReadDonnees() {
     const resultat = await fetch(
       "http://localhost:8080/HistoriqueDesSessions",
@@ -12,8 +12,17 @@ class CrudHistoriqueSessions {
 
     return await resultat.json();
   }
-  async UpdateDonnees() {
-    const resultat = await fetch("http://localhost:8080/HistoriqueDesSessions");
+  async UpdateDonnees(id, body) {
+    const resultat = await fetch(
+      `http://localhost:8080/HistoriqueDesSessions/${id}`,
+      {
+        body: JSON.stringify(body),
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
+    resultat.json();
   }
   async DeleteDonnees(id) {
     const resultat = await fetch(

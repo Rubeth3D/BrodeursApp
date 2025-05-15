@@ -2,10 +2,6 @@ class CrudTables {
   constructor(strategie) {
     this.strategie = strategie;
   }
-  changerStrategie(nouvelleStrategie) {
-    this.Strategie = nouvelleStrategie;
-  }
-
   async ReadDonnees() {
     return await this.strategie.ReadDonnees();
   }

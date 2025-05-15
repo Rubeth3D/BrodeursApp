@@ -22,13 +22,22 @@ const MessageUtilisateur = ({ reponseCodeStatus, reponseMessage }) => {
     alignItems: "center",
     gap: "10px",
   };
+  console.log(reponseCodeStatus);
+  console.log(reponseMessage);
 
   if (!reponseCodeStatus || !reponseMessage) return null;
 
-  if (reponseCodeStatus === 200) {
+  if (reponseCodeStatus >= 200 && reponseCodeStatus < 400) {
     return (
       <div style={styleSucces}>
         {SuccesSVG()}
+        <span>{reponseMessage}</span>
+      </div>
+    );
+  } else if (reponseCodeStatus >= 400 && reponseCodeStatus < 500) {
+    return (
+      <div style={styleErreur}>
+        {ErreurSVG()}
         <span>{reponseMessage}</span>
       </div>
     );
@@ -36,7 +45,10 @@ const MessageUtilisateur = ({ reponseCodeStatus, reponseMessage }) => {
     return (
       <div style={styleErreur}>
         {ErreurSVG()}
-        <span>{reponseMessage}</span>
+        <span>
+          Erreur de serveur, veuillez contacter l'equipe de developpement au
+          arnaudkomodo@gmail.com
+        </span>
       </div>
     );
   }
