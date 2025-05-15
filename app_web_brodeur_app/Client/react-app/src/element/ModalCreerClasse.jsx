@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import { Value } from "sass";
 
-function ModalCreerClasse({ open, estFermee, rafraichir }) {
+function ModalCreerClasse({ open, estFermee, rafraichir, type_utilisateur }) {
   if (!open) {
     return null;
   }
@@ -10,12 +9,13 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     code_cours: "",
     description: "",
     groupe: "",
-    professeur_id_professeur: "1",
+    professeur_id_professeur: "",
     etat_classe: "Actif",
     cours_id_cours: "",
     cours_session_id_session: "",
   });
   const [cours, setCours] = useState([]);
+  const [professeur, setProfesseur] = useState([]);
 
   //fonction creation de classe
   const creerClasse = async () => {
@@ -37,6 +37,7 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
       console.error(error);
     }
   };
+
   const fetchCours = async () => {
     try {
       const reponse = await fetch("http://localhost:8080/cours", {
@@ -56,6 +57,24 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
     }
   };
 
+  const fetchProfesseur = async () => {
+    try {
+      const reponse = await fetch("http://localhost:8080/professeur", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const donnees = await reponse.json();
+      const optionsProfesseur = donnees.map((professeur) => ({
+        value: professeur.id_professeur,
+        label: professeur.nom_complet,
+      }));
+      setProfesseur(optionsProfesseur);
+    } catch (err) {
+      console.error("Erreur au niveau du fetch des professeurs : ", err);
+    }
+  };
+
   //gerer les changements au niveau du usestate
   const GererChangement = (e) => {
     setNouvelleClasse({
@@ -72,7 +91,11 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
 
   useEffect(() => {
     fetchCours();
+    if (type_utilisateur === "Admin") {
+      fetchProfesseur();
+    }
   }, []);
+
   return (
     <>
       <div
@@ -90,36 +113,44 @@ function ModalCreerClasse({ open, estFermee, rafraichir }) {
             <div className="modal-body">
               <input
                 type="text"
-                className="form-control"
-                placeholder="Nouveau code du cours"
-                name="code_cours"
-                onChange={GererChangement}
-              />
-              <input
-                type="text"
-                className="form-control mt-2"
+                className="form-control mt-3"
                 placeholder="Nouvelle description"
                 name="description"
                 onChange={GererChangement}
               />
               <input
                 type="text"
-                className="form-control mt-2"
+                className="form-control mt-3"
                 placeholder="Numéro du groupe"
                 name="groupe"
                 onChange={GererChangement}
               />
+              {type_utilisateur === "Admin" && (
+                <Select
+                  className="mt-3"
+                  options={professeur}
+                  placeholder="choisir un professeur..."
+                  onChange={(option) => {
+                    const updatedProfesseur = {
+                      ...nouvelleClasse,
+                      professeur_id_professeur: option.value,
+                    };
+                    setNouvelleClasse(updatedProfesseur);
+                  }}
+                />
+              )}
               <Select
-                className="mt-2"
+                className="mt-3"
                 options={cours}
                 placeholder="choisir un cours..."
                 onChange={(option) => {
-                  setNouvelleClasse({
+                  const updatedClasse = {
                     ...nouvelleClasse,
                     cours_id_cours: option.value,
                     cours_session_id_session: option.id_session,
-                  });
-                  console.log("Nouvelle classe : ", nouvelleClasse);
+                    code_cours: option.label,
+                  };
+                  setNouvelleClasse(updatedClasse);
                 }}
               />
             </div>

@@ -5,6 +5,7 @@ import oAuth2Client from "../api/oAuth2Client.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import creerId from "../strategies/creerId.js";
+import { cli } from "winston/lib/winston/config/index.js";
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -77,6 +78,131 @@ router.get("/professeurExiste/:nom_complet", async (req, res) => {
   }
 });
 
+router.post("/CreationCompte/Professeur", async (req, res) => {
+  try {
+    const { courriel } = req.body;
+    const type_utilisateur = "P";
+    // Création de l'utilisateur
+    const requeteQuery = `
+      INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `;
+    const creerUtilisateur = await client.query(requeteQuery, [
+      courriel,
+      "Inactif",
+      type_utilisateur,
+    ]);
+
+    // Vérification : un utilisateur a bien été inséré
+    if (creerUtilisateur.rowCount === 0) {
+      logger.info("Échec de la création de l'utilisateur.");
+      return res.status(400).json({ message: "Échec création utilisateur." });
+    }
+
+    const id_utilisateur = creerUtilisateur.rows[0].id_utilisateur;
+
+    // Création du professeur lié à l'utilisateur
+    const requeteQueryProfesseur = `
+      INSERT INTO professeur (utilisateur_id_utilisateur, etat_professeur)
+      VALUES ($1, $2)
+      RETURNING *;
+    `;
+    const creerProfesseur = await client.query(requeteQueryProfesseur, [
+      id_utilisateur,
+      "Inactif",
+    ]);
+
+    // Vérification : un professeur a bien été inséré
+    if (creerProfesseur.rowCount === 0) {
+      logger.info("Échec de la création du professeur.");
+      return res.status(400).json({ message: "Échec création professeur." });
+    }
+
+    const id_professeur = creerProfesseur.rows[0].id_professeur;
+
+    // Mise à jour de l'utilisateur avec l'id du professeur
+    const requeteUpdateUtilisateur = `
+      UPDATE utilisateur
+      SET professeur_id_professeur = $1
+      WHERE id_utilisateur = $2;
+    `;
+    await client.query(requeteUpdateUtilisateur, [
+      id_professeur,
+      id_utilisateur,
+    ]);
+
+    logger.info("Création du compte professeur réussie !");
+    return res
+      .status(200)
+      .json({ message: "Compte professeur créé avec succès !" });
+  } catch (err) {
+    logger.error("Erreur lors de la création du compte professeur :", err);
+    return res.status(500).json({ message: "Erreur serveur : " + err.message });
+  }
+});
+
+router.post("/CreationCompte/Etudiant", async (req, res) => {
+  try {
+    const { courriel } = req.body;
+    const type_utilisateur = "E";
+    // Création de l'utilisateur
+    const requeteQuery = `
+      INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `;
+    const creerUtilisateur = await client.query(requeteQuery, [
+      courriel,
+      "Inactif",
+      type_utilisateur,
+    ]);
+
+    // Vérification : un utilisateur a bien été inséré
+    if (creerUtilisateur.rowCount === 0) {
+      logger.info("Échec de la création de l'utilisateur.");
+      return res.status(400).json({ message: "Échec création utilisateur." });
+    }
+
+    const id_utilisateur = creerUtilisateur.rows[0].id_utilisateur;
+
+    // Création de l'étudiant lié à l'utilisateur
+    const requeteQueryEtudiant = `
+      INSERT INTO etudiant (utilisateur_id_utilisateur, etat_etudiant)
+      VALUES ($1, $2)
+      RETURNING *;
+    `;
+    const creerEtudiant = await client.query(requeteQueryEtudiant, [
+      id_utilisateur,
+      "Inactif",
+    ]);
+
+    // Vérification : un étudiant a bien été inséré
+    if (creerEtudiant.rowCount === 0) {
+      logger.info("Échec de la création de l'étudiant.");
+      return res.status(400).json({ message: "Échec création étudiant." });
+    }
+
+    const id_etudiant = creerEtudiant.rows[0].id_etudiant;
+
+    // Mise à jour de l'utilisateur avec l'id de l'étudiant
+    const requeteUpdateUtilisateur = `
+      UPDATE utilisateur
+      SET etudiant_id_etudiant = $1
+      WHERE id_utilisateur = $2;
+    `;
+    await client.query(requeteUpdateUtilisateur, [id_etudiant, id_utilisateur]);
+
+    logger.info("Création du compte étudiant réussie !");
+    return res
+      .status(200)
+      .json({ message: "Compte étudiant créé avec succès !" });
+  } catch (err) {
+    logger.error("Erreur lors de la création du compte étudiant :", err);
+    return res.status(500).json({ message: "Erreur serveur : " + err.message });
+  }
+});
+
 router.post("/envoyerCode/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
@@ -146,13 +272,21 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
       mot_de_passe,
       etat_utilisateur,
       type_utilisateur,
-      professeur_id_professeur,
-      etudiant_id_etudiant,
     } = req.body;
+
     const salt = bcrypt.genSaltSync(10);
     const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
-    const resultat = await client.query(
-      "UPDATE utilisateur SET nom = $1, prenom = $2, nom_utilisateur = $3 ,mot_de_passe = $4, etat_utilisateur = $5, type_utilisateur = $6, professeur_id_professeur = $7, etudiant_id_etudiant = $8 WHERE courriel = $9 RETURNING *",
+
+    const updateUtilisateurResult = await client.query(
+      `UPDATE utilisateur SET 
+        nom = $1, 
+        prenom = $2, 
+        nom_utilisateur = $3,
+        mot_de_passe = $4, 
+        etat_utilisateur = $5,
+        type_utilisateur = $6
+      WHERE courriel = $7 
+      RETURNING *`,
       [
         nom,
         prenom,
@@ -160,21 +294,45 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
         mot_de_passe_hash,
         etat_utilisateur,
         type_utilisateur,
-        professeur_id_professeur,
-        etudiant_id_etudiant,
         courriel,
       ]
     );
-    const utilisateur = resultat.rows[0];
-    const idSession = await creerId(client);
-    utilisateur.session_id = idSession;
 
-    console.log("Utilisateur a etre loged : ", utilisateur);
-    logger.info("Update fait avec succes!");
-    res.status(200).json({ message: "Code validé avec succès!" });
+    const utilisateur = updateUtilisateurResult.rows[0];
+
+    if (type_utilisateur === "P") {
+      const requeteUpdateProfesseur = `
+        UPDATE professeur
+        SET nom_complet = $1,
+            etat_professeur = $2
+        WHERE id_professeur = $3
+      `;
+      await client.query(requeteUpdateProfesseur, [
+        utilisateur.nom + " " + utilisateur.prenom,
+        "Actif",
+        utilisateur.professeur_id_professeur,
+      ]);
+    } else if (type_utilisateur === "E") {
+      const requeteUpdateEtudiant = `
+        UPDATE etudiant
+        SET nom_complet = $1,
+            numero_da = $2,
+            etat_etudiant = $3
+        WHERE id_etudiant = $4
+      `;
+      await client.query(requeteUpdateEtudiant, [
+        utilisateur.nom + " " + utilisateur.prenom,
+        "1234567", // Remplace par la vraie valeur DA si nécessaire
+        "Actif",
+        utilisateur.etudiant_id_etudiant,
+      ]);
+    }
+
+    logger.info("Mise à jour de l'utilisateur réussie.");
+    res.status(200).json({ message: "Compte mis à jour avec succès." });
   } catch (err) {
-    res.status(500).json({ message: `Erreur lors du update ${err}` });
-    logger.error(`Erreur lors du update ${err}`);
+    logger.error(`Erreur lors de la mise à jour : ${err}`);
+    res.status(500).json({ message: `Erreur serveur : ${err.message}` });
   }
 });
 

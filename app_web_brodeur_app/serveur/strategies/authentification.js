@@ -80,6 +80,7 @@ export const verifierSessionUtilisateur = async (req, res, next) => {
     req.sessionData = {
       authentification: true,
       utilisateurId: session.utilisateur_id_utilisateur,
+      type_utilisateur: session.type_utilisateur,
     };
 
     return next();

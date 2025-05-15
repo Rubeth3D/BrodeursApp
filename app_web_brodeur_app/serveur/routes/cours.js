@@ -31,7 +31,7 @@ router.get("/", verifierSessionUtilisateur, async (req, res) => {
       logger.info("Session validée, récupération des cours");
       console.log("Id de session active : ", req.sessionData);
       const resultatPourAffichage = await client.query(
-        "SELECT code_cours,description_cours,etat_cours,code_session FROM cours JOIN session on session_id_session = id_session"
+        "SELECT id_cours, code_cours,session_id_session, description_cours,etat_cours,code_session FROM cours JOIN session on session_id_session = id_session"
       );
 
       // Vérifie ici si tu récupères bien les cours

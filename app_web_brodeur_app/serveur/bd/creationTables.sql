@@ -103,7 +103,7 @@ CREATE TABLE niveau_performance (
 );
 CREATE TABLE professeur (
     id_professeur SERIAL PRIMARY KEY,
-    nom_complet VARCHAR(200) NOT NULL,
+    nom_complet VARCHAR(200),
     utilisateur_id_utilisateur INTEGER,
     etat_professeur VARCHAR(20),
     UNIQUE (utilisateur_id_utilisateur)

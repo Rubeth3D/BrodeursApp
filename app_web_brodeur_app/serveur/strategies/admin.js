@@ -29,9 +29,10 @@ const InitAdmin = async () => {
     if (resultat.rowCount < 1) {
       logger.info("Aucun Admin trouvé dans la base de données");
 
+      
       const defaultAdmin = {
         nom_utilisateur: 'Admin',
-        courriel: 'evaluationparlespairs@gmail.com',
+        courriel: 'Admin',
         mot_de_passe: 'admin123',
         etat_utilisateur: 'Actif',
         type_utilisateur: 'A',

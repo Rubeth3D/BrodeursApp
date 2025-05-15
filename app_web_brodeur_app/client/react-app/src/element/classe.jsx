@@ -5,7 +5,7 @@ import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./ModalModifierClasse.jsx";
 import ModalCreerClasse from "./ModalCreerClasse.jsx";
 
-const Classe = () => {
+const Classe = ({ type_utilisateur }) => {
   const navigate = useNavigate();
   const [donneesModal, setDonnesModal] = useState(null);
   const EtatDesactiverClasse = "Inactive";
@@ -18,27 +18,25 @@ const Classe = () => {
   const [modalCreerClasseEstOuvert, setModalCreerClasseEstOuvert] =
     useState(false);
 
-    const classesFiltrees = useMemo(() => {
-      if (!classes) {
-        console.log("Pas de classe");
-        return [];
-      }
-    
-      // Filtrage de base : classes actives
-      const classesActives = classes.filter(
-        (classe) => classe.etat_classe === "Actif"
-      );
-    
-      // Si pas de requête, retourner toutes les classes actives
-      if (!requete) {
-        return classesActives;
-      }
-    
-      // Si requête, filtrer en plus sur le code du cours
-      return classesActives.filter((classe) =>
-        classe.code_cours.toLowerCase().includes(requete.toLowerCase())
-      );
-    }, [requete, classes]);
+  const classesFiltrees = useMemo(() => {
+    if (!classes) {
+      console.log("Pas de classe");
+      return [];
+    }
+
+    // Filtrage de base : classes actives
+    const classesActives = classes;
+
+    // Si pas de requête, retourner toutes les classes actives
+    if (!requete) {
+      return classesActives;
+    }
+
+    // Si requête, filtrer en plus sur le code du cours
+    return classesActives.filter((classe) =>
+      classe.code_cours.toLowerCase().includes(requete.toLowerCase())
+    );
+  }, [requete, classes]);
 
   const fetchClasses = async () => {
     try {
@@ -104,11 +102,16 @@ const Classe = () => {
   }
 
   useEffect(() => {
-    fetchClasses();
-  }, []);
+    if (type_utilisateur) {
+      console.log("Type utilisateur dans Classe :", type_utilisateur);
+      fetchClasses();
+    }
+  }, [type_utilisateur]);
 
   useEffect(() => {
-    GererCompteursClasses(classes);
+    if (classes.length > 0) {
+      GererCompteursClasses(classes);
+    }
   }, [classes]);
 
   return (
@@ -189,6 +192,7 @@ const Classe = () => {
               rafraichir={() => {
                 fetchClasses();
               }}
+              type_utilisateur={type_utilisateur}
             />
           </div>
         </div>
@@ -199,8 +203,8 @@ const Classe = () => {
               <th className="text-center">Code</th>
               <th className="text-center">Description</th>
               <th className="text-center">Groupe</th>
-              <th className="text-center">Cours</th>
-              <th className="text-center">État</th>
+              <th className="text-center">Professeur</th>
+              <th className="text-center">Etat</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -217,8 +221,9 @@ const Classe = () => {
                   {classe.groupe}
                 </td>
                 <td className="text-center align-middle py-3">
-                  {classe.cours_id_cours}
+                  {classe.nom_professeur}
                 </td>
+
                 <td className="text-center align-middle py-3">
                   {classe.etat_classe}
                 </td>

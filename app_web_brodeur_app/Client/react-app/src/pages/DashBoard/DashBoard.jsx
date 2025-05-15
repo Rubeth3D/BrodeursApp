@@ -271,7 +271,9 @@ function DashBoard() {
           </div>
           <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
-            {etatBoutton[2].isActiver && <Classe />}
+            {etatBoutton[2].isActiver && (
+              <Classe type_utilisateur={typeUtilisateur} />
+            )}
             {etatBoutton[3].isActiver && <Equipe />}
             {etatBoutton[7].isActiver && (
               <Commentaire
