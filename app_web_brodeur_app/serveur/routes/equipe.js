@@ -57,14 +57,15 @@ router.get("/:id", async (req, res) => {
 //post pour un etudiant
 router.post("/", async (req, res) => {
   const { nom, classe_id_classe, etat_equipe } = req.body;
-
+  
   try {
     const resultat = await client.query(
+      // Source : https://www.w3schools.com/sql/sql_top.asp pour permettre d'envoyer une seule valeur
       `INSERT INTO equipe (nom, classe_id_classe, etat_equipe, id_cours, id_session
        )
        VALUES ($1, $2, $3,
-         (SELECT cours_id_cours FROM classe join cours ON classe.id_classe = $2),
-         (SELECT cours_session_id_session FROM classe join cours ON classe.id_classe = $2)
+         (SELECT cours_id_cours FROM classe join cours ON classe.id_classe = $2 LIMIT 1),
+         (SELECT cours_session_id_session FROM classe join cours ON classe.id_classe = $2 LIMIT 1)
        )
        RETURNING *`,
       [nom, classe_id_classe, etat_equipe]
@@ -92,8 +93,9 @@ router.put("/:id", async (req, res) => {
   try {
     const resultat = await client.query(
       `UPDATE equipe
-       SET nom = $1, classe_id_classe = $2, etat_equipe = $3, id_cours = (SELECT cours_id_cours FROM classe WHERE id_classe = $2),
-           id_session = (SELECT cours_session_id_session FROM classe WHERE id_classe = $2)
+       SET nom = $1, classe_id_classe = $2, etat_equipe = $3, 
+          id_cours = (SELECT cours_id_cours FROM classe WHERE id_classe = $2 LIMIT 1),
+          id_session = (SELECT cours_session_id_session FROM classe WHERE id_classe = $2 LIMIT 1)
        WHERE id_equipe = $4
        RETURNING *`,
       [nom, classe_id_classe, etat_equipe, id]
