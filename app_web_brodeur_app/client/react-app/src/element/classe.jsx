@@ -179,7 +179,7 @@ const Classe = ({ type_utilisateur }) => {
                       setModalCreerClasseEstOuvert(true);
                     }}
                   >
-                    + Ajouter une classe
+                    + Ajouter
                   </button>
                 </div>
               </div>
