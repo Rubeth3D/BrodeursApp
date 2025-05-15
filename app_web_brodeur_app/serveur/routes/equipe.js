@@ -60,9 +60,11 @@ router.post("/", async (req, res) => {
 
   try {
     const resultat = await client.query(
-      `INSERT INTO equipe (nom, classe_id_classe, etat_equipe, id_cours, id_session)
-       VALUES ($1, $2, $3,(SELECT cours_id_cours FROM classe JOIN cours ON classe.cours_id_cours = cours.id_cours), 
-       (SELECT cours_session_id_session FROM classe JOIN cours ON classe.cours_id_cours = cours.id_cours)
+      `INSERT INTO equipe (nom, classe_id_classe, etat_equipe, id_cours, id_session
+       )
+       VALUES ($1, $2, $3,
+         (SELECT cours_id_cours FROM classe join cours ON classe.id_classe = $2),
+         (SELECT cours_session_id_session FROM classe join cours ON classe.id_classe = $2)
        )
        RETURNING *`,
       [nom, classe_id_classe, etat_equipe]
@@ -79,6 +81,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Erreur lors de l'insertion de l'équipe" });
   }
 });
+
 
 
 //put pour un etudiant
