@@ -185,7 +185,21 @@ const Classe = ({ type_utilisateur }) => {
                 </div>
               </div>
             </div>
-            <ModalCreerClasse
+            <ModalTables
+              open={modalCreerEstOuvert}
+              donneesAUtiliser={bodyDonnees[0]}
+              estFermee={() => {
+                setModalCreerEstOuvert(false);
+              }}
+              rafraichir={() => {
+                fetchData();
+              }}
+              ActionDemande={async (body) => {
+                crudTables.CreateDonnees(body);
+              }}
+              ModalDemande={"Creer"}
+            />
+            {/*<ModalCreerClasse
               open={modalCreerClasseEstOuvert}
               estFermee={() => {
                 setModalCreerClasseEstOuvert(false);
@@ -194,7 +208,7 @@ const Classe = ({ type_utilisateur }) => {
                 fetchClasses();
               }}
               type_utilisateur={type_utilisateur}
-            />
+            /> */}
           </div>
         </div>
 
