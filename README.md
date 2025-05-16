@@ -135,12 +135,17 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 17. Connexion aux deux bd
 
 ````.env
-   créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
-   POSTGRES_URL=postgres://postgres:oracle@localhost:5000
-   MONGO_URL=mongodb://localhost:2717
+créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
+POSTGRES_URL=postgres://postgres:oracle@localhost:5000
+MONGO_URL=mongodb://mongoadmin:mongo@localhost:2717
+CLIENT_ID=1038961685497-3thcq7c3b0tdhn6epgpgsn9psi1vnlv1.apps.googleusercontent.com
+CLIENT_SECRET=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
+REDIRECT_URL=https://developers.google.com/oauthplayground
+REFRESH_TOKEN=1//04byMDHtlM0OVCgYIARAAGAQSNwF-L9IrCZs45sYpD5OZ2tqtd_IerfNHrMFkTrmG9LHbR4PWGSAwJu-97dORvUTTfDiGcgRugAs 
+ACCESS_TOKEN=ya29.a0AW4Xtxi0hNaCyyiJq842aNKEm8ghBOXVv4NdC3laaqucyUAW6iX_F2Zwhn425DxcowGJ024I5WkE0sNJR5vfyRaIjfReFkfSF-q5NkwDIg0VKGQWol1L_SC15DQlrBUIJxJMNKxIuwc7NZlSK17hHqak53PvtupTqFpvadTWaCgYKASkSARYSFQHGX2Mic4d5RAm2KUr_HzqFC1NBKg0175
 
-    Connexion
-   Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
+Connexion
+Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
 ````
 
 ## Auteurs
