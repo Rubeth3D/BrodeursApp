@@ -283,14 +283,8 @@ router.post("/VerifierCode/:courriel", async (req, res) => {
 router.put("/CreationCompte/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
-    const {
-      nom,
-      prenom,
-      nom_utilisateur,
-      mot_de_passe,
-      etat_utilisateur,
-      type_utilisateur,
-    } = req.body;
+    const { nom, prenom, nom_utilisateur, mot_de_passe, etat_utilisateur } =
+      req.body;
 
     const salt = bcrypt.genSaltSync(10);
     const mot_de_passe_hash = await bcrypt.hash(mot_de_passe, salt);
@@ -301,9 +295,8 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
         prenom = $2, 
         nom_utilisateur = $3,
         mot_de_passe = $4, 
-        etat_utilisateur = $5,
-        type_utilisateur = $6
-      WHERE courriel = $7 
+        etat_utilisateur = $5
+      WHERE courriel = $6
       RETURNING *`,
       [
         nom,
@@ -311,14 +304,13 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
         nom_utilisateur,
         mot_de_passe_hash,
         etat_utilisateur,
-        type_utilisateur,
         courriel,
       ]
     );
 
     const utilisateur = updateUtilisateurResult.rows[0];
 
-    if (type_utilisateur === "P") {
+    if (utilisateur.type_utilisateur === "P") {
       const requeteUpdateProfesseur = `
         UPDATE professeur
         SET nom_complet = $1,
@@ -330,7 +322,7 @@ router.put("/CreationCompte/:courriel", async (req, res) => {
         "Actif",
         utilisateur.professeur_id_professeur,
       ]);
-    } else if (type_utilisateur === "E") {
+    } else if (utilisateur.type_utilisateur === "E") {
       const requeteUpdateEtudiant = `
         UPDATE etudiant
         SET nom_complet = $1,
