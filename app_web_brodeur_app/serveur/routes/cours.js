@@ -21,8 +21,6 @@ const logger = winston.createLogger({
 
 const router = express.Router();
 
-router.use(express.json());
-
 // GET les cours
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {

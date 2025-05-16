@@ -214,31 +214,17 @@ router.post("/", verifierSessionUtilisateur, async (req, res) => {
 router.put("/ModifierClasse/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      code_cours,
-      description,
-      groupe,
-      professeur_id_professeur,
-      cours_id_cours,
-      etat_classe,
-    } = req.body;
+    const { code_cours, description, groupe, cours_id_cours, etat_classe } =
+      req.body;
 
+    console.log(groupe);
     const resultat = await client.query(
       `UPDATE classe 
        SET code_cours = $1, description = $2, groupe = $3, 
-           professeur_id_professeur = $4, cours_id_cours = $5, 
-           etat_classe = $6 
-       WHERE id_classe = $7 
+           etat_classe = $4 
+       WHERE id_classe = $5 
        RETURNING id_classe`,
-      [
-        code_cours,
-        description,
-        groupe,
-        professeur_id_professeur,
-        cours_id_cours,
-        etat_classe,
-        id,
-      ]
+      [code_cours, description, groupe, etat_classe, id]
     );
 
     if (resultat.rowCount === 0) {

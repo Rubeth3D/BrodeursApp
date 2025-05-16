@@ -23,7 +23,9 @@ const router = express.Router();
 //get pour les professeurs
 router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    const resultat = await client.query("SELECT * FROM professeur");
+    const resultat = await client.query(
+      "SELECT * FROM professeur WHERE etat_professeur = 'Actif' "
+    );
     res.status(200).json(resultat.rows);
     logger.info("Get des professeurs effectue avec succes!");
   } catch (err) {
