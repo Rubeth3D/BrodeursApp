@@ -3,7 +3,6 @@ import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 
 const Cours = () => {
-  const [sessionCours, setSessionCours] = useState([]);
   const [filtreTousCours, setFiltreTousCours] = useState([]);
   const [cours, setCours] = useState([]);
   const [form, setForm] = useState({
@@ -17,8 +16,10 @@ const Cours = () => {
       const response = await fetch("http://localhost:8080/cours", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       const data = await response.json();
+      console.log(data);
       setCours(data);
       setFiltreTousCours(data);
     } catch (error) {
@@ -64,19 +65,6 @@ const Cours = () => {
     }
   };
 
-  const fetchSessions = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/sessionCours", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await response.json();
-      setSessionCours(data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des sessions :", error);
-    }
-  };
-
   const desactiverCours = async (cours) => {
     try {
       await fetch(`http://localhost:8080/cours/${cours.id_cours}`, {
@@ -104,7 +92,6 @@ const Cours = () => {
 
   useEffect(() => {
     fetchCours();
-    fetchSessions();
   }, []);
 
   const coursActif = cours.filter(
@@ -206,7 +193,7 @@ const Cours = () => {
                   <tr key={cours.id_cours}>
                     <td>{cours.code_cours}</td>
                     <td>{cours.description_cours}</td>
-                    <td>{cours.session_id_session}</td>
+                    <td>{cours.code_session}</td>
                     <td>
                       <button
                         className="btn btn-sn"
@@ -296,30 +283,20 @@ const Cours = () => {
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Nom du cours requis</div>
                 </div>
-
                 <div className="col-mb-4">
                   <label htmlFor="validationCustom04" className="form-label">
                     Session
                   </label>
-                  <select
-                    className="form-select"
+                  <input
+                    type="text"
+                    className="form-control"
                     id="validationCustom04"
                     value={form.session_id_session}
                     onChange={(e) =>
                       setForm({ ...form, session_id_session: e.target.value })
                     }
                     required
-                  >
-                    <option value="">Sélectionner une session</option>
-                    {sessionCours.map((session) => (
-                      <option
-                        key={session.id_session}
-                        value={session.id_session}
-                      >
-                        {session.code_session}
-                      </option>
-                    ))}
-                  </select>
+                  />
                   <div className="valid-feedback">Bien</div>
                   <div className="invalid-feedback">Session requise</div>
                 </div>
@@ -394,26 +371,21 @@ const Cours = () => {
 
                 <div className="mb-3">
                   <label className="form-label">Session</label>
-                  <select
-                    className="form-select"
+                  <input
+                    type="text"
+                    className="form-control"
                     value={form.session_id_session}
                     onChange={(e) =>
                       setForm({ ...form, session_id_session: e.target.value })
                     }
                     required
-                  >
-                    <option value="">Sélectionner une session</option>
-                    {sessionCours.map((session) => (
-                      <option
-                        key={session.id_session}
-                        value={session.id_session}
-                      >
-                        {session.code_session}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  aria-label="Close"
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Enregistrer les modifications
                 </button>
               </form>
