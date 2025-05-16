@@ -138,10 +138,11 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
    créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
    POSTGRES_URL=postgres://postgres:oracle@localhost:5000
    MONGO_URL=mongodb://localhost:2717
-```
-```Connexion
+
+    Connexion
    Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
 ```
+
 ## Auteurs
 
 L'équipe de développement Brodeur Apps est composé de trois étudiant du collège de bois-de-boulogne.
