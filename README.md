@@ -91,44 +91,44 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 11. Installer la base de données dans un terminal:
 
     ```bash
-        docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
+    docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
-        docker exec -it postgresBrodeurApps psql -U postgres
+    docker exec -it postgresBrodeurApps psql -U postgres
     ```
 
 12. Création de la base de données :
 
     ```bash
-      Ouvrir le dossier BrodeursApp\Modele E-A.
+    Ouvrir le dossier BrodeursApp\Modele E-A.
 
-      Copier et coller le fichier 'ConversionSQL_PostgreSQL.sql'
+    Copier et coller le fichier 'ConversionSQL_PostgreSQL.sql'
     ```
 
 13. Remplir la base de données :
 
     ```bash
 
-      Copier et coller le fichier 'postgreSQL_Remplir'
+    Copier et coller le fichier 'postgreSQL_Remplir'
     ```
 
 14. Installer l'image de mongodb sur docker:
 
     ```bash
 
-      docker pull mongo:latest
+    docker pull mongo:latest
     ```
 
 15. Installer la base de données dans un terminal
 
     ```bash
 
-      docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
+    docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
     ```
 
 16. Creer la collection sur docker
 
     ```bash
-      Entrer la commande : docker exec -it mongoBrodeurApps mongosh -u mongoadmin -p mongo
+    Entrer la commande : docker exec -it mongoBrodeurApps mongosh -u mongoadmin -p mongo
 
     ```
 
