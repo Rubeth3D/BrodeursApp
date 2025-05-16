@@ -99,16 +99,17 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 12. Création de la base de données :
 
     ```bash
-    Ouvrir le dossier BrodeursApp\Modele E-A.
+    Ouvrir le dossier BrodeursApp\app_web_brodeur_app\serveur\bd
 
-    Copier et coller le fichier 'ConversionSQL_PostgreSQL.sql'
+    Copier et coller le fichier 'creationTables.sql'
     ```
 
 13. Remplir la base de données :
 
     ```bash
+    Ouvrir le dossier BrodeursApp\app_web_brodeur_app\serveur\bd
 
-    Copier et coller le fichier 'postgreSQL_Remplir'
+    Copier et coller le fichier 'Insertion.sql'
     ```
 
 14. Installer l'image de mongodb sur docker:
@@ -131,8 +132,14 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
     Entrer la commande : docker exec -it mongoBrodeurApps mongosh -u mongoadmin -p mongo
 
     ```
+17. Creation des collections pour la base de données Mongo
+    ```bash
+    Ouvrez le fichier BrodeursApp\app_web_brodeur_app\serveur\bd\MongoBD
 
-17. Connexion aux deux bd
+    Copier et coller le fichier 'ScriptMongo.js'
+    ```
+
+18. Connexion aux deux bd
 
 ````.env
 créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
