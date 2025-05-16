@@ -97,8 +97,6 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
         ```
 
-    sel
-
 12. Création de la base de données :
 
     ```bash
