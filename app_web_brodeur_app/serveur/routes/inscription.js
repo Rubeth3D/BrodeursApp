@@ -82,6 +82,16 @@ router.post("/CreationCompte/Professeur", async (req, res) => {
   try {
     const { courriel } = req.body;
     const type_utilisateur = "P";
+
+    const utilisateurExistant = await client.query(
+      `SELECT * FROM utilisateur WHERE courriel = $1`,
+      [courriel]
+    );
+    if (utilisateurExistant.rowCount > 0) {
+      logger.info("Le compte existe deja");
+      return res.status(400).json({ message: "Compte existe deja" });
+    }
+
     // Création de l'utilisateur
     const requeteQuery = `
       INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur)
@@ -146,6 +156,16 @@ router.post("/CreationCompte/Etudiant", async (req, res) => {
   try {
     const { courriel } = req.body;
     const type_utilisateur = "E";
+
+    const utilisateurExistant = await client.query(
+      `SELECT * FROM utilisateur WHERE courriel = $1`,
+      [courriel]
+    );
+    if (utilisateurExistant.rowCount > 0) {
+      logger.info("Le compte existe deja");
+      return res.status(400).json({ message: "Compte existe deja" });
+    }
+
     // Création de l'utilisateur
     const requeteQuery = `
       INSERT INTO utilisateur (courriel, etat_utilisateur, type_utilisateur)
@@ -206,9 +226,7 @@ router.post("/CreationCompte/Etudiant", async (req, res) => {
 router.post("/envoyerCode/:courriel", async (req, res) => {
   try {
     const { courriel } = req.params;
-    const typeCourriel = courriel.match(/@([^@]+)(?=\.)/);
     logger.info(courriel);
-    console.log(typeCourriel);
     const jetonAcces = await oAuth2Client.getAccessToken();
     console.log("Jeton d'acces : ", jetonAcces);
     const transport = nodemailer.createTransport({
