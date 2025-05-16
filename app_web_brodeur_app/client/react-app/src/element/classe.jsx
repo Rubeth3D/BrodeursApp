@@ -4,41 +4,41 @@ import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./ModalModifierClasse.jsx";
 import ModalCreerClasse from "./ModalCreerClasse.jsx";
+import ModalTables from "./admin/ModalTable.jsx";
 
-const Classe = () => {
+const Classe = ({ type_utilisateur }) => {
   const navigate = useNavigate();
   const [donneesModal, setDonnesModal] = useState(null);
   const EtatDesactiverClasse = "Inactive";
   const [requete, setRequete] = useState(null);
   const [classes, setClasses] = useState([]);
   const [compteurClasse, setCompteurClasse] = useState(0);
+  const [modalCreerEstOuvert, setModalCreerEstOuvert] = useState(false);
   const [compteurClasseActive, setCompteurClasseActive] = useState(0);
   const [compteurClasseInactive, setCompteurClasseInactive] = useState(0);
   const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
   const [modalCreerClasseEstOuvert, setModalCreerClasseEstOuvert] =
     useState(false);
+  const [bodyDonnees, setBodyDonnees] = useState([]);
+  const classesFiltrees = useMemo(() => {
+    if (!classes) {
+      console.log("Pas de classe");
+      return [];
+    }
 
-    const classesFiltrees = useMemo(() => {
-      if (!classes) {
-        console.log("Pas de classe");
-        return [];
-      }
-    
-      // Filtrage de base : classes actives
-      const classesActives = classes.filter(
-        (classe) => classe.etat_classe === "Actif"
-      );
-    
-      // Si pas de requête, retourner toutes les classes actives
-      if (!requete) {
-        return classesActives;
-      }
-    
-      // Si requête, filtrer en plus sur le code du cours
-      return classesActives.filter((classe) =>
-        classe.code_cours.toLowerCase().includes(requete.toLowerCase())
-      );
-    }, [requete, classes]);
+    // Filtrage de base : classes actives
+    const classesActives = classes;
+
+    // Si pas de requête, retourner toutes les classes actives
+    if (!requete) {
+      return classesActives;
+    }
+
+    // Si requête, filtrer en plus sur le code du cours
+    return classesActives.filter((classe) =>
+      classe.code_cours.toLowerCase().includes(requete.toLowerCase())
+    );
+  }, [requete, classes]);
 
   const fetchClasses = async () => {
     try {
@@ -104,11 +104,16 @@ const Classe = () => {
   }
 
   useEffect(() => {
-    fetchClasses();
-  }, []);
+    if (type_utilisateur) {
+      console.log("Type utilisateur dans Classe :", type_utilisateur);
+      fetchClasses();
+    }
+  }, [type_utilisateur]);
 
   useEffect(() => {
-    GererCompteursClasses(classes);
+    if (classes.length > 0) {
+      GererCompteursClasses(classes);
+    }
   }, [classes]);
 
   return (
@@ -164,23 +169,27 @@ const Classe = () => {
                 />
               </div>
             </div>
-            <div className="col-xxl-2 col-lg-4">
-              <div className="d-flex m-0">
-                <div className="d-flex m-0">
-                  <button
-                    type="button"
-                    className="btn btn-btn btn-outline-success btn-rounded" // source : https://mdbootstrap.com/docs/standard/components/buttons/
-                    data-bs-toggle="modal"
-                    data-bs-target="#createClassModal"
-                    onClick={() => {
-                      setModalCreerClasseEstOuvert(true);
-                    }}
-                  >
-                    + Ajouter une classe
-                  </button>
+            {type_utilisateur == "Admin" ||
+              (type_utilisateur == "Professeur" && (
+                <div className="col-xxl-2 col-lg-4">
+                  <div className="d-flex m-0">
+                    <div className="d-flex m-0">
+                      <button
+                        type="button"
+                        className="btn btn-btn btn-outline-success btn-rounded"
+                        data-bs-toggle="modal"
+                        data-bs-target="#createClassModal"
+                        onClick={() => {
+                          setModalCreerClasseEstOuvert(true);
+                        }}
+                      >
+                        + Ajouter
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              ))}
+
             <ModalCreerClasse
               open={modalCreerClasseEstOuvert}
               estFermee={() => {
@@ -189,6 +198,7 @@ const Classe = () => {
               rafraichir={() => {
                 fetchClasses();
               }}
+              type_utilisateur={type_utilisateur}
             />
           </div>
         </div>
@@ -199,9 +209,12 @@ const Classe = () => {
               <th className="text-center">Code</th>
               <th className="text-center">Description</th>
               <th className="text-center">Groupe</th>
-              <th className="text-center">Cours</th>
-              <th className="text-center">État</th>
-              <th className="text-center">Actions</th>
+              <th className="text-center">Professeur</th>
+              <th className="text-center">Etat</th>
+              {(type_utilisateur == "Admin" ||
+                type_utilisateur == "Professeur") && (
+                <th className="text-center">Actions</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -217,36 +230,40 @@ const Classe = () => {
                   {classe.groupe}
                 </td>
                 <td className="text-center align-middle py-3">
-                  {classe.cours_id_cours}
+                  {classe.nom_professeur}
                 </td>
+
                 <td className="text-center align-middle py-3">
                   {classe.etat_classe}
                 </td>
-                <td className="text-center align-middle py-3">
-                  <div className="d-flex justify-content-center gap-2">
-                    <button
-                      className="btn btn-sm"
-                      onClick={() => {
-                        setModalModifierEstOuvert(true);
-                        setDonnesModal(classe);
-                      }}
-                    >
-                      {ModifierSVG()}
-                    </button>
-                    <ModalModifierClasse
-                      open={modalModifierEstOuvert}
-                      classe={donneesModal}
-                      estFermee={() => setModalModifierEstOuvert(false)}
-                      rafraichir={fetchClasses}
-                    />
-                    <button
-                      className="btn btn-sm"
-                      onClick={() => desactiverClasse(classe.id_classe)}
-                    >
-                      {SupprimerSVG()}
-                    </button>
-                  </div>
-                </td>
+                {(type_utilisateur == "Admin" ||
+                  type_utilisateur == "Professeur") && (
+                  <td className="text-center align-middle py-3">
+                    <div className="d-flex justify-content-center gap-2">
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => {
+                          setModalModifierEstOuvert(true);
+                          setDonnesModal(classe);
+                        }}
+                      >
+                        {ModifierSVG()}
+                      </button>
+                      <ModalModifierClasse
+                        open={modalModifierEstOuvert}
+                        classe={donneesModal}
+                        estFermee={() => setModalModifierEstOuvert(false)}
+                        rafraichir={fetchClasses}
+                      />
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => desactiverClasse(classe.id_classe)}
+                      >
+                        {SupprimerSVG()}
+                      </button>
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

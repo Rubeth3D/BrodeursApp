@@ -11,6 +11,8 @@ import DeconnexionSVG from "../../image/DeconnexionSVG";
 import CompteSVG from "../../image/CompteSVG";
 import TravauxSVG from "../../image/TravauxSVG";
 import CommentaireSVG from "../../image/CommentaireSVG";
+import ProfesseurSVG from "../../image/ProfesseurSVG.jsx";
+import EtudiantSVG from "../../image/EtudiantSVG.jsx";
 //element
 import HoverDiv from "../../element/HoverDiv";
 import Classe from "../../element/classe";
@@ -19,6 +21,7 @@ import Admin from "../../element/admin/admin.jsx";
 import Equipe from "../../element/Equipe";
 import Commentaire from "../../element/Commentaire";
 import ModalDeconnexion from "../../element/modalDeconnexion";
+import CreationCompte from "../../element/CreationCompte.jsx";
 
 function DashBoard() {
   const [modalDeconnexionOpen, setModalDeconnexionOpen] = useState(false);
@@ -42,6 +45,7 @@ function DashBoard() {
     { id: "Critère", isActiver: false },
     { id: "Travaux", isActiver: false },
     { id: "Resultats", isActiver: false },
+    { id: "Inscription", isActiver: false },
     { id: "Commentaire", isActiver: false },
     { id: "Admin", isActiver: false },
   ]);
@@ -248,20 +252,32 @@ function DashBoard() {
                 }}
               ></HoverDiv>
 
+              {(typeUtilisateur === "Admin" ||
+                typeUtilisateur === "Professeur") && (
+                <HoverDiv
+                  text={"Inscription"}
+                  svgImage={<EtudiantSVG />}
+                  isCliquer={etatBoutton[7].isActiver}
+                  onclick={() => {
+                    Cliquer("Inscription");
+                  }}
+                ></HoverDiv>
+              )}
+
               <HoverDiv
                 text={"Commentaire"}
                 svgImage={<CommentaireSVG />}
-                isCliquer={etatBoutton[7].isActiver}
+                isCliquer={etatBoutton[8].isActiver}
                 onclick={() => {
                   Cliquer("Commentaire");
                 }}
               ></HoverDiv>
 
-              {typeUtilisateur == "Professeur" && (
+              {typeUtilisateur == "Admin" && (
                 <HoverDiv
                   text={"Admin"}
                   svgImage={<AdminSVG />}
-                  isCliquer={etatBoutton[8].isActiver}
+                  isCliquer={etatBoutton[9].isActiver}
                   onclick={() => {
                     Cliquer("Admin");
                   }}
@@ -271,16 +287,21 @@ function DashBoard() {
           </div>
           <div className="col-9 mt-5">
             {etatBoutton[1].isActiver && <Cours />}
-            {etatBoutton[2].isActiver && <Classe />}
+            {etatBoutton[2].isActiver && (
+              <Classe type_utilisateur={typeUtilisateur} />
+            )}
             {etatBoutton[3].isActiver && <Equipe />}
             {etatBoutton[7].isActiver && (
+              <CreationCompte type_utilisateur={typeUtilisateur} />
+            )}
+            {etatBoutton[8].isActiver && (
               <Commentaire
                 id_utilisateur={id_utilisateur}
                 nom_utilisateur={nomUtilisateur}
                 type_utilisateur={typeUtilisateur}
               />
             )}
-            {etatBoutton[8].isActiver && <Admin />}
+            {etatBoutton[9].isActiver && <Admin />}
           </div>
         </div>
       </div>

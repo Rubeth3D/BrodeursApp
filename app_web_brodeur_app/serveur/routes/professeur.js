@@ -2,6 +2,7 @@ import express, { json, query } from "express";
 import cors from "cors";
 import winston from "winston";
 import client from "../bd/postgresBD/Connexion.js";
+import { verifierSessionUtilisateur } from "../strategies/authentification.js";
 
 const logger = winston.createLogger({
   level: "info",
@@ -20,9 +21,11 @@ const logger = winston.createLogger({
 const router = express.Router();
 
 //get pour les professeurs
-router.get("/", async (req, res) => {
+router.get("/", verifierSessionUtilisateur, async (req, res) => {
   try {
-    const resultat = await client.query("SELECT * FROM professeur");
+    const resultat = await client.query(
+      "SELECT * FROM professeur WHERE etat_professeur = 'Actif' "
+    );
     res.status(200).json(resultat.rows);
     logger.info("Get des professeurs effectue avec succes!");
   } catch (err) {

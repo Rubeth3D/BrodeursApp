@@ -11,9 +11,11 @@ import sessionDeCours from "../routes/sessionCours.js";
 import connexion from "../routes/connexion.js";
 import passport from "passport";
 import session from "express-session";
+import professeur from "../routes/professeur.js";
 import "./../strategies/local-strategy.mjs";
 import HistoriqueSession from "../routes/HistoriqueDesSessions.js";
 import Commentaire from "../routes/commentaire.js";
+import InitAdmin from "../strategies/admin.js";
 
 const app = express();
 
@@ -47,6 +49,7 @@ app.use(
   })
 );
 
+InitAdmin();
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsConfig));
@@ -62,6 +65,7 @@ app.use("/historiqueDesSessions", HistoriqueSession);
 app.use("/commentaire", Commentaire);
 app.use("/connexion", connexion);
 app.use("/inscription", inscription);
+app.use("/professeur", professeur);
 
 // Route de connexion
 app.post("/login", (req, res, next) => {

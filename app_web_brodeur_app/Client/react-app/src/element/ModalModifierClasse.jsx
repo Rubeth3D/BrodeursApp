@@ -31,11 +31,14 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   const modifierClasse = async (id) => {
     try {
       console.log("Classe à modifier : ", classeAModifier);
-      const reponse = await fetch(`http://localhost:8080/classe/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(classeAModifier),
-      });
+      const reponse = await fetch(
+        `http://localhost:8080/classe/ModifierClasse/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(classeAModifier),
+        }
+      );
       if (reponse.ok) {
         // Handle success
       }
@@ -48,7 +51,7 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
     try {
       const response = await fetch(`http://localhost:8080/etudiant`);
       const data = await response.json();
-      setEtudiantClasse(data);  // Mise à jour de l'état avec les étudiants récupérés
+      setEtudiantClasse(data); // Mise à jour de l'état avec les étudiants récupérés
     } catch (err) {
       console.error("Erreur lors du chargement des étudiants :", err);
     }
@@ -61,7 +64,8 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
   };
 
   useEffect(() => {
-    if (open) {  // Charger les étudiants uniquement si le modal est ouvert
+    if (open) {
+      // Charger les étudiants uniquement si le modal est ouvert
       chargerEtudiants();
     }
   }, [open, classe.id_classe]);
@@ -101,32 +105,14 @@ function ModalModifierClasse({ open, classe, estFermee, rafraichir }) {
                 value={classeAModifier.description}
                 onChange={ModifierClasseSetData}
               />
-
-              <div className="mt-4">
-                <h6>Étudiants inscrits</h6>
-                <table className="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Nom complet</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {etudiantClasse.length > 0 ? (
-                      etudiantClasse.map((etudiant, index) => (
-                        <tr key={index}>
-                          <td>{etudiant.nom_complet}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td className="">
-                          Aucun étudiant trouvé.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+              <input
+                type="text"
+                className="form-control mt-2"
+                placeholder="Nouveau Groupe"
+                name="groupe"
+                value={classeAModifier.groupe}
+                onChange={ModifierClasseSetData}
+              />
             </div>
 
             <div className="modal-footer">

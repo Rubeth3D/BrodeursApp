@@ -23,6 +23,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 - `Express.js`
 - `React.js`
 - `PostgreSQL`
+- `MongoDB`
 - `Docker`
 - `PgAdmin 4 //pas obligatoire`
 
@@ -90,63 +91,73 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
 11. Installer la base de données dans un terminal:
 
-        ```bash
-        docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
+    ```bash
+    docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
-        docker exec -it postgresBrodeurApps psql -U postgres
-
-        ```
-
-    sel
+    docker exec -it postgresBrodeurApps psql -U postgres
+    ```
 
 12. Création de la base de données :
 
     ```bash
-      Ouvrir le dossier BrodeursApp\Modele E-A.
+    Ouvrir le dossier BrodeursApp\app_web_brodeur_app\serveur\bd
 
-      Copier et coller le fichier 'ConversionSQL_PostgreSQL.sql'
+    Copier et coller le fichier 'creationTables.sql'
     ```
 
 13. Remplir la base de données :
 
     ```bash
+    Ouvrir le dossier BrodeursApp\app_web_brodeur_app\serveur\bd
 
-      Copier et coller le fichier 'postgreSQL_Remplir'
+    Copier et coller le fichier 'Insertion.sql'
     ```
 
 14. Installer l'image de mongodb sur docker:
 
     ```bash
 
-      docker pull mongo:latest
+    docker pull mongo:latest
     ```
 
 15. Installer la base de données dans un terminal
 
     ```bash
 
-      docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
+    docker run -d --name mongoBrodeurApps -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=mongo -p 2717:27017 mongo:latest
     ```
 
 16. Creer la collection sur docker
 
     ```bash
-      Entrer la commande : docker exec -it mongoBrodeurApps mongosh -u mongoadmin -p mongo
+    Entrer la commande : docker exec -it mongoBrodeurApps mongosh -u mongoadmin -p mongo
 
     ```
+17. Creation des collections pour la base de données Mongo
+    ```bash
+    Ouvrez le fichier BrodeursApp\app_web_brodeur_app\serveur\bd\MongoBD
 
-17. Connexion aux deux bd
+    Copier et coller le fichier 'ScriptMongo.js'
+    ```
+
+18. Connexion aux deux bd
 
 ````.env
-   créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
-   POSTGRES_URL=postgres://postgres:oracle@localhost:5000
-   MONGO_URL=mongodb://localhost:2717
-```
-```Connexion
-   Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
-```
+créer le fichier .env dans le dossier serveur et copier coller ces deux URL:
+POSTGRES_URL=postgres://postgres:oracle@localhost:5000
+MONGO_URL=mongodb://mongoadmin:mongo@localhost:2717
+CLIENT_ID=1038961685497-3thcq7c3b0tdhn6epgpgsn9psi1vnlv1.apps.googleusercontent.com
+CLIENT_SECRET=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
+REDIRECT_URL=https://developers.google.com/oauthplayground
+REFRESH_TOKEN=1//04byMDHtlM0OVCgYIARAAGAQSNwF-L9IrCZs45sYpD5OZ2tqtd_IerfNHrMFkTrmG9LHbR4PWGSAwJu-97dORvUTTfDiGcgRugAs 
+ACCESS_TOKEN=ya29.a0AW4Xtxi0hNaCyyiJq842aNKEm8ghBOXVv4NdC3laaqucyUAW6iX_F2Zwhn425DxcowGJ024I5WkE0sNJR5vfyRaIjfReFkfSF-q5NkwDIg0VKGQWol1L_SC15DQlrBUIJxJMNKxIuwc7NZlSK17hHqak53PvtupTqFpvadTWaCgYKASkSARYSFQHGX2Mic4d5RAm2KUr_HzqFC1NBKg0175
+
+Connexion
+Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
+````
+
 ## Auteurs
 
 L'équipe de développement Brodeur Apps est composé de trois étudiant du collège de bois-de-boulogne.
 Arnaud Simard Desmeules, Rubeth Rokonuzzaman, Cedryk Leblanc.
-````
+
