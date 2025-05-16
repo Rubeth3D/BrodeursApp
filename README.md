@@ -23,6 +23,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 - `Express.js`
 - `React.js`
 - `PostgreSQL`
+- `MongoDB`
 - `Docker`
 - `PgAdmin 4 //pas obligatoire`
 
