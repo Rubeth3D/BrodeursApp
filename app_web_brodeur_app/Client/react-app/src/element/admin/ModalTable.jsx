@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CrudTables from "./Strategy/CrudTables.jsx";
-import MessageUtilisateur from "../MessageUtilisateur.jsx";
+
 function ModalTables({
   open,
   donneesAUtiliser,
