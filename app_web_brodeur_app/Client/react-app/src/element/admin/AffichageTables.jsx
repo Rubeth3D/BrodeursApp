@@ -3,9 +3,11 @@ import CrudTables from "./Strategy/CrudTables.jsx";
 import ModifierSVG from "../../image/ModifierSVG.jsx";
 import SupprimerSVG from "../../image/SupprimerSVG.jsx";
 import ModalTables from "./ModalTables.jsx";
+import CrudHistoriqueSessions from "./Strategy/CrudHistoriqueSessions.jsx";
 function AffichageTables({ StrategieDemande, TableAjoutable }) {
-  const crudTables = new CrudTables(StrategieDemande);
   const [bodyDonnees, setBodyDonnees] = useState([]);
+  const [crudTables, setCrudTables] = useState(new CrudHistoriqueSessions());
+
   const [clesDonnees, setCleesDonnees] = useState([]);
   const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
   const [modalCreerEstOuvert, setModalCreerEstOuvert] = useState(false);
@@ -43,6 +45,18 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
         <div className="row">
           <div className=" col-xxl-10 col-lg-8 col-sm-6">
             <div className="d-flex m-0">
+              <select className=" rounded-2" name="tables" id="tables">
+                <option value="HistoriqueSessions">HistoriqueSessions</option>
+                <option value="Commentaires">Commentaires</option>
+                <option value="Classe">Classe</option>
+                <option value="Equipe">Equipe</option>
+                <option value="Cours">Cours</option>
+                <option value="Evaluation">Evaluation</option>
+                <option value="HistoriqueSessions">HistoriqueSessions</option>
+                <option value="HistoriqueSessions">HistoriqueSessions</option>
+                <option value="HistoriqueSessions">HistoriqueSessions</option>
+                <option value="HistoriqueSessions">HistoriqueSessions</option>
+              </select>
               <input
                 type="text"
                 className="form-control rounded-2"
@@ -51,6 +65,7 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
               />
             </div>
           </div>
+
           <div className="col-xxl-2 col-lg-4">
             <div className="d-flex m-0">
               <div className="d-flex m-0">
