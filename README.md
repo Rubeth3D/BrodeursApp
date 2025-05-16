@@ -90,12 +90,11 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
 11. Installer la base de données dans un terminal:
 
-        ```bash
+    ```bash
         docker run --name postgresBrodeurApps -e POSTGRES_PASSWORD=oracle -p 5000:5432 -d postgres
 
         docker exec -it postgresBrodeurApps psql -U postgres
-
-        ```
+    ```
 
 12. Création de la base de données :
 
