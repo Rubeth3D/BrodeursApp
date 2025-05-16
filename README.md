@@ -141,10 +141,10 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 
     Connexion
    Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
-```
+````
 
 ## Auteurs
 
 L'équipe de développement Brodeur Apps est composé de trois étudiant du collège de bois-de-boulogne.
 Arnaud Simard Desmeules, Rubeth Rokonuzzaman, Cedryk Leblanc.
-````
+
