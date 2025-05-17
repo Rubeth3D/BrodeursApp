@@ -96,7 +96,7 @@ function Connexion() {
               <label className="fw-bold fs-4">Courriel</label>
               <div className="input-group">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control form-control-lg"
                   placeholder="Entrer votre nom d'utilisateur"
                   id="inputNumeroIdentification"
