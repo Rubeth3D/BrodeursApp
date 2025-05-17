@@ -4,7 +4,6 @@ import ModifierSVG from "../image/ModifierSVG.jsx";
 import ListEtudiant from "./listeEtudiant.jsx";
 
 const Equipe = () => {
-  const [cours, setCours] = useState([]);
   const [classes, setClasses] = useState([]);
   const [etudiants, setEtudiants] = useState([]);
   const [filtreTousEquipes, setFiltreTousEquipes] = useState([]);
@@ -170,24 +169,6 @@ const Equipe = () => {
       }
     };
 
-    const fetchCours = async () => {
-      try {
-        const reponse = await fetch("http://localhost:8080/cours", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
-        const donnees = await reponse.json();
-        const options = donnees.map((cours) => ({
-          value: cours.id_cours,
-          label: cours.description,
-        }));
-        setCours(options);
-      } catch (err) {
-        console.error("Erreur au niveau du fetch des cours : ", err);
-      }
-    };
-
     const viderForm = () => {
       setForm({
         nom: "",
@@ -201,7 +182,6 @@ const Equipe = () => {
       fetchEquipes();
       fetchEtudiants();
       fetchClasses();
-      fetchCours();
   }, []);
 
 
@@ -240,6 +220,7 @@ const Equipe = () => {
             </div>
           </div>
           <br />
+          
           <h1 className="text-center mb-4 mt-5">Tableau des équipes</h1>
           <div className="container my-4">
             <div className="row">
