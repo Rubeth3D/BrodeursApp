@@ -220,7 +220,7 @@ const Equipe = () => {
             </div>
           </div>
           <br />
-          
+
           <h1 className="text-center mb-4 mt-5">Tableau des équipes</h1>
           <div className="container my-4">
             <div className="row">
@@ -422,7 +422,7 @@ const Equipe = () => {
                   
                   <div className="mb-3">
                   <ListEtudiant
-                    etudiants={etudiants}   
+                    etudiants={etudiants}
                     handleCheckboxChange={handleCheckboxChange}
                     />
                   </div>
