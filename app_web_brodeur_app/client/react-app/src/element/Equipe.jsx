@@ -261,7 +261,7 @@ const Equipe = () => {
             <thead>
               <tr>
                 <th>Nom</th>
-                <th>Nom classe</th>
+                <th>Numéro classe</th>
                 <th>Actions</th>
               </tr>
             </thead>
