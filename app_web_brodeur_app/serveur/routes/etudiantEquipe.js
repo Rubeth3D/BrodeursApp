@@ -48,17 +48,19 @@ router.get("/etudiant/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post ("/", async (req, res) => {
   const { equipe_id_equipe, etudiant_id_etudiant } = req.body;
   try {
+    console.log("equipe_id_equipe: ", equipe_id_equipe);
+    console.log("etudiant_id_etudiant: ", etudiant_id_etudiant);
     const resultat = await client.query(
-      "INSERT INTO etudiantEquipe (equipe_id_equipe, etudiant_id_etudiant) VALUES ($1, $2) RETURNING *",
+      "INSERT INTO etudiantEquipe (equipe_id_equipe , etudiant_id_etudiant) VALUES ($1, $2) RETURNING *",
       [equipe_id_equipe, etudiant_id_etudiant]
     );
-    res.status(201).json({ message: "Association créée avec succès", data: resultat.rows[0] });
-    logger.info(`Association ajoutée : étudiant ${etudiant_id_etudiant} à équipe ${equipe_id_equipe}`);
+    logger.info(`Association créée : étudiant ${etudiant_id_etudiant} à équipe ${equipe_id_equipe}`);
+    return res.status(201).json({ message: "Association créée avec succès", data: resultat.rows[0] });
   } catch (err) {
-    logger.error(`Erreur lors de l'insertion de l'association : ${err}`);
+    logger.error(`Erreur lors de la création de l'association : ${err}`);
     res.status(500).json({ message: "Erreur lors de la création de l'association" });
   }
 });

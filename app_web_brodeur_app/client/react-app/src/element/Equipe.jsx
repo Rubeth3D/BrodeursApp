@@ -29,39 +29,47 @@ const Equipe = () => {
   };
 
   const creerEquipe = async (e) => {
-    e.preventDefault();
-    try {
+  e.preventDefault();
+  try {
       const equipeActif = {
-        ...form,
-        etat_equipe: "Active",
-      };
-      const reponse = await fetch("http://localhost:8080/equipe", {
+      nom: form.nom,
+      classe_id_classe: form.classe_id_classe,
+      etudiant: form.etudiant,
+      etat_equipe: "Active",
+    };
+
+    const reponse = await fetch("http://localhost:8080/equipe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(equipeActif),
+    });
+
+    if (!reponse.ok) {
+      throw new Error("Erreur lors de la création de l'équipe");
+    }
+
+    // Récupérer l'Id de l'équipe qu'on vient de créer
+    const data = await reponse.json();
+    const id_equipe = data.data.id_equipe;
+  
+    for (const id_Etudiant of form.etudiant) {
+      await fetch("http://localhost:8080/etudiantEquipe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(equipeActif),
+        body: JSON.stringify({
+          equipe_id_equipe: id_equipe,
+          etudiant_id_etudiant: id_Etudiant,
+        }),
       });
-
-      const newEquipe = await reponse.json(); 
-      const id_equipe = newEquipe.id_equipe;
-
-      for (const id_Etudiant of form.etudiant) {
-        await fetch("http://localhost:8080/etudiantEquipe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            equipe_id_equipe: id_equipe,
-            etudiant_id_etudiant: id_Etudiant,
-          }),
-        });
-      }
-      if (reponse.ok) {
-        fetchEquipes(); 
-        viderForm();
-      }
-    } catch (error) {
-      console.error("Erreur lors de la création d'équipe : ", error);
     }
-  };
+
+    fetchEquipes();
+    viderForm();
+    
+  } catch (error) {
+    console.error("Erreur lors de la création d'équipe : ", error);
+  }
+};
   
   
   const modifierEquipe = async (id_equipe) => {
@@ -74,6 +82,13 @@ const Equipe = () => {
           etat_equipe: "Active",
         }),
       });
+      await fetch(`http://localhost:8080/etudiantEquipe/${id_equipe}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ etudiants: [] }),
+      });
+
+      // Ajouter les nouvelles associations
       for (const id_Etudiant of form.etudiant) {
         await fetch("http://localhost:8080/etudiantEquipe", {
           method: "PUT",
@@ -322,8 +337,9 @@ const Equipe = () => {
                   </div>
                   <div className="col-mb-4">
                     <ListEtudiant
-                    etudiants={etudiants}   
-                    handleCheckboxChange={handleCheckboxChange}
+                      etudiants={etudiants}
+                      selectedEtudiants={form.etudiant}
+                      handleCheckboxChange={handleCheckboxChange}
                     />
                   </div>
 
