@@ -75,7 +75,6 @@ router.post("/", async (req, res) => {
       message: "Équipe créée avec succès",
       data: resultat.rows[0]
     });
-
     logger.info(`Insertion de l'équipe réussie : ${nom}`);
   } catch (err) {
     logger.error(`Erreur lors de l'insertion de l'équipe : ${err}`);

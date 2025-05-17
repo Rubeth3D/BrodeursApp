@@ -4,6 +4,7 @@ import ModifierSVG from "../image/ModifierSVG.jsx";
 import ListEtudiant from "./listeEtudiant.jsx";
 
 const Equipe = () => {
+  const [cours, setCours] = useState([]);
   const [classes, setClasses] = useState([]);
   const [etudiants, setEtudiants] = useState([]);
   const [filtreTousEquipes, setFiltreTousEquipes] = useState([]);
@@ -169,6 +170,24 @@ const Equipe = () => {
       }
     };
 
+    const fetchCours = async () => {
+      try {
+        const reponse = await fetch("http://localhost:8080/cours", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
+        const donnees = await reponse.json();
+        const options = donnees.map((cours) => ({
+          value: cours.id_cours,
+          label: cours.description,
+        }));
+        setCours(options);
+      } catch (err) {
+        console.error("Erreur au niveau du fetch des cours : ", err);
+      }
+    };
+
     const viderForm = () => {
       setForm({
         nom: "",
@@ -182,6 +201,7 @@ const Equipe = () => {
       fetchEquipes();
       fetchEtudiants();
       fetchClasses();
+      fetchCours();
   }, []);
 
 
@@ -193,7 +213,6 @@ const Equipe = () => {
     <>
       <div className="container mt-2">
         <div className="row mb-2 justify-content-center">
-
           <div className="col-4">
             <div className="card shadow-sm p-2 mb-2 bg-body rounded">
               <div className="card-body text-center">
@@ -262,6 +281,8 @@ const Equipe = () => {
               <tr>
                 <th>Nom</th>
                 <th>Numéro classe</th>
+                <th>Id_cours</th>
+                <th>id_session</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -270,6 +291,8 @@ const Equipe = () => {
                 <tr key={equipe.id_equipe}>
                   <td>{equipe.nom}</td>
                   <td>{equipe.classe_id_classe}</td>
+                  <td>{equipe.id_cours}</td>
+                  <td>{equipe.id_session}</td>
                   <td>
                     <button
                       className="btn btn-sn"

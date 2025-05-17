@@ -51,8 +51,6 @@ router.get("/etudiant/:id", async (req, res) => {
 router.post ("/", async (req, res) => {
   const { equipe_id_equipe, etudiant_id_etudiant } = req.body;
   try {
-    console.log("equipe_id_equipe: ", equipe_id_equipe);
-    console.log("etudiant_id_etudiant: ", etudiant_id_etudiant);
     const resultat = await client.query(
       "INSERT INTO etudiantEquipe (equipe_id_equipe , etudiant_id_etudiant) VALUES ($1, $2) RETURNING *",
       [equipe_id_equipe, etudiant_id_etudiant]
