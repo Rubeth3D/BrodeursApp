@@ -159,7 +159,7 @@ Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
 19. Installation Passeport.js
 
 ```bash
-Entrez la commande pour l'installation le passport.js : $ npm install passport
+Entrez la commande pour l'installation le passport.js: $ npm install passport
 ````
 
 ## Auteurs
