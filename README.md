@@ -140,7 +140,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
     Copier et coller le fichier 'ScriptMongo.js'
     ```
     
-18. Installation Passeport.js
+18. Installer le Passeport.js
 
 ```bash
 Entrez la commande pour installation le passport.js: $ npm install passport
