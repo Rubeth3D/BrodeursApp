@@ -143,7 +143,7 @@ Projet visant à créer un logiciel pour aider les professeurs. Le logiciel perm
 18. Installation Passeport.js
 
 ```bash
-Entrez la commande pour l'installation le passport.js: $ npm install passport
+Entrez la commande pour installation le passport.js: $ npm install passport
 ````
 
 19. Connexion aux deux bd
