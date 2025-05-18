@@ -156,6 +156,12 @@ Connexion
 Lancer la commande node : node .\main\serveur.js\ depuis le dossier serveur
 ````
 
+19. Installation Passeport.js
+
+```bash
+Entrez la commande pour l'installation le passport.js : $ npm install passport
+````
+
 ## Auteurs
 
 L'équipe de développement Brodeur Apps est composé de trois étudiant du collège de bois-de-boulogne.
