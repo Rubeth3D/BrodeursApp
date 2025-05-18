@@ -4,7 +4,7 @@ import SupprimerSVG from "../image/SupprimerSVG.jsx";
 import ModifierSVG from "../image/ModifierSVG.jsx";
 import ModalModifierClasse from "./ModalModifierClasse.jsx";
 import ModalCreerClasse from "./ModalCreerClasse.jsx";
-import ModalTables from "./admin/ModalTable.jsx";
+import ModalNoSql from "./admin/ModalTables.jsx";
 
 const Classe = ({ type_utilisateur }) => {
   const navigate = useNavigate();

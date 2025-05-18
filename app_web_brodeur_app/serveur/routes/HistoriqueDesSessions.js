@@ -62,9 +62,11 @@ router.post("/", async (req, res) => {
       date_action: req.body.date_action,
     };
     console.log(nouveauHistoriqueDeSession);
-    const commentaire = await collection.insertOne(nouveauHistoriqueDeSession);
-    logger.info(`Historique des sessios effectué`);
-    res.status(200).json(commentaire);
+    await collection.insertOne(nouveauHistoriqueDeSession);
+    logger.info(`insert sur historique des sessios effectué`);
+    res
+      .status(200)
+      .json({ message: "Historique des sessions inséré avec succès!" });
   } catch (err) {
     logger.error("Erreur lors de la récupération des documents: ", err);
     res.status(500).json({ message: "Erreur du serveur" });
@@ -88,7 +90,7 @@ router.put("/:id", async (req, res) => {
       description_action: req.body.description_action,
       date_action: req.body.date_action,
     };
-
+    console.log(updatedHistoriqueDeSession);
     const resultat = await collection.updateOne(
       { _id: new ObjectId(id) },
       { $set: updatedHistoriqueDeSession }

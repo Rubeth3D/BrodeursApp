@@ -1,15 +1,16 @@
 //@ts-ignore
-import AffichageAdmin from "./AffichageAdmin.jsx";
+import React, { useState } from "react";
+import AffichageTables from "./AffichageTables.jsx";
 import MessageUtilisateur from "../MessageUtilisateur.jsx";
 import CrudHistoriqueSessions from "./Strategy/CrudHistoriqueSessions.jsx";
 
 const Admin = () => {
   return (
     <>
-      <AffichageAdmin
-        DonneesDemandes={1}
-        StrategyDemande={new CrudHistoriqueSessions()}
-      />
+      <div className="text-center">
+        <h1 className="mb-5">Tableau de l'admin</h1>
+        <AffichageTables TableAjoutable={"Historique des sessions"} />
+      </div>
     </>
   );
 };
