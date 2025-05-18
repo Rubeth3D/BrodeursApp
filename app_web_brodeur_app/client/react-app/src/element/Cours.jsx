@@ -177,10 +177,10 @@ const Cours = () => {
         <table className="table table-striped table-hover mt-5">
           <thead>
             <tr>
-              <th>Code</th>
-              <th>Description</th>
-              <th>Session</th>
-              <th>Actions</th>
+              <th className="text-center">Code</th>
+              <th className="text-center">Description</th>
+              <th className="text-center">Session</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -191,9 +191,9 @@ const Cours = () => {
                   cours // Aider par ChatGPT pour filtrer les cours actifs
                 ) => (
                   <tr key={cours.id_cours}>
-                    <td>{cours.code_cours}</td>
-                    <td>{cours.description_cours}</td>
-                    <td>{cours.code_session}</td>
+                    <td className="text-center">{cours.code_cours}</td>
+                    <td className="text-center">{cours.description_cours}</td>
+                    <td className="text-center">{cours.code_session}</td>
                     <td>
                       <button
                         className="btn btn-sn"

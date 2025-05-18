@@ -169,8 +169,7 @@ const Classe = ({ type_utilisateur }) => {
                 />
               </div>
             </div>
-            {type_utilisateur == "Admin" ||
-              (type_utilisateur == "Professeur" && (
+            {(type_utilisateur == "Admin" ||type_utilisateur == "Professeur") && (
                 <div className="col-xxl-2 col-lg-4">
                   <div className="d-flex m-0">
                     <div className="d-flex m-0">
@@ -188,7 +187,8 @@ const Classe = ({ type_utilisateur }) => {
                     </div>
                   </div>
                 </div>
-              ))}
+              )}
+              
 
             <ModalCreerClasse
               open={modalCreerClasseEstOuvert}
