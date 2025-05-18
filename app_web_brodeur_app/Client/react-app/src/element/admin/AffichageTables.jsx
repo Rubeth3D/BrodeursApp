@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import CrudTables from "./Strategy/CrudTables.jsx";
 import ModifierSVG from "../../image/ModifierSVG.jsx";
 import SupprimerSVG from "../../image/SupprimerSVG.jsx";
-import ModalTables from "./ModalTables.jsx";
+import ModalNoSql from "./ModalTables.jsx";
 import CrudHistoriqueSessions from "./Strategy/CrudHistoriqueSessions.jsx";
-function AffichageTables({ StrategieDemande, TableAjoutable }) {
+import CrudCommentaire from "./Strategy/CrudCommentaires.jsx";
+function AffichageTables() {
+  const crudTables = useRef(new CrudTables(new CrudHistoriqueSessions()));
   const [bodyDonnees, setBodyDonnees] = useState([]);
-  const [crudTables, setCrudTables] = useState(new CrudHistoriqueSessions());
-
+  const [crudChangeable, setCrudChangeable] = useState(
+    new CrudHistoriqueSessions()
+  );
+  const [requete, setRequete] = useState(null);
+  const [tableAfficher, setTableAfficher] = useState("Historique de session");
   const [clesDonnees, setCleesDonnees] = useState([]);
   const [modalModifierEstOuvert, setModalModifierEstOuvert] = useState(false);
   const [modalCreerEstOuvert, setModalCreerEstOuvert] = useState(false);
@@ -28,40 +33,68 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
     zIndex: 2,
   };
   const fetchData = async () => {
-    const data = await crudTables.ReadDonnees();
+    const data = await crudTables.current.ReadDonnees();
+    console.log(data);
     setBodyDonnees(data);
     console.log("data : ", data[0]);
     setCleesDonnees(Object.keys(data[0]));
   };
-  const createData = () => {
-    crudTables.CreateDonnees();
-  };
+  const tablesFiltrees = useMemo(() => {
+    if (!Array.isArray(bodyDonnees) || bodyDonnees.length === 0) {
+      return [];
+    }
+
+    // Filtrage de base : bodyDonnes actifs
+    const tablesActives = bodyDonnees;
+
+    // Si pas de requête, retourner toutes les classes actives
+    if (!requete) {
+      return tablesActives;
+    }
+
+    // Si requête, filtrer en plus sur le code du cours
+    return tablesActives.filter(
+      (bodyDonnees) => bodyDonnees.id_utilisateur == requete
+    );
+  }, [requete, bodyDonnees]);
   useEffect(() => {
+    crudTables.current.ChangerStrategie(crudChangeable);
     fetchData();
-  }, []);
+  }, [crudChangeable]);
   return (
     <>
       <div className="container my-4">
         <div className="row">
           <div className=" col-xxl-10 col-lg-8 col-sm-6">
             <div className="d-flex m-0">
-              <select className=" rounded-2" name="tables" id="tables">
+              <select
+                className=" rounded-2"
+                name="tables"
+                id="tables"
+                onChange={(e) => {
+                  const valeureSelectionne = e.target.value;
+                  var crudInstance;
+                  if (valeureSelectionne === "HistoriqueSessions") {
+                    crudInstance = new CrudHistoriqueSessions();
+                  } else if (valeureSelectionne === "Commentaires") {
+                    crudInstance = new CrudCommentaire();
+                  }
+
+                  setCrudChangeable(crudInstance);
+                  setTableAfficher(valeureSelectionne);
+                  console.log("Nom de la table :", valeureSelectionne);
+                }}
+              >
                 <option value="HistoriqueSessions">HistoriqueSessions</option>
                 <option value="Commentaires">Commentaires</option>
-                <option value="Classe">Classe</option>
-                <option value="Equipe">Equipe</option>
-                <option value="Cours">Cours</option>
-                <option value="Evaluation">Evaluation</option>
-                <option value="HistoriqueSessions">HistoriqueSessions</option>
-                <option value="HistoriqueSessions">HistoriqueSessions</option>
-                <option value="HistoriqueSessions">HistoriqueSessions</option>
-                <option value="HistoriqueSessions">HistoriqueSessions</option>
               </select>
               <input
                 type="text"
                 className="form-control rounded-2"
-                placeholder="Rechercher une entree par son code de cours..."
-                onChange={() => {}}
+                placeholder="Rechercher une entree par son id_utilisateur..."
+                onChange={(e) => {
+                  setRequete(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -78,7 +111,7 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
                     setModalCreerEstOuvert(true);
                   }}
                 >
-                  + Ajouter un element de {TableAjoutable}
+                  + Ajouter un element de {tableAfficher}
                 </button>
               </div>
             </div>
@@ -100,7 +133,7 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
             </tr>
           </thead>
           <tbody>
-            {bodyDonnees.map((Donnees, i) => (
+            {tablesFiltrees.map((Donnees, i) => (
               <tr key={i}>
                 {Object.values(Donnees)
                   .slice(1)
@@ -124,7 +157,7 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
                     className={classNameBoutonsActions}
                     onClick={async () => {
                       const id = Object.values(Donnees)[0];
-                      await crudTables.DeleteDonnees(id);
+                      await crudChangeable.DeleteDonnees(id);
                       fetchData();
                     }}
                   >
@@ -136,7 +169,7 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
           </tbody>
         </table>
       </div>
-      <ModalTables
+      <ModalNoSql
         open={modalModifierEstOuvert}
         donneesAUtiliser={donneesAModifier}
         estFermee={() => {
@@ -145,12 +178,12 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
         rafraichir={() => {
           fetchData();
         }}
-        ActionDemande={async ({ id, body }) => {
-          crudTables.UpdateDonnees({ id, body });
+        ActionDemande={async (id, body) => {
+          return crudTables.current.UpdateDonnees(id, body);
         }}
         ModalDemande={"Modifier"}
       />
-      <ModalTables
+      <ModalNoSql
         open={modalCreerEstOuvert}
         donneesAUtiliser={bodyDonnees[0]}
         estFermee={() => {
@@ -160,7 +193,7 @@ function AffichageTables({ StrategieDemande, TableAjoutable }) {
           fetchData();
         }}
         ActionDemande={async (body) => {
-          crudTables.CreateDonnees(body);
+          return crudTables.current.CreateDonnees(body);
         }}
         ModalDemande={"Creer"}
       />

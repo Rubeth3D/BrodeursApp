@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
 });
 
 //POST
-router.post("/",verifierSessionUtilisateur, async (req, res) => {
+router.post("/", verifierSessionUtilisateur, async (req, res) => {
   try {
     const collection = await ConnexionCollection();
     const nouveauCommentaire = {
@@ -60,7 +60,7 @@ router.post("/",verifierSessionUtilisateur, async (req, res) => {
     };
     const commentaire = await collection.insertOne(nouveauCommentaire);
     logger.info(`Commentaire effectué`);
-    res.status(200).json(commentaire);
+    res.status(200).json({ message: "Insert effectue avec succes!" });
   } catch (err) {
     logger.error("Erreur lors de la création des documents: ", err);
     res.status(500).json({ message: "Erreur du serveur" });
@@ -72,11 +72,11 @@ router.put("/:id", async (req, res) => {
   try {
     const collection = await ConnexionCollection();
     const id = req.params.id;
-    const commentaire = req.body; 
-
+    const body = req.body;
+    console.log("Body : ", body);
     const resultat = await collection.updateOne(
-      { _id: new ObjectId(id) }, 
-      { $set: { commentaire } } 
+      { _id: new ObjectId(id) },
+      { $set: body }
     );
 
     if (resultat.matchedCount === 0) {

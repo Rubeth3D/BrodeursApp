@@ -15,11 +15,11 @@ function ModalTables({
   if (!donneesAUtiliser) {
     return <div>Chargement...</div>;
   }
-
-  const [messageUtilisateur, setMessageUtilisateur] = useState([]);
+  const [codeServeur, setCodeServeur] = useState(null);
+  const [messageUtilisateur, setMessageUtilisateur] = useState("");
   const [cleesTables, setCleesTables] = useState(Object.keys(donneesAUtiliser));
   const [donnees, setDonnees] = useState(donneesAUtiliser);
-  const [contenu, setContenu] = useState([]);
+  const [contenu, setContenu] = useState(Object.values(donnees));
 
   const ModifierRow = (e) => {
     setDonnees({
@@ -29,10 +29,9 @@ function ModalTables({
   };
   useEffect(() => {
     setCleesTables(Object.keys(donnees));
-    if (ModalDemande == "Modifier") {
-      setContenu(Object.values(donnees));
-    }
-    console.log("contenu", contenu[1]);
+    setContenu(Object.values(donnees));
+
+    console.log("Donnees", donnees);
     console.log("contenmodal demande ", ModalDemande);
   }, [donnees]);
 
@@ -53,6 +52,10 @@ function ModalTables({
                 {ModalDemande}
               </h5>
             </div>
+            <MessageUtilisateur
+              reponseCodeStatus={codeServeur}
+              reponseMessage={messageUtilisateur}
+            />
             <div className="modal-body">
               {cleesTables.slice(1).map((key, i) => (
                 <div className="mb-3 row" key={i}>
@@ -89,14 +92,23 @@ function ModalTables({
                 type="button"
                 className="btn btn-primary"
                 onClick={async () => {
+                  console.log(ModalDemande);
                   if (ModalDemande === "Modifier") {
-                    await ActionDemande({ id: contenu[0], body: donnees });
+                    console.log("Contenu commentaire : ", contenu[0]);
+                    console.log("donnees commentaire : ", donnees);
+                    const resultat = await ActionDemande(contenu[0], donnees);
+                    setCodeServeur(resultat.status);
+                    setMessageUtilisateur(resultat.body.message);
                     rafraichir();
                     return;
                   }
                   const body = await JSON.stringify(donnees);
-                  await ActionDemande(body);
-                  rafraichir();
+                  const resultat = await ActionDemande(body);
+                  setCodeServeur(resultat.status);
+                  setMessageUtilisateur(resultat.body.message);
+                  if (resultat.ok) {
+                    rafraichir();
+                  }
                 }}
               >
                 Sauvegarder
